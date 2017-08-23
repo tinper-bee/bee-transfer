@@ -6,7 +6,8 @@ import PureRenderMixin from 'rc-util/lib/PureRenderMixin';
 import assign from 'object-assign';
 import { TransferItem } from './index';
 import Item from './item';
-import Checkbox from 'rc-checkbox';
+//import Checkbox from 'rc-checkbox';
+import Checkbox from 'bee-checkbox';
 
 function noop() {
 }
@@ -69,15 +70,15 @@ class TransferList extends React.Component {
 
   renderCheckbox({ prefixCls, filteredDataSource, checked, checkPart, disabled, checkable }) {
     const checkAll = (!checkPart) && checked;
-    prefixCls = "rc"
+    prefixCls = "u"
     const checkboxCls = classNames({
       [`${prefixCls}-checkbox-indeterminate`]: checkPart,
       [`${prefixCls}-checkbox-disabled`]: disabled,
     });
-
+    debugger;
     return (
       <span
-        className="rc-checkbox-wrapper"
+        className="u-checkbox-wrapper"
       >
         <Checkbox 
         onClick={() => this.props.handleSelectAll(filteredDataSource, checkAll)} 

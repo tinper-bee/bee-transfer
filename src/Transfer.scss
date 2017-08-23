@@ -3,6 +3,7 @@
 @import '../node_modules/rc-checkbox/assets/index.css';
 @import '../node_modules/bee-button/src/Button.scss';
 @import '../node_modules/bee-form-control/src/FormControl.scss';
+@import '../node_modules/bee-checkbox/src/Checkbox.scss';
 
 
 
@@ -169,13 +170,13 @@
 }
 
 .u-transfer-operation .u-button-sm{
-    background: #49a9ee;
+    background: $checkbox-color;
     color: #fff;
-    border-color: #49a9ee;
+    border-color: $checkbox-color;
 }
 .u-transfer-operation .u-button-sm:hover{
-    background: #49a9ee;
-    border-color: #49a9ee;
+    background: $checkbox-color;
+    border-color: $checkbox-color;
 }
 
 
@@ -192,25 +193,26 @@
 }
 
 
-.rc-checkbox+span, .rc-checkbox-wrapper+span {
+.u-checkbox+span, .u-checkbox-wrapper+span {
     padding-left: 8px;
     padding-right: 8px;
 }
-.rc-checkbox-checked .rc-checkbox-inner, .rc-checkbox-indeterminate .rc-checkbox-inner {
+.u-checkbox-checked .u-checkbox-label, .u-checkbox-indeterminate .u-checkbox-label {
     background-color: #108ee9;
     border-color: #108ee9;
 }
-.rc-checkbox-indeterminate .rc-checkbox-inner:after {
-    content: " ";
-    -webkit-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-    position: absolute;
-    left: 2px;
-    top: 5px;
-    width: 8px;
-    height: 1px;
+.u-checkbox.u-checkbox-indeterminate  .u-checkbox-label:after {
+    color: #fff;
+    content: "\e6ce";
+    line-height: 18px;
+    font-size: 14px;
 }
+
+.u-checkbox.u-checkbox-indeterminate .u-checkbox-label:before {
+    box-shadow: inset 0 0 0 10px rgb(30,136,229);
+    border-color: rgb(30,136,229);
+}
+
 .u-transfer-list-search {
 	font-size: 1.2rem;
 	border-color: #d9d9d9;
@@ -219,7 +221,7 @@
 
 @keyframes transferHighlightIn {
   0% {
-    background: #49a9ee;
+    background: $checkbox-color;
   }
   100% {
     background: transparent;

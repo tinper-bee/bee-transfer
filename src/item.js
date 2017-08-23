@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PureRenderMixin from 'rc-util/lib/PureRenderMixin';
 import assign from 'object-assign';
 import Lazyload from 'react-lazy-load';
-import Checkbox from 'rc-checkbox';
+import Checkbox from 'bee-checkbox';
 
 function isRenderResultPlainObject(result) {
   return result && !React.isValidElement(result) &&
