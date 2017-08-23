@@ -1,0 +1,227 @@
+@import "../node_modules/tinper-bee-core/scss/minxin-variables";
+@import "../node_modules/tinper-bee-core/scss/minxin-mixins";
+@import '../node_modules/rc-checkbox/assets/index.css';
+@import '../node_modules/bee-button/src/Button.scss';
+@import '../node_modules/bee-form-control/src/FormControl.scss';
+
+
+
+.u-transfer {
+  position: relative;
+  line-height: 1.5;
+
+  &-list {
+    font-size: 12px;
+    border: 1px solid #d9d9d9;
+    display: inline-block;
+    border-radius: 4px;
+    vertical-align: middle;
+    position: relative;
+    width: 180px;
+    height: 200px;
+    padding-top: 33px;
+
+    &-with-footer {
+      padding-bottom: 33px;
+    }
+
+    &-search {
+      &-action {
+        color: #ccc;
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        font-size: 14px;
+        text-decoration: none;
+        .uf {
+          transition: all .3s;
+          font-size: 12px;
+          color: #ccc;
+          &:hover {
+            color: rgba(0,0,0,.43);
+          }
+        }
+      }
+    }
+
+    &-header {
+      padding: 7px 15px;
+      border-radius: 4px 4px 0 0;
+      background: #fff;
+      color: rgba(0,0,0,.65);
+      border-bottom: 1px solid #e9e9e9;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+
+      &-title {
+        position: absolute;
+        right: 15px;
+      }
+    }
+
+    &-body {
+      font-size: 12px;
+      position: relative;
+      height: 100%;
+
+      &-search-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 28px;
+        padding: 4px;
+        width: 100%;
+      }
+    }
+
+    &-body-with-search {
+      padding-top: 34px;
+    }
+
+    &-content {
+      height: 100%;
+      overflow: auto;
+      margin: 0;
+      padding: 0;
+      &-item {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 7px 15px;
+        min-height: 32px;
+        transition: all 0.3s ease;
+      }
+
+      &-item:not(&-item-disabled):hover {
+        cursor: pointer;
+        background-color: #ecf6fd;
+      }
+
+      &-item-disabled {
+        cursor: not-allowed;
+        color: rgba(0,0,0,.25);
+      }
+
+      &-item-highlight-enter {
+        animation: transferHighlightIn 1s ease;
+        transition: none;
+      }
+    }
+
+    &-body-not-found {
+      padding-top: 0;
+      color: #ccc;
+      text-align: center;
+      display: none;
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      margin-top: -10px;
+    }
+
+    &-content:empty + &-body-not-found {
+      display: block;
+    }
+
+    &-footer {
+      border-top: 1px solid #e9e9e9;
+      border-radius: 0 0 4px 4px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
+
+  &-operation {
+    display: inline-block;
+    overflow: hidden;
+    margin: 0 8px;
+    vertical-align: middle;
+
+    button {
+      display: block;
+
+      &:first-child {
+        margin-bottom: 4px;
+      }
+
+      .uf {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+.u-transfer-operation .u-button-sm {
+	padding: 0;
+    font-size: 1.2rem;
+    border: 1px solid;
+    color: rgb(109, 107, 107);
+    min-width: 3rem;
+}
+
+.u-transfer-operation .u-button-sm{
+    background: #49a9ee;
+    color: #fff;
+    border-color: #49a9ee;
+}
+.u-transfer-operation .u-button-sm:hover{
+    background: #49a9ee;
+    border-color: #49a9ee;
+}
+
+
+
+.u-transfer-operation .u-button-sm[disabled]{
+    background: #fff;
+    color:#9a9898;
+    border-color: rgb(224,224,224);
+}
+.u-button.disabled, .u-button[disabled]:hover {
+    background: #fff;
+    color:#9a9898;
+    border-color: rgb(224,224,224);
+}
+
+
+.rc-checkbox+span, .rc-checkbox-wrapper+span {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.rc-checkbox-checked .rc-checkbox-inner, .rc-checkbox-indeterminate .rc-checkbox-inner {
+    background-color: #108ee9;
+    border-color: #108ee9;
+}
+.rc-checkbox-indeterminate .rc-checkbox-inner:after {
+    content: " ";
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    position: absolute;
+    left: 2px;
+    top: 5px;
+    width: 8px;
+    height: 1px;
+}
+.u-transfer-list-search {
+	font-size: 1.2rem;
+	border-color: #d9d9d9;
+    height: 26px;
+}
+
+@keyframes transferHighlightIn {
+  0% {
+    background: #49a9ee;
+  }
+  100% {
+    background: transparent;
+  }
+}
