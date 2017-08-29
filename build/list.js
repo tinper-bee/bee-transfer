@@ -20,7 +20,7 @@ var _rcAnimate = require('rc-animate');
 
 var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
 
-var _PureRenderMixin = require('rc-util/lib/PureRenderMixin');
+var _PureRenderMixin = require('./PureRenderMixin');
 
 var _PureRenderMixin2 = _interopRequireDefault(_PureRenderMixin);
 
@@ -141,7 +141,6 @@ var TransferList = function (_React$Component) {
     var checkAll = !checkPart && checked;
     prefixCls = "u";
     var checkboxCls = (0, _classnames2["default"])((_classNames = {}, _defineProperty(_classNames, prefixCls + '-checkbox-indeterminate', checkPart), _defineProperty(_classNames, prefixCls + '-checkbox-disabled', disabled), _classNames));
-    debugger;
     return _react2["default"].createElement(
       'span',
       {

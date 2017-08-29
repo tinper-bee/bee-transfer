@@ -1,6 +1,6 @@
 {
   "name": "bee-transfer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Transfer ui component for react",
   "keywords": [
     "react",
@@ -41,6 +41,7 @@
     "classnames": "^2.2.5",
     "rc-animate": "^2.4.1",
     "react-lazy-load": "^3.0.12",
+    "shallowequal": "^1.0.2",
     "tinper-bee-core": "latest"
   },
   "devDependencies": {

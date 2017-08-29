@@ -12,7 +12,7 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _PureRenderMixin = require('rc-util/lib/PureRenderMixin');
+var _PureRenderMixin = require('./PureRenderMixin');
 
 var _PureRenderMixin2 = _interopRequireDefault(_PureRenderMixin);
 

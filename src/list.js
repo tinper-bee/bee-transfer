@@ -2,7 +2,7 @@ import React from 'react';
 import Search from './search';
 import classNames from 'classnames';
 import Animate from 'rc-animate';
-import PureRenderMixin from 'rc-util/lib/PureRenderMixin';
+import PureRenderMixin from './PureRenderMixin';
 import assign from 'object-assign';
 import { TransferItem } from './index';
 import Item from './item';
@@ -75,7 +75,6 @@ class TransferList extends React.Component {
       [`${prefixCls}-checkbox-indeterminate`]: checkPart,
       [`${prefixCls}-checkbox-disabled`]: disabled,
     });
-    debugger;
     return (
       <span
         className="u-checkbox-wrapper"

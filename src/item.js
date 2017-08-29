@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import PureRenderMixin from 'rc-util/lib/PureRenderMixin';
+import PureRenderMixin from './PureRenderMixin';
 import assign from 'object-assign';
 import Lazyload from 'react-lazy-load';
 import Checkbox from 'bee-checkbox';
