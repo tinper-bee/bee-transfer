@@ -1,3 +1,14 @@
+/**
+*
+* @title 带搜索框的tranfer
+* @description
+*
+*/
+
+import React, { Component } from 'react';
+import Transfer from '../../src';
+
+
 class Demo2 extends React.Component {
   state = {
     mockData: [],
@@ -42,3 +53,6 @@ class Demo2 extends React.Component {
     );
   }
 }
+
+
+export default Demo2

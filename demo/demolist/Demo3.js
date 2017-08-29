@@ -1,3 +1,14 @@
+/**
+*
+* @title 底部自定义的transfer
+* @description 
+*
+*/
+
+import React, { Component } from 'react';
+import Button from 'bee-button';
+import Transfer from '../../src';
+
 class Demo3 extends React.Component {
   state = {
     mockData: [],
@@ -54,3 +65,5 @@ class Demo3 extends React.Component {
     );
   }
 }
+
+export default Demo3

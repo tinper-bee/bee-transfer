@@ -1,9 +1,13 @@
 /**
 *
-* @title 这是标题
-* @description 这是描述
+* @title 常用可选transfer
+* @description 
 *
 */
+
+
+import React, { Component } from 'react';
+import Transfer from '../../src';
 
 const mockData = [];
 for (let i = 0; i < 20; i++) {
@@ -61,3 +65,6 @@ class Demo1 extends React.Component {
     );
   }
 }
+
+
+export default Demo1
