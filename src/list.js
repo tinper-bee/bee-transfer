@@ -70,6 +70,7 @@ class TransferList extends React.Component {
 
   renderCheckbox({ prefixCls, filteredDataSource, checked, checkPart, disabled, checkable }) {
     const checkAll = (!checkPart) && checked;
+    debugger;
     prefixCls = "u"
     const checkboxCls = classNames({
       [`${prefixCls}-checkbox-indeterminate`]: checkPart,
@@ -80,7 +81,7 @@ class TransferList extends React.Component {
         className="u-checkbox-wrapper"
       >
         <Checkbox 
-        onClick={() => this.props.handleSelectAll(filteredDataSource, checkAll)} 
+        onChange={() => this.props.handleSelectAll(filteredDataSource, checkAll)} 
         className={checkboxCls}
         checked={checkAll}
         />

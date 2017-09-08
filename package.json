@@ -35,7 +35,7 @@
   "dependencies": {
     "babel-runtime": "^6.23.0",
     "bee-button": "^0.2.6",
-    "bee-checkbox": "^0.2.0",
+    "bee-checkbox": "^0.2.4",
     "bee-form-control": "^0.1.8",
     "bee-icon": "latest",
     "classnames": "^2.2.5",

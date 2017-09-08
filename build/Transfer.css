@@ -348,6 +348,20 @@ input.u-button[type="submit"] {
       text-align: center;
       position: absolute; }
 
+.u-checkbox-checked .u-checkbox-label, .u-checkbox-indeterminate .u-checkbox-label {
+  background-color: #108ee9;
+  border-color: #108ee9; }
+
+.u-checkbox.u-checkbox-indeterminate .u-checkbox-label:after {
+  color: #fff;
+  content: "\e6ce";
+  line-height: 18px;
+  font-size: 14px; }
+
+.u-checkbox.u-checkbox-indeterminate .u-checkbox-label:before {
+  box-shadow: inset 0 0 0 10px #1e88e5;
+  border-color: #1e88e5; }
+
 .u-checkbox.u-checkbox-success.is-checked .u-checkbox-label:before {
   -moz-box-shadow: inset 0 0 0 10px rgb(76,175,80);
   -webkit-box-shadow: inset 0 0 0 10px rgb(76,175,80);
