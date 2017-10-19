@@ -1,6 +1,7 @@
-import React,{PropTypes} from 'react';
+import React from 'react';
 import Icon from 'bee-icon';
 import FormControl from 'bee-form-control';
+import PropTypes from 'prop-types';
 
 const propTypes = {
   prefixCls: PropTypes.string,

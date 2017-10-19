@@ -1,6 +1,7 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import Button from 'bee-button';
 import Icon from 'bee-icon';
+import PropTypes from 'prop-types';
 
 function noop() {
 }

@@ -1,9 +1,9 @@
 import React from 'react';
-import { PropTypes } from 'react';
 import classNames from 'classnames';
 import List from './list';
 import Operation from './operation';
 import Search from './search';
+import PropTypes from 'prop-types';
 
 function noop() {
 }

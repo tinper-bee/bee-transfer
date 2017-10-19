@@ -16,6 +16,10 @@ var _beeIcon = require('bee-icon');
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -29,13 +33,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function noop() {}
 
 var propTypes = {
-  className: _react.PropTypes.string,
-  leftArrowText: _react.PropTypes.string,
-  rightArrowText: _react.PropTypes.string,
-  moveToLeft: _react.PropTypes.func,
-  moveToRight: _react.PropTypes.func,
-  leftActive: _react.PropTypes["boolean"],
-  rightActive: _react.PropTypes["boolean"]
+  className: _propTypes2["default"].string,
+  leftArrowText: _propTypes2["default"].string,
+  rightArrowText: _propTypes2["default"].string,
+  moveToLeft: _propTypes2["default"].func,
+  moveToRight: _propTypes2["default"].func,
+  leftActive: _propTypes2["default"]["boolean"],
+  rightActive: _propTypes2["default"]["boolean"]
 };
 
 var defaultProps = {

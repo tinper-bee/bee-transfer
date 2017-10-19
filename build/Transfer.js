@@ -24,6 +24,10 @@ var _search = require('./search');
 
 var _search2 = _interopRequireDefault(_search);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -47,24 +51,24 @@ var defaultProps = {
 };
 
 var propTypes = {
-  prefixCls: _react.PropTypes.string,
-  dataSource: _react.PropTypes.array,
-  render: _react.PropTypes.func,
-  targetKeys: _react.PropTypes.array,
-  onChange: _react.PropTypes.func,
-  height: _react.PropTypes.number,
-  listStyle: _react.PropTypes.object,
-  className: _react.PropTypes.string,
-  titles: _react.PropTypes.array,
-  operations: _react.PropTypes.array,
-  showSearch: _react.PropTypes.bool,
-  filterOption: _react.PropTypes.func,
-  searchPlaceholder: _react.PropTypes.string,
-  notFoundContent: _react.PropTypes.node,
-  body: _react.PropTypes.func,
-  footer: _react.PropTypes.func,
-  rowKey: _react.PropTypes.func,
-  lazy: _react.PropTypes.object
+  prefixCls: _propTypes2["default"].string,
+  dataSource: _propTypes2["default"].array,
+  render: _propTypes2["default"].func,
+  targetKeys: _propTypes2["default"].array,
+  onChange: _propTypes2["default"].func,
+  height: _propTypes2["default"].number,
+  listStyle: _propTypes2["default"].object,
+  className: _propTypes2["default"].string,
+  titles: _propTypes2["default"].array,
+  operations: _propTypes2["default"].array,
+  showSearch: _propTypes2["default"].bool,
+  filterOption: _propTypes2["default"].func,
+  searchPlaceholder: _propTypes2["default"].string,
+  notFoundContent: _propTypes2["default"].node,
+  body: _propTypes2["default"].func,
+  footer: _propTypes2["default"].func,
+  rowKey: _propTypes2["default"].func,
+  lazy: _propTypes2["default"].object
 };
 
 var defaultTitles = ['', ''];

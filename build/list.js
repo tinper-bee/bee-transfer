@@ -139,7 +139,6 @@ var TransferList = function (_React$Component) {
         checkable = _ref.checkable;
 
     var checkAll = !checkPart && checked;
-    debugger;
     prefixCls = "u";
     var checkboxCls = (0, _classnames2["default"])((_classNames = {}, _defineProperty(_classNames, prefixCls + '-checkbox-indeterminate', checkPart), _defineProperty(_classNames, prefixCls + '-checkbox-disabled', disabled), _classNames));
     return _react2["default"].createElement(
