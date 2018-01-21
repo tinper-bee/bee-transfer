@@ -1,12 +1,11 @@
 import React from 'react';
 import Search from './search';
 import classNames from 'classnames';
-import Animate from 'rc-animate';
+import Animate from 'bee-animate';
 import PureRenderMixin from './PureRenderMixin';
 import assign from 'object-assign';
 import { TransferItem } from './index';
 import Item from './item';
-//import Checkbox from 'rc-checkbox';
 import Checkbox from 'bee-checkbox';
 
 function noop() {
