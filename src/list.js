@@ -102,7 +102,7 @@ class TransferList extends React.Component {
       [`${prefixCls}-with-footer`]: !!footerDom,
     });
 
-    const filteredDataSource: TransferItem[] = [];
+    const filteredDataSource = [];
 
     const showItems = dataSource.map((item) => {
       if (!item.disabled) {

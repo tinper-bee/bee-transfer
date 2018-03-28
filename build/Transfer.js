@@ -355,7 +355,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.handleFilter = function (direction, e) {
-    _this2.setState(_defineProperty({}, direction + 'Filter', e.target.value));
+    _this2.setState(_defineProperty({}, direction + 'Filter', e));
   };
 
   this.handleLeftFilter = function (e) {

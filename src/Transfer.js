@@ -165,7 +165,7 @@ class Transfer extends React.Component{
   handleFilter = (direction, e) => {
     this.setState({
       // add filter
-      [`${direction}Filter`]: e.target.value,
+      [`${direction}Filter`]: e,
     });
   }
 
