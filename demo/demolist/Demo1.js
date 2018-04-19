@@ -7,6 +7,9 @@
 
 
 import React, { Component } from 'react';
+import Modal from 'bee-modal';
+import Button from 'bee-button';
+import Select from 'bee-select';
 import Transfer from '../../src';
 
 const mockData = [];
@@ -16,6 +19,7 @@ for (let i = 0; i < 20; i++) {
     title: `content${i + 1}`,
     description: `description of content${i + 1}`,
     disabled: i % 3 < 1,
+
   });
 }
 
@@ -27,6 +31,8 @@ class Demo1 extends React.Component {
   state = {
     targetKeys,
     selectedKeys: [],
+    showModal: false,
+    modalSize: ''
   }
 
   handleChange = (nextTargetKeys, direction, moveKeys) => {
@@ -49,19 +55,21 @@ class Demo1 extends React.Component {
     console.log('target:', e.target);
   }
 
+
   render() {
     const state = this.state;
+
     return (
-      <Transfer
-        dataSource={mockData}
-        titles={['Source', 'Target']}
-        targetKeys={state.targetKeys}
-        selectedKeys={state.selectedKeys}
-        onChange={this.handleChange}
-        onSelectChange={this.handleSelectChange}
-        onScroll={this.handleScroll}
-        render={item => item.title}
-      />
+       <Transfer
+          dataSource={mockData}
+          titles={['Source', 'Target']}
+          targetKeys={state.targetKeys}
+          selectedKeys={state.selectedKeys}
+          onChange={this.handleChange}
+          onSelectChange={this.handleSelectChange}
+          onScroll={this.handleScroll}
+          render={item => item.title}
+        />
     );
   }
 }

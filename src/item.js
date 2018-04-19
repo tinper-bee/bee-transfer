@@ -51,8 +51,14 @@ class Item extends React.Component{
       debounce: false,
     }, lazy);
 
-    return (
-      <Lazyload {...lazyProps}>
+    let lazyFlag = true;
+    if(lazy && lazy.container == "modal")
+    {
+      lazyFlag = false
+    }
+
+    if(!lazyFlag) {
+      return (
         <li
           className={className}
           title={renderedText}
@@ -61,8 +67,22 @@ class Item extends React.Component{
           <Checkbox checked={checked} disabled={item.disabled} />
           <span>{renderedEl}</span>
         </li>
-      </Lazyload>
-    );
+      )
+    }else {
+        return (
+          <Lazyload {...lazyProps}>
+            <li
+              className={className}
+              title={renderedText}
+              onClick={item.disabled ? undefined : () => onClick(item)}
+            >
+              <Checkbox checked={checked} disabled={item.disabled} />
+              <span>{renderedEl}</span>
+            </li>
+          </Lazyload>
+        );
+    }
+    
   }
 }
 

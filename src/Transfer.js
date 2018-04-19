@@ -224,7 +224,7 @@ class Transfer extends React.Component{
     const {
       prefixCls = 'u-transfer', operations = [], showSearch, notFoundContent,
       searchPlaceholder, body, footer, listStyle, className = '',
-      filterOption, render, lazy,
+      filterOption, render, lazy
     } = this.props;
     const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys } = this.state;
 
