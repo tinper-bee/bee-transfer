@@ -114,10 +114,13 @@ var Item = function (_React$Component) {
       debounce: false
     }, lazy);
 
-    return _react2["default"].createElement(
-      _reactLazyLoad2["default"],
-      lazyProps,
-      _react2["default"].createElement(
+    var lazyFlag = true;
+    if (lazy && lazy.container == "modal") {
+      lazyFlag = false;
+    }
+
+    if (!lazyFlag) {
+      return _react2["default"].createElement(
         'li',
         {
           className: className,
@@ -132,8 +135,29 @@ var Item = function (_React$Component) {
           null,
           renderedEl
         )
-      )
-    );
+      );
+    } else {
+      return _react2["default"].createElement(
+        _reactLazyLoad2["default"],
+        lazyProps,
+        _react2["default"].createElement(
+          'li',
+          {
+            className: className,
+            title: renderedText,
+            onClick: item.disabled ? undefined : function () {
+              return onClick(item);
+            }
+          },
+          _react2["default"].createElement(_beeCheckbox2["default"], { checked: checked, disabled: item.disabled }),
+          _react2["default"].createElement(
+            'span',
+            null,
+            renderedEl
+          )
+        )
+      );
+    }
   };
 
   return Item;
