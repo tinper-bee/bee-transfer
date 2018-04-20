@@ -9767,7 +9767,8 @@
 	    disabled: false,
 	    colors: 'primary',
 	    clsPrefix: 'u-checkbox',
-	    defaultChecked: false
+	    defaultChecked: false,
+	    onClick: function onClick() {}
 	};
 	var clsPrefix = 'u-checkbox';
 	
@@ -9779,10 +9780,12 @@
 	
 	        var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 	
+	        _initialiseProps.call(_this);
+	
 	        _this.state = {
 	            checked: 'checked' in props ? props.checked : props.defaultChecked
 	        };
-	        _this.changeState = _this.changeState.bind(_this);
+	        _this.doubleClickFlag = null;
 	        return _this;
 	    }
 	
@@ -9794,23 +9797,6 @@
 	        }
 	    };
 	
-	    Checkbox.prototype.changeState = function changeState() {
-	        var props = this.props;
-	
-	        if (props.disabled) {
-	            return;
-	        }
-	        if (!('checked' in props)) {
-	            this.setState({
-	                checked: !this.state.checked
-	            });
-	        }
-	
-	        if (props.onChange instanceof Function) {
-	            props.onChange(!this.state.checked);
-	        }
-	    };
-	
 	    Checkbox.prototype.render = function render() {
 	        var _props = this.props,
 	            disabled = _props.disabled,
@@ -9818,11 +9804,13 @@
 	            size = _props.size,
 	            className = _props.className,
 	            indeterminate = _props.indeterminate,
+	            onClick = _props.onClick,
 	            children = _props.children,
 	            checked = _props.checked,
 	            clsPrefix = _props.clsPrefix,
+	            onDoubleClick = _props.onDoubleClick,
 	            onChange = _props.onChange,
-	            others = _objectWithoutProperties(_props, ['disabled', 'colors', 'size', 'className', 'indeterminate', 'children', 'checked', 'clsPrefix', 'onChange']);
+	            others = _objectWithoutProperties(_props, ['disabled', 'colors', 'size', 'className', 'indeterminate', 'onClick', 'children', 'checked', 'clsPrefix', 'onDoubleClick', 'onChange']);
 	
 	        var input = _react2["default"].createElement('input', _extends({}, others, {
 	            type: 'checkbox',
@@ -9850,7 +9838,10 @@
 	
 	        return _react2["default"].createElement(
 	            'label',
-	            { className: (0, _classnames2["default"])(classNames, className), onClick: this.changeState },
+	            {
+	                className: (0, _classnames2["default"])(classNames, className),
+	                onDoubleClick: this.handledbClick,
+	                onClick: this.changeState },
 	            input,
 	            _react2["default"].createElement(
 	                'label',
@@ -9862,6 +9853,42 @@
 	
 	    return Checkbox;
 	}(_react2["default"].Component);
+	
+	var _initialiseProps = function _initialiseProps() {
+	    var _this2 = this;
+	
+	    this.changeState = function (e) {
+	        var props = _this2.props;
+	
+	        clearTimeout(_this2.doubleClickFlag);
+	        if (props.onClick instanceof Function) {
+	            props.onClick(e);
+	        }
+	        //执行延时
+	        _this2.doubleClickFlag = setTimeout(function () {
+	            //do function在此处写单击事件要执行的代码
+	            if (props.disabled) {
+	                return;
+	            }
+	            if (!('checked' in props)) {
+	                _this2.setState({
+	                    checked: !_this2.state.checked
+	                });
+	            }
+	
+	            if (props.onChange instanceof Function) {
+	                props.onChange(!_this2.state.checked);
+	            }
+	        }, 300);
+	    };
+	
+	    this.handledbClick = function (e) {
+	        var onDoubleClick = _this2.props.onDoubleClick;
+	
+	        clearTimeout(_this2.doubleClickFlag);
+	        onDoubleClick && onDoubleClick(_this2.state.checked, e);
+	    };
+	};
 	
 	Checkbox.propTypes = propTypes;
 	Checkbox.defaultProps = defaultProps;
