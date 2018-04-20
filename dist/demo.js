@@ -76,7 +76,7 @@
 	
 	var CARETUP = _react2['default'].createElement('i', { className: 'uf uf-arrow-up' });
 	
-	var Demo1 = __webpack_require__(64);var Demo2 = __webpack_require__(153);var Demo3 = __webpack_require__(154);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 常用可选transfer", "code": "/**\n*\n* @title 常用可选transfer\n* @description \n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Transfer, Select, Button, Modal } from 'tinper-bee';\n\nconst mockData = [];\nfor (let i = 0; i < 20; i++) {\n  mockData.push({\n    key: i.toString(),\n    title: `content${i + 1}`,\n    description: `description of content${i + 1}`,\n    disabled: i % 3 < 1,\n\n  });\n}\n\nconst targetKeys = mockData\n        .filter(item => +item.key % 3 > 1)\n        .map(item => item.key);\n\nclass Demo1 extends React.Component {\n  state = {\n    targetKeys,\n    selectedKeys: [],\n    showModal: false,\n    modalSize: ''\n  }\n\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\n    this.setState({ targetKeys: nextTargetKeys });\n\n    console.log('targetKeys: ', targetKeys);\n    console.log('direction: ', direction);\n    console.log('moveKeys: ', moveKeys);\n  }\n\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\n\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\n  }\n\n  handleScroll = (direction, e) => {\n    console.log('direction:', direction);\n    console.log('target:', e.target);\n  }\n\n\n  render() {\n    const state = this.state;\n\n    return (\n       <Transfer\n          dataSource={mockData}\n          titles={['Source', 'Target']}\n          targetKeys={state.targetKeys}\n          selectedKeys={state.selectedKeys}\n          onChange={this.handleChange}\n          onSelectChange={this.handleSelectChange}\n          onScroll={this.handleScroll}\n          render={item => item.title}\n        />\n    );\n  }\n}\n\n\n\n", "desc": " " }, { "example": _react2['default'].createElement(Demo2, null), "title": " 带搜索框的tranfer", "code": "/**\n*\n* @title 带搜索框的tranfer\n* @description\n*\n*/\n\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\n\n\nclass Demo2 extends React.Component {\n  state = {\n    mockData: [],\n    targetKeys: [],\n  }\n  componentDidMount() {\n    this.getMock();\n  }\n  getMock = () => {\n    const targetKeys = [];\n    const mockData = [];\n    for (let i = 0; i < 20; i++) {\n      const data = {\n        key: i.toString(),\n        title: `content${i + 1}`,\n        description: `description of content${i + 1}`,\n        chosen: Math.random() * 2 > 1,\n      };\n      if (data.chosen) {\n        targetKeys.push(data.key);\n      }\n      mockData.push(data);\n    }\n    this.setState({ mockData, targetKeys });\n  }\n  filterOption = (inputValue, option) => {\n    return option.title.indexOf(inputValue) > -1;\n  }\n  handleChange = (targetKeys) => {\n    this.setState({ targetKeys });\n  }\n  render() {\n    return (\n      <Transfer\n        dataSource={this.state.mockData}\n        showSearch\n        filterOption={this.filterOption}\n        targetKeys={this.state.targetKeys}\n        onChange={this.handleChange}\n        render={item => item.title}\n      />\n    );\n  }\n}\n\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 底部自定义的transfer", "code": "/**\n*\n* @title 底部自定义的transfer\n* @description \n*\n*/\n\nimport React, { Component } from 'react';\nimport { Transfer, Button } from 'tinper-bee';\n\nclass Demo3 extends React.Component {\n  state = {\n    mockData: [],\n    targetKeys: [],\n  }\n  componentDidMount() {\n    this.getMock();\n  }\n  getMock = () => {\n    const targetKeys = [];\n    const mockData = [];\n    for (let i = 0; i < 20; i++) {\n      const data = {\n        key: i.toString(),\n        title: `content${i + 1}`,\n        description: `description of content${i + 1}`,\n        chosen: Math.random() * 2 > 1,\n      };\n      if (data.chosen) {\n        targetKeys.push(data.key);\n      }\n      mockData.push(data);\n    }\n    this.setState({ mockData, targetKeys });\n  }\n  handleChange = (targetKeys) => {\n    this.setState({ targetKeys });\n  }\n  renderFooter = () => {\n    return (\n      <Button\n        size=\"sm\"\n        style={{ float: 'right', margin: 5 }}\n        onClick={this.getMock}\n      >\n        reload\n      </Button>\n    );\n  }\n  render() {\n    return (\n      <Transfer\n        dataSource={this.state.mockData}\n        showSearch\n        listStyle={{\n          width: 250,\n          height: 300,\n        }}\n        targetKeys={this.state.targetKeys}\n        onChange={this.handleChange}\n        render={item => `${item.title}-${item.description}`}\n        footer={this.renderFooter}\n      />\n    );\n  }\n}\n\n\n", "desc": " " }];
+	var Demo1 = __webpack_require__(64);var Demo2 = __webpack_require__(91);var Demo3 = __webpack_require__(92);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 常用可选transfer", "code": "/**\n*\n* @title 常用可选transfer\n* @description \n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\n\nconst mockData = [];\nfor (let i = 0; i < 20; i++) {\n  mockData.push({\n    key: i.toString(),\n    title: `content${i + 1}`,\n    description: `description of content${i + 1}`,\n    disabled: i % 3 < 1,\n\n  });\n}\n\nconst targetKeys = mockData\n        .filter(item => +item.key % 3 > 1)\n        .map(item => item.key);\n\nclass Demo1 extends React.Component {\n  state = {\n    targetKeys,\n    selectedKeys: [],\n    showModal: false,\n    modalSize: ''\n  }\n\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\n    this.setState({ targetKeys: nextTargetKeys });\n\n    console.log('targetKeys: ', targetKeys);\n    console.log('direction: ', direction);\n    console.log('moveKeys: ', moveKeys);\n  }\n\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\n\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\n  }\n\n  handleScroll = (direction, e) => {\n    console.log('direction:', direction);\n    console.log('target:', e.target);\n  }\n\n\n  render() {\n    const state = this.state;\n\n    return (\n       <Transfer\n          dataSource={mockData}\n          titles={['Source', 'Target']}\n          targetKeys={state.targetKeys}\n          selectedKeys={state.selectedKeys}\n          onChange={this.handleChange}\n          onSelectChange={this.handleSelectChange}\n          onScroll={this.handleScroll}\n          render={item => item.title}\n        />\n    );\n  }\n}\n\n\n\n", "desc": " " }, { "example": _react2['default'].createElement(Demo2, null), "title": " 带搜索框的tranfer", "code": "/**\n*\n* @title 带搜索框的tranfer\n* @description\n*\n*/\n\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\n\n\nclass Demo2 extends React.Component {\n  state = {\n    mockData: [],\n    targetKeys: [],\n  }\n  componentDidMount() {\n    this.getMock();\n  }\n  getMock = () => {\n    const targetKeys = [];\n    const mockData = [];\n    for (let i = 0; i < 20; i++) {\n      const data = {\n        key: i.toString(),\n        title: `content${i + 1}`,\n        description: `description of content${i + 1}`,\n        chosen: Math.random() * 2 > 1,\n      };\n      if (data.chosen) {\n        targetKeys.push(data.key);\n      }\n      mockData.push(data);\n    }\n    this.setState({ mockData, targetKeys });\n  }\n  filterOption = (inputValue, option) => {\n    return option.title.indexOf(inputValue) > -1;\n  }\n  handleChange = (targetKeys) => {\n    this.setState({ targetKeys });\n  }\n  render() {\n    return (\n      <Transfer\n        dataSource={this.state.mockData}\n        showSearch\n        filterOption={this.filterOption}\n        targetKeys={this.state.targetKeys}\n        onChange={this.handleChange}\n        render={item => item.title}\n      />\n    );\n  }\n}\n\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 底部自定义的transfer", "code": "/**\n*\n* @title 底部自定义的transfer\n* @description \n*\n*/\n\nimport React, { Component } from 'react';\nimport { Transfer, Button } from 'tinper-bee';\n\nclass Demo3 extends React.Component {\n  state = {\n    mockData: [],\n    targetKeys: [],\n  }\n  componentDidMount() {\n    this.getMock();\n  }\n  getMock = () => {\n    const targetKeys = [];\n    const mockData = [];\n    for (let i = 0; i < 20; i++) {\n      const data = {\n        key: i.toString(),\n        title: `content${i + 1}`,\n        description: `description of content${i + 1}`,\n        chosen: Math.random() * 2 > 1,\n      };\n      if (data.chosen) {\n        targetKeys.push(data.key);\n      }\n      mockData.push(data);\n    }\n    this.setState({ mockData, targetKeys });\n  }\n  handleChange = (targetKeys) => {\n    this.setState({ targetKeys });\n  }\n  renderFooter = () => {\n    return (\n      <Button\n        size=\"sm\"\n        style={{ float: 'right', margin: 5 }}\n        onClick={this.getMock}\n      >\n        reload\n      </Button>\n    );\n  }\n  render() {\n    return (\n      <Transfer\n        dataSource={this.state.mockData}\n        showSearch\n        listStyle={{\n          width: 250,\n          height: 300,\n        }}\n        targetKeys={this.state.targetKeys}\n        onChange={this.handleChange}\n        render={item => `${item.title}-${item.description}`}\n        footer={this.renderFooter}\n      />\n    );\n  }\n}\n\n\n", "desc": " " }];
 	
 	var Demo = function (_Component) {
 	    _inherits(Demo, _Component);
@@ -6210,19 +6210,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeModal = __webpack_require__(65);
-	
-	var _beeModal2 = _interopRequireDefault(_beeModal);
-	
-	var _beeButton = __webpack_require__(62);
-	
-	var _beeButton2 = _interopRequireDefault(_beeButton);
-	
-	var _beeSelect = __webpack_require__(95);
-	
-	var _beeSelect2 = _interopRequireDefault(_beeSelect);
-	
-	var _src = __webpack_require__(132);
+	var _src = __webpack_require__(65);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -6327,13 +6315,13 @@
 	  value: true
 	});
 	
-	var _Modal = __webpack_require__(66);
+	var _Transfer = __webpack_require__(66);
 	
-	var _Modal2 = _interopRequireDefault(_Modal);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	exports["default"] = _Modal2["default"];
+	var _Transfer2 = _interopRequireDefault(_Transfer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	exports['default'] = _Transfer2['default'];
 	module.exports = exports['default'];
 
 /***/ }),
@@ -6346,7276 +6334,6 @@
 	  value: true
 	});
 	
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _events = __webpack_require__(67);
-	
-	var _events2 = _interopRequireDefault(_events);
-	
-	var _ownerDocument = __webpack_require__(73);
-	
-	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
-	
-	var _inDOM = __webpack_require__(14);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	var _scrollbarSize = __webpack_require__(74);
-	
-	var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _Modal = __webpack_require__(75);
-	
-	var _Modal2 = _interopRequireDefault(_Modal);
-	
-	var _isOverflowing = __webpack_require__(84);
-	
-	var _isOverflowing2 = _interopRequireDefault(_isOverflowing);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	var _beeTransition = __webpack_require__(10);
-	
-	var _ModalBody = __webpack_require__(90);
-	
-	var _ModalBody2 = _interopRequireDefault(_ModalBody);
-	
-	var _ModalDialog = __webpack_require__(91);
-	
-	var _ModalDialog2 = _interopRequireDefault(_ModalDialog);
-	
-	var _ModalFooter = __webpack_require__(92);
-	
-	var _ModalFooter2 = _interopRequireDefault(_ModalFooter);
-	
-	var _ModalHeader = __webpack_require__(93);
-	
-	var _ModalHeader2 = _interopRequireDefault(_ModalHeader);
-	
-	var _ModalTitle = __webpack_require__(94);
-	
-	var _ModalTitle2 = _interopRequireDefault(_ModalTitle);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = _extends({}, _Modal2["default"].propTypes, _ModalDialog2["default"].propTypes, {
-	
-	  /**
-	   * 是否弹出遮罩层/遮罩层点击是否触发关闭
-	   */
-	  backdrop: _propTypes2["default"].oneOf(['static', true, false]),
-	
-	  /**
-	   * esc触发关闭
-	   */
-	  keyboard: _propTypes2["default"].bool,
-	
-	  /**
-	   * 显隐时是否使用动画
-	   */
-	  animation: _propTypes2["default"].bool,
-	
-	  /**
-	   * 传递给模态框的样式
-	   */
-	  dialogComponentClass: _tinperBeeCore.elementType,
-	
-	  /**
-	   * 自动设置焦点
-	   */
-	  autoFocus: _propTypes2["default"].bool,
-	
-	  /**
-	   * 防止打开时焦点离开模态框
-	   */
-	  enforceFocus: _propTypes2["default"].bool,
-	
-	  /**
-	   * 是否打开模态框
-	   */
-	  show: _propTypes2["default"].bool,
-	
-	  /**
-	   * 关闭时的钩子函数
-	   */
-	  onHide: _propTypes2["default"].func,
-	
-	  onEnter: _propTypes2["default"].func,
-	
-	  onEntering: _propTypes2["default"].func,
-	
-	  onEntered: _propTypes2["default"].func,
-	
-	  onExit: _propTypes2["default"].func,
-	
-	  onExiting: _propTypes2["default"].func,
-	
-	  onExited: _propTypes2["default"].func,
-	
-	  /**
-	   * 要添加到的元素
-	   */
-	  container: _Modal2["default"].propTypes.container,
-	
-	  /**
-	   * 尺寸
-	   */
-	  size: _propTypes2["default"].oneOf(["sm", "lg", "xlg", ""])
-	});
-	
-	var defaultProps = _extends({}, _Modal2["default"].defaultProps, {
-	  animation: true,
-	  dialogComponentClass: _ModalDialog2["default"],
-	  clsPrefix: 'u-modal'
-	});
-	
-	var childContextTypes = {
-	  $u_modal: _propTypes2["default"].shape({
-	    onHide: _propTypes2["default"].func
-	  })
-	};
-	
-	var Modal = function (_React$Component) {
-	  _inherits(Modal, _React$Component);
-	
-	  function Modal(props, context) {
-	    _classCallCheck(this, Modal);
-	
-	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props, context));
-	
-	    _this.handleEntering = _this.handleEntering.bind(_this);
-	    _this.handleExited = _this.handleExited.bind(_this);
-	    _this.handleWindowResize = _this.handleWindowResize.bind(_this);
-	    _this.handleDialogClick = _this.handleDialogClick.bind(_this);
-	
-	    _this.state = {
-	      style: {}
-	    };
-	    return _this;
-	  }
-	
-	  Modal.prototype.getChildContext = function getChildContext() {
-	    return {
-	      $u_modal: {
-	        onHide: this.props.onHide
-	      }
-	    };
-	  };
-	
-	  Modal.prototype.componentWillUnmount = function componentWillUnmount() {
-	    // Clean up the listener if we need to.
-	    this.handleExited();
-	  };
-	
-	  Modal.prototype.handleEntering = function handleEntering() {
-	    // FIXME: This should work even when animation is disabled.
-	    _events2["default"].on(window, 'resize', this.handleWindowResize);
-	    this.updateStyle();
-	  };
-	
-	  Modal.prototype.handleExited = function handleExited() {
-	    // FIXME: This should work even when animation is disabled.
-	    _events2["default"].off(window, 'resize', this.handleWindowResize);
-	  };
-	
-	  Modal.prototype.handleWindowResize = function handleWindowResize() {
-	    this.updateStyle();
-	  };
-	
-	  Modal.prototype.handleDialogClick = function handleDialogClick(e) {
-	    if (e.target !== e.currentTarget) {
-	      return;
-	    }
-	
-	    this.props.onHide();
-	  };
-	
-	  Modal.prototype.updateStyle = function updateStyle() {
-	    if (!_inDOM2["default"]) {
-	      return;
-	    }
-	
-	    var dialogNode = this._modal.getDialogElement();
-	    var dialogHeight = dialogNode.scrollHeight;
-	
-	    var document = (0, _ownerDocument2["default"])(dialogNode);
-	    var bodyIsOverflowing = (0, _isOverflowing2["default"])(_reactDom2["default"].findDOMNode(this.props.container || document.body));
-	    var modalIsOverflowing = dialogHeight > document.documentElement.clientHeight;
-	
-	    this.setState({
-	      style: {
-	        paddingRight: bodyIsOverflowing && !modalIsOverflowing ? (0, _scrollbarSize2["default"])() : undefined,
-	        paddingLeft: !bodyIsOverflowing && modalIsOverflowing ? (0, _scrollbarSize2["default"])() : undefined
-	      }
-	    });
-	  };
-	
-	  Modal.prototype.render = function render() {
-	    var _this2 = this;
-	
-	    var _props = this.props,
-	        backdrop = _props.backdrop,
-	        animation = _props.animation,
-	        show = _props.show,
-	        Dialog = _props.dialogComponentClass,
-	        className = _props.className,
-	        clsPrefix = _props.clsPrefix,
-	        style = _props.style,
-	        size = _props.size,
-	        children = _props.children,
-	        onEntering = _props.onEntering,
-	        onExited = _props.onExited,
-	        props = _objectWithoutProperties(_props, ['backdrop', 'animation', 'show', 'dialogComponentClass', 'className', 'clsPrefix', 'style', 'size', 'children', 'onEntering', 'onExited']);
-	
-	    var _splitComponent = (0, _tinperBeeCore.splitComponent)(props, _Modal2["default"]),
-	        _splitComponent2 = _slicedToArray(_splitComponent, 2),
-	        baseModalProps = _splitComponent2[0],
-	        dialogProps = _splitComponent2[1];
-	
-	    var inClassName = show && !animation && 'in';
-	
-	    var backdropClasses = _defineProperty({}, clsPrefix + '-backdrop', true);
-	    var containerClasses = _defineProperty({}, clsPrefix + '-open', true);
-	
-	    return _react2["default"].createElement(
-	      _Modal2["default"],
-	      _extends({}, baseModalProps, {
-	        ref: function ref(c) {
-	          _this2._modal = c;
-	        },
-	        show: show,
-	        onEntering: (0, _tinperBeeCore.createChainedFunction)(onEntering, this.handleEntering),
-	        onExited: (0, _tinperBeeCore.createChainedFunction)(onExited, this.handleExited),
-	        backdrop: backdrop,
-	        backdropClassName: (0, _classnames2["default"])(backdropClasses, inClassName),
-	        containerClassName: (0, _classnames2["default"])(containerClasses),
-	        transition: animation ? _beeTransition.Fade : undefined,
-	        dialogTransitionTimeout: Modal.TRANSITION_DURATION,
-	        backdropTransitionTimeout: Modal.BACKDROP_TRANSITION_DURATION
-	      }),
-	      _react2["default"].createElement(
-	        Dialog,
-	        _extends({}, dialogProps, {
-	          style: _extends({}, this.state.style, style),
-	          className: (0, _classnames2["default"])(className, inClassName),
-	          onClick: backdrop === true ? this.handleDialogClick : null,
-	          size: size
-	        }),
-	        children
-	      )
-	    );
-	  };
-	
-	  return Modal;
-	}(_react2["default"].Component);
-	
-	Modal.propTypes = propTypes;
-	Modal.defaultProps = defaultProps;
-	Modal.childContextTypes = childContextTypes;
-	
-	Modal.Body = _ModalBody2["default"];
-	Modal.Header = _ModalHeader2["default"];
-	Modal.Title = _ModalTitle2["default"];
-	Modal.Footer = _ModalFooter2["default"];
-	
-	Modal.Dialog = _ModalDialog2["default"];
-	
-	Modal.TRANSITION_DURATION = 200000;
-	Modal.BACKDROP_TRANSITION_DURATION = 10000;
-	
-	exports["default"] = Modal;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 67 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.listen = exports.filter = exports.off = exports.on = undefined;
-	
-	var _on = __webpack_require__(15);
-	
-	var _on2 = _interopRequireDefault(_on);
-	
-	var _off = __webpack_require__(68);
-	
-	var _off2 = _interopRequireDefault(_off);
-	
-	var _filter = __webpack_require__(69);
-	
-	var _filter2 = _interopRequireDefault(_filter);
-	
-	var _listen = __webpack_require__(72);
-	
-	var _listen2 = _interopRequireDefault(_listen);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.on = _on2.default;
-	exports.off = _off2.default;
-	exports.filter = _filter2.default;
-	exports.listen = _listen2.default;
-	exports.default = { on: _on2.default, off: _off2.default, filter: _filter2.default, listen: _listen2.default };
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _inDOM = __webpack_require__(14);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var off = function off() {};
-	if (_inDOM2.default) {
-	  off = function () {
-	    if (document.addEventListener) return function (node, eventName, handler, capture) {
-	      return node.removeEventListener(eventName, handler, capture || false);
-	    };else if (document.attachEvent) return function (node, eventName, handler) {
-	      return node.detachEvent('on' + eventName, handler);
-	    };
-	  }();
-	}
-	
-	exports.default = off;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = filterEvents;
-	
-	var _contains = __webpack_require__(70);
-	
-	var _contains2 = _interopRequireDefault(_contains);
-	
-	var _querySelectorAll = __webpack_require__(71);
-	
-	var _querySelectorAll2 = _interopRequireDefault(_querySelectorAll);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function filterEvents(selector, handler) {
-	  return function filterHandler(e) {
-	    var top = e.currentTarget,
-	        target = e.target,
-	        matches = (0, _querySelectorAll2.default)(top, selector);
-	
-	    if (matches.some(function (match) {
-	      return (0, _contains2.default)(match, target);
-	    })) handler.call(this, e);
-	  };
-	}
-	module.exports = exports['default'];
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _inDOM = __webpack_require__(14);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function () {
-	  // HTML DOM and SVG DOM may have different support levels,
-	  // so we need to check on context instead of a document root element.
-	  return _inDOM2.default ? function (context, node) {
-	    if (context.contains) {
-	      return context.contains(node);
-	    } else if (context.compareDocumentPosition) {
-	      return context === node || !!(context.compareDocumentPosition(node) & 16);
-	    } else {
-	      return fallback(context, node);
-	    }
-	  } : fallback;
-	}();
-	
-	function fallback(context, node) {
-	  if (node) do {
-	    if (node === context) return true;
-	  } while (node = node.parentNode);
-	
-	  return false;
-	}
-	module.exports = exports['default'];
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = qsa;
-	// Zepto.js
-	// (c) 2010-2015 Thomas Fuchs
-	// Zepto.js may be freely distributed under the MIT license.
-	var simpleSelectorRE = /^[\w-]*$/;
-	var toArray = Function.prototype.bind.call(Function.prototype.call, [].slice);
-	
-	function qsa(element, selector) {
-	  var maybeID = selector[0] === '#',
-	      maybeClass = selector[0] === '.',
-	      nameOnly = maybeID || maybeClass ? selector.slice(1) : selector,
-	      isSimple = simpleSelectorRE.test(nameOnly),
-	      found;
-	
-	  if (isSimple) {
-	    if (maybeID) {
-	      element = element.getElementById ? element : document;
-	      return (found = element.getElementById(nameOnly)) ? [found] : [];
-	    }
-	
-	    if (element.getElementsByClassName && maybeClass) return toArray(element.getElementsByClassName(nameOnly));
-	
-	    return toArray(element.getElementsByTagName(selector));
-	  }
-	
-	  return toArray(element.querySelectorAll(selector));
-	}
-	module.exports = exports['default'];
-
-/***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _inDOM = __webpack_require__(14);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	var _on = __webpack_require__(15);
-	
-	var _on2 = _interopRequireDefault(_on);
-	
-	var _off = __webpack_require__(68);
-	
-	var _off2 = _interopRequireDefault(_off);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var listen = function listen() {};
-	
-	if (_inDOM2.default) {
-	  listen = function listen(node, eventName, handler, capture) {
-	    (0, _on2.default)(node, eventName, handler, capture);
-	    return function () {
-	      (0, _off2.default)(node, eventName, handler, capture);
-	    };
-	  };
-	}
-	
-	exports.default = listen;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = ownerDocument;
-	function ownerDocument(node) {
-	  return node && node.ownerDocument || document;
-	}
-	module.exports = exports["default"];
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	exports.default = function (recalc) {
-	  if (!size && size !== 0 || recalc) {
-	    if (_inDOM2.default) {
-	      var scrollDiv = document.createElement('div');
-	
-	      scrollDiv.style.position = 'absolute';
-	      scrollDiv.style.top = '-9999px';
-	      scrollDiv.style.width = '50px';
-	      scrollDiv.style.height = '50px';
-	      scrollDiv.style.overflow = 'scroll';
-	
-	      document.body.appendChild(scrollDiv);
-	      size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-	      document.body.removeChild(scrollDiv);
-	    }
-	  }
-	
-	  return size;
-	};
-	
-	var _inDOM = __webpack_require__(14);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var size = void 0;
-	
-	module.exports = exports['default'];
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /*eslint-disable react/prop-types */
-	
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _warning = __webpack_require__(31);
-	
-	var _warning2 = _interopRequireDefault(_warning);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	var _Portal = __webpack_require__(76);
-	
-	var _Portal2 = _interopRequireDefault(_Portal);
-	
-	var _ModalManager = __webpack_require__(79);
-	
-	var _ModalManager2 = _interopRequireDefault(_ModalManager);
-	
-	var _ownerDocument = __webpack_require__(77);
-	
-	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
-	
-	var _addEventListener = __webpack_require__(87);
-	
-	var _addEventListener2 = _interopRequireDefault(_addEventListener);
-	
-	var _addFocusListener = __webpack_require__(88);
-	
-	var _addFocusListener2 = _interopRequireDefault(_addFocusListener);
-	
-	var _inDOM = __webpack_require__(14);
-	
-	var _inDOM2 = _interopRequireDefault(_inDOM);
-	
-	var _activeElement = __webpack_require__(89);
-	
-	var _activeElement2 = _interopRequireDefault(_activeElement);
-	
-	var _contains = __webpack_require__(70);
-	
-	var _contains2 = _interopRequireDefault(_contains);
-	
-	var _getContainer = __webpack_require__(78);
-	
-	var _getContainer2 = _interopRequireDefault(_getContainer);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var modalManager = new _ModalManager2["default"]();
-	
-	/**
-	 * 模态框
-	 */
-	
-	var propTypes = _extends({}, _Portal2["default"].propTypes, {
-	
-	  /**
-	   * 是否显示
-	   */
-	  show: _propTypes2["default"].bool,
-	
-	  /**
-	   * 容器
-	   */
-	  container: _propTypes2["default"].oneOfType([_tinperBeeCore.componentOrElement, _propTypes2["default"].func]),
-	
-	  /**
-	   * 当模态框打开时的钩子函数
-	   */
-	  onShow: _propTypes2["default"].func,
-	
-	  /**
-	   * 当show参数为false时触发的模态框关闭时的钩子函数
-	   */
-	  onHide: _propTypes2["default"].func,
-	
-	  /**
-	   * 是否包含背景
-	   */
-	  backdrop: _propTypes2["default"].oneOfType([_propTypes2["default"].bool, _propTypes2["default"].oneOf(['static'])]),
-	
-	  /**
-	   *返回背景组件的函数
-	   */
-	  renderBackdrop: _propTypes2["default"].func,
-	
-	  /**
-	   * 设置esc键特殊钩子函数
-	   */
-	  onEscapeKeyUp: _propTypes2["default"].func,
-	
-	  /**
-	   * 当点击背景时触发的函数
-	   */
-	  onBackdropClick: _propTypes2["default"].func,
-	
-	  /**
-	   * 背景的style
-	   */
-	  backdropStyle: _propTypes2["default"].object,
-	
-	  /**
-	   * 背景的class
-	   */
-	  backdropClassName: _propTypes2["default"].string,
-	
-	  /**
-	   *容器的class
-	   */
-	  containerClassName: _propTypes2["default"].string,
-	
-	  /**
-	   * 按esc键是否关闭模态框
-	   */
-	  keyboard: _propTypes2["default"].bool,
-	
-	  /**
-	   * 动画组件
-	   */
-	  transition: _tinperBeeCore.elementType,
-	
-	  /**
-	   * 设置动画超时时间
-	   */
-	  dialogTransitionTimeout: _propTypes2["default"].number,
-	
-	  /**
-	   * 设置背景动画超时时间
-	   */
-	  backdropTransitionTimeout: _propTypes2["default"].number,
-	
-	  /**
-	   * 是否自动设置焦点
-	   */
-	  autoFocus: _propTypes2["default"].bool,
-	
-	  /**
-	   * 防止焦点离开模态框
-	   */
-	  enforceFocus: _propTypes2["default"].bool,
-	
-	  /**
-	   * 模态框进入时的钩子函数
-	   */
-	  onEnter: _propTypes2["default"].func,
-	
-	  /**
-	   * 模态框开始进入时的钩子函数
-	   */
-	  onEntering: _propTypes2["default"].func,
-	
-	  /**
-	   * 模态框进入后的钩子函数
-	   */
-	  onEntered: _propTypes2["default"].func,
-	
-	  /**
-	   * 模态框退出时的钩子函数
-	   */
-	  onExit: _propTypes2["default"].func,
-	
-	  /**
-	   * 模态框开始退出时的钩子函数
-	   */
-	  onExiting: _propTypes2["default"].func,
-	
-	  /**
-	   * 模态框推出后的钩子函数
-	   */
-	  onExited: _propTypes2["default"].func,
-	
-	  /**
-	   *管理model状态的实例
-	   */
-	  manager: _propTypes2["default"].object.isRequired
-	});
-	
-	var defaultProps = {
-	  show: false,
-	  backdrop: true,
-	  keyboard: true,
-	  autoFocus: true,
-	  enforceFocus: true,
-	  onHide: function onHide() {},
-	  manager: modalManager,
-	  renderBackdrop: function renderBackdrop(props) {
-	    return _react2["default"].createElement('div', props);
-	  }
-	};
-	
-	var BaseModal = function (_Component) {
-	  _inherits(BaseModal, _Component);
-	
-	  function BaseModal(props, content) {
-	    _classCallCheck(this, BaseModal);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    _this.state = {
-	      exited: !_this.props.show
-	    };
-	
-	    _this.onShow = _this.onShow.bind(_this);
-	    _this.onHide = _this.onHide.bind(_this);
-	    _this.setMountNode = _this.setMountNode.bind(_this);
-	    _this.handleHidden = _this.handleHidden.bind(_this);
-	    _this.handleBackdropClick = _this.handleBackdropClick.bind(_this);
-	    _this.handleDocumentKeyUp = _this.handleDocumentKeyUp.bind(_this);
-	    _this.checkForFocus = _this.checkForFocus.bind(_this);
-	    _this.focus = _this.focus.bind(_this);
-	    _this.restoreLastFocus = _this.restoreLastFocus.bind(_this);
-	    _this.enforceFocus = _this.enforceFocus.bind(_this);
-	    _this.getDialogElement = _this.getDialogElement.bind(_this);
-	    _this.isTopModal = _this.isTopModal.bind(_this);
-	    _this.renderBackdrop = _this.renderBackdrop.bind(_this);
-	    return _this;
-	  }
-	
-	  BaseModal.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	    if (nextProps.show) {
-	      this.setState({ exited: false });
-	    } else if (!nextProps.transition) {
-	      // Otherwise let handleHidden take care of marking exited.
-	      this.setState({ exited: true });
-	    }
-	  };
-	
-	  BaseModal.prototype.componentWillUpdate = function componentWillUpdate(nextProps) {
-	    if (!this.props.show && nextProps.show) {
-	      this.checkForFocus();
-	    }
-	  };
-	
-	  BaseModal.prototype.componentDidMount = function componentDidMount() {
-	    if (this.props.show) {
-	      this.onShow();
-	    }
-	    this.mounted = true;
-	  };
-	
-	  BaseModal.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
-	    var transition = this.props.transition;
-	
-	
-	    if (prevProps.show && !this.props.show && !transition) {
-	      // Otherwise handleHidden will call this.
-	      this.onHide();
-	    } else if (!prevProps.show && this.props.show) {
-	      this.onShow();
-	    }
-	  };
-	
-	  BaseModal.prototype.componentWillUnmount = function componentWillUnmount() {
-	    var _props = this.props,
-	        show = _props.show,
-	        transition = _props.transition;
-	
-	
-	    if (show || transition && !this.state.exited) {
-	      this.onHide();
-	    }
-	
-	    this.mounted = false;
-	  };
-	
-	  BaseModal.prototype.onShow = function onShow() {
-	    var doc = (0, _ownerDocument2["default"])(this);
-	    var container = (0, _getContainer2["default"])(this.props.container, doc.body);
-	
-	    this.props.manager.add(this, container, this.props.containerClassName);
-	
-	    this._onDocumentKeyupListener = (0, _addEventListener2["default"])(doc, 'keyup', this.handleDocumentKeyUp);
-	
-	    this._onFocusinListener = (0, _addFocusListener2["default"])(this.enforceFocus);
-	
-	    this.focus();
-	
-	    if (this.props.onShow) {
-	      this.props.onShow();
-	    }
-	  };
-	
-	  BaseModal.prototype.onHide = function onHide() {
-	    this.props.manager.remove(this);
-	
-	    this._onDocumentKeyupListener.remove();
-	
-	    this._onFocusinListener.remove();
-	
-	    this.restoreLastFocus();
-	  };
-	
-	  BaseModal.prototype.setMountNode = function setMountNode(ref) {
-	    this.mountNode = ref ? ref.getMountNode() : ref;
-	  };
-	
-	  BaseModal.prototype.handleHidden = function handleHidden() {
-	    this.setState({ exited: true });
-	    this.onHide();
-	
-	    if (this.props.onExited) {
-	      var _props2;
-	
-	      (_props2 = this.props).onExited.apply(_props2, arguments);
-	    }
-	  };
-	
-	  BaseModal.prototype.handleBackdropClick = function handleBackdropClick(e) {
-	    if (e.target !== e.currentTarget) {
-	      return;
-	    }
-	
-	    if (this.props.onBackdropClick) {
-	      this.props.onBackdropClick(e);
-	    }
-	
-	    if (this.props.backdrop === true) {
-	      this.props.onHide();
-	    }
-	  };
-	
-	  BaseModal.prototype.handleDocumentKeyUp = function handleDocumentKeyUp(e) {
-	    if (this.props.keyboard && e.keyCode === 27 && this.isTopModal()) {
-	      if (this.props.onEscapeKeyUp) {
-	        this.props.onEscapeKeyUp(e);
-	      }
-	      this.props.onHide();
-	    }
-	  };
-	
-	  BaseModal.prototype.checkForFocus = function checkForFocus() {
-	    if (_inDOM2["default"]) {
-	      this.lastFocus = (0, _activeElement2["default"])();
-	    }
-	  };
-	
-	  BaseModal.prototype.focus = function focus() {
-	    var autoFocus = this.props.autoFocus;
-	    var modalContent = this.getDialogElement();
-	    var current = (0, _activeElement2["default"])((0, _ownerDocument2["default"])(this));
-	    var focusInModal = current && (0, _contains2["default"])(modalContent, current);
-	
-	    if (modalContent && autoFocus && !focusInModal) {
-	      this.lastFocus = current;
-	
-	      if (!modalContent.hasAttribute('tabIndex')) {
-	        modalContent.setAttribute('tabIndex', -1);
-	        (0, _warning2["default"])(false, 'The modal content node does not accept focus. ' + 'For the benefit of assistive technologies, the tabIndex of the node is being set to "-1".');
-	      }
-	
-	      modalContent.focus();
-	    }
-	  };
-	
-	  BaseModal.prototype.restoreLastFocus = function restoreLastFocus() {
-	    // Support: <=IE11 doesn't support `focus()` on svg elements (RB: #917)
-	    if (this.lastFocus && this.lastFocus.focus) {
-	      this.lastFocus.focus();
-	      this.lastFocus = null;
-	    }
-	  };
-	
-	  BaseModal.prototype.enforceFocus = function enforceFocus() {
-	    var enforceFocus = this.props.enforceFocus;
-	
-	
-	    if (!enforceFocus || !this.mounted || !this.isTopModal()) {
-	      return;
-	    }
-	
-	    var active = (0, _activeElement2["default"])((0, _ownerDocument2["default"])(this));
-	    var modal = this.getDialogElement();
-	
-	    if (modal && modal !== active && !(0, _contains2["default"])(modal, active)) {
-	      modal.focus();
-	    }
-	  };
-	
-	  //instead of a ref, which might conflict with one the parent applied.
-	
-	
-	  BaseModal.prototype.getDialogElement = function getDialogElement() {
-	    var node = this.refs.modal;
-	    return node && node.lastChild;
-	  };
-	
-	  BaseModal.prototype.isTopModal = function isTopModal() {
-	    return this.props.manager.isTopModal(this);
-	  };
-	
-	  BaseModal.prototype.renderBackdrop = function renderBackdrop() {
-	    var _this2 = this;
-	
-	    var _props3 = this.props,
-	        backdropStyle = _props3.backdropStyle,
-	        backdropClassName = _props3.backdropClassName,
-	        renderBackdrop = _props3.renderBackdrop,
-	        Transition = _props3.transition,
-	        backdropTransitionTimeout = _props3.backdropTransitionTimeout;
-	
-	
-	    var backdropRef = function backdropRef(ref) {
-	      return _this2.backdrop = ref;
-	    };
-	
-	    var backdrop = _react2["default"].createElement('div', {
-	      ref: backdropRef,
-	      style: this.props.backdropStyle,
-	      className: this.props.backdropClassName,
-	      onClick: this.handleBackdropClick
-	    });
-	
-	    if (Transition) {
-	      backdrop = _react2["default"].createElement(
-	        Transition,
-	        { transitionAppear: true,
-	          'in': this.props.show,
-	          timeout: backdropTransitionTimeout
-	        },
-	        renderBackdrop({
-	          ref: backdropRef,
-	          style: backdropStyle,
-	          className: backdropClassName,
-	          onClick: this.handleBackdropClick
-	        })
-	      );
-	    }
-	
-	    return backdrop;
-	  };
-	
-	  BaseModal.prototype.render = function render() {
-	    var _props4 = this.props,
-	        show = _props4.show,
-	        container = _props4.container,
-	        children = _props4.children,
-	        Transition = _props4.transition,
-	        backdrop = _props4.backdrop,
-	        dialogTransitionTimeout = _props4.dialogTransitionTimeout,
-	        className = _props4.className,
-	        style = _props4.style,
-	        onExit = _props4.onExit,
-	        onExiting = _props4.onExiting,
-	        onEnter = _props4.onEnter,
-	        onEntering = _props4.onEntering,
-	        onEntered = _props4.onEntered;
-	
-	
-	    var dialog = _react2["default"].Children.only(children);
-	
-	    var mountModal = show || Transition && !this.state.exited;
-	    if (!mountModal) {
-	      return null;
-	    }
-	
-	    var _dialog$props = dialog.props,
-	        role = _dialog$props.role,
-	        tabIndex = _dialog$props.tabIndex;
-	
-	
-	    if (role === undefined || tabIndex === undefined) {
-	      dialog = (0, _react.cloneElement)(dialog, {
-	        role: role === undefined ? 'document' : role,
-	        tabIndex: tabIndex == null ? '-1' : tabIndex
-	      });
-	    }
-	
-	    if (Transition) {
-	      dialog = _react2["default"].createElement(
-	        Transition,
-	        {
-	          transitionAppear: true,
-	          unmountOnExit: true,
-	          'in': show,
-	          timeout: dialogTransitionTimeout,
-	          onExit: onExit,
-	          onExiting: onExiting,
-	          onExited: this.handleHidden,
-	          onEnter: onEnter,
-	          onEntering: onEntering,
-	          onEntered: onEntered
-	        },
-	        dialog
-	      );
-	    }
-	
-	    return _react2["default"].createElement(
-	      _Portal2["default"],
-	      {
-	        ref: this.setMountNode,
-	        container: container
-	      },
-	      _react2["default"].createElement(
-	        'div',
-	        {
-	          ref: 'modal',
-	          role: role || 'dialog',
-	          style: style,
-	          className: className
-	        },
-	        backdrop && this.renderBackdrop(),
-	        dialog
-	      )
-	    );
-	  };
-	
-	  return BaseModal;
-	}(_react.Component);
-	
-	;
-	
-	BaseModal.Manager = _ModalManager2["default"];
-	
-	BaseModal.propTypes = propTypes;
-	BaseModal.defaultProps = defaultProps;
-	
-	exports["default"] = BaseModal;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _ownerDocument = __webpack_require__(77);
-	
-	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
-	
-	var _getContainer = __webpack_require__(78);
-	
-	var _getContainer2 = _interopRequireDefault(_getContainer);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var isReact16 = _reactDom2["default"].createPortal !== undefined;
-	var createPortal = isReact16 ? _reactDom2["default"].createPortal : _reactDom2["default"].unstable_renderSubtreeIntoContainer;
-	
-	var propTypes = {
-	  /**
-	   * 存放子组件的容器
-	   */
-	  container: _propTypes2["default"].oneOfType([_tinperBeeCore.componentOrElement, _propTypes2["default"].func])
-	};
-	
-	var defaultProps = {};
-	
-	/**
-	 * Portal组件是将子组件渲染
-	 */
-	
-	var Portal = function (_Component) {
-	  _inherits(Portal, _Component);
-	
-	  function Portal(props) {
-	    _classCallCheck(this, Portal);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    _this.getMountNode = _this.getMountNode.bind(_this);
-	    _this.getOverlayDOMNode = _this.getOverlayDOMNode.bind(_this);
-	    _this.mountOverlayTarget = _this.mountOverlayTarget.bind(_this);
-	    _this.unmountOverlayTarget = _this.unmountOverlayTarget.bind(_this);
-	    _this.renderOverlay = _this.renderOverlay.bind(_this);
-	    _this.unrenderOverlay = _this.unrenderOverlay.bind(_this);
-	
-	    _this.overlayTarget = isReact16 ? document.createElement('div') : null;
-	    return _this;
-	  }
-	
-	  Portal.prototype.componentDidMount = function componentDidMount() {
-	    if (isReact16) {
-	      this.portalContainerNode = (0, _getContainer2["default"])(this.props.container, (0, _ownerDocument2["default"])(this).body);
-	      this.portalContainerNode.appendChild(this.overlayTarget);
-	    } else {
-	      this.renderOverlay();
-	    }
-	
-	    this.mounted = true;
-	  };
-	
-	  Portal.prototype.componentDidUpdate = function componentDidUpdate() {
-	    if (isReact16) {
-	      var overlay = !this.props.children ? null : _react2["default"].Children.only(this.props.children);
-	      if (overlay === null) {
-	        this.unrenderOverlay();
-	        this.unmountOverlayTarget();
-	      } else {}
-	    } else {
-	      this.renderOverlay();
-	    }
-	  };
-	  //this._overlayTarget为当前的要添加的子组件， this._portalContainerNode要添加组件的容器元素
-	
-	
-	  Portal.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	    if (this.overlayTarget && nextProps.container !== this.props.container) {
-	      this.portalContainerNode.removeChild(this.overlayTarget);
-	      this.portalContainerNode = (0, _getContainer2["default"])(nextProps.container, (0, _ownerDocument2["default"])(this).body);
-	      this.portalContainerNode.appendChild(this.overlayTarget);
-	    }
-	  };
-	
-	  Portal.prototype.componentWillUnmount = function componentWillUnmount() {
-	    this.unrenderOverlay();
-	    this.unmountOverlayTarget();
-	
-	    this.mounted = false;
-	  };
-	
-	  Portal.prototype.getMountNode = function getMountNode() {
-	    return this.overlayTarget;
-	  };
-	
-	  Portal.prototype.getOverlayDOMNode = function getOverlayDOMNode() {
-	    if (!this.mounted) {
-	      throw new Error('getOverlayDOMNode(): A component must be mounted to have a DOM node.');
-	    }
-	
-	    if (this.overlayInstance) {
-	      return _reactDom2["default"].findDOMNode(this.overlayInstance);
-	    }
-	
-	    return null;
-	  };
-	
-	  /**
-	   * 如果要添加的子组件不存在，就将div添加到要添加容器的DOM中；
-	   */
-	
-	  Portal.prototype.mountOverlayTarget = function mountOverlayTarget() {
-	    if (!this.overlayTarget) {
-	      this.overlayTarget = document.createElement('div');
-	      this.portalContainerNode = (0, _getContainer2["default"])(this.props.container, (0, _ownerDocument2["default"])(this).body);
-	      this.portalContainerNode.appendChild(this.overlayTarget);
-	    }
-	  };
-	  /**
-	   * 将要添加的子元素从容器中移除，并把变量置为null
-	   */
-	
-	
-	  Portal.prototype.unmountOverlayTarget = function unmountOverlayTarget() {
-	    if (this.overlayTarget) {
-	      this.portalContainerNode.removeChild(this.overlayTarget);
-	      this.overlayTarget = null;
-	    }
-	    this.portalContainerNode = null;
-	  };
-	  /**
-	   * 手动渲染_overlayTarget
-	   */
-	
-	
-	  Portal.prototype.renderOverlay = function renderOverlay() {
-	
-	    var overlay = !this.props.children ? null : _react2["default"].Children.only(this.props.children);
-	
-	    // Save reference for future access.
-	    if (overlay !== null) {
-	      this.mountOverlayTarget();
-	      this.overlayInstance = _reactDom2["default"].unstable_renderSubtreeIntoContainer(this, overlay, this.overlayTarget);
-	    } else {
-	      // Unrender if the component is null for transitions to null
-	      this.unrenderOverlay();
-	      this.unmountOverlayTarget();
-	    }
-	  };
-	  /**
-	   * 销毁_overlayTarget组件。并把_overlayInstance置为null
-	   */
-	
-	
-	  Portal.prototype.unrenderOverlay = function unrenderOverlay() {
-	    if (this.overlayTarget) {
-	      !isReact16 && _reactDom2["default"].unmountComponentAtNode(this.overlayTarget);
-	      this.overlayInstance = null;
-	    }
-	  };
-	
-	  Portal.prototype.render = function render() {
-	    if (!isReact16) {
-	      return null;
-	    }
-	
-	    var overlay = !this.props.children ? null : _react2["default"].Children.only(this.props.children);
-	
-	    return _reactDom2["default"].createPortal(overlay, this.overlayTarget);
-	  };
-	
-	  return Portal;
-	}(_react.Component);
-	
-	;
-	
-	Portal.propTypes = propTypes;
-	Portal.defaultProps = defaultProps;
-	
-	exports["default"] = Portal;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	exports["default"] = function (componentOrElement) {
-	  return (0, _ownerDocument2["default"])(_reactDom2["default"].findDOMNode(componentOrElement));
-	};
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _ownerDocument = __webpack_require__(73);
-	
-	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	module.exports = exports['default'];
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports["default"] = getContainer;
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	/**
-	 * 获取容器组件
-	 * @param  {[type]} container        [description]
-	 * @param  {[type]} defaultContainer [description]
-	 * @return {[type]}                  [description]
-	 */
-	function getContainer(container, defaultContainer) {
-	  container = typeof container === 'function' ? container() : container;
-	  return _reactDom2["default"].findDOMNode(container) || defaultContainer;
-	}
-	module.exports = exports['default'];
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _style = __webpack_require__(17);
-	
-	var _style2 = _interopRequireDefault(_style);
-	
-	var _class = __webpack_require__(80);
-	
-	var _class2 = _interopRequireDefault(_class);
-	
-	var _scrollbarSize = __webpack_require__(74);
-	
-	var _scrollbarSize2 = _interopRequireDefault(_scrollbarSize);
-	
-	var _isOverflowing = __webpack_require__(84);
-	
-	var _isOverflowing2 = _interopRequireDefault(_isOverflowing);
-	
-	var _manageAriaHidden = __webpack_require__(86);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function findIndexOf(arr, cb) {
-	  var idx = -1;
-	  arr.some(function (d, i) {
-	    if (cb(d, i)) {
-	      idx = i;
-	      return true;
-	    }
-	  });
-	  return idx;
-	}
-	
-	//查找容器
-	function findContainer(data, modal) {
-	  return findIndexOf(data, function (d) {
-	    return d.modals.indexOf(modal) !== -1;
-	  });
-	}
-	
-	//设置容器style
-	function setContainerStyle(state, container) {
-	  var style = { overflow: 'hidden' };
-	
-	  state.style = {
-	    overflow: container.style.overflow,
-	    paddingRight: container.style.paddingRight
-	  };
-	
-	  if (state.overflowing) {
-	    //设置内边距，和添加滚动条宽度
-	    style.paddingRight = parseInt((0, _style2["default"])(container, 'paddingRight') || 0, 10) + (0, _scrollbarSize2["default"])() + 'px';
-	  }
-	
-	  (0, _style2["default"])(container, style);
-	}
-	//移除容器style
-	function removeContainerStyle(_ref, container) {
-	  var style = _ref.style;
-	
-	
-	  Object.keys(style).forEach(function (key) {
-	    return container.style[key] = style[key];
-	  });
-	}
-	/**
-	 * 容器的正确状态管理和那些容器中的模态。
-	 */
-	
-	var ModalManager = function () {
-	  function ModalManager() {
-	    var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-	        _ref2$hideSiblingNode = _ref2.hideSiblingNodes,
-	        hideSiblingNodes = _ref2$hideSiblingNode === undefined ? true : _ref2$hideSiblingNode,
-	        _ref2$handleContainer = _ref2.handleContainerOverflow,
-	        handleContainerOverflow = _ref2$handleContainer === undefined ? true : _ref2$handleContainer;
-	
-	    _classCallCheck(this, ModalManager);
-	
-	    this.hideSiblingNodes = hideSiblingNodes;
-	    this.handleContainerOverflow = handleContainerOverflow;
-	    this.modals = [];
-	    this.containers = [];
-	    this.data = [];
-	  }
-	
-	  ModalManager.prototype.add = function add(modal, container, className) {
-	    var modalIdx = this.modals.indexOf(modal);
-	    var containerIdx = this.containers.indexOf(container);
-	
-	    if (modalIdx !== -1) {
-	      return modalIdx;
-	    }
-	
-	    modalIdx = this.modals.length;
-	    this.modals.push(modal);
-	
-	    if (this.hideSiblingNodes) {
-	      (0, _manageAriaHidden.hideSiblings)(container, modal.mountNode);
-	    }
-	
-	    if (containerIdx !== -1) {
-	      this.data[containerIdx].modals.push(modal);
-	      return modalIdx;
-	    }
-	
-	    var data = {
-	      modals: [modal],
-	      //right now only the first modal of a container will have its classes applied
-	      classes: className ? className.split(/\s+/) : [],
-	
-	      overflowing: (0, _isOverflowing2["default"])(container)
-	    };
-	
-	    if (this.handleContainerOverflow) {
-	      setContainerStyle(data, container);
-	    }
-	
-	    data.classes.forEach(_class2["default"].addClass.bind(null, container));
-	
-	    this.containers.push(container);
-	    this.data.push(data);
-	
-	    return modalIdx;
-	  };
-	
-	  ModalManager.prototype.remove = function remove(modal) {
-	    var modalIdx = this.modals.indexOf(modal);
-	
-	    if (modalIdx === -1) {
-	      return;
-	    }
-	
-	    var containerIdx = findContainer(this.data, modal);
-	    var data = this.data[containerIdx];
-	    var container = this.containers[containerIdx];
-	
-	    data.modals.splice(data.modals.indexOf(modal), 1);
-	
-	    this.modals.splice(modalIdx, 1);
-	
-	    // if that was the last modal in a container,
-	    // clean up the container
-	    if (data.modals.length === 0) {
-	      data.classes.forEach(_class2["default"].removeClass.bind(null, container));
-	
-	      if (this.handleContainerOverflow) {
-	        removeContainerStyle(data, container);
-	      }
-	
-	      if (this.hideSiblingNodes) {
-	        (0, _manageAriaHidden.showSiblings)(container, modal.mountNode);
-	      }
-	      this.containers.splice(containerIdx, 1);
-	      this.data.splice(containerIdx, 1);
-	    } else if (this.hideSiblingNodes) {
-	      //otherwise make sure the next top modal is visible to a SR
-	      (0, _manageAriaHidden.ariaHidden)(false, data.modals[data.modals.length - 1].mountNode);
-	    }
-	  };
-	
-	  ModalManager.prototype.isTopModal = function isTopModal(modal) {
-	    return !!this.modals.length && this.modals[this.modals.length - 1] === modal;
-	  };
-	
-	  return ModalManager;
-	}();
-	
-	exports["default"] = ModalManager;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.hasClass = exports.removeClass = exports.addClass = undefined;
-	
-	var _addClass = __webpack_require__(81);
-	
-	var _addClass2 = _interopRequireDefault(_addClass);
-	
-	var _removeClass = __webpack_require__(83);
-	
-	var _removeClass2 = _interopRequireDefault(_removeClass);
-	
-	var _hasClass = __webpack_require__(82);
-	
-	var _hasClass2 = _interopRequireDefault(_hasClass);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.addClass = _addClass2.default;
-	exports.removeClass = _removeClass2.default;
-	exports.hasClass = _hasClass2.default;
-	exports.default = { addClass: _addClass2.default, removeClass: _removeClass2.default, hasClass: _hasClass2.default };
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = addClass;
-	
-	var _hasClass = __webpack_require__(82);
-	
-	var _hasClass2 = _interopRequireDefault(_hasClass);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function addClass(element, className) {
-	  if (element.classList) element.classList.add(className);else if (!(0, _hasClass2.default)(element, className)) if (typeof element.className === 'string') element.className = element.className + ' ' + className;else element.setAttribute('class', (element.className && element.className.baseVal || '') + ' ' + className);
-	}
-	module.exports = exports['default'];
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = hasClass;
-	function hasClass(element, className) {
-	  if (element.classList) return !!className && element.classList.contains(className);else return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
-	}
-	module.exports = exports["default"];
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	function replaceClassName(origClass, classToRemove) {
-	  return origClass.replace(new RegExp('(^|\\s)' + classToRemove + '(?:\\s|$)', 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
-	}
-	
-	module.exports = function removeClass(element, className) {
-	  if (element.classList) element.classList.remove(className);else if (typeof element.className === 'string') element.className = replaceClassName(element.className, className);else element.setAttribute('class', replaceClassName(element.className && element.className.baseVal || '', className));
-	};
-
-/***/ }),
-/* 84 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports["default"] = isOverflowing;
-	
-	var _isWindow = __webpack_require__(85);
-	
-	var _isWindow2 = _interopRequireDefault(_isWindow);
-	
-	var _ownerDocument = __webpack_require__(73);
-	
-	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function isBody(node) {
-	  return node && node.tagName.toLowerCase() === 'body';
-	}
-	
-	function bodyIsOverflowing(node) {
-	  var doc = (0, _ownerDocument2["default"])(node);
-	  var win = (0, _isWindow2["default"])(doc);
-	  var fullWidth = win.innerWidth;
-	
-	  // Support: ie8, no innerWidth
-	  if (!fullWidth) {
-	    var documentElementRect = doc.documentElement.getBoundingClientRect();
-	    fullWidth = documentElementRect.right - Math.abs(documentElementRect.left);
-	  }
-	
-	  return doc.body.clientWidth < fullWidth;
-	}
-	
-	function isOverflowing(container) {
-	  var win = (0, _isWindow2["default"])(container);
-	
-	  return win || isBody(container) ? bodyIsOverflowing(container) : container.scrollHeight > container.clientHeight;
-	}
-	module.exports = exports['default'];
-
-/***/ }),
-/* 85 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = getWindow;
-	function getWindow(node) {
-	  return node === node.window ? node : node.nodeType === 9 ? node.defaultView || node.parentWindow : false;
-	}
-	module.exports = exports["default"];
-
-/***/ }),
-/* 86 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.ariaHidden = ariaHidden;
-	exports.hideSiblings = hideSiblings;
-	exports.showSiblings = showSiblings;
-	
-	var BLACKLIST = ['template', 'script', 'style'];
-	
-	var isHidable = function isHidable(_ref) {
-	  var nodeType = _ref.nodeType,
-	      tagName = _ref.tagName;
-	  return nodeType === 1 && BLACKLIST.indexOf(tagName.toLowerCase()) === -1;
-	};
-	
-	var siblings = function siblings(container, mount, cb) {
-	  mount = [].concat(mount);
-	
-	  [].forEach.call(container.children, function (node) {
-	    if (mount.indexOf(node) === -1 && isHidable(node)) {
-	      cb(node);
-	    }
-	  });
-	};
-	
-	function ariaHidden(show, node) {
-	  if (!node) {
-	    return;
-	  }
-	  if (show) {
-	    node.setAttribute('aria-hidden', 'true');
-	  } else {
-	    node.removeAttribute('aria-hidden');
-	  }
-	}
-	
-	function hideSiblings(container, mountNode) {
-	  siblings(container, mountNode, function (node) {
-	    return ariaHidden(true, node);
-	  });
-	}
-	
-	function showSiblings(container, mountNode) {
-	  siblings(container, mountNode, function (node) {
-	    return ariaHidden(false, node);
-	  });
-	}
-
-/***/ }),
-/* 87 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	exports["default"] = function (node, event, handler, capture) {
-	  (0, _on2["default"])(node, event, handler, capture);
-	
-	  return {
-	    remove: function remove() {
-	      (0, _off2["default"])(node, event, handler, capture);
-	    }
-	  };
-	};
-	
-	var _on = __webpack_require__(15);
-	
-	var _on2 = _interopRequireDefault(_on);
-	
-	var _off = __webpack_require__(68);
-	
-	var _off2 = _interopRequireDefault(_off);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	module.exports = exports['default'];
-
-/***/ }),
-/* 88 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports["default"] = addFocusListener;
-	/**
-	 * Firefox doesn't have a focusin event so using capture is easiest way to get bubbling
-	 * IE8 can't do addEventListener, but does have onfocusin, so we use that in ie8
-	 *
-	 * We only allow one Listener at a time to avoid stack overflows
-	 */
-	function addFocusListener(handler) {
-	  var useFocusin = !document.addEventListener;
-	  var remove = void 0;
-	
-	  if (useFocusin) {
-	    document.attachEvent('onfocusin', handler);
-	    remove = function remove() {
-	      return document.detachEvent('onfocusin', handler);
-	    };
-	  } else {
-	    document.addEventListener('focus', handler, true);
-	    remove = function remove() {
-	      return document.removeEventListener('focus', handler, true);
-	    };
-	  }
-	
-	  return { remove: remove };
-	}
-	module.exports = exports['default'];
-
-/***/ }),
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = activeElement;
-	
-	var _ownerDocument = __webpack_require__(73);
-	
-	var _ownerDocument2 = _interopRequireDefault(_ownerDocument);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function activeElement() {
-	  var doc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (0, _ownerDocument2.default)();
-	
-	  try {
-	    return doc.activeElement;
-	  } catch (e) {/* ie throws if no active element */}
-	}
-	module.exports = exports['default'];
-
-/***/ }),
-/* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  componentClass: _tinperBeeCore.elementType
-	};
-	
-	var defaultProps = {
-	  componentClass: 'div',
-	  clsPrefix: 'u-modal-body'
-	};
-	
-	var ModalBody = function (_React$Component) {
-	  _inherits(ModalBody, _React$Component);
-	
-	  function ModalBody() {
-	    _classCallCheck(this, ModalBody);
-	
-	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
-	  }
-	
-	  ModalBody.prototype.render = function render() {
-	    var _props = this.props,
-	        Component = _props.componentClass,
-	        clsPrefix = _props.clsPrefix,
-	        className = _props.className,
-	        props = _objectWithoutProperties(_props, ['componentClass', 'clsPrefix', 'className']);
-	
-	    var classes = {};
-	    classes['' + clsPrefix] = true;
-	
-	    return _react2["default"].createElement(Component, _extends({}, props, {
-	      className: (0, _classnames2["default"])(className, classes)
-	    }));
-	  };
-	
-	  return ModalBody;
-	}(_react2["default"].Component);
-	
-	ModalBody.propTypes = propTypes;
-	ModalBody.defaultProps = defaultProps;
-	
-	exports["default"] = ModalBody;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  /**
-	   * 传给dialog的classname
-	   */
-	  dialogClassName: _propTypes2["default"].string,
-	  contentStyle: _propTypes2["default"].object
-	
-	};
-	
-	var defaultProps = {
-	  clsPrefix: 'u-modal'
-	};
-	
-	var ModalDialog = function (_React$Component) {
-	  _inherits(ModalDialog, _React$Component);
-	
-	  function ModalDialog() {
-	    _classCallCheck(this, ModalDialog);
-	
-	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
-	  }
-	
-	  ModalDialog.prototype.render = function render() {
-	    var _dialogClasses;
-	
-	    var _props = this.props,
-	        dialogClassName = _props.dialogClassName,
-	        className = _props.className,
-	        clsPrefix = _props.clsPrefix,
-	        size = _props.size,
-	        style = _props.style,
-	        contentStyle = _props.contentStyle,
-	        children = _props.children,
-	        props = _objectWithoutProperties(_props, ['dialogClassName', 'className', 'clsPrefix', 'size', 'style', 'contentStyle', 'children']);
-	    // const [bsProps, elementProps] = splitBsProps(props);
-	    //
-	
-	
-	    var uClassName = _defineProperty({}, '' + clsPrefix, true);
-	
-	    var modalStyle = { display: 'block' };
-	
-	    var dialogClasses = (_dialogClasses = {}, _defineProperty(_dialogClasses, uClassName, false), _defineProperty(_dialogClasses, clsPrefix + '-dialog', true), _dialogClasses);
-	    if (size) {
-	      dialogClasses[clsPrefix + '-' + size] = true;
-	    }
-	
-	    return _react2["default"].createElement(
-	      'div',
-	      _extends({}, props, {
-	        tabIndex: '-1',
-	        role: 'dialog',
-	        style: modalStyle,
-	        className: (0, _classnames2["default"])(className, uClassName)
-	      }),
-	      _react2["default"].createElement(
-	        'div',
-	        { className: (0, _classnames2["default"])(dialogClassName, dialogClasses), style: style },
-	        _react2["default"].createElement(
-	          'div',
-	          { style: contentStyle, className: (0, _classnames2["default"])([clsPrefix + '-content']), role: 'document' },
-	          children
-	        )
-	      )
-	    );
-	  };
-	
-	  return ModalDialog;
-	}(_react2["default"].Component);
-	
-	ModalDialog.propTypes = propTypes;
-	ModalDialog.defaultProps = defaultProps;
-	
-	exports["default"] = ModalDialog;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  componentClass: _tinperBeeCore.elementType
-	};
-	
-	var defaultProps = {
-	  componentClass: 'div',
-	  clsPrefix: 'u-modal-footer'
-	};
-	
-	var ModalFooter = function (_React$Component) {
-	  _inherits(ModalFooter, _React$Component);
-	
-	  function ModalFooter() {
-	    _classCallCheck(this, ModalFooter);
-	
-	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
-	  }
-	
-	  ModalFooter.prototype.render = function render() {
-	    var _props = this.props,
-	        Component = _props.componentClass,
-	        clsPrefix = _props.clsPrefix,
-	        className = _props.className,
-	        props = _objectWithoutProperties(_props, ['componentClass', 'clsPrefix', 'className']);
-	
-	    var classes = {};
-	    classes['' + clsPrefix] = true;
-	
-	    return _react2["default"].createElement(Component, _extends({}, props, {
-	      className: (0, _classnames2["default"])(className, classes)
-	    }));
-	  };
-	
-	  return ModalFooter;
-	}(_react2["default"].Component);
-	
-	ModalFooter.propTypes = propTypes;
-	ModalFooter.defaultProps = defaultProps;
-	
-	exports["default"] = ModalFooter;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 93 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	
-	  /**
-	   * 是否显示关闭按钮
-	   */
-	  closeButton: _propTypes2["default"].bool,
-	
-	  /**
-	   * 关闭时的钩子函数
-	   */
-	  onHide: _propTypes2["default"].func
-	};
-	
-	var defaultProps = {
-	  'aria-label': 'Close',
-	  closeButton: false,
-	  clsPrefix: 'u-modal-header'
-	};
-	
-	var contextTypes = {
-	  $u_modal: _propTypes2["default"].shape({
-	    onHide: _propTypes2["default"].func
-	  })
-	};
-	
-	var ModalHeader = function (_React$Component) {
-	  _inherits(ModalHeader, _React$Component);
-	
-	  function ModalHeader() {
-	    _classCallCheck(this, ModalHeader);
-	
-	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
-	  }
-	
-	  ModalHeader.prototype.render = function render() {
-	    var _props = this.props,
-	        label = _props['aria-label'],
-	        closeButton = _props.closeButton,
-	        onHide = _props.onHide,
-	        className = _props.className,
-	        clsPrefix = _props.clsPrefix,
-	        children = _props.children,
-	        props = _objectWithoutProperties(_props, ['aria-label', 'closeButton', 'onHide', 'className', 'clsPrefix', 'children']);
-	
-	    var modal = this.context.$u_modal;
-	
-	    var classes = {};
-	    classes['' + clsPrefix] = true;
-	
-	    return _react2["default"].createElement(
-	      'div',
-	      _extends({}, props, {
-	        className: (0, _classnames2["default"])(className, classes)
-	      }),
-	      closeButton && _react2["default"].createElement(
-	        'button',
-	        {
-	          type: 'button',
-	          className: 'u-close',
-	          'aria-label': label,
-	          onClick: (0, _tinperBeeCore.createChainedFunction)(modal.onHide, onHide)
-	        },
-	        _react2["default"].createElement(
-	          'span',
-	          { 'aria-hidden': 'true' },
-	          '\xD7'
-	        )
-	      ),
-	      children
-	    );
-	  };
-	
-	  return ModalHeader;
-	}(_react2["default"].Component);
-	
-	ModalHeader.propTypes = propTypes;
-	ModalHeader.defaultProps = defaultProps;
-	ModalHeader.contextTypes = contextTypes;
-	
-	exports["default"] = ModalHeader;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  componentClass: _tinperBeeCore.elementType
-	};
-	
-	var defaultProps = {
-	  componentClass: 'h4',
-	  clsPrefix: 'u-modal-title'
-	};
-	
-	var ModalTitle = function (_React$Component) {
-	  _inherits(ModalTitle, _React$Component);
-	
-	  function ModalTitle() {
-	    _classCallCheck(this, ModalTitle);
-	
-	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
-	  }
-	
-	  ModalTitle.prototype.render = function render() {
-	    var _props = this.props,
-	        Component = _props.componentClass,
-	        className = _props.className,
-	        clsPrefix = _props.clsPrefix,
-	        props = _objectWithoutProperties(_props, ['componentClass', 'className', 'clsPrefix']);
-	
-	    var classes = {};
-	    classes['' + clsPrefix] = true;
-	
-	    return _react2["default"].createElement(Component, _extends({}, props, {
-	      className: (0, _classnames2["default"])(className, classes)
-	    }));
-	  };
-	
-	  return ModalTitle;
-	}(_react2["default"].Component);
-	
-	ModalTitle.propTypes = propTypes;
-	ModalTitle.defaultProps = defaultProps;
-	
-	exports["default"] = ModalTitle;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 95 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _Select = __webpack_require__(96);
-	
-	var _Select2 = _interopRequireDefault(_Select);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	exports["default"] = _Select2["default"];
-	module.exports = exports['default'];
-
-/***/ }),
-/* 96 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _RcSelect = __webpack_require__(97);
-	
-	var _RcSelect2 = _interopRequireDefault(_RcSelect);
-	
-	var _Option = __webpack_require__(131);
-	
-	var _Option2 = _interopRequireDefault(_Option);
-	
-	var _OptGroup = __webpack_require__(118);
-	
-	var _OptGroup2 = _interopRequireDefault(_OptGroup);
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var SelectContext = {
-	  antLocale: {
-	    Select: _propTypes2["default"].any
-	  }
-	};
-	
-	var defaultProps = {
-	  clsPrefix: "u-select",
-	  showSearch: false,
-	  transitionName: "slide-up",
-	  choiceTransitionName: "zoom"
-	};
-	
-	var propTypes = {
-	  clsPrefix: _propTypes2["default"].string,
-	  className: _propTypes2["default"].string,
-	  value: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].any]),
-	  defaultValue: _propTypes2["default"].oneOfType([_propTypes2["default"].node, _propTypes2["default"].array, _propTypes2["default"].any]),
-	  size: _propTypes2["default"].oneOf(["default", "lg", "sm"]),
-	  combobox: _propTypes2["default"].bool,
-	  notFoundContent: _propTypes2["default"].oneOfType([_propTypes2["default"].node, _propTypes2["default"].array, _propTypes2["default"].any]),
-	  showSearch: _propTypes2["default"].bool,
-	  transitionName: _propTypes2["default"].string,
-	  choiceTransitionName: _propTypes2["default"].string,
-	  multiple: _propTypes2["default"].bool,
-	  allowClear: _propTypes2["default"].bool,
-	  filterOption: _propTypes2["default"].oneOfType([_propTypes2["default"].bool, _propTypes2["default"].func]),
-	  tags: _propTypes2["default"].bool,
-	  onSelect: _propTypes2["default"].func,
-	  onDeselect: _propTypes2["default"].func,
-	  onSearch: _propTypes2["default"].func,
-	  placeholder: _propTypes2["default"].string,
-	  dropdownMatchSelectWidth: _propTypes2["default"].bool,
-	  optionFilterProp: _propTypes2["default"].string,
-	  optionLabelProp: _propTypes2["default"].string,
-	  disabled: _propTypes2["default"].bool,
-	  defaultActiveFirstOption: _propTypes2["default"].bool,
-	  labelInValue: _propTypes2["default"].bool,
-	  getPopupContainer: _propTypes2["default"].func,
-	  style: _propTypes2["default"].object,
-	  dropdownStyle: _propTypes2["default"].object,
-	  dropdownMenuStyle: _propTypes2["default"].object,
-	  onChange: _propTypes2["default"].func,
-	  scrollToEnd: _propTypes2["default"].func
-	};
-	
-	var Select = function (_Component) {
-	  _inherits(Select, _Component);
-	
-	  function Select(props) {
-	    _classCallCheck(this, Select);
-	
-	    return _possibleConstructorReturn(this, _Component.call(this, props));
-	  }
-	
-	  Select.prototype.render = function render() {
-	    var _classNames;
-	
-	    var _props = this.props,
-	        clsPrefix = _props.clsPrefix,
-	        _props$className = _props.className,
-	        className = _props$className === undefined ? "" : _props$className,
-	        size = _props.size,
-	        combobox = _props.combobox,
-	        showSearch = _props.showSearch,
-	        data = _props.data;
-	    var _props2 = this.props,
-	        _props2$notFoundConte = _props2.notFoundContent,
-	        notFoundContent = _props2$notFoundConte === undefined ? "Not Found" : _props2$notFoundConte,
-	        optionLabelProp = _props2.optionLabelProp;
-	
-	
-	    var cls = (0, _classnames2["default"])((_classNames = {}, _defineProperty(_classNames, clsPrefix + "-lg", size === "lg"), _defineProperty(_classNames, clsPrefix + "-sm", size === "sm"), _defineProperty(_classNames, clsPrefix + "-show-search", showSearch), _classNames), className);
-	
-	    var antLocale = this.context.antLocale;
-	
-	    if (antLocale && antLocale.Select) {
-	      notFoundContent = "notFoundContent" in this.props ? notFoundContent : antLocale.Select.notFoundContent;
-	    }
-	
-	    if (combobox) {
-	      notFoundContent = null;
-	      // children 带 dom 结构时，无法填入输入框
-	      optionLabelProp = optionLabelProp || "value";
-	    }
-	    if (data) {
-	      data.map(function (item) {
-	        return _react2["default"].createElement(
-	          _Option2["default"],
-	          { value: item.value },
-	          item.key
-	        );
-	      });
-	    }
-	    return data ? _react2["default"].createElement(
-	      _RcSelect2["default"],
-	      _extends({}, this.props, {
-	        className: cls,
-	        optionLabelProp: optionLabelProp || "children",
-	        notFoundContent: notFoundContent
-	      }),
-	      data.map(function (item) {
-	        return _react2["default"].createElement(
-	          _Option2["default"],
-	          { key: item.value, value: item.value, disabled: item.disabled ? true : false },
-	          item.key
-	        );
-	      })
-	    ) : _react2["default"].createElement(_RcSelect2["default"], _extends({}, this.props, {
-	      className: cls,
-	      optionLabelProp: optionLabelProp || "children",
-	      notFoundContent: notFoundContent
-	    }));
-	  };
-	
-	  return Select;
-	}(_react.Component);
-	
-	Select.context = SelectContext;
-	Select.propTypes = propTypes;
-	Select.defaultProps = defaultProps;
-	Select.Option = _Option2["default"];
-	Select.OptGroup = _OptGroup2["default"];
-	
-	exports["default"] = Select;
-	module.exports = exports["default"];
-
-/***/ }),
-/* 97 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _beeMenus = __webpack_require__(98);
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _OptGroup = __webpack_require__(118);
-	
-	var _OptGroup2 = _interopRequireDefault(_OptGroup);
-	
-	var _warning = __webpack_require__(31);
-	
-	var _warning2 = _interopRequireDefault(_warning);
-	
-	var _componentClasses = __webpack_require__(46);
-	
-	var _componentClasses2 = _interopRequireDefault(_componentClasses);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _util = __webpack_require__(119);
-	
-	var _SelectTrigger = __webpack_require__(120);
-	
-	var _SelectTrigger2 = _interopRequireDefault(_SelectTrigger);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	//import FilterMixin from './FilterMixin';
-	
-	function noop() {}
-	
-	function filterFn(input, child) {
-	  return String((0, _util.getPropValue)(child, this.props.optionFilterProp)).indexOf(input) > -1;
-	}
-	
-	function saveRef(name, component) {
-	  this[name] = component;
-	}
-	
-	var valueObjectShape = void 0;
-	
-	if (_propTypes2["default"]) {
-	  valueObjectShape = _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].shape({
-	    key: _propTypes2["default"].string,
-	    label: _propTypes2["default"].node
-	  })]);
-	}
-	
-	var propTypes = {
-	  defaultActiveFirstOption: _propTypes2["default"].bool,
-	  multiple: _propTypes2["default"].bool,
-	  filterOption: _propTypes2["default"].any,
-	  children: _propTypes2["default"].any,
-	  showSearch: _propTypes2["default"].bool,
-	  disabled: _propTypes2["default"].bool,
-	  allowClear: _propTypes2["default"].bool,
-	  showArrow: _propTypes2["default"].bool,
-	  tags: _propTypes2["default"].bool,
-	  clsPrefix: _propTypes2["default"].string,
-	  className: _propTypes2["default"].string,
-	  transitionName: _propTypes2["default"].string,
-	  optionLabelProp: _propTypes2["default"].string,
-	  optionFilterProp: _propTypes2["default"].string,
-	  animation: _propTypes2["default"].string,
-	  choiceTransitionName: _propTypes2["default"].string,
-	  onChange: _propTypes2["default"].func,
-	  onBlur: _propTypes2["default"].func,
-	  onFocus: _propTypes2["default"].func,
-	  onSelect: _propTypes2["default"].func,
-	  onSearch: _propTypes2["default"].func,
-	  placeholder: _propTypes2["default"].any,
-	  onDeselect: _propTypes2["default"].func,
-	  labelInValue: _propTypes2["default"].bool,
-	  value: _propTypes2["default"].oneOfType([valueObjectShape, _propTypes2["default"].arrayOf(valueObjectShape)]),
-	  defaultValue: _propTypes2["default"].oneOfType([valueObjectShape, _propTypes2["default"].arrayOf(valueObjectShape)]),
-	  dropdownStyle: _propTypes2["default"].object,
-	  maxTagTextLength: _propTypes2["default"].number,
-	  tokenSeparators: _propTypes2["default"].arrayOf(_propTypes2["default"].string)
-	};
-	
-	var defaultProps = {
-	  clsPrefix: 'rc-select',
-	  filterOption: filterFn,
-	  defaultOpen: false,
-	  labelInValue: false,
-	  defaultActiveFirstOption: true,
-	  showSearch: true,
-	  allowClear: false,
-	  placeholder: '',
-	  defaultValue: [],
-	  onChange: noop,
-	  onFocus: noop,
-	  onBlur: noop,
-	  onSelect: noop,
-	  onSearch: noop,
-	  onDeselect: noop,
-	  showArrow: true,
-	  dropdownMatchSelectWidth: true,
-	  dropdownStyle: {},
-	  dropdownMenuStyle: {},
-	  optionFilterProp: 'value',
-	  optionLabelProp: 'value',
-	  notFoundContent: 'Not Found'
-	};
-	
-	var RcSelect = function (_Component) {
-	  _inherits(RcSelect, _Component);
-	
-	  //mixins: [FilterMixin],
-	
-	  function RcSelect(props) {
-	    _classCallCheck(this, RcSelect);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    var value = [];
-	    if ('value' in props) {
-	      value = (0, _util.toArray)(props.value);
-	    } else {
-	      value = (0, _util.toArray)(props.defaultValue);
-	    }
-	    value = _this.addLabelToValue(props, value);
-	    value = _this.addTitleToValue(props, value);
-	    var inputValue = '';
-	    if (props.combobox) {
-	      inputValue = value.length ? String(value[0].key) : '';
-	    }
-	    _this.saveInputRef = saveRef.bind(_this, 'inputInstance');
-	    _this.saveInputMirrorRef = saveRef.bind(_this, 'inputMirrorInstance');
-	    var open = props.open;
-	    if (open === undefined) {
-	      open = props.defaultOpen;
-	    }
-	    _this.state = {
-	      value: value,
-	      inputValue: inputValue,
-	      open: open
-	    };
-	
-	    _this.filterOption = _this.filterOption.bind(_this);
-	    _this.renderFilterOptions = _this.renderFilterOptions.bind(_this);
-	    _this.renderFilterOptionsFromChildren = _this.renderFilterOptionsFromChildren.bind(_this);
-	    _this.onInputChange = _this.onInputChange.bind(_this);
-	    _this.onDropdownVisibleChange = _this.onDropdownVisibleChange.bind(_this);
-	
-	    _this.onKeyDown = _this.onKeyDown.bind(_this);
-	    _this.onInputKeyDown = _this.onInputKeyDown.bind(_this);
-	    _this.onMenuSelect = _this.onMenuSelect.bind(_this);
-	    _this.onMenuDeselect = _this.onMenuDeselect.bind(_this);
-	    _this.onArrowClick = _this.onArrowClick.bind(_this);
-	
-	    _this.onPlaceholderClick = _this.onPlaceholderClick.bind(_this);
-	    _this.onOuterFocus = _this.onOuterFocus.bind(_this);
-	    _this.onPopupFocus = _this.onPopupFocus.bind(_this);
-	    _this.onOuterBlur = _this.onOuterBlur.bind(_this);
-	    _this.onClearSelection = _this.onClearSelection.bind(_this);
-	
-	    _this.onChoiceAnimationLeave = _this.onChoiceAnimationLeave.bind(_this);
-	    _this.getLabelBySingleValue = _this.getLabelBySingleValue.bind(_this);
-	    _this.getValueByLabel = _this.getValueByLabel.bind(_this);
-	    _this.getLabelFromOption = _this.getLabelFromOption.bind(_this);
-	    _this.getLabelFromProps = _this.getLabelFromProps.bind(_this);
-	
-	    _this.getVLForOnChange = _this.getVLForOnChange.bind(_this);
-	    _this.getLabelByValue = _this.getLabelByValue.bind(_this);
-	    _this.getDropdownContainer = _this.getDropdownContainer.bind(_this);
-	    _this.getPlaceholderElement = _this.getPlaceholderElement.bind(_this);
-	    _this.getInputElement = _this.getInputElement.bind(_this);
-	
-	    _this.getInputDOMNode = _this.getInputDOMNode.bind(_this);
-	    _this.getInputMirrorDOMNode = _this.getInputMirrorDOMNode.bind(_this);
-	    _this.getPopupDOMNode = _this.getPopupDOMNode.bind(_this);
-	    _this.getPopupMenuComponent = _this.getPopupMenuComponent.bind(_this);
-	    _this.setOpenState = _this.setOpenState.bind(_this);
-	
-	    _this.setInputValue = _this.setInputValue.bind(_this);
-	    _this.clearBlurTime = _this.clearBlurTime.bind(_this);
-	    _this.clearAdjustTimer = _this.clearAdjustTimer.bind(_this);
-	    _this.clearAdjustTimer = _this.clearAdjustTimer.bind(_this);
-	    _this.updateFocusClassName = _this.updateFocusClassName.bind(_this);
-	
-	    _this.maybeFocus = _this.maybeFocus.bind(_this);
-	    _this.addLabelToValue = _this.addLabelToValue.bind(_this);
-	    _this.addTitleToValue = _this.addTitleToValue.bind(_this);
-	    _this.removeSelected = _this.removeSelected.bind(_this);
-	    _this.openIfHasChildren = _this.openIfHasChildren.bind(_this);
-	
-	    _this.fireChange = _this.fireChange.bind(_this);
-	    _this.isChildDisabled = _this.isChildDisabled.bind(_this);
-	    _this.tokenize = _this.tokenize.bind(_this);
-	    _this.adjustOpenState = _this.adjustOpenState.bind(_this);
-	    _this.renderTopControlNode = _this.renderTopControlNode.bind(_this);
-	
-	    return _this;
-	  }
-	
-	  RcSelect.prototype.componentWillMount = function componentWillMount() {
-	    this.adjustOpenState();
-	  };
-	
-	  RcSelect.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	    if ('value' in nextProps) {
-	      var value = (0, _util.toArray)(nextProps.value);
-	      value = this.addLabelToValue(nextProps, value);
-	      value = this.addTitleToValue(nextProps, value);
-	      this.setState({
-	        value: value
-	      });
-	      if (nextProps.combobox) {
-	        this.setState({
-	          inputValue: value.length ? this.getLabelFromProps(nextProps, value[0].key) : ''
-	        });
-	      }
-	    }
-	  };
-	
-	  RcSelect.prototype.componentWillUpdate = function componentWillUpdate(nextProps, nextState) {
-	    this.props = nextProps;
-	    this.state = nextState;
-	    this.adjustOpenState();
-	  };
-	
-	  RcSelect.prototype.componentDidUpdate = function componentDidUpdate() {
-	    var state = this.state,
-	        props = this.props;
-	
-	    if (state.open && (0, _util.isMultipleOrTags)(props)) {
-	      var inputNode = this.getInputDOMNode();
-	      var mirrorNode = this.getInputMirrorDOMNode();
-	      if (inputNode.value) {
-	        inputNode.style.width = '';
-	        inputNode.style.width = mirrorNode.clientWidth + 'px';
-	      } else {
-	        inputNode.style.width = '';
-	      }
-	    }
-	  };
-	
-	  RcSelect.prototype.componentWillUnmount = function componentWillUnmount() {
-	    this.clearBlurTime();
-	    this.clearAdjustTimer();
-	    if (this.dropdownContainer) {
-	      _reactDom2["default"].unmountComponentAtNode(this.dropdownContainer);
-	      document.body.removeChild(this.dropdownContainer);
-	      this.dropdownContainer = null;
-	    }
-	  };
-	
-	  RcSelect.prototype.filterOption = function filterOption(input, child) {
-	    if (!input) {
-	      return true;
-	    }
-	    var filterOption = this.props.filterOption;
-	    if (!filterOption) {
-	      return true;
-	    }
-	    if (child.props.disabled) {
-	      return false;
-	    }
-	    return filterOption.call(this, input, child);
-	  };
-	
-	  RcSelect.prototype.renderFilterOptions = function renderFilterOptions(inputValue) {
-	    return this.renderFilterOptionsFromChildren(this.props.children, true, inputValue);
-	  };
-	
-	  RcSelect.prototype.renderFilterOptionsFromChildren = function renderFilterOptionsFromChildren(children, showNotFound, iv) {
-	    var _this2 = this;
-	
-	    var sel = [];
-	    var props = this.props;
-	    var inputValue = iv === undefined ? this.state.inputValue : iv;
-	    var childrenKeys = [];
-	    var tags = props.tags;
-	    _react2["default"].Children.forEach(children, function (child) {
-	      if (child.type === _OptGroup2["default"]) {
-	        var innerItems = _this2.renderFilterOptionsFromChildren(child.props.children, false);
-	        if (innerItems.length) {
-	          var label = child.props.label;
-	          var key = child.key;
-	          if (!key && typeof label === 'string') {
-	            key = label;
-	          } else if (!label && key) {
-	            label = key;
-	          }
-	          sel.push(_react2["default"].createElement(
-	            _beeMenus.ItemGroup,
-	            { key: key, title: label },
-	            innerItems
-	          ));
-	        }
-	        return;
-	      }
-	
-	      // warning(
-	      //   child.type === Option,
-	      //   'the children of `Select` should be `Select.Option` or `Select.OptGroup`, ' +
-	      //     `instead of \`${child.type.name || child.type.displayName || child.type}\`.`
-	      // );
-	
-	      var childValue = (0, _util.getValuePropValue)(child);
-	      if (_this2.filterOption(inputValue, child)) {
-	        sel.push(_react2["default"].createElement(_beeMenus.Item, _extends({
-	          style: _util.UNSELECTABLE_STYLE,
-	          attribute: _util.UNSELECTABLE_ATTRIBUTE,
-	          value: childValue,
-	          key: childValue
-	        }, child.props)));
-	      }
-	      if (tags && !child.props.disabled) {
-	        childrenKeys.push(childValue);
-	      }
-	    });
-	    if (tags) {
-	      // tags value must be string
-	      var value = this.state.value || [];
-	      value = value.filter(function (singleValue) {
-	        return childrenKeys.indexOf(singleValue.key) === -1 && (!inputValue || String(singleValue.key).indexOf(String(inputValue)) > -1);
-	      });
-	      sel = sel.concat(value.map(function (singleValue) {
-	        var key = singleValue.key;
-	        return _react2["default"].createElement(
-	          _beeMenus.Item,
-	          {
-	            style: _util.UNSELECTABLE_STYLE,
-	            attribute: _util.UNSELECTABLE_ATTRIBUTE,
-	            value: key,
-	            key: key
-	          },
-	          key
-	        );
-	      }));
-	      if (inputValue) {
-	        var notFindInputItem = sel.every(function (option) {
-	          return (0, _util.getValuePropValue)(option) !== inputValue;
-	        });
-	        if (notFindInputItem) {
-	          sel.unshift(_react2["default"].createElement(
-	            _beeMenus.Item,
-	            {
-	              style: _util.UNSELECTABLE_STYLE,
-	              attribute: _util.UNSELECTABLE_ATTRIBUTE,
-	              value: inputValue,
-	              key: inputValue
-	            },
-	            inputValue
-	          ));
-	        }
-	      }
-	    }
-	    if (!sel.length && showNotFound && props.notFoundContent) {
-	      sel = [_react2["default"].createElement(
-	        _beeMenus.Item,
-	        {
-	          style: _util.UNSELECTABLE_STYLE,
-	          attribute: _util.UNSELECTABLE_ATTRIBUTE,
-	          disabled: true,
-	          value: 'NOT_FOUND',
-	          key: 'NOT_FOUND'
-	        },
-	        props.notFoundContent
-	      )];
-	    }
-	    return sel;
-	  };
-	
-	  RcSelect.prototype.onInputChange = function onInputChange(event) {
-	    var tokenSeparators = this.props.tokenSeparators;
-	
-	    var val = event.target.value;
-	    if ((0, _util.isMultipleOrTags)(this.props) && tokenSeparators && (0, _util.includesSeparators)(val, tokenSeparators)) {
-	      var nextValue = this.tokenize(val);
-	      this.fireChange(nextValue);
-	      this.setOpenState(false, true);
-	      this.setInputValue('', false);
-	      return;
-	    }
-	    this.setInputValue(val);
-	    this.setState({
-	      open: true
-	    });
-	    if ((0, _util.isCombobox)(this.props)) {
-	      this.fireChange([{
-	        key: val
-	      }]);
-	    }
-	  };
-	
-	  RcSelect.prototype.onDropdownVisibleChange = function onDropdownVisibleChange(open) {
-	    this.setOpenState(open);
-	  };
-	
-	  // combobox ignore
-	
-	
-	  RcSelect.prototype.onKeyDown = function onKeyDown(event) {
-	    var props = this.props;
-	    if (props.disabled) {
-	      return;
-	    }
-	    var keyCode = event.keyCode;
-	    if (this.state.open && !this.getInputDOMNode()) {
-	      this.onInputKeyDown(event);
-	    } else if (keyCode === _tinperBeeCore.KeyCode.ENTER || keyCode === _tinperBeeCore.KeyCode.DOWN) {
-	      this.setOpenState(true);
-	      event.preventDefault();
-	    }
-	  };
-	
-	  RcSelect.prototype.onInputKeyDown = function onInputKeyDown(event) {
-	    var props = this.props;
-	    if (props.disabled) {
-	      return;
-	    }
-	    var state = this.state;
-	    var keyCode = event.keyCode;
-	    if ((0, _util.isMultipleOrTags)(props) && !event.target.value && keyCode === _tinperBeeCore.KeyCode.BACKSPACE) {
-	      event.preventDefault();
-	      var value = state.value;
-	
-	      if (value.length) {
-	        this.removeSelected(value[value.length - 1].key);
-	      }
-	      return;
-	    }
-	    if (keyCode === _tinperBeeCore.KeyCode.DOWN) {
-	      if (!state.open) {
-	        this.openIfHasChildren();
-	        event.preventDefault();
-	        event.stopPropagation();
-	        return;
-	      }
-	    } else if (keyCode === _tinperBeeCore.KeyCode.ESC) {
-	      if (state.open) {
-	        this.setOpenState(false);
-	        event.preventDefault();
-	        event.stopPropagation();
-	      }
-	      return;
-	    }
-	
-	    if (state.open) {
-	      var menu = this.refs.trigger.getInnerMenu();
-	
-	      if (menu && menu.rcMenu.onKeyDown(event)) {
-	        event.preventDefault();
-	        event.stopPropagation();
-	      }
-	    }
-	  };
-	
-	  RcSelect.prototype.onMenuSelect = function onMenuSelect(_ref) {
-	    var _this3 = this;
-	
-	    var item = _ref.item;
-	
-	    var value = this.state.value;
-	    var props = this.props;
-	    var selectedValue = (0, _util.getValuePropValue)(item);
-	    var selectedLabel = this.getLabelFromOption(item);
-	    var event = selectedValue;
-	    if (props.labelInValue) {
-	      event = {
-	        key: event,
-	        label: selectedLabel
-	      };
-	    }
-	    props.onSelect(event, item);
-	    var selectedTitle = item.props.title;
-	    if ((0, _util.isMultipleOrTags)(props)) {
-	      if ((0, _util.findIndexInValueByKey)(value, selectedValue) !== -1) {
-	        return;
-	      }
-	      value = value.concat([{
-	        key: selectedValue,
-	        label: selectedLabel,
-	        title: selectedTitle
-	      }]);
-	    } else {
-	      if ((0, _util.isCombobox)(props)) {
-	        this.skipAdjustOpen = true;
-	        this.clearAdjustTimer();
-	        this.skipAdjustOpenTimer = setTimeout(function () {
-	          _this3.skipAdjustOpen = false;
-	        }, 0);
-	      }
-	      if (value.length && value[0].key === selectedValue) {
-	        this.setOpenState(false, true);
-	        return;
-	      }
-	      value = [{
-	        key: selectedValue,
-	        label: selectedLabel,
-	        title: selectedTitle
-	      }];
-	      this.setOpenState(false, true);
-	    }
-	    this.fireChange(value);
-	    var inputValue = void 0;
-	    if ((0, _util.isCombobox)(props)) {
-	      inputValue = (0, _util.getPropValue)(item, props.optionLabelProp);
-	    } else {
-	      inputValue = '';
-	    }
-	    this.setInputValue(inputValue, false);
-	  };
-	
-	  RcSelect.prototype.onMenuDeselect = function onMenuDeselect(_ref2) {
-	    var item = _ref2.item,
-	        domEvent = _ref2.domEvent;
-	
-	    if (domEvent.type === 'click') {
-	      this.removeSelected((0, _util.getValuePropValue)(item));
-	    }
-	    this.setInputValue('', false);
-	  };
-	
-	  RcSelect.prototype.onArrowClick = function onArrowClick(e) {
-	    e.stopPropagation();
-	    if (!this.props.disabled) {
-	      this.setOpenState(!this.state.open, true);
-	    }
-	  };
-	
-	  RcSelect.prototype.onPlaceholderClick = function onPlaceholderClick() {
-	    if (this.getInputDOMNode()) {
-	      this.getInputDOMNode().focus();
-	    }
-	  };
-	
-	  RcSelect.prototype.onOuterFocus = function onOuterFocus() {
-	    this.clearBlurTime();
-	    this._focused = true;
-	    this.updateFocusClassName();
-	    this.props.onFocus();
-	  };
-	
-	  RcSelect.prototype.onPopupFocus = function onPopupFocus() {
-	    // fix ie scrollbar, focus element again
-	    this.maybeFocus(true, true);
-	  };
-	
-	  RcSelect.prototype.onOuterBlur = function onOuterBlur() {
-	    var _this4 = this;
-	
-	    this.blurTimer = setTimeout(function () {
-	      _this4._focused = false;
-	      _this4.updateFocusClassName();
-	      var props = _this4.props;
-	      var value = _this4.state.value;
-	      var inputValue = _this4.state.inputValue;
-	
-	      if ((0, _util.isSingleMode)(props) && props.showSearch && inputValue && props.defaultActiveFirstOption) {
-	        var options = _this4._options || [];
-	        if (options.length) {
-	          var firstOption = (0, _util.findFirstMenuItem)(options);
-	          if (firstOption) {
-	            value = [{
-	              key: firstOption.key,
-	              label: _this4.getLabelFromOption(firstOption)
-	            }];
-	            _this4.fireChange(value);
-	          }
-	        }
-	      } else if ((0, _util.isMultipleOrTags)(props) && inputValue) {
-	        // why not use setState?
-	        _this4.state.inputValue = _this4.getInputDOMNode().value = '';
-	      }
-	      props.onBlur(_this4.getVLForOnChange(value));
-	    }, 10);
-	  };
-	
-	  RcSelect.prototype.onClearSelection = function onClearSelection(event) {
-	    var props = this.props;
-	    var state = this.state;
-	    if (props.disabled) {
-	      return;
-	    }
-	    var inputValue = state.inputValue,
-	        value = state.value;
-	
-	    event.stopPropagation();
-	    if (inputValue || value.length) {
-	      if (value.length) {
-	        this.fireChange([]);
-	      }
-	      this.setOpenState(false, true);
-	      if (inputValue) {
-	        this.setInputValue('');
-	      }
-	    }
-	  };
-	
-	  RcSelect.prototype.onChoiceAnimationLeave = function onChoiceAnimationLeave() {
-	    this.refs.trigger.refs.trigger.forcePopupAlign();
-	  };
-	
-	  RcSelect.prototype.getLabelBySingleValue = function getLabelBySingleValue(children, value) {
-	    var _this5 = this;
-	
-	    if (value === undefined) {
-	      return null;
-	    }
-	    var label = null;
-	    _react2["default"].Children.forEach(children, function (child) {
-	      if (child.type === _OptGroup2["default"]) {
-	        var maybe = _this5.getLabelBySingleValue(child.props.children, value);
-	        if (maybe !== null) {
-	          label = maybe;
-	        }
-	      } else if ((0, _util.getValuePropValue)(child) === value) {
-	        label = _this5.getLabelFromOption(child);
-	      }
-	    });
-	    return label;
-	  };
-	
-	  RcSelect.prototype.getValueByLabel = function getValueByLabel(children, label) {
-	    var _this6 = this;
-	
-	    if (label === undefined) {
-	      return null;
-	    }
-	    var value = null;
-	    _react2["default"].Children.forEach(children, function (child) {
-	      if (child.type === _OptGroup2["default"]) {
-	        var maybe = _this6.getValueByLabel(child.props.children, label);
-	        if (maybe !== null) {
-	          value = maybe;
-	        }
-	      } else if ((0, _util.toArray)(_this6.getLabelFromOption(child)).join('') === label) {
-	        value = (0, _util.getValuePropValue)(child);
-	      }
-	    });
-	    return value;
-	  };
-	
-	  RcSelect.prototype.getLabelFromOption = function getLabelFromOption(child) {
-	    return (0, _util.getPropValue)(child, this.props.optionLabelProp);
-	  };
-	
-	  RcSelect.prototype.getLabelFromProps = function getLabelFromProps(props, value) {
-	    return this.getLabelByValue(props.children, value);
-	  };
-	
-	  RcSelect.prototype.getVLForOnChange = function getVLForOnChange(vls_) {
-	    var vls = vls_;
-	    if (vls !== undefined) {
-	      if (!this.props.labelInValue) {
-	        vls = vls.map(function (v) {
-	          return v.key;
-	        });
-	      } else {
-	        vls = vls.map(function (vl) {
-	          return { key: vl.key, label: vl.label };
-	        });
-	      }
-	      return (0, _util.isMultipleOrTags)(this.props) ? vls : vls[0];
-	    }
-	    return vls;
-	  };
-	
-	  RcSelect.prototype.getLabelByValue = function getLabelByValue(children, value) {
-	    var label = this.getLabelBySingleValue(children, value);
-	    if (label === null) {
-	      return value;
-	    }
-	    return label;
-	  };
-	
-	  RcSelect.prototype.getDropdownContainer = function getDropdownContainer() {
-	    if (!this.dropdownContainer) {
-	      this.dropdownContainer = document.createElement('div');
-	      document.body.appendChild(this.dropdownContainer);
-	    }
-	    return this.dropdownContainer;
-	  };
-	
-	  RcSelect.prototype.getPlaceholderElement = function getPlaceholderElement() {
-	    var props = this.props,
-	        state = this.state;
-	
-	    var hidden = false;
-	    if (state.inputValue) {
-	      hidden = true;
-	    }
-	    if (state.value.length) {
-	      hidden = true;
-	    }
-	    if ((0, _util.isCombobox)(props) && state.value.length === 1 && !state.value[0].key) {
-	      hidden = false;
-	    }
-	    var placeholder = props.placeholder;
-	    if (placeholder) {
-	      return _react2["default"].createElement(
-	        'div',
-	        _extends({
-	          onMouseDown: _util.preventDefaultEvent,
-	          style: _extends({
-	            display: hidden ? 'none' : 'block'
-	          }, _util.UNSELECTABLE_STYLE)
-	        }, _util.UNSELECTABLE_ATTRIBUTE, {
-	          onClick: this.onPlaceholderClick,
-	          className: props.clsPrefix + '-selection-placeholder'
-	        }),
-	        placeholder
-	      );
-	    }
-	    return null;
-	  };
-	
-	  RcSelect.prototype.getInputElement = function getInputElement() {
-	    var props = this.props;
-	    return _react2["default"].createElement(
-	      'div',
-	      { className: props.clsPrefix + '-search-field-wrap' },
-	      _react2["default"].createElement('input', {
-	        ref: this.saveInputRef,
-	        onChange: this.onInputChange,
-	        onKeyDown: this.onInputKeyDown,
-	        value: this.state.inputValue,
-	        disabled: props.disabled,
-	        className: props.clsPrefix + '-search-field'
-	      }),
-	      _react2["default"].createElement(
-	        'span',
-	        {
-	          ref: this.saveInputMirrorRef,
-	          className: props.clsPrefix + '-search-field-mirror'
-	        },
-	        this.state.inputValue
-	      )
-	    );
-	  };
-	
-	  RcSelect.prototype.getInputDOMNode = function getInputDOMNode() {
-	    return this.inputInstance;
-	  };
-	
-	  RcSelect.prototype.getInputMirrorDOMNode = function getInputMirrorDOMNode() {
-	    return this.inputMirrorInstance;
-	  };
-	
-	  RcSelect.prototype.getPopupDOMNode = function getPopupDOMNode() {
-	    return this.refs.trigger.getPopupDOMNode();
-	  };
-	
-	  RcSelect.prototype.getPopupMenuComponent = function getPopupMenuComponent() {
-	    return this.refs.trigger.getInnerMenu();
-	  };
-	
-	  RcSelect.prototype.setOpenState = function setOpenState(open, needFocus) {
-	    var _this7 = this;
-	
-	    var props = this.props,
-	        state = this.state;
-	
-	    if (state.open === open) {
-	      this.maybeFocus(open, needFocus);
-	      return;
-	    }
-	    var nextState = {
-	      open: open
-	    };
-	    // clear search input value when open is false in singleMode.
-	    if (!open && (0, _util.isSingleMode)(props) && props.showSearch) {
-	      this.setInputValue('');
-	    }
-	    if (!open) {
-	      this.maybeFocus(open, needFocus);
-	    }
-	    this.setState(nextState, function () {
-	      if (open) {
-	        _this7.maybeFocus(open, needFocus);
-	      }
-	    });
-	  };
-	
-	  RcSelect.prototype.setInputValue = function setInputValue(inputValue) {
-	    var fireSearch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-	
-	    this.setState({
-	      inputValue: inputValue
-	    });
-	    if (fireSearch) {
-	      this.props.onSearch(inputValue);
-	    }
-	  };
-	
-	  RcSelect.prototype.clearBlurTime = function clearBlurTime() {
-	    if (this.blurTimer) {
-	      clearTimeout(this.blurTimer);
-	      this.blurTimer = null;
-	    }
-	  };
-	
-	  RcSelect.prototype.clearAdjustTimer = function clearAdjustTimer() {
-	    if (this.skipAdjustOpenTimer) {
-	      clearTimeout(this.skipAdjustOpenTimer);
-	      this.skipAdjustOpenTimer = null;
-	    }
-	  };
-	
-	  RcSelect.prototype.updateFocusClassName = function updateFocusClassName() {
-	    var refs = this.refs,
-	        props = this.props;
-	
-	
-	    if (this._focused) {
-	      (0, _componentClasses2["default"])(refs.root).add(props.clsPrefix + '-focused');
-	    } else {
-	      (0, _componentClasses2["default"])(refs.root).remove(props.clsPrefix + '-focused');
-	    }
-	  };
-	
-	  RcSelect.prototype.maybeFocus = function maybeFocus(open, needFocus) {
-	    if (needFocus || open) {
-	      var input = this.getInputDOMNode();
-	      var _document = document,
-	          activeElement = _document.activeElement;
-	
-	      if (input && (open || (0, _util.isMultipleOrTagsOrCombobox)(this.props))) {
-	        if (activeElement !== input) {
-	          input.focus();
-	        }
-	      } else {
-	        var selection = this.refs.selection;
-	        if (activeElement !== selection) {
-	          selection.focus();
-	        }
-	      }
-	    }
-	  };
-	
-	  RcSelect.prototype.addLabelToValue = function addLabelToValue(props, value_) {
-	    var _this8 = this;
-	
-	    var value = value_;
-	    if (props.labelInValue) {
-	      value.forEach(function (v) {
-	        v.label = v.label || _this8.getLabelFromProps(props, v.key);
-	      });
-	    } else {
-	      value = value.map(function (v) {
-	        return {
-	          key: v,
-	          label: _this8.getLabelFromProps(props, v)
-	        };
-	      });
-	    }
-	    return value;
-	  };
-	
-	  RcSelect.prototype.addTitleToValue = function addTitleToValue(props, values) {
-	    var _this9 = this;
-	
-	    var nextValues = values;
-	    var keys = values.map(function (v) {
-	      return v.key;
-	    });
-	    _react2["default"].Children.forEach(props.children, function (child) {
-	      if (child.type === _OptGroup2["default"]) {
-	        nextValues = _this9.addTitleToValue(child.props, nextValues);
-	      } else {
-	        var value = (0, _util.getValuePropValue)(child);
-	        var valueIndex = keys.indexOf(value);
-	        if (valueIndex > -1) {
-	          nextValues[valueIndex].title = child.props.title;
-	        }
-	      }
-	    });
-	    return nextValues;
-	  };
-	
-	  RcSelect.prototype.removeSelected = function removeSelected(selectedKey) {
-	    var props = this.props;
-	    if (props.disabled || this.isChildDisabled(selectedKey)) {
-	      return;
-	    }
-	    var label = void 0;
-	    var value = this.state.value.filter(function (singleValue) {
-	      if (singleValue.key === selectedKey) {
-	        label = singleValue.label;
-	      }
-	      return singleValue.key !== selectedKey;
-	    });
-	    var canMultiple = (0, _util.isMultipleOrTags)(props);
-	
-	    if (canMultiple) {
-	      var event = selectedKey;
-	      if (props.labelInValue) {
-	        event = {
-	          key: selectedKey,
-	          label: label
-	        };
-	      }
-	      props.onDeselect(event);
-	    }
-	    this.fireChange(value);
-	  };
-	
-	  RcSelect.prototype.openIfHasChildren = function openIfHasChildren() {
-	    var props = this.props;
-	    if (_react2["default"].Children.count(props.children) || (0, _util.isSingleMode)(props)) {
-	      this.setOpenState(true);
-	    }
-	  };
-	
-	  RcSelect.prototype.fireChange = function fireChange(value) {
-	    var props = this.props;
-	    if (!('value' in props)) {
-	      this.setState({
-	        value: value
-	      });
-	    }
-	    props.onChange(this.getVLForOnChange(value));
-	  };
-	
-	  RcSelect.prototype.isChildDisabled = function isChildDisabled(key) {
-	    return (0, _util.toArray)(this.props.children).some(function (child) {
-	      var childValue = (0, _util.getValuePropValue)(child);
-	      return childValue === key && child.props && child.props.disabled;
-	    });
-	  };
-	
-	  RcSelect.prototype.tokenize = function tokenize(string) {
-	    var _this10 = this;
-	
-	    var _props = this.props,
-	        multiple = _props.multiple,
-	        tokenSeparators = _props.tokenSeparators,
-	        children = _props.children;
-	
-	    var nextValue = this.state.value;
-	    (0, _util.splitBySeparators)(string, tokenSeparators).forEach(function (label) {
-	      var selectedValue = { key: label, label: label };
-	      if ((0, _util.findIndexInValueByLabel)(nextValue, label) === -1) {
-	        if (multiple) {
-	          var value = _this10.getValueByLabel(children, label);
-	          if (value) {
-	            selectedValue.key = value;
-	            nextValue = nextValue.concat(selectedValue);
-	          }
-	        } else {
-	          nextValue = nextValue.concat(selectedValue);
-	        }
-	      }
-	    });
-	    return nextValue;
-	  };
-	
-	  RcSelect.prototype.adjustOpenState = function adjustOpenState() {
-	    if (this.skipAdjustOpen) {
-	      return;
-	    }
-	    var open = this.state.open;
-	
-	    if (typeof document !== 'undefined' && this.getInputDOMNode() && document.activeElement === this.getInputDOMNode()) {
-	      open = true;
-	    }
-	    var options = [];
-	    if (open) {
-	      options = this.renderFilterOptions();
-	    }
-	    this._options = options;
-	    if (open && ((0, _util.isMultipleOrTagsOrCombobox)(this.props) || !this.props.showSearch) && !options.length) {
-	      open = false;
-	    }
-	    this.state.open = open;
-	  };
-	
-	  RcSelect.prototype.renderTopControlNode = function renderTopControlNode() {
-	    var _this11 = this;
-	
-	    var _state = this.state,
-	        value = _state.value,
-	        open = _state.open,
-	        inputValue = _state.inputValue;
-	
-	    var props = this.props;
-	    var choiceTransitionName = props.choiceTransitionName,
-	        clsPrefix = props.clsPrefix,
-	        maxTagTextLength = props.maxTagTextLength,
-	        showSearch = props.showSearch;
-	
-	    var className = clsPrefix + '-selection-rendered';
-	    // search input is inside topControlNode in single, multiple & combobox. 2016/04/13
-	    var innerNode = null;
-	    if ((0, _util.isSingleMode)(props)) {
-	      var selectedValue = null;
-	      if (value.length) {
-	        var showSelectedValue = false;
-	        var opacity = 1;
-	        if (!showSearch) {
-	          showSelectedValue = true;
-	        } else {
-	          if (open) {
-	            showSelectedValue = !inputValue;
-	            if (showSelectedValue) {
-	              opacity = 0.4;
-	            }
-	          } else {
-	            showSelectedValue = true;
-	          }
-	        }
-	        var singleValue = value[0];
-	        selectedValue = _react2["default"].createElement(
-	          'div',
-	          {
-	            key: 'value',
-	            className: clsPrefix + '-selection-selected-value',
-	            title: singleValue.title || singleValue.label,
-	            style: {
-	              display: showSelectedValue ? 'block' : 'none',
-	              opacity: opacity
-	            }
-	          },
-	          value[0].label
-	        );
-	      }
-	      if (!showSearch) {
-	        innerNode = [selectedValue];
-	      } else {
-	        innerNode = [selectedValue, _react2["default"].createElement(
-	          'div',
-	          {
-	            className: clsPrefix + '-search ' + clsPrefix + '-search--inline',
-	            key: 'input',
-	            style: {
-	              display: open ? 'block' : 'none'
-	            }
-	          },
-	          this.getInputElement()
-	        )];
-	      }
-	    } else {
-	      var selectedValueNodes = [];
-	      if ((0, _util.isMultipleOrTags)(props)) {
-	        selectedValueNodes = value.map(function (singleValue) {
-	          var content = singleValue.label;
-	          var title = singleValue.title || content;
-	          if (maxTagTextLength && typeof content === 'string' && content.length > maxTagTextLength) {
-	            content = content.slice(0, maxTagTextLength) + '...';
-	          }
-	          var disabled = _this11.isChildDisabled(singleValue.key);
-	          var choiceClassName = disabled ? clsPrefix + '-selection-choice ' + clsPrefix + '-selection-choice-disabled' : clsPrefix + '-selection-choice';
-	          return _react2["default"].createElement(
-	            'li',
-	            _extends({
-	              style: _util.UNSELECTABLE_STYLE
-	            }, _util.UNSELECTABLE_ATTRIBUTE, {
-	              onMouseDown: _util.preventDefaultEvent,
-	              className: choiceClassName,
-	              key: singleValue.key,
-	              title: title
-	            }),
-	            _react2["default"].createElement(
-	              'div',
-	              { className: clsPrefix + '-selection-choice-content' },
-	              content
-	            ),
-	            disabled ? null : _react2["default"].createElement('span', {
-	              className: clsPrefix + '-selection-choice-remove',
-	              onClick: _this11.removeSelected.bind(_this11, singleValue.key)
-	            })
-	          );
-	        });
-	      }
-	      selectedValueNodes.push(_react2["default"].createElement(
-	        'li',
-	        {
-	          className: clsPrefix + '-search ' + clsPrefix + '-search--inline',
-	          key: '__input'
-	        },
-	        this.getInputElement()
-	      ));
-	
-	      innerNode = _react2["default"].createElement(
-	        'ul',
-	        null,
-	        selectedValueNodes
-	      );
-	    }
-	    return _react2["default"].createElement(
-	      'div',
-	      { className: className },
-	      this.getPlaceholderElement(),
-	      innerNode
-	    );
-	  };
-	
-	  RcSelect.prototype.render = function render() {
-	    var _rootCls;
-	
-	    var props = this.props;
-	    var multiple = (0, _util.isMultipleOrTags)(props);
-	    var state = this.state;
-	    var className = props.className,
-	        disabled = props.disabled,
-	        allowClear = props.allowClear,
-	        clsPrefix = props.clsPrefix;
-	
-	    var ctrlNode = this.renderTopControlNode();
-	    var extraSelectionProps = {};
-	    var open = this.state.open;
-	
-	    var options = this._options;
-	    if (!(0, _util.isMultipleOrTagsOrCombobox)(props)) {
-	      extraSelectionProps = {
-	        onKeyDown: this.onKeyDown,
-	        tabIndex: 0
-	      };
-	    }
-	    var rootCls = (_rootCls = {}, _defineProperty(_rootCls, className, !!className), _defineProperty(_rootCls, clsPrefix, 1), _defineProperty(_rootCls, clsPrefix + '-open', open), _defineProperty(_rootCls, clsPrefix + '-focused', open || !!this._focused), _defineProperty(_rootCls, clsPrefix + '-combobox', (0, _util.isCombobox)(props)), _defineProperty(_rootCls, clsPrefix + '-disabled', disabled), _defineProperty(_rootCls, clsPrefix + '-enabled', !disabled), _defineProperty(_rootCls, clsPrefix + '-allow-clear', !!props.allowClear), _rootCls);
-	    var clearStyle = _extends({}, _util.UNSELECTABLE_STYLE, {
-	      display: 'none'
-	    });
-	    if (state.inputValue || state.value.length) {
-	      clearStyle.display = 'block';
-	    }
-	    var clear = _react2["default"].createElement('span', _extends({
-	      key: 'clear',
-	      onMouseDown: _util.preventDefaultEvent,
-	      style: clearStyle
-	    }, _util.UNSELECTABLE_ATTRIBUTE, {
-	      className: clsPrefix + '-selection-clear',
-	      onClick: this.onClearSelection
-	    }));
-	    return _react2["default"].createElement(
-	      _SelectTrigger2["default"],
-	      {
-	        onPopupFocus: this.onPopupFocus,
-	        dropdownAlign: props.dropdownAlign,
-	        dropdownClassName: props.dropdownClassName,
-	        dropdownMatchSelectWidth: props.dropdownMatchSelectWidth,
-	        defaultActiveFirstOption: props.defaultActiveFirstOption,
-	        dropdownMenuStyle: props.dropdownMenuStyle,
-	        transitionName: props.transitionName,
-	        animation: props.animation,
-	        clsPrefix: props.clsPrefix,
-	        dropdownStyle: props.dropdownStyle,
-	        combobox: props.combobox,
-	        showSearch: props.showSearch,
-	        options: options,
-	        multiple: multiple,
-	        disabled: disabled,
-	        visible: open,
-	        inputValue: state.inputValue,
-	        value: state.value,
-	        onDropdownVisibleChange: this.onDropdownVisibleChange,
-	        getPopupContainer: props.getPopupContainer,
-	        onMenuSelect: this.onMenuSelect,
-	        onMenuDeselect: this.onMenuDeselect,
-	        scrollToEnd: props.scrollToEnd,
-	        ref: 'trigger'
-	      },
-	      _react2["default"].createElement(
-	        'div',
-	        {
-	          style: props.style,
-	          ref: 'root',
-	          onBlur: this.onOuterBlur,
-	          onFocus: this.onOuterFocus,
-	          className: (0, _classnames2["default"])(rootCls)
-	        },
-	        _react2["default"].createElement(
-	          'div',
-	          _extends({
-	            ref: 'selection',
-	            key: 'selection',
-	            className: clsPrefix + '-selection\n            ' + clsPrefix + '-selection--' + (multiple ? 'multiple' : 'single'),
-	            role: 'combobox',
-	            'aria-autocomplete': 'list',
-	            'aria-haspopup': 'true',
-	            'aria-expanded': open
-	          }, extraSelectionProps),
-	          ctrlNode,
-	          allowClear && !multiple ? clear : null,
-	          multiple || !props.showArrow ? null : _react2["default"].createElement(
-	            'span',
-	            _extends({
-	              key: 'arrow',
-	              className: clsPrefix + '-arrow',
-	              style: _util.UNSELECTABLE_STYLE
-	            }, _util.UNSELECTABLE_ATTRIBUTE, {
-	              onMouseDown: _util.preventDefaultEvent,
-	              onClick: this.onArrowClick
-	            }),
-	            _react2["default"].createElement('b', null)
-	          )
-	        )
-	      )
-	    );
-	  };
-	
-	  return RcSelect;
-	}(_react.Component);
-	
-	;
-	
-	RcSelect.defaultProps = defaultProps;
-	RcSelect.propTypes = propTypes;
-	
-	exports["default"] = RcSelect;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 98 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _VerticalMenu = __webpack_require__(99);
-	
-	var _VerticalMenu2 = _interopRequireDefault(_VerticalMenu);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	exports["default"] = _VerticalMenu2["default"];
-	module.exports = exports['default'];
-
-/***/ }),
-/* 99 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _ExportMenu = __webpack_require__(100);
-	
-	var _ExportMenu2 = _interopRequireDefault(_ExportMenu);
-	
-	var _openAnimation = __webpack_require__(116);
-	
-	var _openAnimation2 = _interopRequireDefault(_openAnimation);
-	
-	var _warning = __webpack_require__(117);
-	
-	var _warning2 = _interopRequireDefault(_warning);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var Menu = function (_React$Component) {
-	  _inherits(Menu, _React$Component);
-	
-	  function Menu(props) {
-	    _classCallCheck(this, Menu);
-	
-	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
-	
-	    _this.handleClick = function (e) {
-	      _this.setOpenKeys([]);
-	
-	      var onClick = _this.props.onClick;
-	      if (onClick) {
-	        onClick(e);
-	      }
-	    };
-	
-	    _this.handleOpenChange = function (openKeys) {
-	      _this.setOpenKeys(openKeys);
-	
-	      var onOpenChange = _this.props.onOpenChange;
-	      if (onOpenChange) {
-	        onOpenChange(openKeys);
-	      }
-	    };
-	
-	    (0, _warning2["default"])(!('onOpen' in props || 'onClose' in props), '`onOpen` and `onClose` are removed, please use `onOpenChange` instead.');
-	
-	    _this.state = {
-	      openKeys: []
-	    };
-	    _this.rcMenu = {};
-	    return _this;
-	  }
-	
-	  Menu.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	    if (this.props.mode === 'inline' && nextProps.mode !== 'inline') {
-	      this.switchModeFromInline = true;
-	    }
-	    if ('openKeys' in nextProps) {
-	      this.setOpenKeys(nextProps.openKeys);
-	    }
-	  };
-	
-	  Menu.prototype.setOpenKeys = function setOpenKeys(openKeys) {
-	    if (!('openKeys' in this.props)) {
-	      this.setState({ openKeys: openKeys });
-	    }
-	  };
-	
-	  Menu.prototype.render = function render() {
-	    var _this2 = this;
-	
-	    var openAnimation = this.props.openAnimation || this.props.openTransitionName;
-	    if (!openAnimation) {
-	      switch (this.props.mode) {
-	        case 'horizontal':
-	          openAnimation = 'slide-up';
-	          break;
-	        case 'vertical':
-	          // When mode switch from inline
-	          // submenu should hide without animation
-	          if (this.switchModeFromInline) {
-	            openAnimation = '';
-	            this.switchModeFromInline = false;
-	          } else {
-	            openAnimation = 'zoom-big';
-	          }
-	          break;
-	        case 'inline':
-	          openAnimation = _openAnimation2["default"];
-	          break;
-	        default:
-	      }
-	    }
-	
-	    var props = {};
-	    var className = this.props.className + ' ' + this.props.prefixCls + '-' + this.props.theme;
-	    if (this.props.mode !== 'inline') {
-	      // 这组属性的目的是
-	      // 弹出型的菜单需要点击后立即关闭
-	      // 另外，弹出型的菜单的受控模式没有使用场景
-	      props = {
-	        openKeys: this.state.openKeys,
-	        onClick: this.handleClick,
-	        onOpenChange: this.handleOpenChange,
-	        openTransitionName: openAnimation,
-	        className: className
-	      };
-	    } else {
-	      props = {
-	        openAnimation: openAnimation,
-	        className: className
-	      };
-	    }
-	    return _react2["default"].createElement(_ExportMenu2["default"], _extends({ ref: function ref(el) {
-	        return _this2.rcMenu = el;
-	      } }, this.props, props));
-	  };
-	
-	  return Menu;
-	}(_react2["default"].Component);
-	
-	Menu.defaultProps = {
-	  prefixCls: 'u-menu',
-	  className: '',
-	  theme: 'light' // or dark
-	};
-	
-	Menu.Divider = _ExportMenu.Divider;
-	Menu.Item = _ExportMenu.Item;
-	Menu.SubMenu = _ExportMenu.SubMenu;
-	Menu.ItemGroup = _ExportMenu.ItemGroup;
-	Menu.MenuToggle = _ExportMenu.MenuToggle;
-	Menu.SideContainer = _ExportMenu.SideContainer;
-	exports["default"] = Menu;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 100 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.MenuToggle = exports.SideContainer = exports.Divider = exports.ItemGroup = exports.MenuItemGroup = exports.MenuItem = exports.Item = exports.SubMenu = undefined;
-	
-	var _Menu = __webpack_require__(101);
-	
-	var _Menu2 = _interopRequireDefault(_Menu);
-	
-	var _SubMenu = __webpack_require__(104);
-	
-	var _SubMenu2 = _interopRequireDefault(_SubMenu);
-	
-	var _MenuItem = __webpack_require__(111);
-	
-	var _MenuItem2 = _interopRequireDefault(_MenuItem);
-	
-	var _MenuItemGroup = __webpack_require__(112);
-	
-	var _MenuItemGroup2 = _interopRequireDefault(_MenuItemGroup);
-	
-	var _Divider = __webpack_require__(113);
-	
-	var _Divider2 = _interopRequireDefault(_Divider);
-	
-	var _SideContainer = __webpack_require__(114);
-	
-	var _SideContainer2 = _interopRequireDefault(_SideContainer);
-	
-	var _MenuToggle = __webpack_require__(115);
-	
-	var _MenuToggle2 = _interopRequireDefault(_MenuToggle);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	exports.SubMenu = _SubMenu2["default"];
-	exports.Item = _MenuItem2["default"];
-	exports.MenuItem = _MenuItem2["default"];
-	exports.MenuItemGroup = _MenuItemGroup2["default"];
-	exports.ItemGroup = _MenuItemGroup2["default"];
-	exports.Divider = _Divider2["default"];
-	exports.SideContainer = _SideContainer2["default"];
-	exports.MenuToggle = _MenuToggle2["default"];
-	exports["default"] = _Menu2["default"];
-
-/***/ }),
-/* 101 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _util = __webpack_require__(102);
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _DOMWrap = __webpack_require__(103);
-	
-	var _DOMWrap2 = _interopRequireDefault(_DOMWrap);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	function saveRef(index, subIndex, c) {
-	  if (c) {
-	    if (subIndex !== undefined) {
-	      this.instanceArray[index] = this.instanceArray[index] || [];
-	      this.instanceArray[index][subIndex] = c;
-	    } else {
-	      this.instanceArray[index] = c;
-	    }
-	  }
-	}
-	function allDisabled(arr) {
-	  if (!arr.length) {
-	    return true;
-	  }
-	  return arr.every(function (c) {
-	    return !!c.props.disabled;
-	  });
-	}
-	
-	function getActiveKey(props, originalActiveKey) {
-	  var activeKey = originalActiveKey;
-	  var children = props.children,
-	      eventKey = props.eventKey;
-	
-	  if (activeKey) {
-	    var found = void 0;
-	    (0, _util.loopMenuItem)(children, function (c, i) {
-	      if (c && !c.props.disabled && activeKey === (0, _util.getKeyFromChildrenIndex)(c, eventKey, i)) {
-	        found = true;
-	      }
-	    });
-	    if (found) {
-	      return activeKey;
-	    }
-	  }
-	  activeKey = null;
-	  if (props.defaultActiveFirst) {
-	    (0, _util.loopMenuItem)(children, function (c, i) {
-	      if (!activeKey && c && !c.props.disabled) {
-	        activeKey = (0, _util.getKeyFromChildrenIndex)(c, eventKey, i);
-	      }
-	    });
-	    return activeKey;
-	  }
-	  return activeKey;
-	}
-	
-	var propTypes = {
-	
-	  openSubMenuOnMouseEnter: _propTypes2["default"].bool,
-	  closeSubMenuOnMouseLeave: _propTypes2["default"].bool,
-	  selectedKeys: _propTypes2["default"].oneOfType([_propTypes2["default"].array, _propTypes2["default"].string]),
-	  defaultSelectedKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
-	  defaultOpenKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
-	  openKeys: _propTypes2["default"].arrayOf(_propTypes2["default"].string),
-	  mode: _propTypes2["default"].string,
-	  onClick: _propTypes2["default"].func,
-	  onSelect: _propTypes2["default"].func,
-	  onDeselect: _propTypes2["default"].func,
-	  onDestroy: _propTypes2["default"].func,
-	  openTransitionName: _propTypes2["default"].string,
-	  openAnimation: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object]),
-	  level: _propTypes2["default"].number,
-	  eventKey: _propTypes2["default"].string,
-	  selectable: _propTypes2["default"].bool,
-	  children: _propTypes2["default"].any,
-	
-	  focusable: _propTypes2["default"].bool,
-	  multiple: _propTypes2["default"].bool,
-	  style: _propTypes2["default"].object,
-	  defaultActiveFirst: _propTypes2["default"].bool,
-	  visible: _propTypes2["default"].bool,
-	  activeKey: _propTypes2["default"].string
-	
-	};
-	var defaultProps = {
-	  openSubMenuOnMouseEnter: true,
-	  closeSubMenuOnMouseLeave: true,
-	  selectable: true,
-	  onClick: _util.noop,
-	  onSelect: _util.noop,
-	  onOpenChange: _util.noop,
-	  onDeselect: _util.noop,
-	  defaultSelectedKeys: [],
-	  defaultOpenKeys: [],
-	
-	  clsPrefix: 'u-menu',
-	  className: '',
-	  mode: 'vertical',
-	  level: 1,
-	  inlineIndent: 24,
-	  visible: true,
-	  focusable: true,
-	  style: {}
-	};
-	
-	var Menu = function (_Component) {
-	  _inherits(Menu, _Component);
-	
-	  function Menu(props) {
-	    _classCallCheck(this, Menu);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    var selectedKeys = _this.props.defaultSelectedKeys;
-	    var openKeys = _this.props.defaultOpenKeys;
-	    if ('selectedKeys' in _this.props) {
-	      selectedKeys = _this.props.selectedKeys || [];
-	    }
-	    if ('openKeys' in props) {
-	      openKeys = _this.props.openKeys || [];
-	    }
-	
-	    _this.state = {
-	      selectedKeys: selectedKeys,
-	      openKeys: openKeys,
-	      activeKey: getActiveKey(_this.props, _this.props.activeKey)
-	      //activeKey: getActiveKey(this.props, this.props.activeKey),
-	    };
-	    _this.renderMenuItem = _this.renderMenuItem.bind(_this);
-	    _this.onDestroy = _this.onDestroy.bind(_this);
-	    _this.onItemHover = _this.onItemHover.bind(_this);
-	    _this.onSelect = _this.onSelect.bind(_this);
-	    _this.onOpenChange = _this.onOpenChange.bind(_this);
-	    _this.onClick = _this.onClick.bind(_this);
-	    _this.onDeselect = _this.onDeselect.bind(_this);
-	    _this.getOpenTransitionName = _this.getOpenTransitionName.bind(_this);
-	    _this.isInlineMode = _this.isInlineMode.bind(_this);
-	    _this.lastOpenSubMenu = _this.lastOpenSubMenu.bind(_this);
-	    _this.renderMenuItem = _this.renderMenuItem.bind(_this);
-	
-	    _this.renderCommonMenuItem = _this.renderCommonMenuItem.bind(_this);
-	    _this.renderRoot = _this.renderRoot.bind(_this);
-	    _this.getOpenChangesOnItemHover = _this.getOpenChangesOnItemHover.bind(_this);
-	    _this.getFlatInstanceArray = _this.getFlatInstanceArray.bind(_this);
-	    _this.onKeyDown = _this.onKeyDown.bind(_this);
-	    _this.step = _this.step.bind(_this);
-	
-	    return _this;
-	  }
-	
-	  Menu.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	    var props = {};
-	    if ('selectedKeys' in nextProps) {
-	      props.selectedKeys = nextProps.selectedKeys;
-	    }
-	    if ('openKeys' in nextProps) {
-	      props.openKeys = nextProps.openKeys;
-	    }
-	
-	    if ('activeKey' in nextProps) {
-	      props.activeKey = getActiveKey(nextProps, nextProps.activeKey);
-	    } else {
-	      var originalActiveKey = this.state.activeKey;
-	      var activeKey = getActiveKey(nextProps, originalActiveKey);
-	      // fix: this.setState(), parent.render(),
-	      if (activeKey !== originalActiveKey) {
-	        props.activeKey = activeKey;
-	      }
-	    }
-	
-	    this.setState(props);
-	  };
-	
-	  Menu.prototype.componentWillMount = function componentWillMount() {
-	    this.instanceArray = [];
-	  };
-	
-	  Menu.prototype.onDestroy = function onDestroy(key) {
-	    var state = this.state;
-	    var props = this.props;
-	    var selectedKeys = state.selectedKeys;
-	    var openKeys = state.openKeys;
-	    var index = selectedKeys.indexOf(key);
-	    if (!('selectedKeys' in props) && index !== -1) {
-	      selectedKeys.splice(index, 1);
-	    }
-	    index = openKeys.indexOf(key);
-	    if (!('openKeys' in props) && index !== -1) {
-	      openKeys.splice(index, 1);
-	    }
-	  };
-	
-	  Menu.prototype.onItemHover = function onItemHover(e) {
-	    var item = e.item;
-	    var _props = this.props,
-	        mode = _props.mode,
-	        closeSubMenuOnMouseLeave = _props.closeSubMenuOnMouseLeave;
-	    var _e$openChanges = e.openChanges,
-	        openChanges = _e$openChanges === undefined ? [] : _e$openChanges;
-	    // special for top sub menu
-	
-	    if (mode !== 'inline' && !closeSubMenuOnMouseLeave && item.isSubMenu) {
-	      var activeKey = this.state.activeKey;
-	      var activeItem = this.getFlatInstanceArray().filter(function (c) {
-	        return c && c.props.eventKey === activeKey;
-	      })[0];
-	      if (activeItem && activeItem.props.open) {
-	        openChanges = openChanges.concat({
-	          key: item.props.eventKey,
-	          item: item,
-	          originalEvent: e,
-	          open: true
-	        });
-	      }
-	    }
-	    openChanges = openChanges.concat(this.getOpenChangesOnItemHover(e));
-	    if (openChanges.length) {
-	      this.onOpenChange(openChanges);
-	    }
-	  };
-	
-	  Menu.prototype.onSelect = function onSelect(selectInfo) {
-	    var props = this.props;
-	    if (props.selectable) {
-	      // root menu
-	      var selectedKeys = this.state.selectedKeys;
-	      var selectedKey = selectInfo.key;
-	      if (props.multiple) {
-	        selectedKeys = selectedKeys.concat([selectedKey]);
-	      } else {
-	        selectedKeys = [selectedKey];
-	      }
-	      if (!('selectedKeys' in props)) {
-	        this.setState({
-	          selectedKeys: selectedKeys
-	        });
-	      }
-	      props.onSelect(_extends({}, selectInfo, {
-	        selectedKeys: selectedKeys
-	      }));
-	    }
-	  };
-	
-	  Menu.prototype.onClick = function onClick(e) {
-	    this.props.onClick(e);
-	  };
-	
-	  Menu.prototype.onOpenChange = function onOpenChange(e_) {
-	    var props = this.props;
-	    var openKeys = this.state.openKeys.concat();
-	    var changed = false;
-	    var processSingle = function processSingle(e) {
-	      var oneChanged = false;
-	      if (e.open) {
-	        oneChanged = openKeys.indexOf(e.key) === -1;
-	        if (oneChanged) {
-	          openKeys.push(e.key);
-	        }
-	      } else {
-	        var index = openKeys.indexOf(e.key);
-	        oneChanged = index !== -1;
-	        if (oneChanged) {
-	          openKeys.splice(index, 1);
-	        }
-	      }
-	      changed = changed || oneChanged;
-	    };
-	    if (Array.isArray(e_)) {
-	      // batch change call
-	      e_.forEach(processSingle);
-	    } else {
-	      processSingle(e_);
-	    }
-	    if (changed) {
-	      if (!('openKeys' in this.props)) {
-	        this.setState({ openKeys: openKeys });
-	      }
-	      props.onOpenChange(openKeys);
-	    }
-	  };
-	
-	  Menu.prototype.onDeselect = function onDeselect(selectInfo) {
-	    var props = this.props;
-	    if (props.selectable) {
-	      var selectedKeys = this.state.selectedKeys.concat();
-	      var selectedKey = selectInfo.key;
-	      var index = selectedKeys.indexOf(selectedKey);
-	      if (index !== -1) {
-	        selectedKeys.splice(index, 1);
-	      }
-	      if (!('selectedKeys' in props)) {
-	        this.setState({
-	          selectedKeys: selectedKeys
-	        });
-	      }
-	      props.onDeselect(_extends({}, selectInfo, {
-	        selectedKeys: selectedKeys
-	      }));
-	    }
-	  };
-	
-	  Menu.prototype.getOpenTransitionName = function getOpenTransitionName() {
-	    var props = this.props;
-	    var transitionName = props.openTransitionName;
-	    var animationName = props.openAnimation;
-	    if (!transitionName && typeof animationName === 'string') {
-	      transitionName = props.clsPrefix + '-open-' + animationName;
-	    }
-	    return transitionName;
-	  };
-	
-	  Menu.prototype.isInlineMode = function isInlineMode() {
-	    return this.props.mode === 'inline';
-	  };
-	
-	  Menu.prototype.lastOpenSubMenu = function lastOpenSubMenu() {
-	    var lastOpen = [];
-	    var openKeys = this.state.openKeys;
-	
-	    if (openKeys.length) {
-	      lastOpen = this.getFlatInstanceArray().filter(function (c) {
-	        return c && openKeys.indexOf(c.props.eventKey) !== -1;
-	      });
-	    }
-	    return lastOpen[0];
-	  };
-	
-	  Menu.prototype.renderMenuItem = function renderMenuItem(c, i, subIndex) {
-	    if (!c) {
-	      return null;
-	    }
-	    var state = this.state;
-	    var extraProps = {
-	      openKeys: state.openKeys,
-	      selectedKeys: state.selectedKeys,
-	      openSubMenuOnMouseEnter: this.props.openSubMenuOnMouseEnter
-	    };
-	    return this.renderCommonMenuItem(c, i, subIndex, extraProps);
-	  };
-	
-	  Menu.prototype.renderCommonMenuItem = function renderCommonMenuItem(child, i, subIndex, extraProps) {
-	    var state = this.state;
-	    var props = this.props;
-	    var key = (0, _util.getKeyFromChildrenIndex)(child, props.eventKey, i);
-	    var childProps = child.props;
-	    var isActive = key === state.activeKey;
-	    var newChildProps = _extends({
-	      mode: props.mode,
-	      level: props.level,
-	      inlineIndent: props.inlineIndent,
-	      renderMenuItem: this.renderMenuItem,
-	      rootPrefixCls: props.clsPrefix,
-	      index: i,
-	      parentMenu: this,
-	      ref: childProps.disabled ? undefined : (0, _tinperBeeCore.createChainedFunction)(child.ref, saveRef.bind(this, i, subIndex)),
-	      eventKey: key,
-	      closeSubMenuOnMouseLeave: props.closeSubMenuOnMouseLeave,
-	      onItemHover: this.onItemHover,
-	      active: !childProps.disabled && isActive,
-	      multiple: props.multiple,
-	      onClick: this.onClick,
-	      openTransitionName: this.getOpenTransitionName(),
-	      openAnimation: props.openAnimation,
-	      onOpenChange: this.onOpenChange,
-	      onDeselect: this.onDeselect,
-	      onDestroy: this.onDestroy,
-	      onSelect: this.onSelect
-	    }, extraProps);
-	    if (props.mode === 'inline') {
-	      newChildProps.closeSubMenuOnMouseLeave = newChildProps.openSubMenuOnMouseEnter = false;
-	    }
-	    return _react2["default"].cloneElement(child, newChildProps);
-	  };
-	
-	  Menu.prototype.getOpenChangesOnItemHover = function getOpenChangesOnItemHover(e) {
-	    var mode = this.props.mode;
-	    var key = e.key,
-	        hover = e.hover,
-	        trigger = e.trigger;
-	
-	    var activeKey = this.state.activeKey;
-	    if (!trigger || hover || this.props.closeSubMenuOnMouseLeave || !e.item.isSubMenu || mode === 'inline') {
-	      this.setState({
-	        activeKey: hover ? key : null
-	      });
-	    } else {}
-	    // keep active for sub menu for click active
-	    // empty
-	
-	    // clear last open status
-	    if (hover && mode !== 'inline') {
-	      var activeItem = this.getFlatInstanceArray().filter(function (c) {
-	        return c && c.props.eventKey === activeKey;
-	      })[0];
-	      if (activeItem && activeItem.isSubMenu && activeItem.props.eventKey !== key) {
-	        return {
-	          item: activeItem,
-	          originalEvent: e,
-	          key: activeItem.props.eventKey,
-	          open: false
-	        };
-	      }
-	    }
-	    return [];
-	  };
-	
-	  Menu.prototype.getFlatInstanceArray = function getFlatInstanceArray() {
-	    var instanceArray = this.instanceArray;
-	    var hasInnerArray = instanceArray.some(function (a) {
-	      return Array.isArray(a);
-	    });
-	    if (hasInnerArray) {
-	      instanceArray = [];
-	      this.instanceArray.forEach(function (a) {
-	        if (Array.isArray(a)) {
-	          instanceArray.push.apply(instanceArray, a);
-	        } else {
-	          instanceArray.push(a);
-	        }
-	      });
-	      this.instanceArray = instanceArray;
-	    }
-	    return instanceArray;
-	  };
-	
-	  Menu.prototype.step = function step(direction) {
-	    var children = this.getFlatInstanceArray();
-	    var activeKey = this.state.activeKey;
-	    var len = children.length;
-	    if (!len) {
-	      return null;
-	    }
-	    if (direction < 0) {
-	      children = children.concat().reverse();
-	    }
-	    // find current activeIndex
-	    var activeIndex = -1;
-	    children.every(function (c, ci) {
-	      if (c && c.props.eventKey === activeKey) {
-	        activeIndex = ci;
-	        return false;
-	      }
-	      return true;
-	    });
-	    if (!this.props.defaultActiveFirst && activeIndex !== -1) {
-	      if (allDisabled(children.slice(activeIndex, len - 1))) {
-	        return undefined;
-	      }
-	    }
-	    var start = (activeIndex + 1) % len;
-	    var i = start;
-	    for (;;) {
-	      var child = children[i];
-	      if (!child || child.props.disabled) {
-	        i = (i + 1 + len) % len;
-	        // complete a loop
-	        if (i === start) {
-	          return null;
-	        }
-	      } else {
-	        return child;
-	      }
-	    }
-	  };
-	
-	  Menu.prototype.onKeyDown = function onKeyDown(e) {
-	    var _this2 = this;
-	
-	    var keyCode = e.keyCode;
-	    var handled = void 0;
-	    this.getFlatInstanceArray().forEach(function (obj) {
-	      if (obj && obj.props.active) {
-	        handled = obj.onKeyDown(e);
-	      }
-	    });
-	    if (handled) {
-	      return 1;
-	    }
-	    var activeItem = null;
-	    if (keyCode === _tinperBeeCore.KeyCode.UP || keyCode === _tinperBeeCore.KeyCode.DOWN) {
-	      activeItem = this.step(keyCode === _tinperBeeCore.KeyCode.UP ? -1 : 1);
-	    }
-	    if (activeItem) {
-	      e.preventDefault();
-	      this.setState({
-	        activeKey: activeItem.props.eventKey
-	      }, function () {
-	        scrollIntoView(ReactDOM.findDOMNode(activeItem), ReactDOM.findDOMNode(_this2), {
-	          onlyScrollIfNeeded: true
-	        });
-	      });
-	      return 1;
-	    } else if (activeItem === undefined) {
-	      e.preventDefault();
-	      this.setState({
-	        activeKey: null
-	      });
-	      return 1;
-	    }
-	  };
-	
-	  Menu.prototype.renderRoot = function renderRoot(props) {
-	    var _classes;
-	
-	    this.instanceArray = [];
-	    var classes = (_classes = {}, _defineProperty(_classes, props.clsPrefix, 1), _defineProperty(_classes, props.clsPrefix + '-' + props.mode, 1), _defineProperty(_classes, props.className, !!props.className), _classes);
-	    var domProps = {
-	      className: (0, _classnames2["default"])(classes),
-	      role: 'menu',
-	      'aria-activedescendant': ''
-	    };
-	    if (props.id) {
-	      domProps.id = props.id;
-	    }
-	    if (props.focusable) {
-	      domProps.tabIndex = '0';
-	      domProps.onKeyDown = this.onKeyDown;
-	    }
-	    return (
-	      // ESLint is not smart enough to know that the type of `children` was checked.
-	      /* eslint-disable */
-	      _react2["default"].createElement(
-	        _DOMWrap2["default"],
-	        _extends({
-	          style: props.style,
-	          tag: 'ul',
-	          hiddenClassName: props.clsPrefix + '-hidden',
-	          visible: props.visible
-	        }, domProps),
-	        _react2["default"].Children.map(props.children, this.renderMenuItem.bind(this))
-	      )
-	      /*eslint-enable */
-	
-	    );
-	  };
-	
-	  Menu.prototype.render = function render() {
-	    var props = _extends({}, this.props);
-	    props.className += ' ' + props.clsPrefix + '-root';
-	    return this.renderRoot(props);
-	  };
-	
-	  return Menu;
-	}(_react.Component);
-	
-	;
-	
-	Menu.propTypes = propTypes;
-	Menu.defaultProps = defaultProps;
-	
-	exports["default"] = Menu;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 102 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.noop = noop;
-	exports.getKeyFromChildrenIndex = getKeyFromChildrenIndex;
-	exports.loopMenuItem = loopMenuItem;
-	exports.loopMenuItemRecusively = loopMenuItemRecusively;
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function noop() {}
-	
-	function getKeyFromChildrenIndex(child, menuEventKey, index) {
-	  var prefix = menuEventKey || '';
-	  return child.key || prefix + 'item_' + index;
-	}
-	
-	function loopMenuItem(children, cb) {
-	  var index = -1;
-	  _react2["default"].Children.forEach(children, function (c) {
-	    index++;
-	    if (c && c.type && c.type.isMenuItemGroup) {
-	      _react2["default"].Children.forEach(c.props.children, function (c2) {
-	        index++;
-	        cb(c2, index);
-	      });
-	    } else {
-	      cb(c, index);
-	    }
-	  });
-	}
-	
-	function loopMenuItemRecusively(children, keys, ret) {
-	  if (!children || ret.find) {
-	    return;
-	  }
-	  _react2["default"].Children.forEach(children, function (c) {
-	    if (ret.find) {
-	      return;
-	    }
-	    if (c) {
-	      var construt = c.type;
-	      if (!construt || !(construt.isSubMenu || construt.isMenuItem || construt.isMenuItemGroup)) {
-	        return;
-	      }
-	      if (keys.indexOf(c.key) !== -1) {
-	        ret.find = true;
-	      } else if (c.props.children) {
-	        loopMenuItemRecusively(c.props.children, keys, ret);
-	      }
-	    }
-	  });
-	}
-
-/***/ }),
-/* 103 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  tag: _propTypes2["default"].string,
-	  hiddenClassName: _propTypes2["default"].string,
-	  visible: _propTypes2["default"].bool
-	};
-	var defaultProps = {
-	  tag: 'div'
-	};
-	
-	var DOMWrap = function (_Component) {
-	  _inherits(DOMWrap, _Component);
-	
-	  function DOMWrap() {
-	    _classCallCheck(this, DOMWrap);
-	
-	    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
-	  }
-	
-	  DOMWrap.prototype.render = function render() {
-	    var props = _extends({}, this.props);
-	    if (!props.visible) {
-	      props.className = props.className || '';
-	      props.className += ' ' + props.hiddenClassName;
-	    }
-	    var Tag = props.tag;
-	    delete props.tag;
-	    delete props.hiddenClassName;
-	    delete props.visible;
-	    return _react2["default"].createElement(Tag, props);
-	  };
-	
-	  return DOMWrap;
-	}(_react.Component);
-	
-	;
-	
-	DOMWrap.propTypes = propTypes;
-	DOMWrap.defaultProps = defaultProps;
-	
-	exports["default"] = DOMWrap;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 104 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _SubPopupMenu = __webpack_require__(105);
-	
-	var _SubPopupMenu2 = _interopRequireDefault(_SubPopupMenu);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _keyCode = __webpack_require__(37);
-	
-	var _keyCode2 = _interopRequireDefault(_keyCode);
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _util = __webpack_require__(102);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var guid = 0;
-	
-	var propTypes = {
-	  parentMenu: _propTypes2["default"].object,
-	  title: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].node]),
-	  children: _propTypes2["default"].any,
-	  selectedKeys: _propTypes2["default"].array,
-	  openKeys: _propTypes2["default"].array,
-	  onClick: _propTypes2["default"].func,
-	  onOpenChange: _propTypes2["default"].func,
-	  rootPrefixCls: _propTypes2["default"].string,
-	  eventKey: _propTypes2["default"].string,
-	  multiple: _propTypes2["default"].bool,
-	  active: _propTypes2["default"].bool,
-	  onSelect: _propTypes2["default"].func,
-	  closeSubMenuOnMouseLeave: _propTypes2["default"].bool,
-	  openSubMenuOnMouseEnter: _propTypes2["default"].bool,
-	  onDeselect: _propTypes2["default"].func,
-	  onDestroy: _propTypes2["default"].func,
-	  onItemHover: _propTypes2["default"].func,
-	  onMouseEnter: _propTypes2["default"].func,
-	  onMouseLeave: _propTypes2["default"].func,
-	  onTitleMouseEnter: _propTypes2["default"].func,
-	  onTitleMouseLeave: _propTypes2["default"].func,
-	  onTitleClick: _propTypes2["default"].func
-	};
-	var defaultProps = {
-	  onMouseEnter: _util.noop,
-	  onMouseLeave: _util.noop,
-	  onTitleMouseEnter: _util.noop,
-	  onTitleMouseLeave: _util.noop,
-	  onTitleClick: _util.noop,
-	  title: ''
-	};
-	
-	var SubMenu = function (_Component) {
-	  _inherits(SubMenu, _Component);
-	
-	  function SubMenu(props) {
-	    _classCallCheck(this, SubMenu);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    _this.isSubMenu = 1;
-	    _this.state = {
-	      defaultActiveFirst: false
-	    };
-	
-	    _this.onDestroy = _this.onDestroy.bind(_this);
-	    _this.onKeyDown = _this.onKeyDown.bind(_this);
-	    _this.onOpenChange = _this.onOpenChange.bind(_this);
-	    _this.onMouseEnter = _this.onMouseEnter.bind(_this);
-	    _this.onTitleMouseEnter = _this.onTitleMouseEnter.bind(_this);
-	
-	    _this.onTitleMouseLeave = _this.onTitleMouseLeave.bind(_this);
-	    _this.onMouseLeave = _this.onMouseLeave.bind(_this);
-	    _this.onTitleClick = _this.onTitleClick.bind(_this);
-	    _this.onSubMenuClick = _this.onSubMenuClick.bind(_this);
-	    _this.onSelect = _this.onSelect.bind(_this);
-	    _this.onDeselect = _this.onDeselect.bind(_this);
-	
-	    _this.getPrefixCls = _this.getPrefixCls.bind(_this);
-	    _this.getActiveClassName = _this.getActiveClassName.bind(_this);
-	    _this.getSelectedClassName = _this.getSelectedClassName.bind(_this);
-	
-	    _this.getDisabledClassName = _this.getDisabledClassName.bind(_this);
-	    _this.getOpenClassName = _this.getOpenClassName.bind(_this);
-	    _this.saveMenuInstance = _this.saveMenuInstance.bind(_this);
-	    _this.addKeyPath = _this.addKeyPath.bind(_this);
-	    _this.triggerOpenChange = _this.triggerOpenChange.bind(_this);
-	    _this.clearSubMenuTimers = _this.clearSubMenuTimers.bind(_this);
-	
-	    _this.clearSubMenuLeaveTimer = _this.clearSubMenuLeaveTimer.bind(_this);
-	    _this.clearSubMenuTitleLeaveTimer = _this.clearSubMenuTitleLeaveTimer.bind(_this);
-	    _this.isChildrenSelected = _this.isChildrenSelected.bind(_this);
-	    _this.isOpen = _this.isOpen.bind(_this);
-	    _this.renderChildren = _this.renderChildren.bind(_this);
-	    return _this;
-	  }
-	
-	  SubMenu.prototype.componentWillUnmount = function componentWillUnmount() {
-	    var _props = this.props,
-	        onDestroy = _props.onDestroy,
-	        eventKey = _props.eventKey,
-	        parentMenu = _props.parentMenu;
-	
-	    this.mounted = true;
-	    if (onDestroy) {
-	      onDestroy(eventKey);
-	    }
-	    if (parentMenu.subMenuInstance === this) {
-	      this.clearSubMenuTimers();
-	    }
-	  };
-	
-	  SubMenu.prototype.componentDidMount = function componentDidMount() {
-	    this.mounted = true;
-	  };
-	
-	  SubMenu.prototype.onDestroy = function onDestroy(key) {
-	    this.props.onDestroy(key);
-	  };
-	
-	  SubMenu.prototype.onKeyDown = function onKeyDown(e) {
-	    var keyCode = e.keyCode;
-	    var menu = this.menuInstance;
-	    var isOpen = this.isOpen();
-	
-	    if (keyCode === _keyCode2["default"].ENTER) {
-	      this.onTitleClick(e);
-	      this.setState({
-	        defaultActiveFirst: true
-	      });
-	      return true;
-	    }
-	
-	    if (keyCode === _keyCode2["default"].RIGHT) {
-	      if (isOpen) {
-	        menu.onKeyDown(e);
-	      } else {
-	        this.triggerOpenChange(true);
-	        this.setState({
-	          defaultActiveFirst: true
-	        });
-	      }
-	      return true;
-	    }
-	    if (keyCode === _keyCode2["default"].LEFT) {
-	      var handled = void 0;
-	      if (isOpen) {
-	        handled = menu.onKeyDown(e);
-	      } else {
-	        return undefined;
-	      }
-	      if (!handled) {
-	        this.triggerOpenChange(false);
-	        handled = true;
-	      }
-	      return handled;
-	    }
-	
-	    if (isOpen && (keyCode === _keyCode2["default"].UP || keyCode === _keyCode2["default"].DOWN)) {
-	      return menu.onKeyDown(e);
-	    }
-	  };
-	
-	  SubMenu.prototype.onOpenChange = function onOpenChange(e) {
-	    this.props.onOpenChange(e);
-	  };
-	
-	  SubMenu.prototype.onMouseEnter = function onMouseEnter(e) {
-	    var props = this.props;
-	    this.clearSubMenuLeaveTimer(props.parentMenu.subMenuInstance !== this);
-	    props.onMouseEnter({
-	      key: props.eventKey,
-	      domEvent: e
-	    });
-	  };
-	
-	  SubMenu.prototype.onTitleMouseEnter = function onTitleMouseEnter(domEvent) {
-	    var props = this.props;
-	    var parentMenu = props.parentMenu,
-	        key = props.eventKey;
-	
-	    var item = this;
-	    this.clearSubMenuTitleLeaveTimer(parentMenu.subMenuInstance !== item);
-	    if (parentMenu.menuItemInstance) {
-	      parentMenu.menuItemInstance.clearMenuItemMouseLeaveTimer(true);
-	    }
-	    var openChanges = [];
-	    if (props.openSubMenuOnMouseEnter) {
-	      openChanges.push({
-	        key: key,
-	        item: item,
-	        trigger: 'mouseenter',
-	        open: true
-	      });
-	    }
-	    props.onItemHover({
-	      key: key,
-	      item: item,
-	      hover: true,
-	      trigger: 'mouseenter',
-	      openChanges: openChanges
-	    });
-	    this.setState({
-	      defaultActiveFirst: false
-	    });
-	    props.onTitleMouseEnter({
-	      key: key,
-	      domEvent: domEvent
-	    });
-	  };
-	
-	  SubMenu.prototype.onTitleMouseLeave = function onTitleMouseLeave(e) {
-	    var _this2 = this;
-	
-	    var props = this.props;
-	    var parentMenu = props.parentMenu,
-	        eventKey = props.eventKey;
-	
-	    parentMenu.subMenuInstance = this;
-	    parentMenu.subMenuTitleLeaveFn = function () {
-	      if (_this2.mounted) {
-	        // leave whole sub tree
-	        // still active
-	        if (props.mode === 'inline' && props.active) {
-	          props.onItemHover({
-	            key: eventKey,
-	            item: _this2,
-	            hover: false,
-	            trigger: 'mouseleave'
-	          });
-	        }
-	        props.onTitleMouseLeave({
-	          key: props.eventKey,
-	          domEvent: e
-	        });
-	      }
-	    };
-	    parentMenu.subMenuTitleLeaveTimer = setTimeout(parentMenu.subMenuTitleLeaveFn, 100);
-	  };
-	
-	  SubMenu.prototype.onMouseLeave = function onMouseLeave(e) {
-	    var _this3 = this;
-	
-	    var props = this.props;
-	    var parentMenu = props.parentMenu,
-	        eventKey = props.eventKey;
-	
-	    parentMenu.subMenuInstance = this;
-	    parentMenu.subMenuLeaveFn = function () {
-	      if (_this3.mounted) {
-	        // leave whole sub tree
-	        // still active
-	        if (props.mode !== 'inline') {
-	          var isOpen = _this3.isOpen();
-	          if (isOpen && props.closeSubMenuOnMouseLeave && props.active) {
-	            props.onItemHover({
-	              key: eventKey,
-	              item: _this3,
-	              hover: false,
-	              trigger: 'mouseleave',
-	              openChanges: [{
-	                key: eventKey,
-	                item: _this3,
-	                trigger: 'mouseleave',
-	                open: false
-	              }]
-	            });
-	          } else {
-	            if (props.active) {
-	              props.onItemHover({
-	                key: eventKey,
-	                item: _this3,
-	                hover: false,
-	                trigger: 'mouseleave'
-	              });
-	            }
-	            if (isOpen && props.closeSubMenuOnMouseLeave) {
-	              _this3.triggerOpenChange(false);
-	            }
-	          }
-	        }
-	        // trigger mouseleave
-	        props.onMouseLeave({
-	          key: eventKey,
-	          domEvent: e
-	        });
-	      }
-	    };
-	    // prevent popup menu and submenu gap
-	    parentMenu.subMenuLeaveTimer = setTimeout(parentMenu.subMenuLeaveFn, 100);
-	  };
-	
-	  SubMenu.prototype.onTitleClick = function onTitleClick(e) {
-	    var props = this.props;
-	
-	    props.onTitleClick({
-	      key: props.eventKey,
-	      domEvent: e
-	    });
-	    if (props.openSubMenuOnMouseEnter) {
-	      return;
-	    }
-	    this.triggerOpenChange(!this.isOpen(), 'click');
-	    this.setState({
-	      defaultActiveFirst: false
-	    });
-	  };
-	
-	  SubMenu.prototype.onSubMenuClick = function onSubMenuClick(info) {
-	    this.props.onClick(this.addKeyPath(info));
-	  };
-	
-	  SubMenu.prototype.onSelect = function onSelect(info) {
-	    this.props.onSelect(info);
-	  };
-	
-	  SubMenu.prototype.onDeselect = function onDeselect(info) {
-	    this.props.onDeselect(info);
-	  };
-	
-	  SubMenu.prototype.getPrefixCls = function getPrefixCls() {
-	    return this.props.rootPrefixCls + '-submenu';
-	  };
-	
-	  SubMenu.prototype.getActiveClassName = function getActiveClassName() {
-	    return this.getPrefixCls() + '-active';
-	  };
-	
-	  SubMenu.prototype.getDisabledClassName = function getDisabledClassName() {
-	    return this.getPrefixCls() + '-disabled';
-	  };
-	
-	  SubMenu.prototype.getSelectedClassName = function getSelectedClassName() {
-	    return this.getPrefixCls() + '-selected';
-	  };
-	
-	  SubMenu.prototype.getOpenClassName = function getOpenClassName() {
-	    return this.props.rootPrefixCls + '-submenu-open';
-	  };
-	
-	  SubMenu.prototype.saveMenuInstance = function saveMenuInstance(c) {
-	    this.menuInstance = c;
-	  };
-	
-	  SubMenu.prototype.addKeyPath = function addKeyPath(info) {
-	    return _extends({}, info, {
-	      keyPath: (info.keyPath || []).concat(this.props.eventKey)
-	    });
-	  };
-	
-	  SubMenu.prototype.triggerOpenChange = function triggerOpenChange(open, type) {
-	    var key = this.props.eventKey;
-	    this.onOpenChange({
-	      key: key,
-	      item: this,
-	      trigger: type,
-	      open: open
-	    });
-	  };
-	
-	  SubMenu.prototype.clearSubMenuTimers = function clearSubMenuTimers() {
-	    var callFn = void 0;
-	    this.clearSubMenuLeaveTimer(callFn);
-	    this.clearSubMenuTitleLeaveTimer(callFn);
-	  };
-	
-	  SubMenu.prototype.clearSubMenuTitleLeaveTimer = function clearSubMenuTitleLeaveTimer() {
-	    var callFn = void 0;
-	    var parentMenu = this.props.parentMenu;
-	    if (parentMenu.subMenuTitleLeaveTimer) {
-	      clearTimeout(parentMenu.subMenuTitleLeaveTimer);
-	      parentMenu.subMenuTitleLeaveTimer = null;
-	      if (callFn && parentMenu.subMenuTitleLeaveFn) {
-	        parentMenu.subMenuTitleLeaveFn();
-	      }
-	      parentMenu.subMenuTitleLeaveFn = null;
-	    }
-	  };
-	
-	  SubMenu.prototype.clearSubMenuLeaveTimer = function clearSubMenuLeaveTimer() {
-	    var callFn = void 0;
-	    var parentMenu = this.props.parentMenu;
-	    if (parentMenu.subMenuLeaveTimer) {
-	      clearTimeout(parentMenu.subMenuLeaveTimer);
-	      parentMenu.subMenuLeaveTimer = null;
-	      if (callFn && parentMenu.subMenuLeaveFn) {
-	        parentMenu.subMenuLeaveFn();
-	      }
-	      parentMenu.subMenuLeaveFn = null;
-	    }
-	  };
-	
-	  SubMenu.prototype.isChildrenSelected = function isChildrenSelected() {
-	    var ret = { find: false };
-	    (0, _util.loopMenuItemRecusively)(this.props.children, this.props.selectedKeys, ret);
-	    return ret.find;
-	  };
-	
-	  SubMenu.prototype.isOpen = function isOpen() {
-	    return this.props.openKeys.indexOf(this.props.eventKey) !== -1;
-	  };
-	
-	  SubMenu.prototype.renderChildren = function renderChildren(children) {
-	    var props = this.props;
-	    var baseProps = {
-	      mode: props.mode === 'horizontal' ? 'vertical' : props.mode,
-	      visible: this.isOpen(),
-	      level: props.level + 1,
-	      inlineIndent: props.inlineIndent,
-	      focusable: false,
-	      onClick: this.onSubMenuClick,
-	      onSelect: this.onSelect,
-	      onDeselect: this.onDeselect,
-	      onDestroy: this.onDestroy,
-	      selectedKeys: props.selectedKeys,
-	      eventKey: props.eventKey + '-menu-',
-	      openKeys: props.openKeys,
-	      openTransitionName: props.openTransitionName,
-	      openAnimation: props.openAnimation,
-	      onOpenChange: this.onOpenChange,
-	      closeSubMenuOnMouseLeave: props.closeSubMenuOnMouseLeave,
-	      defaultActiveFirst: this.state.defaultActiveFirst,
-	      multiple: props.multiple,
-	      prefixCls: props.rootPrefixCls,
-	      id: this._menuId,
-	      ref: this.saveMenuInstance
-	    };
-	    return _react2["default"].createElement(
-	      _SubPopupMenu2["default"],
-	      baseProps,
-	      children
-	    );
-	  };
-	
-	  SubMenu.prototype.render = function render() {
-	    var _classes;
-	
-	    var isOpen = this.isOpen();
-	    this.haveOpen = this.haveOpen || isOpen;
-	    var props = this.props;
-	    var prefixCls = this.getPrefixCls();
-	    var classes = (_classes = {}, _defineProperty(_classes, props.className, !!props.className), _defineProperty(_classes, prefixCls + '-' + props.mode, 1), _classes);
-	
-	    classes[this.getOpenClassName()] = isOpen;
-	    classes[this.getActiveClassName()] = props.active;
-	    classes[this.getDisabledClassName()] = props.disabled;
-	    classes[this.getSelectedClassName()] = this.isChildrenSelected();
-	
-	    if (!this._menuId) {
-	      if (props.eventKey) {
-	        this._menuId = props.eventKey + '$Menu';
-	      } else {
-	        this._menuId = '$__$' + ++guid + '$Menu';
-	      }
-	    }
-	
-	    classes[prefixCls] = true;
-	    classes[prefixCls + '-' + props.mode] = 1;
-	    var titleClickEvents = {};
-	    var mouseEvents = {};
-	    var titleMouseEvents = {};
-	    if (!props.disabled) {
-	      titleClickEvents = {
-	        onClick: this.onTitleClick
-	      };
-	      mouseEvents = {
-	        onMouseLeave: this.onMouseLeave,
-	        onMouseEnter: this.onMouseEnter
-	      };
-	      // only works in title, not outer li
-	      titleMouseEvents = {
-	        onMouseEnter: this.onTitleMouseEnter,
-	        onMouseLeave: this.onTitleMouseLeave
-	      };
-	    }
-	    var style = {};
-	    if (props.mode === 'inline') {
-	      style.paddingLeft = props.inlineIndent * props.level;
-	    }
-	    return _react2["default"].createElement(
-	      'li',
-	      _extends({ className: (0, _classnames2["default"])(classes) }, mouseEvents),
-	      _react2["default"].createElement(
-	        'div',
-	        _extends({
-	          style: style,
-	          className: prefixCls + '-title'
-	        }, titleMouseEvents, titleClickEvents, {
-	          'aria-expanded': isOpen,
-	          'aria-owns': this._menuId,
-	          'aria-haspopup': 'true'
-	        }),
-	        props.title
-	      ),
-	      this.renderChildren(props.children)
-	    );
-	  };
-	
-	  return SubMenu;
-	}(_react.Component);
-	
-	;
-	
-	SubMenu.propTypes = propTypes;
-	SubMenu.defaultProps = defaultProps;
-	SubMenu.isSubMenu = 1;
-	
-	exports["default"] = SubMenu;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _beeAnimate = __webpack_require__(106);
-	
-	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _createChainedFunction = __webpack_require__(36);
-	
-	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
-	
-	var _util = __webpack_require__(102);
-	
-	var _DOMWrap = __webpack_require__(103);
-	
-	var _DOMWrap2 = _interopRequireDefault(_DOMWrap);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	function allDisabled(arr) {
-	  if (!arr.length) {
-	    return true;
-	  }
-	  return arr.every(function (c) {
-	    return !!c.props.disabled;
-	  });
-	}
-	
-	function getActiveKey(props, originalActiveKey) {
-	  var activeKey = originalActiveKey;
-	  var children = props.children,
-	      eventKey = props.eventKey;
-	
-	  if (activeKey) {
-	    var found = void 0;
-	    (0, _util.loopMenuItem)(children, function (c, i) {
-	      if (c && !c.props.disabled && activeKey === (0, _util.getKeyFromChildrenIndex)(c, eventKey, i)) {
-	        found = true;
-	      }
-	    });
-	    if (found) {
-	      return activeKey;
-	    }
-	  }
-	  activeKey = null;
-	  if (props.defaultActiveFirst) {
-	    (0, _util.loopMenuItem)(children, function (c, i) {
-	      if (!activeKey && c && !c.props.disabled) {
-	        activeKey = (0, _util.getKeyFromChildrenIndex)(c, eventKey, i);
-	      }
-	    });
-	    return activeKey;
-	  }
-	  return activeKey;
-	}
-	
-	function saveRef(index, subIndex, c) {
-	  if (c) {
-	    if (subIndex !== undefined) {
-	      this.instanceArray[index] = this.instanceArray[index] || [];
-	      this.instanceArray[index][subIndex] = c;
-	    } else {
-	      this.instanceArray[index] = c;
-	    }
-	  }
-	}
-	
-	var propTypes = {
-	  onSelect: _propTypes2["default"].func,
-	  onClick: _propTypes2["default"].func,
-	  onDeselect: _propTypes2["default"].func,
-	  onOpenChange: _propTypes2["default"].func,
-	  onDestroy: _propTypes2["default"].func,
-	  openTransitionName: _propTypes2["default"].string,
-	  openAnimation: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object]),
-	  openKeys: _propTypes2["default"].array,
-	  closeSubMenuOnMouseLeave: _propTypes2["default"].bool,
-	  visible: _propTypes2["default"].bool,
-	  children: _propTypes2["default"].any
-	};
-	
-	var SubPopupMenu = function (_Component) {
-	  _inherits(SubPopupMenu, _Component);
-	
-	  function SubPopupMenu(props) {
-	    _classCallCheck(this, SubPopupMenu);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    _this.state = {
-	      activeKey: getActiveKey(_this.props, _this.props.activeKey)
-	    };
-	    _this.getOpenChangesOnItemHover = _this.getOpenChangesOnItemHover.bind(_this);
-	    _this.onDeselect = _this.onDeselect.bind(_this);
-	    _this.onClick = _this.onClick.bind(_this);
-	    _this.onOpenChange = _this.onOpenChange.bind(_this);
-	    _this.onDestroy = _this.onDestroy.bind(_this);
-	    _this.onSelect = _this.onSelect.bind(_this);
-	
-	    _this.onItemHover = _this.onItemHover.bind(_this);
-	    _this.getOpenTransitionName = _this.getOpenTransitionName.bind(_this);
-	    _this.renderMenuItem = _this.renderMenuItem.bind(_this);
-	
-	    _this.getFlatInstanceArray = _this.getFlatInstanceArray.bind(_this);
-	    _this.renderCommonMenuItem = _this.renderCommonMenuItem.bind(_this);
-	    _this.renderRoot = _this.renderRoot.bind(_this);
-	
-	    return _this;
-	  }
-	
-	  SubPopupMenu.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	    var props = void 0;
-	    if ('activeKey' in nextProps) {
-	      props = {
-	        activeKey: getActiveKey(nextProps, nextProps.activeKey)
-	      };
-	    } else {
-	      var originalActiveKey = this.state.activeKey;
-	      var activeKey = getActiveKey(nextProps, originalActiveKey);
-	      // fix: this.setState(), parent.render(),
-	      if (activeKey !== originalActiveKey) {
-	        props = {
-	          activeKey: activeKey
-	        };
-	      }
-	    }
-	    if (props) {
-	      this.setState(props);
-	    }
-	  };
-	
-	  SubPopupMenu.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
-	    return this.props.visible || nextProps.visible;
-	  };
-	
-	  SubPopupMenu.prototype.onDeselect = function onDeselect(selectInfo) {
-	    this.props.onDeselect(selectInfo);
-	  };
-	
-	  SubPopupMenu.prototype.onSelect = function onSelect(selectInfo) {
-	    this.props.onSelect(selectInfo);
-	  };
-	
-	  SubPopupMenu.prototype.onClick = function onClick(e) {
-	    this.props.onClick(e);
-	  };
-	
-	  SubPopupMenu.prototype.onOpenChange = function onOpenChange(e) {
-	    this.props.onOpenChange(e);
-	  };
-	
-	  SubPopupMenu.prototype.onDestroy = function onDestroy(key) {
-	    this.props.onDestroy(key);
-	  };
-	
-	  SubPopupMenu.prototype.onItemHover = function onItemHover(e) {
-	    var _e$openChanges = e.openChanges,
-	        openChanges = _e$openChanges === undefined ? [] : _e$openChanges;
-	
-	    openChanges = openChanges.concat(this.getOpenChangesOnItemHover(e));
-	    if (openChanges.length) {
-	      this.onOpenChange(openChanges);
-	    }
-	  };
-	
-	  SubPopupMenu.prototype.getOpenTransitionName = function getOpenTransitionName() {
-	    return this.props.openTransitionName;
-	  };
-	
-	  SubPopupMenu.prototype.renderMenuItem = function renderMenuItem(c, i, subIndex) {
-	    var props = this.props;
-	    var extraProps = {
-	      openKeys: props.openKeys,
-	      selectedKeys: props.selectedKeys,
-	      openSubMenuOnMouseEnter: true
-	    };
-	    return this.renderCommonMenuItem(c, i, subIndex, extraProps);
-	  };
-	
-	  SubPopupMenu.prototype.getOpenChangesOnItemHover = function getOpenChangesOnItemHover(e) {
-	    var mode = this.props.mode;
-	    var key = e.key,
-	        hover = e.hover,
-	        trigger = e.trigger;
-	
-	    var activeKey = this.state.activeKey;
-	    if (!trigger || hover || this.props.closeSubMenuOnMouseLeave || !e.item.isSubMenu || mode === 'inline') {
-	      this.setState({
-	        activeKey: hover ? key : null
-	      });
-	    } else {}
-	    // keep active for sub menu for click active
-	    // empty
-	
-	    // clear last open status
-	    if (hover && mode !== 'inline') {
-	      var activeItem = this.getFlatInstanceArray().filter(function (c) {
-	        return c && c.props.eventKey === activeKey;
-	      })[0];
-	      if (activeItem && activeItem.isSubMenu && activeItem.props.eventKey !== key) {
-	        return {
-	          item: activeItem,
-	          originalEvent: e,
-	          key: activeItem.props.eventKey,
-	          open: false
-	        };
-	      }
-	    }
-	    return [];
-	  };
-	
-	  SubPopupMenu.prototype.renderCommonMenuItem = function renderCommonMenuItem(child, i, subIndex, extraProps) {
-	    var state = this.state;
-	    var props = this.props;
-	    var key = (0, _util.getKeyFromChildrenIndex)(child, props.eventKey, i);
-	    var childProps = child.props;
-	    var isActive = key === state.activeKey;
-	    var newChildProps = _extends({
-	      mode: props.mode,
-	      level: props.level,
-	      inlineIndent: props.inlineIndent,
-	      renderMenuItem: this.renderMenuItem,
-	      rootPrefixCls: props.prefixCls,
-	      index: i,
-	      parentMenu: this,
-	      ref: childProps.disabled ? undefined : (0, _createChainedFunction2["default"])(child.ref, saveRef.bind(this, i, subIndex)),
-	      eventKey: key,
-	      closeSubMenuOnMouseLeave: props.closeSubMenuOnMouseLeave,
-	      onItemHover: this.onItemHover,
-	      active: !childProps.disabled && isActive,
-	      multiple: props.multiple,
-	      onClick: this.onClick,
-	      openTransitionName: this.getOpenTransitionName(),
-	      openAnimation: props.openAnimation,
-	      onOpenChange: this.onOpenChange,
-	      onDeselect: this.onDeselect,
-	      onDestroy: this.onDestroy,
-	      onSelect: this.onSelect
-	    }, extraProps);
-	    if (props.mode === 'inline') {
-	      newChildProps.closeSubMenuOnMouseLeave = newChildProps.openSubMenuOnMouseEnter = false;
-	    }
-	    return _react2["default"].cloneElement(child, newChildProps);
-	  };
-	
-	  SubPopupMenu.prototype.getFlatInstanceArray = function getFlatInstanceArray() {
-	    var instanceArray = this.instanceArray;
-	    var hasInnerArray = instanceArray.some(function (a) {
-	      return Array.isArray(a);
-	    });
-	    if (hasInnerArray) {
-	      instanceArray = [];
-	      this.instanceArray.forEach(function (a) {
-	        if (Array.isArray(a)) {
-	          instanceArray.push.apply(instanceArray, a);
-	        } else {
-	          instanceArray.push(a);
-	        }
-	      });
-	      this.instanceArray = instanceArray;
-	    }
-	    return instanceArray;
-	  };
-	
-	  SubPopupMenu.prototype.renderRoot = function renderRoot(props) {
-	    var _classes;
-	
-	    this.instanceArray = [];
-	    var classes = (_classes = {}, _defineProperty(_classes, props.prefixCls, 1), _defineProperty(_classes, props.prefixCls + '-' + props.mode, 1), _defineProperty(_classes, props.className, !!props.className), _classes);
-	    var domProps = {
-	      className: (0, _classnames2["default"])(classes),
-	      role: 'menu',
-	      'aria-activedescendant': ''
-	    };
-	    if (props.id) {
-	      domProps.id = props.id;
-	    }
-	    if (props.focusable) {
-	      domProps.tabIndex = '0';
-	      domProps.onKeyDown = this.onKeyDown;
-	    }
-	    return (
-	      // ESLint is not smart enough to know that the type of `children` was checked.
-	      /* eslint-disable */
-	      _react2["default"].createElement(
-	        _DOMWrap2["default"],
-	        _extends({
-	          style: props.style,
-	          tag: 'ul',
-	          hiddenClassName: props.prefixCls + '-hidden',
-	          visible: props.visible
-	        }, domProps),
-	        _react2["default"].Children.map(props.children, this.renderMenuItem.bind(this))
-	      )
-	      /*eslint-enable */
-	
-	    );
-	  };
-	
-	  SubPopupMenu.prototype.render = function render() {
-	    var renderFirst = this.renderFirst;
-	    this.renderFirst = 1;
-	    this.haveOpened = this.haveOpened || this.props.visible;
-	    if (!this.haveOpened) {
-	      return null;
-	    }
-	    var transitionAppear = true;
-	    if (!renderFirst && this.props.visible) {
-	      transitionAppear = false;
-	    }
-	    var props = _extends({}, this.props);
-	    props.className += ' ' + props.prefixCls + '-sub';
-	    var animProps = {};
-	    if (props.openTransitionName) {
-	      animProps.transitionName = props.openTransitionName;
-	    } else if (_typeof(props.openAnimation) === 'object') {
-	      animProps.animation = _extends({}, props.openAnimation);
-	      if (!transitionAppear) {
-	        delete animProps.animation.appear;
-	      }
-	    }
-	    return _react2["default"].createElement(
-	      _beeAnimate2["default"],
-	      _extends({}, animProps, {
-	        showProp: 'visible',
-	        component: '',
-	        transitionAppear: transitionAppear
-	      }),
-	      this.renderRoot(props)
-	    );
-	  };
-	
-	  return SubPopupMenu;
-	}(_react.Component);
-	
-	;
-	SubPopupMenu.propTypes = propTypes;
-	exports["default"] = SubPopupMenu;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _Animate = __webpack_require__(107);
-	
-	var _Animate2 = _interopRequireDefault(_Animate);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	exports["default"] = _Animate2["default"];
-	module.exports = exports['default'];
-
-/***/ }),
-/* 107 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _ChildrenUtils = __webpack_require__(108);
-	
-	var _AnimateChild = __webpack_require__(109);
-	
-	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
-	
-	var _util = __webpack_require__(110);
-	
-	var _util2 = _interopRequireDefault(_util);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var defaultKey = 'u_animate_' + Date.now();
-	
-	
-	function getChildrenFromProps(props) {
-	  var children = props.children;
-	  if (_react2["default"].isValidElement(children)) {
-	    if (!children.key) {
-	      return _react2["default"].cloneElement(children, {
-	        key: defaultKey
-	      });
-	    }
-	  }
-	  return children;
-	}
-	
-	function noop() {}
-	
-	var propTypes = {
-	  component: _propTypes2["default"].any,
-	  animation: _propTypes2["default"].object,
-	  transitionName: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object]),
-	  transitionEnter: _propTypes2["default"].bool,
-	  transitionAppear: _propTypes2["default"].bool,
-	  exclusive: _propTypes2["default"].bool,
-	  transitionLeave: _propTypes2["default"].bool,
-	  onEnd: _propTypes2["default"].func,
-	  onEnter: _propTypes2["default"].func,
-	  onLeave: _propTypes2["default"].func,
-	  onAppear: _propTypes2["default"].func,
-	  showProp: _propTypes2["default"].string
-	};
-	
-	var defaultProps = {
-	  animation: {},
-	  component: 'span',
-	  transitionEnter: true,
-	  transitionLeave: true,
-	  transitionAppear: false,
-	  onEnd: noop,
-	  onEnter: noop,
-	  onLeave: noop,
-	  onAppear: noop
-	};
-	
-	var Animate = function (_Component) {
-	  _inherits(Animate, _Component);
-	
-	  function Animate(props) {
-	    _classCallCheck(this, Animate);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    _this.currentlyAnimatingKeys = {};
-	    _this.keysToEnter = [];
-	    _this.keysToLeave = [];
-	    _this.state = {
-	      children: (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(_this.props))
-	    };
-	
-	    _this.performEnter = _this.performEnter.bind(_this);
-	    _this.performAppear = _this.performAppear.bind(_this);
-	    _this.handleDoneAdding = _this.handleDoneAdding.bind(_this);
-	    _this.performLeave = _this.performLeave.bind(_this);
-	
-	    _this.performLeave = _this.performLeave.bind(_this);
-	    _this.handleDoneLeaving = _this.handleDoneLeaving.bind(_this);
-	    _this.isValidChildByKey = _this.isValidChildByKey.bind(_this);
-	    _this.stop = _this.stop.bind(_this);
-	    return _this;
-	  }
-	
-	  Animate.prototype.componentDidMount = function componentDidMount() {
-	    var _this2 = this;
-	
-	    this.mounted = true;
-	    var showProp = this.props.showProp;
-	    var children = this.state.children;
-	    if (showProp) {
-	      children = children.filter(function (child) {
-	        return !!child.props[showProp];
-	      });
-	    }
-	    children.forEach(function (child) {
-	      if (child) {
-	        _this2.performAppear(child.key);
-	      }
-	    });
-	  };
-	
-	  Animate.prototype.componentWillUnmount = function componentWillUnmount() {
-	    this.mounted = false;
-	  };
-	
-	  Animate.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	    var _this3 = this;
-	
-	    this.nextProps = nextProps;
-	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
-	    var props = this.props;
-	    // exclusive needs immediate response
-	    if (props.exclusive) {
-	      Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
-	        _this3.stop(key);
-	      });
-	    }
-	    var showProp = props.showProp;
-	    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
-	    // last props children if exclusive
-	    var currentChildren = props.exclusive ? (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props)) : this.state.children;
-	    // in case destroy in showProp mode
-	    var newChildren = [];
-	    if (showProp) {
-	      currentChildren.forEach(function (currentChild) {
-	        var nextChild = currentChild && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
-	        var newChild = void 0;
-	        if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
-	          newChild = _react2["default"].cloneElement(nextChild || currentChild, _defineProperty({}, showProp, true));
-	        } else {
-	          newChild = nextChild;
-	        }
-	        if (newChild) {
-	          newChildren.push(newChild);
-	        }
-	      });
-	      nextChildren.forEach(function (nextChild) {
-	        if (!nextChild || !(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
-	          newChildren.push(nextChild);
-	        }
-	      });
-	    } else {
-	      newChildren = (0, _ChildrenUtils.mergeChildren)(currentChildren, nextChildren);
-	    }
-	
-	    // need render to avoid update
-	    this.setState({
-	      children: newChildren
-	    });
-	
-	    nextChildren.forEach(function (child) {
-	      var key = child && child.key;
-	      if (child && currentlyAnimatingKeys[key]) {
-	        return;
-	      }
-	      var hasPrev = child && (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
-	      if (showProp) {
-	        var showInNext = child.props[showProp];
-	        if (hasPrev) {
-	          var showInNow = (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
-	          if (!showInNow && showInNext) {
-	            _this3.keysToEnter.push(key);
-	          }
-	        } else if (showInNext) {
-	          _this3.keysToEnter.push(key);
-	        }
-	      } else if (!hasPrev) {
-	        _this3.keysToEnter.push(key);
-	      }
-	    });
-	
-	    currentChildren.forEach(function (child) {
-	      var key = child && child.key;
-	      if (child && currentlyAnimatingKeys[key]) {
-	        return;
-	      }
-	      var hasNext = child && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
-	      if (showProp) {
-	        var showInNow = child.props[showProp];
-	        if (hasNext) {
-	          var showInNext = (0, _ChildrenUtils.findShownChildInChildrenByKey)(nextChildren, key, showProp);
-	          if (!showInNext && showInNow) {
-	            _this3.keysToLeave.push(key);
-	          }
-	        } else if (showInNow) {
-	          _this3.keysToLeave.push(key);
-	        }
-	      } else if (!hasNext) {
-	        _this3.keysToLeave.push(key);
-	      }
-	    });
-	  };
-	
-	  Animate.prototype.componentDidUpdate = function componentDidUpdate() {
-	    var keysToEnter = this.keysToEnter;
-	    this.keysToEnter = [];
-	    keysToEnter.forEach(this.performEnter);
-	    var keysToLeave = this.keysToLeave;
-	    this.keysToLeave = [];
-	    keysToLeave.forEach(this.performLeave);
-	  };
-	
-	  Animate.prototype.performEnter = function performEnter(key) {
-	    // may already remove by exclusive
-	    if (this.refs[key]) {
-	      this.currentlyAnimatingKeys[key] = true;
-	      this.refs[key].componentWillEnter(this.handleDoneAdding.bind(this, key, 'enter'));
-	    }
-	  };
-	
-	  Animate.prototype.performAppear = function performAppear(key) {
-	    if (this.refs[key]) {
-	      this.currentlyAnimatingKeys[key] = true;
-	      this.refs[key].componentWillAppear(this.handleDoneAdding.bind(this, key, 'appear'));
-	    }
-	  };
-	
-	  Animate.prototype.handleDoneAdding = function handleDoneAdding(key, type) {
-	    var props = this.props;
-	    delete this.currentlyAnimatingKeys[key];
-	    // if update on exclusive mode, skip check
-	    if (props.exclusive && props !== this.nextProps) {
-	      return;
-	    }
-	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
-	    if (!this.isValidChildByKey(currentChildren, key)) {
-	      // exclusive will not need this
-	      this.performLeave(key);
-	    } else {
-	      if (type === 'appear') {
-	        if (_util2["default"].allowAppearCallback(props)) {
-	          props.onAppear(key);
-	          props.onEnd(key, true);
-	        }
-	      } else {
-	        if (_util2["default"].allowEnterCallback(props)) {
-	          props.onEnter(key);
-	          props.onEnd(key, true);
-	        }
-	      }
-	    }
-	  };
-	
-	  Animate.prototype.performLeave = function performLeave(key) {
-	    // may already remove by exclusive
-	    if (this.refs[key]) {
-	      this.currentlyAnimatingKeys[key] = true;
-	      this.refs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
-	    }
-	  };
-	
-	  Animate.prototype.handleDoneLeaving = function handleDoneLeaving(key) {
-	    var props = this.props;
-	    delete this.currentlyAnimatingKeys[key];
-	    // if update on exclusive mode, skip check
-	    if (props.exclusive && props !== this.nextProps) {
-	      return;
-	    }
-	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
-	    // in case state change is too fast
-	    if (this.isValidChildByKey(currentChildren, key)) {
-	      this.performEnter(key);
-	    } else {
-	      var end = function end() {
-	        if (_util2["default"].allowLeaveCallback(props)) {
-	          props.onLeave(key);
-	          props.onEnd(key, false);
-	        }
-	      };
-	      /* eslint react/no-is-mounted:0 */
-	      if (this.mounted && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren, props.showProp)) {
-	        this.setState({
-	          children: currentChildren
-	        }, end);
-	      } else {
-	        end();
-	      }
-	    }
-	  };
-	
-	  Animate.prototype.isValidChildByKey = function isValidChildByKey(currentChildren, key) {
-	    var showProp = this.props.showProp;
-	    if (showProp) {
-	      return (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
-	    }
-	    return (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
-	  };
-	
-	  Animate.prototype.stop = function stop(key) {
-	    delete this.currentlyAnimatingKeys[key];
-	    var component = this.refs[key];
-	    if (component) {
-	      component.stop();
-	    }
-	  };
-	
-	  Animate.prototype.render = function render() {
-	    var props = this.props;
-	    this.nextProps = props;
-	    var stateChildren = this.state.children;
-	    var children = null;
-	    if (stateChildren) {
-	      children = stateChildren.map(function (child) {
-	        if (child === null || child === undefined) {
-	          return child;
-	        }
-	        if (!child.key) {
-	          throw new Error('must set key for <rc-animate> children');
-	        }
-	        return _react2["default"].createElement(
-	          _AnimateChild2["default"],
-	          {
-	            key: child.key,
-	            ref: child.key,
-	            animation: props.animation,
-	            transitionName: props.transitionName,
-	            transitionEnter: props.transitionEnter,
-	            transitionAppear: props.transitionAppear,
-	            transitionLeave: props.transitionLeave
-	          },
-	          child
-	        );
-	      });
-	    }
-	    var Component = props.component;
-	    if (Component) {
-	      var passedProps = props;
-	      if (typeof Component === 'string') {
-	        passedProps = {
-	          className: props.className,
-	          style: props.style
-	        };
-	      }
-	      return _react2["default"].createElement(
-	        Component,
-	        passedProps,
-	        children
-	      );
-	    }
-	    return children[0] || null;
-	  };
-	
-	  return Animate;
-	}(_react.Component);
-	
-	;
-	Animate.defaultProps = defaultProps;
-	Animate.propTypes = Animate.propTypes;
-	
-	exports["default"] = Animate;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 108 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.toArrayChildren = toArrayChildren;
-	exports.findChildInChildrenByKey = findChildInChildrenByKey;
-	exports.findShownChildInChildrenByKey = findShownChildInChildrenByKey;
-	exports.findHiddenChildInChildrenByKey = findHiddenChildInChildrenByKey;
-	exports.isSameChildren = isSameChildren;
-	exports.mergeChildren = mergeChildren;
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function toArrayChildren(children) {
-	  var ret = [];
-	  _react2["default"].Children.forEach(children, function (child) {
-	    ret.push(child);
-	  });
-	  return ret;
-	}
-	
-	function findChildInChildrenByKey(children, key) {
-	  var ret = null;
-	  if (children) {
-	    children.forEach(function (child) {
-	      if (ret) {
-	        return;
-	      }
-	      if (child && child.key === key) {
-	        ret = child;
-	      }
-	    });
-	  }
-	  return ret;
-	}
-	
-	function findShownChildInChildrenByKey(children, key, showProp) {
-	  var ret = null;
-	  if (children) {
-	    children.forEach(function (child) {
-	      if (child && child.key === key && child.props[showProp]) {
-	        if (ret) {
-	          throw new Error('two child with same key for <rc-animate> children');
-	        }
-	        ret = child;
-	      }
-	    });
-	  }
-	  return ret;
-	}
-	
-	function findHiddenChildInChildrenByKey(children, key, showProp) {
-	  var found = 0;
-	  if (children) {
-	    children.forEach(function (child) {
-	      if (found) {
-	        return;
-	      }
-	      found = child && child.key === key && !child.props[showProp];
-	    });
-	  }
-	  return found;
-	}
-	
-	function isSameChildren(c1, c2, showProp) {
-	  var same = c1.length === c2.length;
-	  if (same) {
-	    c1.forEach(function (child, index) {
-	      var child2 = c2[index];
-	      if (child && child2) {
-	        if (child && !child2 || !child && child2) {
-	          same = false;
-	        } else if (child.key !== child2.key) {
-	          same = false;
-	        } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
-	          same = false;
-	        }
-	      }
-	    });
-	  }
-	  return same;
-	}
-	
-	function mergeChildren(prev, next) {
-	  var ret = [];
-	
-	  // For each key of `next`, the list of keys to insert before that key in
-	  // the combined list
-	  var nextChildrenPending = {};
-	  var pendingChildren = [];
-	  prev.forEach(function (child) {
-	    if (child && findChildInChildrenByKey(next, child.key)) {
-	      if (pendingChildren.length) {
-	        nextChildrenPending[child.key] = pendingChildren;
-	        pendingChildren = [];
-	      }
-	    } else {
-	      pendingChildren.push(child);
-	    }
-	  });
-	
-	  next.forEach(function (child) {
-	    if (child && nextChildrenPending.hasOwnProperty(child.key)) {
-	      ret = ret.concat(nextChildrenPending[child.key]);
-	    }
-	    ret.push(child);
-	  });
-	
-	  ret = ret.concat(pendingChildren);
-	
-	  return ret;
-	}
-
-/***/ }),
-/* 109 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	var _util = __webpack_require__(110);
-	
-	var _util2 = _interopRequireDefault(_util);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var transitionMap = {
-	  enter: 'transitionEnter',
-	  appear: 'transitionAppear',
-	  leave: 'transitionLeave'
-	};
-	
-	var propTypes = {
-	  children: _propTypes2["default"].any
-	};
-	
-	var AnimateChild = function (_Component) {
-	  _inherits(AnimateChild, _Component);
-	
-	  function AnimateChild(props) {
-	    _classCallCheck(this, AnimateChild);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    _this.transition = _this.transition.bind(_this);
-	    _this.stop = _this.stop.bind(_this);
-	    return _this;
-	  }
-	
-	  AnimateChild.prototype.componentWillUnmount = function componentWillUnmount() {
-	    this.stop();
-	  };
-	
-	  AnimateChild.prototype.componentWillEnter = function componentWillEnter(done) {
-	    if (_util2["default"].isEnterSupported(this.props)) {
-	      this.transition('enter', done);
-	    } else {
-	      done();
-	    }
-	  };
-	
-	  AnimateChild.prototype.componentWillAppear = function componentWillAppear(done) {
-	    if (_util2["default"].isAppearSupported(this.props)) {
-	      this.transition('appear', done);
-	    } else {
-	      done();
-	    }
-	  };
-	
-	  AnimateChild.prototype.componentWillLeave = function componentWillLeave(done) {
-	    if (_util2["default"].isLeaveSupported(this.props)) {
-	      this.transition('leave', done);
-	    } else {
-	      // always sync, do not interupt with react component life cycle
-	      // update hidden -> animate hidden ->
-	      // didUpdate -> animate leave -> unmount (if animate is none)
-	      done();
-	    }
-	  };
-	
-	  AnimateChild.prototype.transition = function transition(animationType, finishCallback) {
-	    var _this2 = this;
-	
-	    var node = _reactDom2["default"].findDOMNode(this);
-	    var props = this.props;
-	    var transitionName = props.transitionName;
-	    var nameIsObj = (typeof transitionName === 'undefined' ? 'undefined' : _typeof(transitionName)) === 'object';
-	    this.stop();
-	    var end = function end() {
-	      _this2.stopper = null;
-	      finishCallback();
-	    };
-	    if ((_tinperBeeCore.cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
-	      var name = nameIsObj ? transitionName[animationType] : transitionName + '-' + animationType;
-	      var activeName = name + '-active';
-	      if (nameIsObj && transitionName[animationType + 'Active']) {
-	        activeName = transitionName[animationType + 'Active'];
-	      }
-	      this.stopper = (0, _tinperBeeCore.cssAnimation)(node, {
-	        name: name,
-	        active: activeName
-	      }, end);
-	    } else {
-	      this.stopper = props.animation[animationType](node, end);
-	    }
-	  };
-	
-	  AnimateChild.prototype.stop = function stop() {
-	    var stopper = this.stopper;
-	    if (stopper) {
-	      this.stopper = null;
-	      stopper.stop();
-	    }
-	  };
-	
-	  AnimateChild.prototype.render = function render() {
-	    return this.props.children;
-	  };
-	
-	  return AnimateChild;
-	}(_react.Component);
-	
-	;
-	
-	AnimateChild.propTypes = propTypes;
-	
-	exports["default"] = AnimateChild;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 110 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var util = {
-	  isAppearSupported: function isAppearSupported(props) {
-	    return props.transitionName && props.transitionAppear || props.animation.appear;
-	  },
-	  isEnterSupported: function isEnterSupported(props) {
-	    return props.transitionName && props.transitionEnter || props.animation.enter;
-	  },
-	  isLeaveSupported: function isLeaveSupported(props) {
-	    return props.transitionName && props.transitionLeave || props.animation.leave;
-	  },
-	  allowAppearCallback: function allowAppearCallback(props) {
-	    return props.transitionAppear || props.animation.appear;
-	  },
-	  allowEnterCallback: function allowEnterCallback(props) {
-	    return props.transitionEnter || props.animation.enter;
-	  },
-	  allowLeaveCallback: function allowLeaveCallback(props) {
-	    return props.transitionLeave || props.animation.leave;
-	  }
-	};
-	exports["default"] = util;
-	module.exports = exports["default"];
-
-/***/ }),
-/* 111 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _keyCode = __webpack_require__(37);
-	
-	var _keyCode2 = _interopRequireDefault(_keyCode);
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _util = __webpack_require__(102);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	/* eslint react/no-is-mounted:0 */
-	var propTypes = {
-	  rootPrefixCls: _propTypes2["default"].string,
-	  eventKey: _propTypes2["default"].string,
-	  active: _propTypes2["default"].bool,
-	  children: _propTypes2["default"].any,
-	  selectedKeys: _propTypes2["default"].array,
-	  disabled: _propTypes2["default"].bool,
-	  title: _propTypes2["default"].string,
-	  onSelect: _propTypes2["default"].func,
-	  onClick: _propTypes2["default"].func,
-	  onDeselect: _propTypes2["default"].func,
-	  parentMenu: _propTypes2["default"].object,
-	  onItemHover: _propTypes2["default"].func,
-	  onDestroy: _propTypes2["default"].func,
-	  onMouseEnter: _propTypes2["default"].func,
-	  onMouseLeave: _propTypes2["default"].func
-	};
-	
-	var defaultProps = {
-	  onSelect: _util.noop,
-	  onMouseEnter: _util.noop,
-	  onMouseLeave: _util.noop
-	};
-	
-	var MenuItem = function (_Component) {
-	  _inherits(MenuItem, _Component);
-	
-	  function MenuItem(props) {
-	    _classCallCheck(this, MenuItem);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    _this.onMouseLeave = _this.onMouseLeave.bind(_this);
-	    _this.onMouseEnter = _this.onMouseEnter.bind(_this);
-	    _this.onKeyDown = _this.onKeyDown.bind(_this);
-	    _this.onClick = _this.onClick.bind(_this);
-	    _this.getPrefixCls = _this.getPrefixCls.bind(_this);
-	    _this.getActiveClassName = _this.getActiveClassName.bind(_this);
-	    _this.getDisabledClassName = _this.getDisabledClassName.bind(_this);
-	    _this.getSelectedClassName = _this.getSelectedClassName.bind(_this);
-	    _this.clearMenuItemMouseLeaveTimer = _this.clearMenuItemMouseLeaveTimer.bind(_this);
-	    _this.isSelected = _this.isSelected.bind(_this);
-	    return _this;
-	  }
-	
-	  MenuItem.prototype.componentWillUnmount = function componentWillUnmount() {
-	    var props = this.props;
-	    this.mounted = false;
-	    if (props.onDestroy) {
-	      props.onDestroy(props.eventKey);
-	    }
-	    if (props.parentMenu.menuItemInstance === this) {
-	      this.clearMenuItemMouseLeaveTimer();
-	    }
-	  };
-	
-	  MenuItem.prototype.componentDidMount = function componentDidMount() {
-	    this.mounted = true;
-	  };
-	
-	  MenuItem.prototype.onKeyDown = function onKeyDown(e) {
-	    var keyCode = e.keyCode;
-	    if (keyCode === _keyCode2["default"].ENTER) {
-	      this.onClick(e);
-	      return true;
-	    }
-	  };
-	
-	  MenuItem.prototype.onMouseLeave = function onMouseLeave(e) {
-	    var _this2 = this;
-	
-	    var props = this.props;
-	    var eventKey = props.eventKey,
-	        parentMenu = props.parentMenu;
-	
-	    parentMenu.menuItemInstance = this;
-	    parentMenu.menuItemMouseLeaveFn = function () {
-	      if (_this2.mounted && props.active) {
-	        props.onItemHover({
-	          key: eventKey,
-	          item: _this2,
-	          hover: false,
-	          domEvent: e,
-	          trigger: 'mouseleave'
-	        });
-	      }
-	    };
-	    parentMenu.menuItemMouseLeaveTimer = setTimeout(parentMenu.menuItemMouseLeaveFn, 30);
-	    props.onMouseLeave({
-	      key: eventKey,
-	      domEvent: e
-	    });
-	  };
-	
-	  MenuItem.prototype.onMouseEnter = function onMouseEnter(e) {
-	    var props = this.props;
-	    var eventKey = props.eventKey,
-	        parentMenu = props.parentMenu;
-	
-	    this.clearMenuItemMouseLeaveTimer(parentMenu.menuItemInstance !== this);
-	    if (parentMenu.subMenuInstance) {
-	      parentMenu.subMenuInstance.clearSubMenuTimers();
-	    }
-	    props.onItemHover({
-	      key: eventKey,
-	      item: this,
-	      hover: true,
-	      domEvent: e,
-	      trigger: 'mouseenter'
-	    });
-	    props.onMouseEnter({
-	      key: eventKey,
-	      domEvent: e
-	    });
-	  };
-	
-	  MenuItem.prototype.onClick = function onClick(e) {
-	    var props = this.props;
-	    var selected = this.isSelected();
-	    var eventKey = props.eventKey;
-	    var info = {
-	      key: eventKey,
-	      keyPath: [eventKey],
-	      item: this,
-	      domEvent: e
-	    };
-	    props.onClick(info);
-	    if (props.multiple) {
-	      if (selected) {
-	        props.onDeselect(info);
-	      } else {
-	        props.onSelect(info);
-	      }
-	    } else if (!selected) {
-	      props.onSelect(info);
-	    }
-	  };
-	
-	  MenuItem.prototype.getPrefixCls = function getPrefixCls() {
-	    return this.props.rootPrefixCls + '-item';
-	  };
-	
-	  MenuItem.prototype.getActiveClassName = function getActiveClassName() {
-	    return this.getPrefixCls() + '-active';
-	  };
-	
-	  MenuItem.prototype.getSelectedClassName = function getSelectedClassName() {
-	    return this.getPrefixCls() + '-selected';
-	  };
-	
-	  MenuItem.prototype.getDisabledClassName = function getDisabledClassName() {
-	    return this.getPrefixCls() + '-disabled';
-	  };
-	
-	  MenuItem.prototype.clearMenuItemMouseLeaveTimer = function clearMenuItemMouseLeaveTimer() {
-	    var props = this.props;
-	    var callFn = void 0;
-	    var parentMenu = props.parentMenu;
-	    if (parentMenu.menuItemMouseLeaveTimer) {
-	      clearTimeout(parentMenu.menuItemMouseLeaveTimer);
-	      parentMenu.menuItemMouseLeaveTimer = null;
-	      if (callFn && parentMenu.menuItemMouseLeaveFn) {
-	        parentMenu.menuItemMouseLeaveFn();
-	      }
-	      parentMenu.menuItemMouseLeaveFn = null;
-	    }
-	  };
-	
-	  MenuItem.prototype.isSelected = function isSelected() {
-	    return this.props.selectedKeys.indexOf(this.props.eventKey) !== -1;
-	  };
-	
-	  MenuItem.prototype.render = function render() {
-	    var props = this.props;
-	    var selected = this.isSelected();
-	    var classes = {};
-	    classes[this.getActiveClassName()] = !props.disabled && props.active;
-	    classes[this.getSelectedClassName()] = selected;
-	    classes[this.getDisabledClassName()] = props.disabled;
-	    classes[this.getPrefixCls()] = true;
-	    classes[props.className] = !!props.className;
-	    var attrs = _extends({}, props.attribute, {
-	      title: props.title,
-	      className: (0, _classnames2["default"])(classes),
-	      role: 'menuitem',
-	      'aria-selected': selected,
-	      'aria-disabled': props.disabled
-	    });
-	    var mouseEvent = {};
-	    if (!props.disabled) {
-	      mouseEvent = {
-	        onClick: this.onClick,
-	        onMouseLeave: this.onMouseLeave,
-	        onMouseEnter: this.onMouseEnter
-	      };
-	    }
-	    var style = _extends({}, props.style);
-	    if (props.mode === 'inline') {
-	      style.paddingLeft = props.inlineIndent * props.level;
-	    }
-	    return _react2["default"].createElement(
-	      'li',
-	      _extends({
-	        style: style
-	      }, attrs, mouseEvent),
-	      props.children
-	    );
-	  };
-	
-	  return MenuItem;
-	}(_react.Component);
-	
-	;
-	
-	MenuItem.isMenuItem = 1;
-	
-	MenuItem.defaultProps = defaultProps;
-	MenuItem.propTypes = propTypes;
-	
-	exports["default"] = MenuItem;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 112 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	    renderMenuItem: _propTypes2["default"].func,
-	    index: _propTypes2["default"].number,
-	    className: _propTypes2["default"].string,
-	    rootPrefixCls: _propTypes2["default"].string,
-	    title: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].node]),
-	    children: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].node])
-	};
-	
-	var defaultProps = {
-	    disabled: true
-	};
-	
-	var MenuItemGroup = function (_Component) {
-	    _inherits(MenuItemGroup, _Component);
-	
-	    function MenuItemGroup() {
-	        _classCallCheck(this, MenuItemGroup);
-	
-	        return _possibleConstructorReturn(this, _Component.apply(this, arguments));
-	    }
-	
-	    MenuItemGroup.prototype.renderInnerMenuItem = function renderInnerMenuItem(item, subIndex) {
-	        var _props = this.props,
-	            renderMenuItem = _props.renderMenuItem,
-	            index = _props.index;
-	
-	        return renderMenuItem(item, index, subIndex);
-	    };
-	
-	    MenuItemGroup.prototype.render = function render() {
-	        var _props2 = this.props,
-	            _props2$className = _props2.className,
-	            className = _props2$className === undefined ? '' : _props2$className,
-	            title = _props2.title,
-	            children = _props2.children,
-	            rootPrefixCls = _props2.rootPrefixCls;
-	
-	        var titleClassName = rootPrefixCls + '-item-group-title';
-	        var listClassName = rootPrefixCls + '-item-group-list';
-	
-	        return _react2["default"].createElement(
-	            'li',
-	            { className: className + ' ' + rootPrefixCls + '-item-group' },
-	            _react2["default"].createElement(
-	                'div',
-	                { className: titleClassName },
-	                title
-	            ),
-	            _react2["default"].createElement(
-	                'ul',
-	                { className: listClassName },
-	                _react2["default"].Children.map(children, this.renderInnerMenuItem.bind(this))
-	            )
-	        );
-	    };
-	
-	    return MenuItemGroup;
-	}(_react.Component);
-	
-	;
-	
-	MenuItemGroup.isMenuItemGroup = true;
-	MenuItemGroup.propTypes = propTypes;
-	MenuItemGroup.defaultProps = defaultProps;
-	
-	exports["default"] = MenuItemGroup;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 113 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  className: _propTypes2["default"].string,
-	  rootPrefixCls: _propTypes2["default"].string
-	};
-	
-	var Divider = function (_Component) {
-	  _inherits(Divider, _Component);
-	
-	  function Divider() {
-	    _classCallCheck(this, Divider);
-	
-	    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
-	  }
-	
-	  Divider.prototype.render = function render() {
-	    var _props = this.props,
-	        className = _props.className,
-	        rootPrefixCls = _props.rootPrefixCls;
-	
-	    return _react2["default"].createElement('li', { className: className + ' ' + rootPrefixCls + '-item-divider' });
-	  };
-	
-	  return Divider;
-	}(_react.Component);
-	
-	;
-	
-	Divider.propTypes = propTypes;
-	
-	exports["default"] = Divider;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 114 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var defaultProps = {
-	  clsPrefix: "u-navbar-side-container",
-	  sideActive: false
-	};
-	
-	var NavSideContainer = function (_React$Component) {
-	  _inherits(NavSideContainer, _React$Component);
-	
-	  function NavSideContainer() {
-	    _classCallCheck(this, NavSideContainer);
-	
-	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
-	  }
-	
-	  NavSideContainer.prototype.render = function render() {
-	    var _props = this.props,
-	        className = _props.className,
-	        children = _props.children,
-	        clsPrefix = _props.clsPrefix,
-	        sideActive = _props.sideActive,
-	        expanded = _props.expanded,
-	        props = _objectWithoutProperties(_props, ['className', 'children', 'clsPrefix', 'sideActive', 'expanded']);
-	
-	    //const navbarProps = this.context.u_navbar;
-	
-	    return _react2["default"].createElement(
-	      'div',
-	      { className: (0, _classnames2["default"])(className, clsPrefix, expanded && 'expanded') },
-	      children
-	    );
-	  };
-	
-	  return NavSideContainer;
-	}(_react2["default"].Component);
-	
-	NavSideContainer.defaultProps = defaultProps;
-	
-	exports["default"] = NavSideContainer;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 115 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _createChainedFunction = __webpack_require__(36);
-	
-	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  onClick: _propTypes2["default"].func,
-	  /**
-	   * The toggle content, if left empty it will render the default toggle (seen above).
-	   */
-	  show: _propTypes2["default"].bool,
-	  children: _propTypes2["default"].node
-	};
-	
-	var contextTypes = {
-	  u_navbar: _propTypes2["default"].shape({
-	    expanded: _propTypes2["default"].bool,
-	    onToggle: _propTypes2["default"].func
-	  })
-	};
-	
-	var defaultProps = {
-	  clsPrefix: 'u-navbar-toggle',
-	  show: false
-	};
-	
-	var MenuToggle = function (_React$Component) {
-	  _inherits(MenuToggle, _React$Component);
-	
-	  function MenuToggle(props) {
-	    _classCallCheck(this, MenuToggle);
-	
-	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
-	
-	    _this.state = {
-	      toggleState: false
-	      //this.handleRender = this.handleRender.bind(this);
-	    };return _this;
-	  }
-	
-	  MenuToggle.prototype.handleClick = function handleClick() {
-	    var _context$u_navbar = this.context.u_navbar,
-	        expanded = _context$u_navbar.expanded,
-	        onToggle = _context$u_navbar.onToggle;
-	
-	    this.setState({ toggleState: !this.state.toggleState });
-	    if (onToggle) {
-	      onToggle(!expanded);
-	    }
-	  };
-	
-	  MenuToggle.prototype.render = function render() {
-	    var _props = this.props,
-	        onClick = _props.onClick,
-	        className = _props.className,
-	        children = _props.children,
-	        clsPrefix = _props.clsPrefix,
-	        show = _props.show,
-	        props = _objectWithoutProperties(_props, ['onClick', 'className', 'children', 'clsPrefix', 'show']);
-	    //const navbarProps = this.context.u_navbar || { bsClass: 'navbar' };
-	    //console.log(navbarProps.onToggle, navbarProps.expanded);
-	
-	    var buttonProps = _extends({
-	      type: 'button'
-	    }, props, {
-	      onClick: (0, _createChainedFunction2["default"])(onClick, this.handleClick.bind(this)),
-	      className: (0, _classnames2["default"])(className, clsPrefix, show && 'show')
-	      //!this.context.u_navbar.expanded && 'collapsed',
-	    });
-	
-	    if (children) {
-	      return _react2["default"].createElement(
-	        'button',
-	        buttonProps,
-	        children
-	      );
-	    }
-	    //当show存在时，渲染左侧静态面包按钮
-	    return _react2["default"].createElement(
-	      'div',
-	      null,
-	      show && this.state.toggleState && _react2["default"].createElement(
-	        'button',
-	        buttonProps,
-	        _react2["default"].createElement(
-	          'span',
-	          { className: 'sr-only' },
-	          'Toggle navigation'
-	        ),
-	        _react2["default"].createElement('span', { className: 'icon-bar' }),
-	        _react2["default"].createElement('span', { className: 'icon-bar' }),
-	        _react2["default"].createElement('span', { className: 'icon-bar' })
-	      ),
-	      show && !this.state.toggleState && _react2["default"].createElement(
-	        'button',
-	        buttonProps,
-	        _react2["default"].createElement('span', { className: 'uf uf-arrow-left' })
-	      ),
-	      !show && !this.state.toggleState && _react2["default"].createElement(
-	        'button',
-	        buttonProps,
-	        _react2["default"].createElement(
-	          'span',
-	          { className: 'sr-only' },
-	          'Toggle navigation'
-	        ),
-	        _react2["default"].createElement('span', { className: 'icon-bar' }),
-	        _react2["default"].createElement('span', { className: 'icon-bar' }),
-	        _react2["default"].createElement('span', { className: 'icon-bar' })
-	      )
-	    );
-	  };
-	
-	  return MenuToggle;
-	}(_react2["default"].Component);
-	
-	MenuToggle.propTypes = propTypes;
-	MenuToggle.defaultProps = defaultProps;
-	MenuToggle.contextTypes = contextTypes;
-	
-	exports["default"] = MenuToggle;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 116 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	function animate(node, show, done) {
-	  var height = void 0;
-	  return (0, _tinperBeeCore.cssAnimation)(node, 'u-motion-collapse', {
-	    start: function start() {
-	      if (!show) {
-	        node.style.height = node.offsetHeight + 'px';
-	      } else {
-	        height = node.offsetHeight;
-	        node.style.height = 0;
-	      }
-	    },
-	    active: function active() {
-	      node.style.height = (show ? height : 0) + 'px';
-	    },
-	    end: function end() {
-	      node.style.height = '';
-	      done();
-	    }
-	  });
-	}
-	
-	var animation = {
-	  enter: function enter(node, done) {
-	    return animate(node, true, done);
-	  },
-	  leave: function leave(node, done) {
-	    return animate(node, false, done);
-	  },
-	  appear: function appear(node, done) {
-	    return animate(node, true, done);
-	  }
-	};
-	
-	exports["default"] = animation;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 117 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _warning = __webpack_require__(31);
-	
-	var _warning2 = _interopRequireDefault(_warning);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	var warned = {};
-	
-	exports["default"] = function (valid, message) {
-	  if (!valid && !warned[message]) {
-	    (0, _warning2["default"])(false, message);
-	    warned[message] = true;
-	  }
-	};
-	
-	module.exports = exports['default'];
-
-/***/ }),
-/* 118 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  label: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object])
-	};
-	
-	var OptGroup = function (_React$Component) {
-	  _inherits(OptGroup, _React$Component);
-	
-	  function OptGroup() {
-	    _classCallCheck(this, OptGroup);
-	
-	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
-	  }
-	
-	  return OptGroup;
-	}(_react2["default"].Component);
-	
-	OptGroup.propTypes = propTypes;
-	exports["default"] = OptGroup;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 119 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.UNSELECTABLE_ATTRIBUTE = exports.UNSELECTABLE_STYLE = undefined;
-	exports.getValuePropValue = getValuePropValue;
-	exports.getPropValue = getPropValue;
-	exports.isCombobox = isCombobox;
-	exports.isMultipleOrTags = isMultipleOrTags;
-	exports.isMultipleOrTagsOrCombobox = isMultipleOrTagsOrCombobox;
-	exports.isSingleMode = isSingleMode;
-	exports.toArray = toArray;
-	exports.preventDefaultEvent = preventDefaultEvent;
-	exports.findIndexInValueByKey = findIndexInValueByKey;
-	exports.findIndexInValueByLabel = findIndexInValueByLabel;
-	exports.getSelectKeys = getSelectKeys;
-	exports.findFirstMenuItem = findFirstMenuItem;
-	exports.includesSeparators = includesSeparators;
-	exports.splitBySeparators = splitBySeparators;
-	
-	var _beeMenus = __webpack_require__(98);
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function getValuePropValue(child) {
-	  var props = child.props;
-	  if ('value' in props) {
-	    return props.value;
-	  }
-	  if (child.key) {
-	    return child.key;
-	  }
-	  throw new Error('no key or value for ' + child);
-	}
-	
-	function getPropValue(child, prop) {
-	  if (prop === 'value') {
-	    return getValuePropValue(child);
-	  }
-	  return child.props[prop];
-	}
-	
-	function isCombobox(props) {
-	  return props.combobox;
-	}
-	
-	function isMultipleOrTags(props) {
-	  return props.multiple || props.tags;
-	}
-	
-	function isMultipleOrTagsOrCombobox(props) {
-	  return isMultipleOrTags(props) || isCombobox(props);
-	}
-	
-	function isSingleMode(props) {
-	  return !isMultipleOrTagsOrCombobox(props);
-	}
-	
-	function toArray(value) {
-	  var ret = value;
-	  if (value === undefined) {
-	    ret = [];
-	  } else if (!Array.isArray(value)) {
-	    ret = [value];
-	  }
-	  return ret;
-	}
-	
-	function preventDefaultEvent(e) {
-	  e.preventDefault();
-	}
-	
-	function findIndexInValueByKey(value, key) {
-	  var index = -1;
-	  for (var i = 0; i < value.length; i++) {
-	    if (value[i].key === key) {
-	      index = i;
-	      break;
-	    }
-	  }
-	  return index;
-	}
-	
-	function findIndexInValueByLabel(value, label) {
-	  var index = -1;
-	  for (var i = 0; i < value.length; i++) {
-	    if (toArray(value[i].label).join('') === label) {
-	      index = i;
-	      break;
-	    }
-	  }
-	  return index;
-	}
-	
-	function getSelectKeys(menuItems, value) {
-	  if (value === null || value === undefined) {
-	    return [];
-	  }
-	  var selectedKeys = [];
-	  _react2["default"].Children.forEach(menuItems, function (item) {
-	    if (item.type === _beeMenus.ItemGroup) {
-	      selectedKeys = selectedKeys.concat(getSelectKeys(item.props.children, value));
-	    } else {
-	      var itemValue = getValuePropValue(item);
-	      var itemKey = item.key;
-	      if (findIndexInValueByKey(value, itemValue) !== -1 && itemKey) {
-	        selectedKeys.push(itemKey);
-	      }
-	    }
-	  });
-	  return selectedKeys;
-	}
-	
-	var UNSELECTABLE_STYLE = exports.UNSELECTABLE_STYLE = {
-	  userSelect: 'none',
-	  WebkitUserSelect: 'none'
-	};
-	
-	var UNSELECTABLE_ATTRIBUTE = exports.UNSELECTABLE_ATTRIBUTE = {
-	  unselectable: 'unselectable'
-	};
-	
-	function findFirstMenuItem(children) {
-	  for (var i = 0; i < children.length; i++) {
-	    var child = children[i];
-	    if (child.type === _beeMenus.ItemGroup) {
-	      var found = findFirstMenuItem(child.props.children);
-	      if (found) {
-	        return found;
-	      }
-	    } else if (!child.props.disabled) {
-	      return child;
-	    }
-	  }
-	  return null;
-	}
-	
-	function includesSeparators(string, separators) {
-	  for (var i = 0; i < separators.length; ++i) {
-	    if (string.lastIndexOf(separators[i]) > 0) {
-	      return true;
-	    }
-	  }
-	  return false;
-	}
-	
-	function splitBySeparators(string, separators) {
-	  var reg = new RegExp('[' + separators.join() + ']');
-	  var array = string.split(reg);
-	  if (array[0] === '') {
-	    array.shift();
-	  }
-	  if (array[array.length - 1] === '') {
-	    array.pop();
-	  }
-	  return array;
-	}
-
-/***/ }),
-/* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _trigger = __webpack_require__(121);
-	
-	var _trigger2 = _interopRequireDefault(_trigger);
-	
 	var _react = __webpack_require__(4);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -13624,2169 +6342,15 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _DropdownMenu = __webpack_require__(127);
-	
-	var _DropdownMenu2 = _interopRequireDefault(_DropdownMenu);
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _util = __webpack_require__(119);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var BUILT_IN_PLACEMENTS = {
-	  bottomLeft: {
-	    points: ['tl', 'bl'],
-	    offset: [0, 4],
-	    overflow: {
-	      adjustX: 0,
-	      adjustY: 1
-	    }
-	  },
-	  topLeft: {
-	    points: ['bl', 'tl'],
-	    offset: [0, -4],
-	    overflow: {
-	      adjustX: 0,
-	      adjustY: 1
-	    }
-	  }
-	};
-	
-	var propTypes = {
-	  onPopupFocus: _propTypes2["default"].func,
-	  dropdownMatchSelectWidth: _propTypes2["default"].bool,
-	  dropdownAlign: _propTypes2["default"].object,
-	  visible: _propTypes2["default"].bool,
-	  disabled: _propTypes2["default"].bool,
-	  showSearch: _propTypes2["default"].bool,
-	  dropdownClassName: _propTypes2["default"].string,
-	  multiple: _propTypes2["default"].bool,
-	  inputValue: _propTypes2["default"].string,
-	  filterOption: _propTypes2["default"].any,
-	  options: _propTypes2["default"].any,
-	  clsPrefix: _propTypes2["default"].string,
-	  popupClassName: _propTypes2["default"].string,
-	  children: _propTypes2["default"].any
-	};
-	
-	var SelectTrigger = function (_Component) {
-	  _inherits(SelectTrigger, _Component);
-	
-	  function SelectTrigger(props) {
-	    _classCallCheck(this, SelectTrigger);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    _this.setDropdownWidth = function () {
-	      var width = _reactDom2["default"].findDOMNode(_this).offsetWidth;
-	      if (width !== _this.state.dropdownWidth) {
-	        _this.setState({ dropdownWidth: width });
-	      }
-	    };
-	
-	    _this.getInnerMenu = _this.getInnerMenu.bind(_this);
-	    _this.getPopupDOMNode = _this.getPopupDOMNode.bind(_this);
-	    _this.getDropdownTransitionName = _this.getDropdownTransitionName.bind(_this);
-	    _this.getDropdownElement = _this.getDropdownElement.bind(_this);
-	    _this.getDropdownPrefixCls = _this.getDropdownPrefixCls.bind(_this);
-	    _this.saveMenu = _this.saveMenu.bind(_this);
-	    _this.state = {
-	      dropdownWidth: null
-	    };
-	
-	    return _this;
-	  }
-	
-	  SelectTrigger.prototype.componentDidMount = function componentDidMount() {
-	    this.setDropdownWidth();
-	  };
-	
-	  SelectTrigger.prototype.componentDidUpdate = function componentDidUpdate() {
-	    this.setDropdownWidth();
-	  };
-	
-	  SelectTrigger.prototype.getInnerMenu = function getInnerMenu() {
-	    return this.popupMenu && this.popupMenu.refs.menu;
-	  };
-	
-	  SelectTrigger.prototype.getPopupDOMNode = function getPopupDOMNode() {
-	    return this.refs.trigger.getPopupDomNode();
-	  };
-	
-	  SelectTrigger.prototype.getDropdownElement = function getDropdownElement(newProps) {
-	    var props = this.props;
-	    return _react2["default"].createElement(_DropdownMenu2["default"], _extends({
-	      ref: this.saveMenu
-	    }, newProps, {
-	      clsPrefix: this.getDropdownPrefixCls(),
-	      onMenuSelect: props.onMenuSelect,
-	      scrollToEnd: props.scrollToEnd,
-	      onMenuDeselect: props.onMenuDeselect,
-	      value: props.value,
-	      defaultActiveFirstOption: props.defaultActiveFirstOption,
-	      dropdownMenuStyle: props.dropdownMenuStyle
-	    }));
-	  };
-	
-	  SelectTrigger.prototype.getDropdownTransitionName = function getDropdownTransitionName() {
-	    var props = this.props;
-	    var transitionName = props.transitionName;
-	    if (!transitionName && props.animation) {
-	      transitionName = this.getDropdownPrefixCls() + '-' + props.animation;
-	    }
-	    return transitionName;
-	  };
-	
-	  SelectTrigger.prototype.getDropdownPrefixCls = function getDropdownPrefixCls() {
-	    return this.props.clsPrefix + '-dropdown';
-	  };
-	
-	  SelectTrigger.prototype.saveMenu = function saveMenu(menu) {
-	    this.popupMenu = menu;
-	  };
-	
-	  SelectTrigger.prototype.render = function render() {
-	    var _popupClassName;
-	
-	    var _props = this.props,
-	        onPopupFocus = _props.onPopupFocus,
-	        props = _objectWithoutProperties(_props, ['onPopupFocus']);
-	
-	    var multiple = props.multiple,
-	        visible = props.visible,
-	        inputValue = props.inputValue,
-	        dropdownAlign = props.dropdownAlign,
-	        disabled = props.disabled,
-	        showSearch = props.showSearch,
-	        dropdownClassName = props.dropdownClassName,
-	        dropdownStyle = props.dropdownStyle,
-	        dropdownMatchSelectWidth = props.dropdownMatchSelectWidth;
-	
-	    var dropdownPrefixCls = this.getDropdownPrefixCls();
-	    var popupClassName = (_popupClassName = {}, _defineProperty(_popupClassName, dropdownClassName, !!dropdownClassName), _defineProperty(_popupClassName, dropdownPrefixCls + '--' + (multiple ? 'multiple' : 'single'), 1), _popupClassName);
-	    var popupElement = this.getDropdownElement({
-	      menuItems: props.options,
-	      onPopupFocus: onPopupFocus,
-	      multiple: multiple,
-	      inputValue: inputValue,
-	      visible: visible
-	    });
-	    var hideAction = void 0;
-	    if (disabled) {
-	      hideAction = [];
-	    } else if ((0, _util.isSingleMode)(props) && !showSearch) {
-	      hideAction = ['click'];
-	    } else {
-	      hideAction = ['blur'];
-	    }
-	    var popupStyle = _extends({}, dropdownStyle);
-	    var widthProp = dropdownMatchSelectWidth ? 'width' : 'minWidth';
-	    if (this.state.dropdownWidth) {
-	      popupStyle[widthProp] = this.state.dropdownWidth + 'px';
-	    }
-	    return _react2["default"].createElement(
-	      _trigger2["default"],
-	      _extends({}, props, {
-	        showAction: disabled ? [] : ['click'],
-	        hideAction: hideAction,
-	        ref: 'trigger',
-	        popupPlacement: 'bottomLeft',
-	        builtinPlacements: BUILT_IN_PLACEMENTS,
-	        clsPrefix: dropdownPrefixCls
-	        // popupTransitionName={this.getDropdownTransitionName()}
-	        , onPopupVisibleChange: props.onDropdownVisibleChange,
-	        popup: popupElement,
-	        popupAlign: dropdownAlign,
-	        popupVisible: visible,
-	        getPopupContainer: props.getPopupContainer,
-	        popupClassName: (0, _classnames2["default"])(popupClassName),
-	        popupStyle: popupStyle
-	      }),
-	      props.children
-	    );
-	  };
-	
-	  return SelectTrigger;
-	}(_react.Component);
-	
-	;
-	
-	SelectTrigger.propTypes = propTypes;
-	
-	exports["default"] = SelectTrigger;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 121 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	module.exports = __webpack_require__(122);
-
-/***/ }),
-/* 122 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _contains = __webpack_require__(70);
-	
-	var _contains2 = _interopRequireDefault(_contains);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	var _Popup = __webpack_require__(123);
-	
-	var _Popup2 = _interopRequireDefault(_Popup);
-	
-	var _utils = __webpack_require__(126);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	//import getContainerRenderMixin from './getContainerRenderMixin';
-	
-	function noop() {}
-	
-	function returnEmptyString() {
-	  return '';
-	}
-	
-	var ALL_HANDLERS = ['onClick', 'onMouseDown', 'onTouchStart', 'onMouseEnter', 'onMouseLeave', 'onFocus', 'onBlur'];
-	
-	var propTypes = {
-	  children: _propTypes2["default"].any,
-	  action: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].arrayOf(_propTypes2["default"].string)]),
-	  showAction: _propTypes2["default"].any,
-	  hideAction: _propTypes2["default"].any,
-	  getPopupClassNameFromAlign: _propTypes2["default"].any,
-	  onPopupVisibleChange: _propTypes2["default"].func,
-	  afterPopupVisibleChange: _propTypes2["default"].func,
-	  popup: _propTypes2["default"].oneOfType([_propTypes2["default"].node, _propTypes2["default"].func]).isRequired,
-	  popupStyle: _propTypes2["default"].object,
-	  clsPrefix: _propTypes2["default"].string,
-	  popupClassName: _propTypes2["default"].string,
-	  popupPlacement: _propTypes2["default"].string,
-	  builtinPlacements: _propTypes2["default"].object,
-	  popupTransitionName: _propTypes2["default"].string,
-	  popupAnimation: _propTypes2["default"].any,
-	  mouseEnterDelay: _propTypes2["default"].number,
-	  mouseLeaveDelay: _propTypes2["default"].number,
-	  zIndex: _propTypes2["default"].number,
-	  focusDelay: _propTypes2["default"].number,
-	  blurDelay: _propTypes2["default"].number,
-	  getPopupContainer: _propTypes2["default"].func,
-	  destroyPopupOnHide: _propTypes2["default"].bool,
-	  mask: _propTypes2["default"].bool,
-	  maskClosable: _propTypes2["default"].bool,
-	  onPopupAlign: _propTypes2["default"].func,
-	  popupAlign: _propTypes2["default"].object,
-	  popupVisible: _propTypes2["default"].bool,
-	  maskTransitionName: _propTypes2["default"].string,
-	  maskAnimation: _propTypes2["default"].string
-	};
-	
-	var defaultProps = {
-	  clsPrefix: 'rc-trigger-popup',
-	  getPopupClassNameFromAlign: returnEmptyString,
-	  onPopupVisibleChange: noop,
-	  afterPopupVisibleChange: noop,
-	  onPopupAlign: noop,
-	  popupClassName: '',
-	  mouseEnterDelay: 0,
-	  mouseLeaveDelay: 0.1,
-	  focusDelay: 0,
-	  blurDelay: 0.15,
-	  popupStyle: {},
-	  destroyPopupOnHide: false,
-	  popupAlign: {},
-	  defaultPopupVisible: false,
-	  mask: false,
-	  maskClosable: true,
-	  action: [],
-	  showAction: [],
-	  hideAction: []
-	};
-	
-	var Trigger = function (_Component) {
-	  _inherits(Trigger, _Component);
-	
-	  function Trigger(props) {
-	    _classCallCheck(this, Trigger);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    _this.state = {
-	      popupVisible: !!_this.props.popupVisible || _this.props.defaultPopupVisible
-	      //this.removeContainer = this.removeContainer.bind(this);
-	    };_this.getContainer = _this.getContainer.bind(_this);
-	    _this.renderComponent = _this.renderComponent.bind(_this);
-	    _this.isVisible = _this.isVisible.bind(_this);
-	
-	    _this.onMouseEnter = _this.onMouseEnter.bind(_this);
-	    _this.onMouseLeave = _this.onMouseLeave.bind(_this);
-	    _this.onPopupMouseEnter = _this.onPopupMouseEnter.bind(_this);
-	    _this.onPopupMouseLeave = _this.onPopupMouseLeave.bind(_this);
-	    _this.onFocus = _this.onFocus.bind(_this);
-	
-	    _this.onMouseDown = _this.onMouseDown.bind(_this);
-	    _this.onTouchStart = _this.onTouchStart.bind(_this);
-	    _this.onBlur = _this.onBlur.bind(_this);
-	    _this.onDocumentClick = _this.onDocumentClick.bind(_this);
-	    _this.getPopupDomNode = _this.getPopupDomNode.bind(_this);
-	
-	    _this.getRootDomNode = _this.getRootDomNode.bind(_this);
-	    _this.getPopupClassNameFromAlign = _this.getPopupClassNameFromAlign.bind(_this);
-	    _this.getPopupAlign = _this.getPopupAlign.bind(_this);
-	    _this.getComponent = _this.getComponent.bind(_this);
-	    _this.setPopupVisible = _this.setPopupVisible.bind(_this);
-	
-	    _this.delaySetPopupVisible = _this.delaySetPopupVisible.bind(_this);
-	    _this.clearDelayTimer = _this.clearDelayTimer.bind(_this);
-	    _this.createTwoChains = _this.createTwoChains.bind(_this);
-	    _this.isClickToShow = _this.isClickToShow.bind(_this);
-	    _this.isClickToHide = _this.isClickToHide.bind(_this);
-	
-	    _this.isMouseEnterToShow = _this.isMouseEnterToShow.bind(_this);
-	    _this.isMouseLeaveToHide = _this.isMouseLeaveToHide.bind(_this);
-	    _this.isFocusToShow = _this.isFocusToShow.bind(_this);
-	    _this.isBlurToHide = _this.isBlurToHide.bind(_this);
-	    _this.forcePopupAlign = _this.forcePopupAlign.bind(_this);
-	
-	    _this.fireEvents = _this.fireEvents.bind(_this);
-	    _this.close = _this.close.bind(_this);
-	    _this.onClick = _this.onClick.bind(_this);
-	    return _this;
-	  }
-	
-	  Trigger.prototype.isVisible = function isVisible(instance) {
-	    return instance.state.popupVisible;
-	  };
-	
-	  Trigger.prototype.getContainer = function getContainer(instance) {
-	    var popupContainer = document.createElement('div');
-	    var mountNode = instance.props.getPopupContainer ? instance.props.getPopupContainer((0, _reactDom.findDOMNode)(instance)) : document.body;
-	    mountNode.appendChild(popupContainer);
-	    return popupContainer;
-	  };
-	
-	  Trigger.prototype.renderComponent = function renderComponent(instance, componentArg, ready) {
-	    if (instance._component || this.isVisible(instance)) {
-	      if (!instance._container) {
-	        instance._container = this.getContainer(instance);
-	      }
-	      var component = instance.getComponent(componentArg);
-	      _reactDom2["default"].unstable_renderSubtreeIntoContainer(instance, component, instance._container, function callback() {
-	        instance._component = this;
-	        if (ready) {
-	          ready.call(this);
-	        }
-	      });
-	    }
-	  };
-	
-	  Trigger.prototype.componentWillMount = function componentWillMount() {
-	    var _this2 = this;
-	
-	    this.mounted = false;
-	    ALL_HANDLERS.forEach(function (h) {
-	      _this2['fire' + h] = function (e) {
-	        _this2.fireEvents(h, e);
-	      };
-	    });
-	  };
-	
-	  Trigger.prototype.componentDidMount = function componentDidMount() {
-	    this.mounted = true;
-	    this.componentDidUpdate({}, {
-	      popupVisible: this.state.popupVisible
-	    });
-	  };
-	
-	  Trigger.prototype.componentWillReceiveProps = function componentWillReceiveProps(_ref) {
-	    var popupVisible = _ref.popupVisible;
-	
-	    if (popupVisible !== undefined) {
-	      this.setState({
-	        popupVisible: popupVisible
-	      });
-	    }
-	  };
-	
-	  Trigger.prototype.componentDidUpdate = function componentDidUpdate(_, prevState) {
-	    var props = this.props;
-	    var state = this.state;
-	    this.renderComponent(this, null, function () {
-	      if (prevState.popupVisible !== state.popupVisible) {
-	        props.afterPopupVisibleChange(state.popupVisible);
-	      }
-	    });
-	    if (this.isClickToHide()) {
-	      if (state.popupVisible) {
-	        if (!this.clickOutsideHandler) {
-	          this.clickOutsideHandler = (0, _tinperBeeCore.addEventListener)(document, 'mousedown', this.onDocumentClick);
-	          this.touchOutsideHandler = (0, _tinperBeeCore.addEventListener)(document, 'touchstart', this.onDocumentClick);
-	        }
-	        return;
-	      }
-	    }
-	    if (this.clickOutsideHandler) {
-	      this.clickOutsideHandler.remove();
-	      this.touchOutsideHandler.remove();
-	      this.clickOutsideHandler = null;
-	      this.touchOutsideHandler = null;
-	    }
-	  };
-	
-	  Trigger.prototype.componentWillUnmount = function componentWillUnmount() {
-	    this.clearDelayTimer();
-	    if (this.clickOutsideHandler) {
-	      this.clickOutsideHandler.remove();
-	      this.touchOutsideHandler.remove();
-	      this.clickOutsideHandler = null;
-	      this.touchOutsideHandler = null;
-	    }
-	    if (this._container) {
-	      _reactDom2["default"].unmountComponentAtNode(this._container);
-	    }
-	
-	    //this.removeContainer();
-	  };
-	
-	  Trigger.prototype.onMouseEnter = function onMouseEnter(e) {
-	    this.fireEvents('onMouseEnter', e);
-	    this.delaySetPopupVisible(true, this.props.mouseEnterDelay);
-	  };
-	
-	  Trigger.prototype.onMouseLeave = function onMouseLeave(e) {
-	    this.fireEvents('onMouseLeave', e);
-	    this.delaySetPopupVisible(false, this.props.mouseLeaveDelay);
-	  };
-	
-	  Trigger.prototype.onPopupMouseEnter = function onPopupMouseEnter() {
-	    this.clearDelayTimer();
-	  };
-	
-	  Trigger.prototype.onPopupMouseLeave = function onPopupMouseLeave(e) {
-	    // https://github.com/react-component/trigger/pull/13
-	    // react bug?
-	    if (e.relatedTarget && !e.relatedTarget.setTimeout && this._component && (0, _contains2["default"])(this._component.getPopupDomNode(), e.relatedTarget)) {
-	      return;
-	    }
-	    this.delaySetPopupVisible(false, this.props.mouseLeaveDelay);
-	  };
-	
-	  Trigger.prototype.onFocus = function onFocus(e) {
-	    this.fireEvents('onFocus', e);
-	    // incase focusin and focusout
-	    this.clearDelayTimer();
-	    if (this.isFocusToShow()) {
-	      this.focusTime = Date.now();
-	      this.delaySetPopupVisible(true, this.props.focusDelay);
-	    }
-	  };
-	
-	  Trigger.prototype.onMouseDown = function onMouseDown(e) {
-	    this.fireEvents('onMouseDown', e);
-	    this.preClickTime = Date.now();
-	  };
-	
-	  Trigger.prototype.onTouchStart = function onTouchStart(e) {
-	    this.fireEvents('onTouchStart', e);
-	    this.preTouchTime = Date.now();
-	  };
-	
-	  Trigger.prototype.onBlur = function onBlur(e) {
-	    this.fireEvents('onBlur', e);
-	    this.clearDelayTimer();
-	    if (this.isBlurToHide()) {
-	      this.delaySetPopupVisible(false, this.props.blurDelay);
-	    }
-	  };
-	
-	  Trigger.prototype.onClick = function onClick(event) {
-	    this.fireEvents('onClick', event);
-	    // focus will trigger click
-	    if (this.focusTime) {
-	      var preTime = void 0;
-	      if (this.preClickTime && this.preTouchTime) {
-	        preTime = Math.min(this.preClickTime, this.preTouchTime);
-	      } else if (this.preClickTime) {
-	        preTime = this.preClickTime;
-	      } else if (this.preTouchTime) {
-	        preTime = this.preTouchTime;
-	      }
-	      if (Math.abs(preTime - this.focusTime) < 20) {
-	        return;
-	      }
-	      this.focusTime = 0;
-	    }
-	    this.preClickTime = 0;
-	    this.preTouchTime = 0;
-	    event.preventDefault();
-	    var nextVisible = !this.state.popupVisible;
-	    if (this.isClickToHide() && !nextVisible || nextVisible && this.isClickToShow()) {
-	      this.setPopupVisible(!this.state.popupVisible);
-	    }
-	  };
-	
-	  Trigger.prototype.onDocumentClick = function onDocumentClick(event) {
-	    if (this.props.mask && !this.props.maskClosable) {
-	      return;
-	    }
-	    var target = event.target;
-	    var root = (0, _reactDom.findDOMNode)(this);
-	    var popupNode = this.getPopupDomNode();
-	    if (!(0, _contains2["default"])(root, target) && !(0, _contains2["default"])(popupNode, target)) {
-	      this.close();
-	    }
-	  };
-	
-	  Trigger.prototype.getPopupDomNode = function getPopupDomNode() {
-	    // for test
-	    if (this._component) {
-	      return this.mounted ? this._component.getPopupDomNode() : null;
-	    }
-	    return null;
-	  };
-	
-	  Trigger.prototype.getRootDomNode = function getRootDomNode() {
-	    return _reactDom2["default"].findDOMNode(this);
-	  };
-	
-	  Trigger.prototype.getPopupClassNameFromAlign = function getPopupClassNameFromAlign(align) {
-	    var className = [];
-	    var props = this.props;
-	    var popupPlacement = props.popupPlacement,
-	        builtinPlacements = props.builtinPlacements,
-	        clsPrefix = props.clsPrefix;
-	
-	    if (popupPlacement && builtinPlacements) {
-	      className.push((0, _utils.getPopupClassNameFromAlign)(builtinPlacements, clsPrefix, align));
-	    }
-	    if (props.getPopupClassNameFromAlign) {
-	      className.push(props.getPopupClassNameFromAlign(align));
-	    }
-	    return className.join(' ');
-	  };
-	
-	  Trigger.prototype.getPopupAlign = function getPopupAlign() {
-	    var props = this.props;
-	    var popupPlacement = props.popupPlacement,
-	        popupAlign = props.popupAlign,
-	        builtinPlacements = props.builtinPlacements;
-	
-	    if (popupPlacement && builtinPlacements) {
-	      return (0, _utils.getAlignFromPlacement)(builtinPlacements, popupPlacement, popupAlign);
-	    }
-	    return popupAlign;
-	  };
-	
-	  Trigger.prototype.getComponent = function getComponent() {
-	    var props = this.props,
-	        state = this.state;
-	
-	    var mouseProps = {};
-	    if (this.isMouseEnterToShow()) {
-	      mouseProps.onMouseEnter = this.onPopupMouseEnter;
-	    }
-	    if (this.isMouseLeaveToHide()) {
-	      mouseProps.onMouseLeave = this.onPopupMouseLeave;
-	    }
-	    return _react2["default"].createElement(
-	      _Popup2["default"],
-	      _extends({
-	        clsPrefix: props.clsPrefix,
-	        destroyPopupOnHide: props.destroyPopupOnHide,
-	        visible: state.popupVisible,
-	        className: props.popupClassName,
-	        action: props.action,
-	        align: this.getPopupAlign(),
-	        onAlign: props.onPopupAlign,
-	        animation: props.popupAnimation,
-	        getClassNameFromAlign: this.getPopupClassNameFromAlign
-	      }, mouseProps, {
-	        getRootDomNode: this.getRootDomNode,
-	        style: props.popupStyle,
-	        mask: props.mask,
-	        zIndex: props.zIndex,
-	        transitionName: props.popupTransitionName,
-	        maskAnimation: props.maskAnimation,
-	        maskTransitionName: props.maskTransitionName
-	      }),
-	      typeof props.popup === 'function' ? props.popup() : props.popup
-	    );
-	  };
-	
-	  Trigger.prototype.setPopupVisible = function setPopupVisible(popupVisible) {
-	    this.clearDelayTimer();
-	    if (this.state.popupVisible !== popupVisible) {
-	      if (!('popupVisible' in this.props)) {
-	        this.setState({
-	          popupVisible: popupVisible
-	        });
-	      }
-	      this.props.onPopupVisibleChange(popupVisible);
-	    }
-	  };
-	
-	  Trigger.prototype.delaySetPopupVisible = function delaySetPopupVisible(visible, delayS) {
-	    var _this3 = this;
-	
-	    var delay = delayS * 1000;
-	    this.clearDelayTimer();
-	    if (delay) {
-	      this.delayTimer = setTimeout(function () {
-	        _this3.setPopupVisible(visible);
-	        _this3.clearDelayTimer();
-	      }, delay);
-	    } else {
-	      this.setPopupVisible(visible);
-	    }
-	  };
-	
-	  Trigger.prototype.clearDelayTimer = function clearDelayTimer() {
-	    if (this.delayTimer) {
-	      clearTimeout(this.delayTimer);
-	      this.delayTimer = null;
-	    }
-	  };
-	
-	  Trigger.prototype.createTwoChains = function createTwoChains(event) {
-	    var childPros = this.props.children.props;
-	    var props = this.props;
-	    if (childPros[event] && props[event]) {
-	      return this['fire' + event];
-	    }
-	    return childPros[event] || props[event];
-	  };
-	
-	  Trigger.prototype.isClickToShow = function isClickToShow() {
-	    var _props = this.props,
-	        action = _props.action,
-	        showAction = _props.showAction;
-	
-	    return action.indexOf('click') !== -1 || showAction.indexOf('click') !== -1;
-	  };
-	
-	  Trigger.prototype.isClickToHide = function isClickToHide() {
-	    var _props2 = this.props,
-	        action = _props2.action,
-	        hideAction = _props2.hideAction;
-	
-	    return action.indexOf('click') !== -1 || hideAction.indexOf('click') !== -1;
-	  };
-	
-	  Trigger.prototype.isMouseEnterToShow = function isMouseEnterToShow() {
-	    var _props3 = this.props,
-	        action = _props3.action,
-	        showAction = _props3.showAction;
-	
-	    return action.indexOf('hover') !== -1 || showAction.indexOf('mouseEnter') !== -1;
-	  };
-	
-	  Trigger.prototype.isMouseLeaveToHide = function isMouseLeaveToHide() {
-	    var _props4 = this.props,
-	        action = _props4.action,
-	        hideAction = _props4.hideAction;
-	
-	    return action.indexOf('hover') !== -1 || hideAction.indexOf('mouseLeave') !== -1;
-	  };
-	
-	  Trigger.prototype.isFocusToShow = function isFocusToShow() {
-	    var _props5 = this.props,
-	        action = _props5.action,
-	        showAction = _props5.showAction;
-	
-	    return action.indexOf('focus') !== -1 || showAction.indexOf('focus') !== -1;
-	  };
-	
-	  Trigger.prototype.isBlurToHide = function isBlurToHide() {
-	    var _props6 = this.props,
-	        action = _props6.action,
-	        hideAction = _props6.hideAction;
-	
-	    return action.indexOf('focus') !== -1 || hideAction.indexOf('blur') !== -1;
-	  };
-	
-	  Trigger.prototype.forcePopupAlign = function forcePopupAlign() {
-	    if (this.state.popupVisible && this.popupInstance && this.popupInstance.alignInstance) {
-	      this.popupInstance.alignInstance.forceAlign();
-	    }
-	  };
-	
-	  Trigger.prototype.fireEvents = function fireEvents(type, e) {
-	    var childCallback = this.props.children.props[type];
-	    if (childCallback) {
-	      childCallback(e);
-	    }
-	    var callback = this.props[type];
-	    if (callback) {
-	      callback(e);
-	    }
-	  };
-	
-	  Trigger.prototype.close = function close() {
-	    this.setPopupVisible(false);
-	  };
-	
-	  Trigger.prototype.render = function render() {
-	    var props = this.props;
-	    var children = props.children;
-	    var child = _react2["default"].Children.only(children);
-	    var newChildProps = {};
-	
-	    if (this.isClickToHide() || this.isClickToShow()) {
-	      newChildProps.onClick = this.onClick;
-	      newChildProps.onMouseDown = this.onMouseDown;
-	      newChildProps.onTouchStart = this.onTouchStart;
-	    } else {
-	      newChildProps.onClick = this.createTwoChains('onClick');
-	      newChildProps.onMouseDown = this.createTwoChains('onMouseDown');
-	      newChildProps.onTouchStart = this.createTwoChains('onTouchStart');
-	    }
-	    if (this.isMouseEnterToShow()) {
-	      newChildProps.onMouseEnter = this.onMouseEnter;
-	    } else {
-	      newChildProps.onMouseEnter = this.createTwoChains('onMouseEnter');
-	    }
-	    if (this.isMouseLeaveToHide()) {
-	      newChildProps.onMouseLeave = this.onMouseLeave;
-	    } else {
-	      newChildProps.onMouseLeave = this.createTwoChains('onMouseLeave');
-	    }
-	    if (this.isFocusToShow() || this.isBlurToHide()) {
-	      newChildProps.onFocus = this.onFocus;
-	      newChildProps.onBlur = this.onBlur;
-	    } else {
-	      newChildProps.onFocus = this.createTwoChains('onFocus');
-	      newChildProps.onBlur = this.createTwoChains('onBlur');
-	    }
-	
-	    return _react2["default"].cloneElement(child, newChildProps);
-	  };
-	
-	  return Trigger;
-	}(_react.Component);
-	
-	;
-	
-	Trigger.propTypes = propTypes;
-	Trigger.defaultProps = defaultProps;
-	exports["default"] = Trigger;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 123 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _Align = __webpack_require__(49);
-	
-	var _Align2 = _interopRequireDefault(_Align);
-	
-	var _beeAnimate = __webpack_require__(106);
-	
-	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
-	
-	var _PopupInner = __webpack_require__(124);
-	
-	var _PopupInner2 = _interopRequireDefault(_PopupInner);
-	
-	var _LazyRenderBox = __webpack_require__(125);
-	
-	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  visible: _propTypes2["default"].bool,
-	  style: _propTypes2["default"].object,
-	  getClassNameFromAlign: _propTypes2["default"].func,
-	  onAlign: _propTypes2["default"].func,
-	  getRootDomNode: _propTypes2["default"].func,
-	  onMouseEnter: _propTypes2["default"].func,
-	  align: _propTypes2["default"].any,
-	  destroyPopupOnHide: _propTypes2["default"].bool,
-	  className: _propTypes2["default"].string,
-	  clsPrefix: _propTypes2["default"].string,
-	  onMouseLeave: _propTypes2["default"].func
-	};
-	
-	var Popup = function (_Component) {
-	  _inherits(Popup, _Component);
-	
-	  function Popup() {
-	    _classCallCheck(this, Popup);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this));
-	
-	    _this.onAlign = _this.onAlign.bind(_this);
-	    _this.getPopupDomNode = _this.getPopupDomNode.bind(_this);
-	    _this.getTarget = _this.getTarget.bind(_this);
-	    _this.getMaskTransitionName = _this.getMaskTransitionName.bind(_this);
-	    _this.getTransitionName = _this.getTransitionName.bind(_this);
-	    _this.getClassName = _this.getClassName.bind(_this);
-	    _this.getPopupElement = _this.getPopupElement.bind(_this);
-	    _this.getZIndexStyle = _this.getZIndexStyle.bind(_this);
-	    _this.getMaskElement = _this.getMaskElement.bind(_this);
-	    _this.saveAlign = _this.saveAlign.bind(_this);
-	    return _this;
-	  }
-	
-	  Popup.prototype.componentDidMount = function componentDidMount() {
-	    this.rootNode = this.getPopupDomNode();
-	  };
-	
-	  Popup.prototype.onAlign = function onAlign(popupDomNode, align) {
-	    var props = this.props;
-	    var alignClassName = props.getClassNameFromAlign(props.align);
-	    var currentAlignClassName = props.getClassNameFromAlign(align);
-	    if (alignClassName !== currentAlignClassName) {
-	      this.currentAlignClassName = currentAlignClassName;
-	      popupDomNode.className = this.getClassName(currentAlignClassName);
-	    }
-	    props.onAlign(popupDomNode, align);
-	  };
-	
-	  Popup.prototype.getPopupDomNode = function getPopupDomNode() {
-	    return _reactDom2["default"].findDOMNode(this.refs.popup);
-	  };
-	
-	  Popup.prototype.getTarget = function getTarget() {
-	    return this.props.getRootDomNode();
-	  };
-	
-	  Popup.prototype.getMaskTransitionName = function getMaskTransitionName() {
-	    var props = this.props;
-	    var transitionName = props.maskTransitionName;
-	    var animation = props.maskAnimation;
-	    if (!transitionName && animation) {
-	      transitionName = props.clsPrefix + '-' + animation;
-	    }
-	    return transitionName;
-	  };
-	
-	  Popup.prototype.getTransitionName = function getTransitionName() {
-	    var props = this.props;
-	    var transitionName = props.transitionName;
-	    if (!transitionName && props.animation) {
-	      transitionName = props.clsPrefix + '-' + props.animation;
-	    }
-	    return transitionName;
-	  };
-	
-	  Popup.prototype.getClassName = function getClassName(currentAlignClassName) {
-	    return this.props.clsPrefix + ' ' + this.props.className + ' ' + currentAlignClassName;
-	  };
-	
-	  Popup.prototype.getPopupElement = function getPopupElement() {
-	    var props = this.props;
-	    var align = props.align,
-	        style = props.style,
-	        visible = props.visible,
-	        clsPrefix = props.clsPrefix,
-	        destroyPopupOnHide = props.destroyPopupOnHide;
-	
-	    var className = this.getClassName(this.currentAlignClassName || props.getClassNameFromAlign(align));
-	    var hiddenClassName = clsPrefix + '-hidden';
-	    if (!visible) {
-	      this.currentAlignClassName = null;
-	    }
-	    var newStyle = _extends({}, style, this.getZIndexStyle());
-	    var popupInnerProps = {
-	      className: className,
-	      clsPrefix: clsPrefix,
-	      ref: 'popup',
-	      onMouseEnter: props.onMouseEnter,
-	      onMouseLeave: props.onMouseLeave,
-	      style: newStyle
-	    };
-	    if (destroyPopupOnHide) {
-	      return _react2["default"].createElement(
-	        _beeAnimate2["default"],
-	        {
-	          component: '',
-	          exclusive: true,
-	          transitionAppear: true,
-	          transitionName: this.getTransitionName()
-	        },
-	        visible ? _react2["default"].createElement(
-	          _Align2["default"],
-	          {
-	            target: this.getTarget,
-	            key: 'popup',
-	            ref: this.saveAlign,
-	            monitorWindowResize: true,
-	            align: align,
-	            onAlign: this.onAlign
-	          },
-	          _react2["default"].createElement(
-	            _PopupInner2["default"],
-	            _extends({
-	              visible: true
-	            }, popupInnerProps),
-	            props.children
-	          )
-	        ) : null
-	      );
-	    }
-	    return _react2["default"].createElement(
-	      _beeAnimate2["default"],
-	      {
-	        component: '',
-	        exclusive: true,
-	        transitionAppear: true,
-	        transitionName: this.getTransitionName(),
-	        showProp: 'xVisible'
-	      },
-	      _react2["default"].createElement(
-	        _Align2["default"],
-	        {
-	          target: this.getTarget,
-	          key: 'popup',
-	          ref: this.saveAlign,
-	          monitorWindowResize: true,
-	          xVisible: visible,
-	          childrenProps: { visible: 'xVisible' },
-	          disabled: !visible,
-	          align: align,
-	          onAlign: this.onAlign
-	        },
-	        _react2["default"].createElement(
-	          _PopupInner2["default"],
-	          _extends({
-	            hiddenClassName: hiddenClassName
-	          }, popupInnerProps),
-	          props.children
-	        )
-	      )
-	    );
-	  };
-	
-	  Popup.prototype.getZIndexStyle = function getZIndexStyle() {
-	    var style = {};
-	    var props = this.props;
-	    if (props.zIndex !== undefined) {
-	      style.zIndex = props.zIndex;
-	    }
-	    return style;
-	  };
-	
-	  Popup.prototype.getMaskElement = function getMaskElement() {
-	    var props = this.props;
-	    var maskElement = void 0;
-	    if (props.mask) {
-	      var maskTransition = this.getMaskTransitionName();
-	      maskElement = _react2["default"].createElement(_LazyRenderBox2["default"], {
-	        style: this.getZIndexStyle(),
-	        key: 'mask',
-	        className: props.clsPrefix + '-mask',
-	        hiddenClassName: props.clsPrefix + '-mask-hidden',
-	        visible: props.visible
-	      });
-	      if (maskTransition) {
-	        maskElement = _react2["default"].createElement(
-	          _beeAnimate2["default"],
-	          {
-	            key: 'mask',
-	            showProp: 'visible',
-	            transitionAppear: true,
-	            component: '',
-	            transitionName: maskTransition
-	          },
-	          maskElement
-	        );
-	      }
-	    }
-	    return maskElement;
-	  };
-	
-	  Popup.prototype.saveAlign = function saveAlign(align) {
-	    this.alignInstance = align;
-	  };
-	
-	  Popup.prototype.render = function render() {
-	    return _react2["default"].createElement(
-	      'div',
-	      null,
-	      this.getMaskElement(),
-	      this.getPopupElement()
-	    );
-	  };
-	
-	  return Popup;
-	}(_react.Component);
-	
-	;
-	
-	Popup.propTypes = propTypes;
-	exports["default"] = Popup;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 124 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _LazyRenderBox = __webpack_require__(125);
-	
-	var _LazyRenderBox2 = _interopRequireDefault(_LazyRenderBox);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  hiddenClassName: _propTypes2["default"].string,
-	  className: _propTypes2["default"].string,
-	  clsPrefix: _propTypes2["default"].string,
-	  onMouseEnter: _propTypes2["default"].func,
-	  onMouseLeave: _propTypes2["default"].func,
-	  children: _propTypes2["default"].any
-	};
-	
-	var PopupInner = function (_Component) {
-	  _inherits(PopupInner, _Component);
-	
-	  function PopupInner() {
-	    _classCallCheck(this, PopupInner);
-	
-	    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
-	  }
-	
-	  PopupInner.prototype.render = function render() {
-	    var props = this.props;
-	    var className = props.className;
-	    if (!props.visible) {
-	      className += ' ' + props.hiddenClassName;
-	    }
-	    return _react2["default"].createElement(
-	      'div',
-	      {
-	        className: className,
-	        onMouseEnter: props.onMouseEnter,
-	        onMouseLeave: props.onMouseLeave,
-	        style: props.style
-	      },
-	      _react2["default"].createElement(
-	        _LazyRenderBox2["default"],
-	        { className: props.clsPrefix + '-content', visible: props.visible },
-	        props.children
-	      )
-	    );
-	  };
-	
-	  return PopupInner;
-	}(_react.Component);
-	
-	;
-	
-	PopupInner.propTypes = propTypes;
-	exports["default"] = PopupInner;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 125 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  children: _propTypes2["default"].any,
-	  className: _propTypes2["default"].string,
-	  visible: _propTypes2["default"].bool,
-	  hiddenClassName: _propTypes2["default"].string
-	};
-	
-	var LazyRenderBox = function (_Component) {
-	  _inherits(LazyRenderBox, _Component);
-	
-	  function LazyRenderBox() {
-	    _classCallCheck(this, LazyRenderBox);
-	
-	    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
-	  }
-	
-	  LazyRenderBox.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
-	    return nextProps.hiddenClassName || nextProps.visible;
-	  };
-	
-	  LazyRenderBox.prototype.render = function render() {
-	    var _props = this.props,
-	        hiddenClassName = _props.hiddenClassName,
-	        visible = _props.visible,
-	        props = _objectWithoutProperties(_props, ['hiddenClassName', 'visible']);
-	
-	    if (hiddenClassName || _react2["default"].Children.count(props.children) > 1) {
-	      if (!visible && hiddenClassName) {
-	        props.className += ' ' + hiddenClassName;
-	      }
-	      return _react2["default"].createElement('div', props);
-	    }
-	
-	    return _react2["default"].Children.only(props.children);
-	  };
-	
-	  return LazyRenderBox;
-	}(_react.Component);
-	
-	;
-	LazyRenderBox.propTypes = propTypes;
-	
-	exports["default"] = LazyRenderBox;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 126 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	exports.getAlignFromPlacement = getAlignFromPlacement;
-	exports.getPopupClassNameFromAlign = getPopupClassNameFromAlign;
-	function isPointsEq(a1, a2) {
-	  return a1[0] === a2[0] && a1[1] === a2[1];
-	}
-	
-	function getAlignFromPlacement(builtinPlacements, placementStr, align) {
-	  var baseAlign = builtinPlacements[placementStr] || {};
-	  return _extends({}, baseAlign, align);
-	}
-	
-	function getPopupClassNameFromAlign(builtinPlacements, clsPrefix, align) {
-	  var points = align.points;
-	  for (var placement in builtinPlacements) {
-	    if (builtinPlacements.hasOwnProperty(placement)) {
-	      if (isPointsEq(builtinPlacements[placement].points, points)) {
-	        return clsPrefix + '-placement-' + placement;
-	      }
-	    }
-	  }
-	  return '';
-	}
-
-/***/ }),
-/* 127 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	var _beeMenus = __webpack_require__(98);
-	
-	var _beeMenus2 = _interopRequireDefault(_beeMenus);
-	
-	var _domScrollIntoView = __webpack_require__(128);
-	
-	var _domScrollIntoView2 = _interopRequireDefault(_domScrollIntoView);
-	
-	var _util = __webpack_require__(119);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  defaultActiveFirstOption: _propTypes2["default"].bool,
-	  value: _propTypes2["default"].any,
-	  dropdownMenuStyle: _propTypes2["default"].object,
-	  multiple: _propTypes2["default"].bool,
-	  onPopupFocus: _propTypes2["default"].func,
-	  onMenuDeSelect: _propTypes2["default"].func,
-	  onMenuSelect: _propTypes2["default"].func,
-	  clsPrefix: _propTypes2["default"].string,
-	  menuItems: _propTypes2["default"].any,
-	  inputValue: _propTypes2["default"].string,
-	  visible: _propTypes2["default"].bool
-	};
-	
-	var DropdownMenu = function (_Component) {
-	  _inherits(DropdownMenu, _Component);
-	
-	  function DropdownMenu() {
-	    _classCallCheck(this, DropdownMenu);
-	
-	    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
-	  }
-	
-	  DropdownMenu.prototype.componentWillMount = function componentWillMount() {
-	    this.lastInputValue = this.props.inputValue;
-	  };
-	
-	  DropdownMenu.prototype.componentDidMount = function componentDidMount() {
-	    this.scrollActiveItemToView();
-	    this.lastVisible = this.props.visible;
-	    var scrollDom = (0, _reactDom.findDOMNode)(this.refs.menu);
-	    scrollDom.addEventListener('scroll', this.handleScroll.bind(this));
-	  };
-	
-	  DropdownMenu.prototype.componentWillUnmount = function componentWillUnmount() {
-	    var scrollDom = (0, _reactDom.findDOMNode)(this.refs.menu);
-	    scrollDom.removeEventListener('scroll', this.handleScroll.bind(this));
-	  };
-	
-	  DropdownMenu.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
-	    if (!nextProps.visible) {
-	      this.lastVisible = false;
-	    }
-	    // freeze when hide
-	    return nextProps.visible;
-	  };
-	
-	  DropdownMenu.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
-	    var props = this.props;
-	    if (!prevProps.visible && props.visible) {
-	      this.scrollActiveItemToView();
-	    }
-	    this.lastVisible = props.visible;
-	    this.lastInputValue = props.inputValue;
-	  };
-	
-	  DropdownMenu.prototype.handleScroll = function handleScroll(event) {
-	    var scrollToEnd = this.props.scrollToEnd;
-	
-	    var el = event.target;
-	    if (el.scrollHeight < el.clientHeight + el.scrollTop + 1) {
-	      if (scrollToEnd) {
-	        scrollToEnd();
-	      }
-	    }
-	  };
-	
-	  DropdownMenu.prototype.scrollActiveItemToView = function scrollActiveItemToView() {
-	    // scroll into view
-	    var itemComponent = (0, _reactDom.findDOMNode)(this.firstActiveItem);
-	    if (itemComponent) {
-	      (0, _domScrollIntoView2["default"])(itemComponent, (0, _reactDom.findDOMNode)(this.refs.menu), {
-	        onlyScrollIfNeeded: true
-	      });
-	    }
-	  };
-	
-	  DropdownMenu.prototype.renderMenu = function renderMenu() {
-	    var _this2 = this;
-	
-	    var props = this.props;
-	    var menuItems = props.menuItems,
-	        defaultActiveFirstOption = props.defaultActiveFirstOption,
-	        value = props.value,
-	        clsPrefix = props.clsPrefix,
-	        multiple = props.multiple,
-	        onMenuSelect = props.onMenuSelect,
-	        inputValue = props.inputValue;
-	
-	    if (menuItems && menuItems.length) {
-	      var menuProps = {};
-	      if (multiple) {
-	        menuProps.onDeselect = props.onMenuDeselect;
-	        menuProps.onSelect = onMenuSelect;
-	      } else {
-	        menuProps.onClick = onMenuSelect;
-	      }
-	
-	      var selectedKeys = (0, _util.getSelectKeys)(menuItems, value);
-	      var activeKeyProps = {};
-	
-	      var clonedMenuItems = menuItems;
-	      if (selectedKeys.length) {
-	        if (props.visible && !this.lastVisible) {
-	          activeKeyProps.activeKey = selectedKeys[0];
-	        }
-	        var foundFirst = false;
-	        // set firstActiveItem via cloning menus
-	        // for scroll into view
-	        var clone = function clone(item) {
-	          if (!foundFirst && selectedKeys.indexOf(item.key) !== -1) {
-	            foundFirst = true;
-	            return (0, _react.cloneElement)(item, {
-	              ref: function ref(_ref) {
-	                _this2.firstActiveItem = _ref;
-	              }
-	            });
-	          }
-	          return item;
-	        };
-	
-	        clonedMenuItems = menuItems.map(function (item) {
-	          if (item.type === _beeMenus.ItemGroup) {
-	            var children = (0, _tinperBeeCore.toArray)(item.props.children).map(clone);
-	            return (0, _react.cloneElement)(item, {}, children);
-	          }
-	          return clone(item);
-	        });
-	      }
-	
-	      // clear activeKey when inputValue change
-	      if (inputValue !== this.lastInputValue) {
-	        activeKeyProps.activeKey = '';
-	      }
-	
-	      return _react2["default"].createElement(
-	        _beeMenus2["default"],
-	        _extends({
-	          ref: 'menu',
-	          style: this.props.dropdownMenuStyle,
-	          defaultActiveFirst: defaultActiveFirstOption
-	        }, activeKeyProps, {
-	          multiple: multiple,
-	          focusable: false
-	        }, menuProps, {
-	          selectedKeys: selectedKeys,
-	          clsPrefix: clsPrefix + '-menu'
-	        }),
-	        clonedMenuItems
-	      );
-	    }
-	    return null;
-	  };
-	
-	  DropdownMenu.prototype.render = function render() {
-	    var renderMenu = this.renderMenu();
-	    return renderMenu ? _react2["default"].createElement(
-	      'div',
-	      {
-	        style: { overflow: 'auto' },
-	        onFocus: this.props.onPopupFocus,
-	        onMouseDown: _util.preventDefaultEvent
-	      },
-	      renderMenu
-	    ) : null;
-	  };
-	
-	  return DropdownMenu;
-	}(_react.Component);
-	
-	;
-	
-	exports["default"] = DropdownMenu;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 128 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	module.exports = __webpack_require__(129);
-
-/***/ }),
-/* 129 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var util = __webpack_require__(130);
-	
-	function scrollIntoView(elem, container, config) {
-	  config = config || {};
-	  // document 归一化到 window
-	  if (container.nodeType === 9) {
-	    container = util.getWindow(container);
-	  }
-	
-	  var allowHorizontalScroll = config.allowHorizontalScroll;
-	  var onlyScrollIfNeeded = config.onlyScrollIfNeeded;
-	  var alignWithTop = config.alignWithTop;
-	  var alignWithLeft = config.alignWithLeft;
-	  var offsetTop = config.offsetTop || 0;
-	  var offsetLeft = config.offsetLeft || 0;
-	  var offsetBottom = config.offsetBottom || 0;
-	  var offsetRight = config.offsetRight || 0;
-	
-	  allowHorizontalScroll = allowHorizontalScroll === undefined ? true : allowHorizontalScroll;
-	
-	  var isWin = util.isWindow(container);
-	  var elemOffset = util.offset(elem);
-	  var eh = util.outerHeight(elem);
-	  var ew = util.outerWidth(elem);
-	  var containerOffset = undefined;
-	  var ch = undefined;
-	  var cw = undefined;
-	  var containerScroll = undefined;
-	  var diffTop = undefined;
-	  var diffBottom = undefined;
-	  var win = undefined;
-	  var winScroll = undefined;
-	  var ww = undefined;
-	  var wh = undefined;
-	
-	  if (isWin) {
-	    win = container;
-	    wh = util.height(win);
-	    ww = util.width(win);
-	    winScroll = {
-	      left: util.scrollLeft(win),
-	      top: util.scrollTop(win)
-	    };
-	    // elem 相对 container 可视视窗的距离
-	    diffTop = {
-	      left: elemOffset.left - winScroll.left - offsetLeft,
-	      top: elemOffset.top - winScroll.top - offsetTop
-	    };
-	    diffBottom = {
-	      left: elemOffset.left + ew - (winScroll.left + ww) + offsetRight,
-	      top: elemOffset.top + eh - (winScroll.top + wh) + offsetBottom
-	    };
-	    containerScroll = winScroll;
-	  } else {
-	    containerOffset = util.offset(container);
-	    ch = container.clientHeight;
-	    cw = container.clientWidth;
-	    containerScroll = {
-	      left: container.scrollLeft,
-	      top: container.scrollTop
-	    };
-	    // elem 相对 container 可视视窗的距离
-	    // 注意边框, offset 是边框到根节点
-	    diffTop = {
-	      left: elemOffset.left - (containerOffset.left + (parseFloat(util.css(container, 'borderLeftWidth')) || 0)) - offsetLeft,
-	      top: elemOffset.top - (containerOffset.top + (parseFloat(util.css(container, 'borderTopWidth')) || 0)) - offsetTop
-	    };
-	    diffBottom = {
-	      left: elemOffset.left + ew - (containerOffset.left + cw + (parseFloat(util.css(container, 'borderRightWidth')) || 0)) + offsetRight,
-	      top: elemOffset.top + eh - (containerOffset.top + ch + (parseFloat(util.css(container, 'borderBottomWidth')) || 0)) + offsetBottom
-	    };
-	  }
-	
-	  if (diffTop.top < 0 || diffBottom.top > 0) {
-	    // 强制向上
-	    if (alignWithTop === true) {
-	      util.scrollTop(container, containerScroll.top + diffTop.top);
-	    } else if (alignWithTop === false) {
-	      util.scrollTop(container, containerScroll.top + diffBottom.top);
-	    } else {
-	      // 自动调整
-	      if (diffTop.top < 0) {
-	        util.scrollTop(container, containerScroll.top + diffTop.top);
-	      } else {
-	        util.scrollTop(container, containerScroll.top + diffBottom.top);
-	      }
-	    }
-	  } else {
-	    if (!onlyScrollIfNeeded) {
-	      alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
-	      if (alignWithTop) {
-	        util.scrollTop(container, containerScroll.top + diffTop.top);
-	      } else {
-	        util.scrollTop(container, containerScroll.top + diffBottom.top);
-	      }
-	    }
-	  }
-	
-	  if (allowHorizontalScroll) {
-	    if (diffTop.left < 0 || diffBottom.left > 0) {
-	      // 强制向上
-	      if (alignWithLeft === true) {
-	        util.scrollLeft(container, containerScroll.left + diffTop.left);
-	      } else if (alignWithLeft === false) {
-	        util.scrollLeft(container, containerScroll.left + diffBottom.left);
-	      } else {
-	        // 自动调整
-	        if (diffTop.left < 0) {
-	          util.scrollLeft(container, containerScroll.left + diffTop.left);
-	        } else {
-	          util.scrollLeft(container, containerScroll.left + diffBottom.left);
-	        }
-	      }
-	    } else {
-	      if (!onlyScrollIfNeeded) {
-	        alignWithLeft = alignWithLeft === undefined ? true : !!alignWithLeft;
-	        if (alignWithLeft) {
-	          util.scrollLeft(container, containerScroll.left + diffTop.left);
-	        } else {
-	          util.scrollLeft(container, containerScroll.left + diffBottom.left);
-	        }
-	      }
-	    }
-	  }
-	}
-	
-	module.exports = scrollIntoView;
-
-/***/ }),
-/* 130 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
-	var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
-	
-	function getClientPosition(elem) {
-	  var box = undefined;
-	  var x = undefined;
-	  var y = undefined;
-	  var doc = elem.ownerDocument;
-	  var body = doc.body;
-	  var docElem = doc && doc.documentElement;
-	  // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
-	  box = elem.getBoundingClientRect();
-	
-	  // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
-	  // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
-	  // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
-	
-	  x = box.left;
-	  y = box.top;
-	
-	  // In IE, most of the time, 2 extra pixels are added to the top and left
-	  // due to the implicit 2-pixel inset border.  In IE6/7 quirks mode and
-	  // IE6 standards mode, this border can be overridden by setting the
-	  // document element's border to zero -- thus, we cannot rely on the
-	  // offset always being 2 pixels.
-	
-	  // In quirks mode, the offset can be determined by querying the body's
-	  // clientLeft/clientTop, but in standards mode, it is found by querying
-	  // the document element's clientLeft/clientTop.  Since we already called
-	  // getClientBoundingRect we have already forced a reflow, so it is not
-	  // too expensive just to query them all.
-	
-	  // ie 下应该减去窗口的边框吧，毕竟默认 absolute 都是相对窗口定位的
-	  // 窗口边框标准是设 documentElement ,quirks 时设置 body
-	  // 最好禁止在 body 和 html 上边框 ，但 ie < 9 html 默认有 2px ，减去
-	  // 但是非 ie 不可能设置窗口边框，body html 也不是窗口 ,ie 可以通过 html,body 设置
-	  // 标准 ie 下 docElem.clientTop 就是 border-top
-	  // ie7 html 即窗口边框改变不了。永远为 2
-	  // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
-	
-	  x -= docElem.clientLeft || body.clientLeft || 0;
-	  y -= docElem.clientTop || body.clientTop || 0;
-	
-	  return {
-	    left: x,
-	    top: y
-	  };
-	}
-	
-	function getScroll(w, top) {
-	  var ret = w['page' + (top ? 'Y' : 'X') + 'Offset'];
-	  var method = 'scroll' + (top ? 'Top' : 'Left');
-	  if (typeof ret !== 'number') {
-	    var d = w.document;
-	    // ie6,7,8 standard mode
-	    ret = d.documentElement[method];
-	    if (typeof ret !== 'number') {
-	      // quirks mode
-	      ret = d.body[method];
-	    }
-	  }
-	  return ret;
-	}
-	
-	function getScrollLeft(w) {
-	  return getScroll(w);
-	}
-	
-	function getScrollTop(w) {
-	  return getScroll(w, true);
-	}
-	
-	function getOffset(el) {
-	  var pos = getClientPosition(el);
-	  var doc = el.ownerDocument;
-	  var w = doc.defaultView || doc.parentWindow;
-	  pos.left += getScrollLeft(w);
-	  pos.top += getScrollTop(w);
-	  return pos;
-	}
-	function _getComputedStyle(elem, name, computedStyle_) {
-	  var val = '';
-	  var d = elem.ownerDocument;
-	  var computedStyle = computedStyle_ || d.defaultView.getComputedStyle(elem, null);
-	
-	  // https://github.com/kissyteam/kissy/issues/61
-	  if (computedStyle) {
-	    val = computedStyle.getPropertyValue(name) || computedStyle[name];
-	  }
-	
-	  return val;
-	}
-	
-	var _RE_NUM_NO_PX = new RegExp('^(' + RE_NUM + ')(?!px)[a-z%]+$', 'i');
-	var RE_POS = /^(top|right|bottom|left)$/;
-	var CURRENT_STYLE = 'currentStyle';
-	var RUNTIME_STYLE = 'runtimeStyle';
-	var LEFT = 'left';
-	var PX = 'px';
-	
-	function _getComputedStyleIE(elem, name) {
-	  // currentStyle maybe null
-	  // http://msdn.microsoft.com/en-us/library/ms535231.aspx
-	  var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
-	
-	  // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
-	  // 一开始就处理了! CUSTOM_STYLE.height,CUSTOM_STYLE.width ,cssHook 解决@2011-08-19
-	  // 在 ie 下不对，需要直接用 offset 方式
-	  // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
-	
-	  // From the awesome hack by Dean Edwards
-	  // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
-	  // If we're not dealing with a regular pixel number
-	  // but a number that has a weird ending, we need to convert it to pixels
-	  // exclude left right for relativity
-	  if (_RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
-	    // Remember the original values
-	    var style = elem.style;
-	    var left = style[LEFT];
-	    var rsLeft = elem[RUNTIME_STYLE][LEFT];
-	
-	    // prevent flashing of content
-	    elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-	
-	    // Put in the new values to get a computed value out
-	    style[LEFT] = name === 'fontSize' ? '1em' : ret || 0;
-	    ret = style.pixelLeft + PX;
-	
-	    // Revert the changed values
-	    style[LEFT] = left;
-	
-	    elem[RUNTIME_STYLE][LEFT] = rsLeft;
-	  }
-	  return ret === '' ? 'auto' : ret;
-	}
-	
-	var getComputedStyleX = undefined;
-	if (typeof window !== 'undefined') {
-	  getComputedStyleX = window.getComputedStyle ? _getComputedStyle : _getComputedStyleIE;
-	}
-	
-	function each(arr, fn) {
-	  for (var i = 0; i < arr.length; i++) {
-	    fn(arr[i]);
-	  }
-	}
-	
-	function isBorderBoxFn(elem) {
-	  return getComputedStyleX(elem, 'boxSizing') === 'border-box';
-	}
-	
-	var BOX_MODELS = ['margin', 'border', 'padding'];
-	var CONTENT_INDEX = -1;
-	var PADDING_INDEX = 2;
-	var BORDER_INDEX = 1;
-	var MARGIN_INDEX = 0;
-	
-	function swap(elem, options, callback) {
-	  var old = {};
-	  var style = elem.style;
-	  var name = undefined;
-	
-	  // Remember the old values, and insert the new ones
-	  for (name in options) {
-	    if (options.hasOwnProperty(name)) {
-	      old[name] = style[name];
-	      style[name] = options[name];
-	    }
-	  }
-	
-	  callback.call(elem);
-	
-	  // Revert the old values
-	  for (name in options) {
-	    if (options.hasOwnProperty(name)) {
-	      style[name] = old[name];
-	    }
-	  }
-	}
-	
-	function getPBMWidth(elem, props, which) {
-	  var value = 0;
-	  var prop = undefined;
-	  var j = undefined;
-	  var i = undefined;
-	  for (j = 0; j < props.length; j++) {
-	    prop = props[j];
-	    if (prop) {
-	      for (i = 0; i < which.length; i++) {
-	        var cssProp = undefined;
-	        if (prop === 'border') {
-	          cssProp = prop + which[i] + 'Width';
-	        } else {
-	          cssProp = prop + which[i];
-	        }
-	        value += parseFloat(getComputedStyleX(elem, cssProp)) || 0;
-	      }
-	    }
-	  }
-	  return value;
-	}
-	
-	/**
-	 * A crude way of determining if an object is a window
-	 * @member util
-	 */
-	function isWindow(obj) {
-	  // must use == for ie8
-	  /* eslint eqeqeq:0 */
-	  return obj != null && obj == obj.window;
-	}
-	
-	var domUtils = {};
-	
-	each(['Width', 'Height'], function (name) {
-	  domUtils['doc' + name] = function (refWin) {
-	    var d = refWin.document;
-	    return Math.max(
-	    // firefox chrome documentElement.scrollHeight< body.scrollHeight
-	    // ie standard mode : documentElement.scrollHeight> body.scrollHeight
-	    d.documentElement['scroll' + name],
-	    // quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
-	    d.body['scroll' + name], domUtils['viewport' + name](d));
-	  };
-	
-	  domUtils['viewport' + name] = function (win) {
-	    // pc browser includes scrollbar in window.innerWidth
-	    var prop = 'client' + name;
-	    var doc = win.document;
-	    var body = doc.body;
-	    var documentElement = doc.documentElement;
-	    var documentElementProp = documentElement[prop];
-	    // 标准模式取 documentElement
-	    // backcompat 取 body
-	    return doc.compatMode === 'CSS1Compat' && documentElementProp || body && body[prop] || documentElementProp;
-	  };
-	});
-	
-	/*
-	 得到元素的大小信息
-	 @param elem
-	 @param name
-	 @param {String} [extra]  'padding' : (css width) + padding
-	 'border' : (css width) + padding + border
-	 'margin' : (css width) + padding + border + margin
-	 */
-	function getWH(elem, name, extra) {
-	  if (isWindow(elem)) {
-	    return name === 'width' ? domUtils.viewportWidth(elem) : domUtils.viewportHeight(elem);
-	  } else if (elem.nodeType === 9) {
-	    return name === 'width' ? domUtils.docWidth(elem) : domUtils.docHeight(elem);
-	  }
-	  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-	  var borderBoxValue = name === 'width' ? elem.offsetWidth : elem.offsetHeight;
-	  var computedStyle = getComputedStyleX(elem);
-	  var isBorderBox = isBorderBoxFn(elem, computedStyle);
-	  var cssBoxValue = 0;
-	  if (borderBoxValue == null || borderBoxValue <= 0) {
-	    borderBoxValue = undefined;
-	    // Fall back to computed then un computed css if necessary
-	    cssBoxValue = getComputedStyleX(elem, name);
-	    if (cssBoxValue == null || Number(cssBoxValue) < 0) {
-	      cssBoxValue = elem.style[name] || 0;
-	    }
-	    // Normalize '', auto, and prepare for extra
-	    cssBoxValue = parseFloat(cssBoxValue) || 0;
-	  }
-	  if (extra === undefined) {
-	    extra = isBorderBox ? BORDER_INDEX : CONTENT_INDEX;
-	  }
-	  var borderBoxValueOrIsBorderBox = borderBoxValue !== undefined || isBorderBox;
-	  var val = borderBoxValue || cssBoxValue;
-	  if (extra === CONTENT_INDEX) {
-	    if (borderBoxValueOrIsBorderBox) {
-	      return val - getPBMWidth(elem, ['border', 'padding'], which, computedStyle);
-	    }
-	    return cssBoxValue;
-	  }
-	  if (borderBoxValueOrIsBorderBox) {
-	    var padding = extra === PADDING_INDEX ? -getPBMWidth(elem, ['border'], which, computedStyle) : getPBMWidth(elem, ['margin'], which, computedStyle);
-	    return val + (extra === BORDER_INDEX ? 0 : padding);
-	  }
-	  return cssBoxValue + getPBMWidth(elem, BOX_MODELS.slice(extra), which, computedStyle);
-	}
-	
-	var cssShow = {
-	  position: 'absolute',
-	  visibility: 'hidden',
-	  display: 'block'
-	};
-	
-	// fix #119 : https://github.com/kissyteam/kissy/issues/119
-	function getWHIgnoreDisplay(elem) {
-	  var val = undefined;
-	  var args = arguments;
-	  // in case elem is window
-	  // elem.offsetWidth === undefined
-	  if (elem.offsetWidth !== 0) {
-	    val = getWH.apply(undefined, args);
-	  } else {
-	    swap(elem, cssShow, function () {
-	      val = getWH.apply(undefined, args);
-	    });
-	  }
-	  return val;
-	}
-	
-	function css(el, name, v) {
-	  var value = v;
-	  if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
-	    for (var i in name) {
-	      if (name.hasOwnProperty(i)) {
-	        css(el, i, name[i]);
-	      }
-	    }
-	    return undefined;
-	  }
-	  if (typeof value !== 'undefined') {
-	    if (typeof value === 'number') {
-	      value += 'px';
-	    }
-	    el.style[name] = value;
-	    return undefined;
-	  }
-	  return getComputedStyleX(el, name);
-	}
-	
-	each(['width', 'height'], function (name) {
-	  var first = name.charAt(0).toUpperCase() + name.slice(1);
-	  domUtils['outer' + first] = function (el, includeMargin) {
-	    return el && getWHIgnoreDisplay(el, name, includeMargin ? MARGIN_INDEX : BORDER_INDEX);
-	  };
-	  var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-	
-	  domUtils[name] = function (elem, val) {
-	    if (val !== undefined) {
-	      if (elem) {
-	        var computedStyle = getComputedStyleX(elem);
-	        var isBorderBox = isBorderBoxFn(elem);
-	        if (isBorderBox) {
-	          val += getPBMWidth(elem, ['padding', 'border'], which, computedStyle);
-	        }
-	        return css(elem, name, val);
-	      }
-	      return undefined;
-	    }
-	    return elem && getWHIgnoreDisplay(elem, name, CONTENT_INDEX);
-	  };
-	});
-	
-	// 设置 elem 相对 elem.ownerDocument 的坐标
-	function setOffset(elem, offset) {
-	  // set position first, in-case top/left are set even on static elem
-	  if (css(elem, 'position') === 'static') {
-	    elem.style.position = 'relative';
-	  }
-	
-	  var old = getOffset(elem);
-	  var ret = {};
-	  var current = undefined;
-	  var key = undefined;
-	
-	  for (key in offset) {
-	    if (offset.hasOwnProperty(key)) {
-	      current = parseFloat(css(elem, key)) || 0;
-	      ret[key] = current + offset[key] - old[key];
-	    }
-	  }
-	  css(elem, ret);
-	}
-	
-	module.exports = _extends({
-	  getWindow: function getWindow(node) {
-	    var doc = node.ownerDocument || node;
-	    return doc.defaultView || doc.parentWindow;
-	  },
-	  offset: function offset(el, value) {
-	    if (typeof value !== 'undefined') {
-	      setOffset(el, value);
-	    } else {
-	      return getOffset(el);
-	    }
-	  },
-	
-	  isWindow: isWindow,
-	  each: each,
-	  css: css,
-	  clone: function clone(obj) {
-	    var ret = {};
-	    for (var i in obj) {
-	      if (obj.hasOwnProperty(i)) {
-	        ret[i] = obj[i];
-	      }
-	    }
-	    var overflow = obj.overflow;
-	    if (overflow) {
-	      for (var i in obj) {
-	        if (obj.hasOwnProperty(i)) {
-	          ret.overflow[i] = obj.overflow[i];
-	        }
-	      }
-	    }
-	    return ret;
-	  },
-	  scrollLeft: function scrollLeft(w, v) {
-	    if (isWindow(w)) {
-	      if (v === undefined) {
-	        return getScrollLeft(w);
-	      }
-	      window.scrollTo(v, getScrollTop(w));
-	    } else {
-	      if (v === undefined) {
-	        return w.scrollLeft;
-	      }
-	      w.scrollLeft = v;
-	    }
-	  },
-	  scrollTop: function scrollTop(w, v) {
-	    if (isWindow(w)) {
-	      if (v === undefined) {
-	        return getScrollTop(w);
-	      }
-	      window.scrollTo(getScrollLeft(w), v);
-	    } else {
-	      if (v === undefined) {
-	        return w.scrollTop;
-	      }
-	      w.scrollTop = v;
-	    }
-	  },
-	
-	  viewportWidth: 0,
-	  viewportHeight: 0
-	}, domUtils);
-
-/***/ }),
-/* 131 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	  disabled: _propTypes2["default"].bool,
-	  value: _propTypes2["default"].string
-	};
-	
-	var Option = function (_React$Component) {
-	  _inherits(Option, _React$Component);
-	
-	  function Option() {
-	    _classCallCheck(this, Option);
-	
-	    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
-	  }
-	
-	  return Option;
-	}(_react2["default"].Component);
-	
-	Option.propTypes = propTypes;
-	exports["default"] = Option;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 132 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _Transfer = __webpack_require__(133);
-	
-	var _Transfer2 = _interopRequireDefault(_Transfer);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	exports['default'] = _Transfer2['default'];
-	module.exports = exports['default'];
-
-/***/ }),
-/* 133 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _classnames = __webpack_require__(3);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _list = __webpack_require__(134);
+	var _list = __webpack_require__(67);
 	
 	var _list2 = _interopRequireDefault(_list);
 	
-	var _operation = __webpack_require__(152);
+	var _operation = __webpack_require__(90);
 	
 	var _operation2 = _interopRequireDefault(_operation);
 	
-	var _search = __webpack_require__(135);
+	var _search = __webpack_require__(68);
 	
 	var _search2 = _interopRequireDefault(_search);
 	
@@ -16194,7 +6758,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 134 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16207,7 +6771,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _search = __webpack_require__(135);
+	var _search = __webpack_require__(68);
 	
 	var _search2 = _interopRequireDefault(_search);
 	
@@ -16215,11 +6779,11 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _beeAnimate = __webpack_require__(106);
+	var _beeAnimate = __webpack_require__(73);
 	
 	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
 	
-	var _PureRenderMixin = __webpack_require__(140);
+	var _PureRenderMixin = __webpack_require__(78);
 	
 	var _PureRenderMixin2 = _interopRequireDefault(_PureRenderMixin);
 	
@@ -16227,13 +6791,13 @@
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
-	var _index = __webpack_require__(132);
+	var _index = __webpack_require__(65);
 	
-	var _item = __webpack_require__(142);
+	var _item = __webpack_require__(80);
 	
 	var _item2 = _interopRequireDefault(_item);
 	
-	var _beeCheckbox = __webpack_require__(150);
+	var _beeCheckbox = __webpack_require__(88);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -16499,7 +7063,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 135 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16512,11 +7076,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeIcon = __webpack_require__(136);
+	var _beeIcon = __webpack_require__(69);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeFormControl = __webpack_require__(138);
+	var _beeFormControl = __webpack_require__(71);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
@@ -16612,7 +7176,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 136 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16621,7 +7185,7 @@
 	  value: true
 	});
 	
-	var _Icon = __webpack_require__(137);
+	var _Icon = __webpack_require__(70);
 	
 	var _Icon2 = _interopRequireDefault(_Icon);
 	
@@ -16631,7 +7195,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 137 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16710,7 +7274,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 138 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16719,7 +7283,7 @@
 	  value: true
 	});
 	
-	var _FormControl = __webpack_require__(139);
+	var _FormControl = __webpack_require__(72);
 	
 	var _FormControl2 = _interopRequireDefault(_FormControl);
 	
@@ -16729,7 +7293,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 139 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16748,7 +7312,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _beeIcon = __webpack_require__(136);
+	var _beeIcon = __webpack_require__(69);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
@@ -16948,7 +7512,703 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 140 */
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _Animate = __webpack_require__(74);
+	
+	var _Animate2 = _interopRequireDefault(_Animate);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	exports["default"] = _Animate2["default"];
+	module.exports = exports['default'];
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _ChildrenUtils = __webpack_require__(75);
+	
+	var _AnimateChild = __webpack_require__(76);
+	
+	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
+	
+	var _util = __webpack_require__(77);
+	
+	var _util2 = _interopRequireDefault(_util);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var defaultKey = 'u_animate_' + Date.now();
+	
+	
+	function getChildrenFromProps(props) {
+	  var children = props.children;
+	  if (_react2["default"].isValidElement(children)) {
+	    if (!children.key) {
+	      return _react2["default"].cloneElement(children, {
+	        key: defaultKey
+	      });
+	    }
+	  }
+	  return children;
+	}
+	
+	function noop() {}
+	
+	var propTypes = {
+	  component: _propTypes2["default"].any,
+	  animation: _propTypes2["default"].object,
+	  transitionName: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object]),
+	  transitionEnter: _propTypes2["default"].bool,
+	  transitionAppear: _propTypes2["default"].bool,
+	  exclusive: _propTypes2["default"].bool,
+	  transitionLeave: _propTypes2["default"].bool,
+	  onEnd: _propTypes2["default"].func,
+	  onEnter: _propTypes2["default"].func,
+	  onLeave: _propTypes2["default"].func,
+	  onAppear: _propTypes2["default"].func,
+	  showProp: _propTypes2["default"].string
+	};
+	
+	var defaultProps = {
+	  animation: {},
+	  component: 'span',
+	  transitionEnter: true,
+	  transitionLeave: true,
+	  transitionAppear: false,
+	  onEnd: noop,
+	  onEnter: noop,
+	  onLeave: noop,
+	  onAppear: noop
+	};
+	
+	var Animate = function (_Component) {
+	  _inherits(Animate, _Component);
+	
+	  function Animate(props) {
+	    _classCallCheck(this, Animate);
+	
+	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+	
+	    _this.currentlyAnimatingKeys = {};
+	    _this.keysToEnter = [];
+	    _this.keysToLeave = [];
+	    _this.state = {
+	      children: (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(_this.props))
+	    };
+	
+	    _this.performEnter = _this.performEnter.bind(_this);
+	    _this.performAppear = _this.performAppear.bind(_this);
+	    _this.handleDoneAdding = _this.handleDoneAdding.bind(_this);
+	    _this.performLeave = _this.performLeave.bind(_this);
+	
+	    _this.performLeave = _this.performLeave.bind(_this);
+	    _this.handleDoneLeaving = _this.handleDoneLeaving.bind(_this);
+	    _this.isValidChildByKey = _this.isValidChildByKey.bind(_this);
+	    _this.stop = _this.stop.bind(_this);
+	    return _this;
+	  }
+	
+	  Animate.prototype.componentDidMount = function componentDidMount() {
+	    var _this2 = this;
+	
+	    this.mounted = true;
+	    var showProp = this.props.showProp;
+	    var children = this.state.children;
+	    if (showProp) {
+	      children = children.filter(function (child) {
+	        return !!child.props[showProp];
+	      });
+	    }
+	    children.forEach(function (child) {
+	      if (child) {
+	        _this2.performAppear(child.key);
+	      }
+	    });
+	  };
+	
+	  Animate.prototype.componentWillUnmount = function componentWillUnmount() {
+	    this.mounted = false;
+	  };
+	
+	  Animate.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	    var _this3 = this;
+	
+	    this.nextProps = nextProps;
+	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
+	    var props = this.props;
+	    // exclusive needs immediate response
+	    if (props.exclusive) {
+	      Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
+	        _this3.stop(key);
+	      });
+	    }
+	    var showProp = props.showProp;
+	    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
+	    // last props children if exclusive
+	    var currentChildren = props.exclusive ? (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props)) : this.state.children;
+	    // in case destroy in showProp mode
+	    var newChildren = [];
+	    if (showProp) {
+	      currentChildren.forEach(function (currentChild) {
+	        var nextChild = currentChild && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
+	        var newChild = void 0;
+	        if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
+	          newChild = _react2["default"].cloneElement(nextChild || currentChild, _defineProperty({}, showProp, true));
+	        } else {
+	          newChild = nextChild;
+	        }
+	        if (newChild) {
+	          newChildren.push(newChild);
+	        }
+	      });
+	      nextChildren.forEach(function (nextChild) {
+	        if (!nextChild || !(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
+	          newChildren.push(nextChild);
+	        }
+	      });
+	    } else {
+	      newChildren = (0, _ChildrenUtils.mergeChildren)(currentChildren, nextChildren);
+	    }
+	
+	    // need render to avoid update
+	    this.setState({
+	      children: newChildren
+	    });
+	
+	    nextChildren.forEach(function (child) {
+	      var key = child && child.key;
+	      if (child && currentlyAnimatingKeys[key]) {
+	        return;
+	      }
+	      var hasPrev = child && (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
+	      if (showProp) {
+	        var showInNext = child.props[showProp];
+	        if (hasPrev) {
+	          var showInNow = (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
+	          if (!showInNow && showInNext) {
+	            _this3.keysToEnter.push(key);
+	          }
+	        } else if (showInNext) {
+	          _this3.keysToEnter.push(key);
+	        }
+	      } else if (!hasPrev) {
+	        _this3.keysToEnter.push(key);
+	      }
+	    });
+	
+	    currentChildren.forEach(function (child) {
+	      var key = child && child.key;
+	      if (child && currentlyAnimatingKeys[key]) {
+	        return;
+	      }
+	      var hasNext = child && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
+	      if (showProp) {
+	        var showInNow = child.props[showProp];
+	        if (hasNext) {
+	          var showInNext = (0, _ChildrenUtils.findShownChildInChildrenByKey)(nextChildren, key, showProp);
+	          if (!showInNext && showInNow) {
+	            _this3.keysToLeave.push(key);
+	          }
+	        } else if (showInNow) {
+	          _this3.keysToLeave.push(key);
+	        }
+	      } else if (!hasNext) {
+	        _this3.keysToLeave.push(key);
+	      }
+	    });
+	  };
+	
+	  Animate.prototype.componentDidUpdate = function componentDidUpdate() {
+	    var keysToEnter = this.keysToEnter;
+	    this.keysToEnter = [];
+	    keysToEnter.forEach(this.performEnter);
+	    var keysToLeave = this.keysToLeave;
+	    this.keysToLeave = [];
+	    keysToLeave.forEach(this.performLeave);
+	  };
+	
+	  Animate.prototype.performEnter = function performEnter(key) {
+	    // may already remove by exclusive
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillEnter(this.handleDoneAdding.bind(this, key, 'enter'));
+	    }
+	  };
+	
+	  Animate.prototype.performAppear = function performAppear(key) {
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillAppear(this.handleDoneAdding.bind(this, key, 'appear'));
+	    }
+	  };
+	
+	  Animate.prototype.handleDoneAdding = function handleDoneAdding(key, type) {
+	    var props = this.props;
+	    delete this.currentlyAnimatingKeys[key];
+	    // if update on exclusive mode, skip check
+	    if (props.exclusive && props !== this.nextProps) {
+	      return;
+	    }
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+	    if (!this.isValidChildByKey(currentChildren, key)) {
+	      // exclusive will not need this
+	      this.performLeave(key);
+	    } else {
+	      if (type === 'appear') {
+	        if (_util2["default"].allowAppearCallback(props)) {
+	          props.onAppear(key);
+	          props.onEnd(key, true);
+	        }
+	      } else {
+	        if (_util2["default"].allowEnterCallback(props)) {
+	          props.onEnter(key);
+	          props.onEnd(key, true);
+	        }
+	      }
+	    }
+	  };
+	
+	  Animate.prototype.performLeave = function performLeave(key) {
+	    // may already remove by exclusive
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
+	    }
+	  };
+	
+	  Animate.prototype.handleDoneLeaving = function handleDoneLeaving(key) {
+	    var props = this.props;
+	    delete this.currentlyAnimatingKeys[key];
+	    // if update on exclusive mode, skip check
+	    if (props.exclusive && props !== this.nextProps) {
+	      return;
+	    }
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+	    // in case state change is too fast
+	    if (this.isValidChildByKey(currentChildren, key)) {
+	      this.performEnter(key);
+	    } else {
+	      var end = function end() {
+	        if (_util2["default"].allowLeaveCallback(props)) {
+	          props.onLeave(key);
+	          props.onEnd(key, false);
+	        }
+	      };
+	      /* eslint react/no-is-mounted:0 */
+	      if (this.mounted && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren, props.showProp)) {
+	        this.setState({
+	          children: currentChildren
+	        }, end);
+	      } else {
+	        end();
+	      }
+	    }
+	  };
+	
+	  Animate.prototype.isValidChildByKey = function isValidChildByKey(currentChildren, key) {
+	    var showProp = this.props.showProp;
+	    if (showProp) {
+	      return (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
+	    }
+	    return (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
+	  };
+	
+	  Animate.prototype.stop = function stop(key) {
+	    delete this.currentlyAnimatingKeys[key];
+	    var component = this.refs[key];
+	    if (component) {
+	      component.stop();
+	    }
+	  };
+	
+	  Animate.prototype.render = function render() {
+	    var props = this.props;
+	    this.nextProps = props;
+	    var stateChildren = this.state.children;
+	    var children = null;
+	    if (stateChildren) {
+	      children = stateChildren.map(function (child) {
+	        if (child === null || child === undefined) {
+	          return child;
+	        }
+	        if (!child.key) {
+	          throw new Error('must set key for <rc-animate> children');
+	        }
+	        return _react2["default"].createElement(
+	          _AnimateChild2["default"],
+	          {
+	            key: child.key,
+	            ref: child.key,
+	            animation: props.animation,
+	            transitionName: props.transitionName,
+	            transitionEnter: props.transitionEnter,
+	            transitionAppear: props.transitionAppear,
+	            transitionLeave: props.transitionLeave
+	          },
+	          child
+	        );
+	      });
+	    }
+	    var Component = props.component;
+	    if (Component) {
+	      var passedProps = props;
+	      if (typeof Component === 'string') {
+	        passedProps = {
+	          className: props.className,
+	          style: props.style
+	        };
+	      }
+	      return _react2["default"].createElement(
+	        Component,
+	        passedProps,
+	        children
+	      );
+	    }
+	    return children[0] || null;
+	  };
+	
+	  return Animate;
+	}(_react.Component);
+	
+	;
+	Animate.defaultProps = defaultProps;
+	Animate.propTypes = Animate.propTypes;
+	
+	exports["default"] = Animate;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.toArrayChildren = toArrayChildren;
+	exports.findChildInChildrenByKey = findChildInChildrenByKey;
+	exports.findShownChildInChildrenByKey = findShownChildInChildrenByKey;
+	exports.findHiddenChildInChildrenByKey = findHiddenChildInChildrenByKey;
+	exports.isSameChildren = isSameChildren;
+	exports.mergeChildren = mergeChildren;
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function toArrayChildren(children) {
+	  var ret = [];
+	  _react2["default"].Children.forEach(children, function (child) {
+	    ret.push(child);
+	  });
+	  return ret;
+	}
+	
+	function findChildInChildrenByKey(children, key) {
+	  var ret = null;
+	  if (children) {
+	    children.forEach(function (child) {
+	      if (ret) {
+	        return;
+	      }
+	      if (child && child.key === key) {
+	        ret = child;
+	      }
+	    });
+	  }
+	  return ret;
+	}
+	
+	function findShownChildInChildrenByKey(children, key, showProp) {
+	  var ret = null;
+	  if (children) {
+	    children.forEach(function (child) {
+	      if (child && child.key === key && child.props[showProp]) {
+	        if (ret) {
+	          throw new Error('two child with same key for <rc-animate> children');
+	        }
+	        ret = child;
+	      }
+	    });
+	  }
+	  return ret;
+	}
+	
+	function findHiddenChildInChildrenByKey(children, key, showProp) {
+	  var found = 0;
+	  if (children) {
+	    children.forEach(function (child) {
+	      if (found) {
+	        return;
+	      }
+	      found = child && child.key === key && !child.props[showProp];
+	    });
+	  }
+	  return found;
+	}
+	
+	function isSameChildren(c1, c2, showProp) {
+	  var same = c1.length === c2.length;
+	  if (same) {
+	    c1.forEach(function (child, index) {
+	      var child2 = c2[index];
+	      if (child && child2) {
+	        if (child && !child2 || !child && child2) {
+	          same = false;
+	        } else if (child.key !== child2.key) {
+	          same = false;
+	        } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
+	          same = false;
+	        }
+	      }
+	    });
+	  }
+	  return same;
+	}
+	
+	function mergeChildren(prev, next) {
+	  var ret = [];
+	
+	  // For each key of `next`, the list of keys to insert before that key in
+	  // the combined list
+	  var nextChildrenPending = {};
+	  var pendingChildren = [];
+	  prev.forEach(function (child) {
+	    if (child && findChildInChildrenByKey(next, child.key)) {
+	      if (pendingChildren.length) {
+	        nextChildrenPending[child.key] = pendingChildren;
+	        pendingChildren = [];
+	      }
+	    } else {
+	      pendingChildren.push(child);
+	    }
+	  });
+	
+	  next.forEach(function (child) {
+	    if (child && nextChildrenPending.hasOwnProperty(child.key)) {
+	      ret = ret.concat(nextChildrenPending[child.key]);
+	    }
+	    ret.push(child);
+	  });
+	
+	  ret = ret.concat(pendingChildren);
+	
+	  return ret;
+	}
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactDom = __webpack_require__(12);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _tinperBeeCore = __webpack_require__(26);
+	
+	var _util = __webpack_require__(77);
+	
+	var _util2 = _interopRequireDefault(_util);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var transitionMap = {
+	  enter: 'transitionEnter',
+	  appear: 'transitionAppear',
+	  leave: 'transitionLeave'
+	};
+	
+	var propTypes = {
+	  children: _propTypes2["default"].any
+	};
+	
+	var AnimateChild = function (_Component) {
+	  _inherits(AnimateChild, _Component);
+	
+	  function AnimateChild(props) {
+	    _classCallCheck(this, AnimateChild);
+	
+	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+	
+	    _this.transition = _this.transition.bind(_this);
+	    _this.stop = _this.stop.bind(_this);
+	    return _this;
+	  }
+	
+	  AnimateChild.prototype.componentWillUnmount = function componentWillUnmount() {
+	    this.stop();
+	  };
+	
+	  AnimateChild.prototype.componentWillEnter = function componentWillEnter(done) {
+	    if (_util2["default"].isEnterSupported(this.props)) {
+	      this.transition('enter', done);
+	    } else {
+	      done();
+	    }
+	  };
+	
+	  AnimateChild.prototype.componentWillAppear = function componentWillAppear(done) {
+	    if (_util2["default"].isAppearSupported(this.props)) {
+	      this.transition('appear', done);
+	    } else {
+	      done();
+	    }
+	  };
+	
+	  AnimateChild.prototype.componentWillLeave = function componentWillLeave(done) {
+	    if (_util2["default"].isLeaveSupported(this.props)) {
+	      this.transition('leave', done);
+	    } else {
+	      // always sync, do not interupt with react component life cycle
+	      // update hidden -> animate hidden ->
+	      // didUpdate -> animate leave -> unmount (if animate is none)
+	      done();
+	    }
+	  };
+	
+	  AnimateChild.prototype.transition = function transition(animationType, finishCallback) {
+	    var _this2 = this;
+	
+	    var node = _reactDom2["default"].findDOMNode(this);
+	    var props = this.props;
+	    var transitionName = props.transitionName;
+	    var nameIsObj = (typeof transitionName === 'undefined' ? 'undefined' : _typeof(transitionName)) === 'object';
+	    this.stop();
+	    var end = function end() {
+	      _this2.stopper = null;
+	      finishCallback();
+	    };
+	    if ((_tinperBeeCore.cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
+	      var name = nameIsObj ? transitionName[animationType] : transitionName + '-' + animationType;
+	      var activeName = name + '-active';
+	      if (nameIsObj && transitionName[animationType + 'Active']) {
+	        activeName = transitionName[animationType + 'Active'];
+	      }
+	      this.stopper = (0, _tinperBeeCore.cssAnimation)(node, {
+	        name: name,
+	        active: activeName
+	      }, end);
+	    } else {
+	      this.stopper = props.animation[animationType](node, end);
+	    }
+	  };
+	
+	  AnimateChild.prototype.stop = function stop() {
+	    var stopper = this.stopper;
+	    if (stopper) {
+	      this.stopper = null;
+	      stopper.stop();
+	    }
+	  };
+	
+	  AnimateChild.prototype.render = function render() {
+	    return this.props.children;
+	  };
+	
+	  return AnimateChild;
+	}(_react.Component);
+	
+	;
+	
+	AnimateChild.propTypes = propTypes;
+	
+	exports["default"] = AnimateChild;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var util = {
+	  isAppearSupported: function isAppearSupported(props) {
+	    return props.transitionName && props.transitionAppear || props.animation.appear;
+	  },
+	  isEnterSupported: function isEnterSupported(props) {
+	    return props.transitionName && props.transitionEnter || props.animation.enter;
+	  },
+	  isLeaveSupported: function isLeaveSupported(props) {
+	    return props.transitionName && props.transitionLeave || props.animation.leave;
+	  },
+	  allowAppearCallback: function allowAppearCallback(props) {
+	    return props.transitionAppear || props.animation.appear;
+	  },
+	  allowEnterCallback: function allowEnterCallback(props) {
+	    return props.transitionEnter || props.animation.enter;
+	  },
+	  allowLeaveCallback: function allowLeaveCallback(props) {
+	    return props.transitionLeave || props.animation.leave;
+	  }
+	};
+	exports["default"] = util;
+	module.exports = exports["default"];
+
+/***/ }),
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16964,7 +8224,7 @@
 	 * @providesModule ReactComponentWithPureRenderMixin
 	 */
 	
-	var shallowEqual = __webpack_require__(141);
+	var shallowEqual = __webpack_require__(79);
 	
 	function shallowCompare(instance, nextProps, nextState) {
 	  return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
@@ -17005,7 +8265,7 @@
 	module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ }),
-/* 141 */
+/* 79 */
 /***/ (function(module, exports) {
 
 	module.exports = function shallowEqual(objA, objB, compare, compareContext) {
@@ -17061,7 +8321,7 @@
 
 
 /***/ }),
-/* 142 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17078,7 +8338,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _PureRenderMixin = __webpack_require__(140);
+	var _PureRenderMixin = __webpack_require__(78);
 	
 	var _PureRenderMixin2 = _interopRequireDefault(_PureRenderMixin);
 	
@@ -17086,11 +8346,11 @@
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
-	var _reactLazyLoad = __webpack_require__(143);
+	var _reactLazyLoad = __webpack_require__(81);
 	
 	var _reactLazyLoad2 = _interopRequireDefault(_reactLazyLoad);
 	
-	var _beeCheckbox = __webpack_require__(150);
+	var _beeCheckbox = __webpack_require__(88);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -17233,7 +8493,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 143 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17254,21 +8514,21 @@
 	
 	var _reactDom = __webpack_require__(12);
 	
-	var _eventlistener = __webpack_require__(144);
+	var _eventlistener = __webpack_require__(82);
 	
-	var _lodash = __webpack_require__(145);
+	var _lodash = __webpack_require__(83);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _lodash3 = __webpack_require__(146);
+	var _lodash3 = __webpack_require__(84);
 	
 	var _lodash4 = _interopRequireDefault(_lodash3);
 	
-	var _parentScroll = __webpack_require__(147);
+	var _parentScroll = __webpack_require__(85);
 	
 	var _parentScroll2 = _interopRequireDefault(_parentScroll);
 	
-	var _inViewport = __webpack_require__(148);
+	var _inViewport = __webpack_require__(86);
 	
 	var _inViewport2 = _interopRequireDefault(_inViewport);
 	
@@ -17459,7 +8719,7 @@
 	};
 
 /***/ }),
-/* 144 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(root,factory){
@@ -17488,7 +8748,7 @@
 	}));
 
 /***/ }),
-/* 145 */
+/* 83 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -17872,7 +9132,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 146 */
+/* 84 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -18318,7 +9578,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 147 */
+/* 85 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -18363,7 +9623,7 @@
 	exports.default = scrollParent;
 
 /***/ }),
-/* 148 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18373,7 +9633,7 @@
 	});
 	exports.default = inViewport;
 	
-	var _getElementPosition = __webpack_require__(149);
+	var _getElementPosition = __webpack_require__(87);
 	
 	var _getElementPosition2 = _interopRequireDefault(_getElementPosition);
 	
@@ -18413,7 +9673,7 @@
 	}
 
 /***/ }),
-/* 149 */
+/* 87 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -18436,7 +9696,7 @@
 	}
 
 /***/ }),
-/* 150 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18445,7 +9705,7 @@
 	  value: true
 	});
 	
-	var _Checkbox = __webpack_require__(151);
+	var _Checkbox = __webpack_require__(89);
 	
 	var _Checkbox2 = _interopRequireDefault(_Checkbox);
 	
@@ -18455,7 +9715,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 151 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18610,7 +9870,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 152 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18627,7 +9887,7 @@
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _beeIcon = __webpack_require__(136);
+	var _beeIcon = __webpack_require__(69);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
@@ -18721,7 +9981,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 153 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18734,7 +9994,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(132);
+	var _src = __webpack_require__(65);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -18815,7 +10075,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 154 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -18832,7 +10092,7 @@
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _src = __webpack_require__(132);
+	var _src = __webpack_require__(65);
 	
 	var _src2 = _interopRequireDefault(_src);
 	

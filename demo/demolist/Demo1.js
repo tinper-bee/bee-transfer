@@ -7,9 +7,6 @@
 
 
 import React, { Component } from 'react';
-import Modal from 'bee-modal';
-import Button from 'bee-button';
-import Select from 'bee-select';
 import Transfer from '../../src';
 
 const mockData = [];
