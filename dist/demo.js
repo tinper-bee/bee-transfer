@@ -4599,18 +4599,12 @@
 	      elFuturePos = (0, _getElFuturePos2['default'])(elRegion, refNodeRegion, points, offset, targetOffset);
 	      _utils2['default'].mix(newElRegion, elFuturePos);
 	    }
-	    var isStillFailX = isFailX(elFuturePos, elRegion, visibleRect);
-	    var isStillFailY = isFailY(elFuturePos, elRegion, visibleRect);
-	    // 检查反下后的位置是否可以放下了，如果仍然放不下：
-	    // 1. 复原修改过的定位参数
-	    if (isStillFailX || isStillFailY) {
-	      points = align.points;
-	      offset = align.offset || [0, 0];
-	      targetOffset = align.targetOffset || [0, 0];
-	    }
-	    // 2. 只有指定了可以调整当前方向才调整
-	    newOverflowCfg.adjustX = overflow.adjustX && isStillFailX;
-	    newOverflowCfg.adjustY = overflow.adjustY && isStillFailY;
+	
+	    // 检查反下后的位置是否可以放下了
+	    // 如果仍然放不下只有指定了可以调整当前方向才调整
+	    newOverflowCfg.adjustX = overflow.adjustX && isFailX(elFuturePos, elRegion, visibleRect);
+	
+	    newOverflowCfg.adjustY = overflow.adjustY && isFailY(elFuturePos, elRegion, visibleRect);
 	
 	    // 确实要调整，甚至可能会调整高度宽度
 	    if (newOverflowCfg.adjustX || newOverflowCfg.adjustY) {
@@ -4681,12 +4675,8 @@
 	
 	var getComputedStyleX = void 0;
 	
-	// https://stackoverflow.com/a/3485654/3040605
-	function forceRelayout(elem) {
-	  var originalStyle = elem.style.display;
-	  elem.style.display = 'none';
-	  elem.offsetHeight; // eslint-disable-line
-	  elem.style.display = originalStyle;
+	function force(x, y) {
+	  return x + y;
 	}
 	
 	function css(el, name, v) {
@@ -4921,8 +4911,6 @@
 	    elem.style[oppositeVerticalProperty] = '';
 	    elem.style[verticalProperty] = presetV + 'px';
 	  }
-	  // force relayout
-	  forceRelayout(elem);
 	  var old = getOffset(elem);
 	  var originalStyle = {};
 	  for (var key in offset) {
@@ -4939,7 +4927,7 @@
 	  }
 	  css(elem, originalStyle);
 	  // force relayout
-	  forceRelayout(elem);
+	  force(elem.offsetTop, elem.offsetLeft);
 	  if ('left' in offset || 'top' in offset) {
 	    (0, _propertyUtils.setTransitionProperty)(elem, originalTransition);
 	  }
@@ -9767,8 +9755,7 @@
 	    disabled: false,
 	    colors: 'primary',
 	    clsPrefix: 'u-checkbox',
-	    defaultChecked: false,
-	    onClick: function onClick() {}
+	    defaultChecked: false
 	};
 	var clsPrefix = 'u-checkbox';
 	
@@ -9780,12 +9767,10 @@
 	
 	        var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 	
-	        _initialiseProps.call(_this);
-	
 	        _this.state = {
 	            checked: 'checked' in props ? props.checked : props.defaultChecked
 	        };
-	        _this.doubleClickFlag = null;
+	        _this.changeState = _this.changeState.bind(_this);
 	        return _this;
 	    }
 	
@@ -9797,6 +9782,23 @@
 	        }
 	    };
 	
+	    Checkbox.prototype.changeState = function changeState() {
+	        var props = this.props;
+	
+	        if (props.disabled) {
+	            return;
+	        }
+	        if (!('checked' in props)) {
+	            this.setState({
+	                checked: !this.state.checked
+	            });
+	        }
+	
+	        if (props.onChange instanceof Function) {
+	            props.onChange(!this.state.checked);
+	        }
+	    };
+	
 	    Checkbox.prototype.render = function render() {
 	        var _props = this.props,
 	            disabled = _props.disabled,
@@ -9804,13 +9806,11 @@
 	            size = _props.size,
 	            className = _props.className,
 	            indeterminate = _props.indeterminate,
-	            onClick = _props.onClick,
 	            children = _props.children,
 	            checked = _props.checked,
 	            clsPrefix = _props.clsPrefix,
-	            onDoubleClick = _props.onDoubleClick,
 	            onChange = _props.onChange,
-	            others = _objectWithoutProperties(_props, ['disabled', 'colors', 'size', 'className', 'indeterminate', 'onClick', 'children', 'checked', 'clsPrefix', 'onDoubleClick', 'onChange']);
+	            others = _objectWithoutProperties(_props, ['disabled', 'colors', 'size', 'className', 'indeterminate', 'children', 'checked', 'clsPrefix', 'onChange']);
 	
 	        var input = _react2["default"].createElement('input', _extends({}, others, {
 	            type: 'checkbox',
@@ -9838,10 +9838,7 @@
 	
 	        return _react2["default"].createElement(
 	            'label',
-	            {
-	                className: (0, _classnames2["default"])(classNames, className),
-	                onDoubleClick: this.handledbClick,
-	                onClick: this.changeState },
+	            { className: (0, _classnames2["default"])(classNames, className), onClick: this.changeState },
 	            input,
 	            _react2["default"].createElement(
 	                'label',
@@ -9853,42 +9850,6 @@
 	
 	    return Checkbox;
 	}(_react2["default"].Component);
-	
-	var _initialiseProps = function _initialiseProps() {
-	    var _this2 = this;
-	
-	    this.changeState = function (e) {
-	        var props = _this2.props;
-	
-	        clearTimeout(_this2.doubleClickFlag);
-	        if (props.onClick instanceof Function) {
-	            props.onClick(e);
-	        }
-	        //执行延时
-	        _this2.doubleClickFlag = setTimeout(function () {
-	            //do function在此处写单击事件要执行的代码
-	            if (props.disabled) {
-	                return;
-	            }
-	            if (!('checked' in props)) {
-	                _this2.setState({
-	                    checked: !_this2.state.checked
-	                });
-	            }
-	
-	            if (props.onChange instanceof Function) {
-	                props.onChange(!_this2.state.checked);
-	            }
-	        }, 300);
-	    };
-	
-	    this.handledbClick = function (e) {
-	        var onDoubleClick = _this2.props.onDoubleClick;
-	
-	        clearTimeout(_this2.doubleClickFlag);
-	        onDoubleClick && onDoubleClick(_this2.state.checked, e);
-	    };
-	};
 	
 	Checkbox.propTypes = propTypes;
 	Checkbox.defaultProps = defaultProps;

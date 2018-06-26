@@ -24,5 +24,5 @@
 |searchPlaceholder|搜索框的默认显示文字|string|'Search here'|
 |notFoundContent|当没有相关内容的显示内容|string或ReactNode|	'The list is empty'|
 |footer|渲染底部的dom|ReactNode|-|
-|lazy|懒加载dom|object|当tranfer放在bee-modal里 添加参数 lazy={{container:"modal"}}|
+|lazy|懒加载dom|object|当tranfer放在bee-modal里 添加参数 lazy={container:"modal"}|
 |onSearchChange|当搜索域变化的回调函数 参数(direction: 'left'|'right', event: Event)|func|-|
