@@ -87,23 +87,9 @@ var Item = function (_React$Component) {
         lazy = _props.lazy,
         checked = _props.checked,
         prefixCls = _props.prefixCls,
-        onClick = _props.onClick;
-
-
-    var renderResult = render(item);
-    var renderedText = void 0;
-    var renderedEl = void 0;
-    if (isRenderResultPlainObject(renderResult)) {
-      renderedText = renderResult.value;
-      renderedEl = renderResult.label;
-    } else {
-      renderedText = renderResult;
-      renderedEl = renderResult;
-    }
-
-    if (filter && filter.trim() && !this.matchFilter(renderedText)) {
-      return null;
-    }
+        onClick = _props.onClick,
+        renderedText = _props.renderedText,
+        renderedEl = _props.renderedEl;
 
     var className = (0, _classnames2["default"])((_classNames = {}, _defineProperty(_classNames, prefixCls + '-content-item', true), _defineProperty(_classNames, prefixCls + '-content-item-disabled', item.disabled), _classNames));
 

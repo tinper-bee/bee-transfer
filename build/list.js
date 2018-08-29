@@ -58,6 +58,9 @@ var defaultProps = {
   showSearch: false,
   render: noop
 };
+function isRenderResultPlainObject(result) {
+  return result && !_react2["default"].isValidElement(result) && Object.prototype.toString.call(result) === '[object Object]';
+}
 
 var TransferList = function (_React$Component) {
   _inherits(TransferList, _React$Component);
@@ -66,6 +69,17 @@ var TransferList = function (_React$Component) {
     _classCallCheck(this, TransferList);
 
     var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    _this.matchFilter = function (text, item) {
+      var _this$props = _this.props,
+          filter = _this$props.filter,
+          filterOption = _this$props.filterOption;
+
+      if (filterOption) {
+        return filterOption(filter, item);
+      }
+      return text.indexOf(filter) >= 0;
+    };
 
     _this.handleSelect = function (selectedItem) {
       var checkedKeys = _this.props.checkedKeys;
@@ -82,6 +96,18 @@ var TransferList = function (_React$Component) {
 
     _this.handleClear = function () {
       _this.props.handleClear();
+    };
+
+    _this.renderItem = function (item) {
+      var _this$props$render = _this.props.render,
+          render = _this$props$render === undefined ? noop : _this$props$render;
+
+      var renderResult = render(item);
+      var isRenderResultPlain = isRenderResultPlainObject(renderResult);
+      return {
+        renderedText: isRenderResultPlain ? renderResult.value : renderResult,
+        renderedEl: isRenderResultPlain ? renderResult.label : renderResult
+      };
     };
 
     _this.state = {
@@ -185,17 +211,31 @@ var TransferList = function (_React$Component) {
     var listCls = (0, _classnames2["default"])(prefixCls, _defineProperty({}, prefixCls + '-with-footer', !!footerDom));
 
     var filteredDataSource = [];
-
+    var totalDataSource = [];
     var showItems = dataSource.map(function (item) {
+      var _renderItem = _this4.renderItem(item),
+          renderedText = _renderItem.renderedText,
+          renderedEl = _renderItem.renderedEl;
+
+      if (filter && filter.trim() && !_this4.matchFilter(renderedText, item)) {
+        return null;
+      }
+
+      // all show items
+      totalDataSource.push(item);
+
       if (!item.disabled) {
         filteredDataSource.push(item);
       }
+
       var checked = checkedKeys.indexOf(item.key) >= 0;
       return _react2["default"].createElement(_item2["default"], {
         key: item.key,
         item: item,
         lazy: lazy,
         render: render,
+        renderedText: renderedText,
+        renderedEl: renderedEl,
         filter: filter,
         filterOption: filterOption,
         checked: checked,
@@ -276,7 +316,7 @@ var TransferList = function (_React$Component) {
           _react2["default"].createElement(
             'span',
             null,
-            (checkedKeys.length > 0 ? checkedKeys.length + '/' : '') + dataSource.length,
+            (checkedKeys.length > 0 ? checkedKeys.length + '/' : '') + totalDataSource.length,
             ' ',
             unit
           ),
