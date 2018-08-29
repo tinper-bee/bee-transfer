@@ -22,23 +22,7 @@ class Item extends React.Component{
     return text.indexOf(filter) >= 0;
   }
   render() {
-    const { render, filter, item, lazy, checked, prefixCls, onClick } = this.props;
-
-    const renderResult = render(item);
-    let renderedText;
-    let renderedEl;
-    if (isRenderResultPlainObject(renderResult)) {
-      renderedText = renderResult.value;
-      renderedEl = renderResult.label;
-    } else {
-      renderedText = renderResult;
-      renderedEl = renderResult;
-    }
-
-    if (filter && filter.trim() && !this.matchFilter(renderedText)) {
-      return null;
-    }
-
+    const { render, filter, item, lazy, checked, prefixCls, onClick,renderedText,renderedEl } = this.props;
     const className = classNames({
       [`${prefixCls}-content-item`]: true,
       [`${prefixCls}-content-item-disabled`]: item.disabled,

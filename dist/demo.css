@@ -5471,6 +5471,8 @@ input.u-button[type="submit"] {
   .u-form-control:focus {
     border-color: #66afe9;
     outline: 0; }
+  .u-form-control::-ms-clear, .u-form-control ::-ms-reveal {
+    display: none; }
 
 .u-form-control[disabled] {
   background: #eee;
@@ -5528,7 +5530,11 @@ input.u-button[type="submit"] {
 /*  Navlayout  */
 .u-checkbox {
   display: inline-block;
-  position: relative; }
+  position: relative;
+  margin: 0 5px;
+  height: 18px;
+  line-height: 18px;
+  font-size: 14px; }
   .u-checkbox.disabled .u-checkbox-label {
     cursor: not-allowed;
     opacity: 0.5; }
@@ -5560,7 +5566,7 @@ input.u-button[type="submit"] {
       width: 18px;
       height: 18px;
       left: 0;
-      top: 4px;
+      top: 0;
       text-align: center;
       position: absolute; }
     .u-checkbox .u-checkbox-label:after {
@@ -5570,7 +5576,7 @@ input.u-button[type="submit"] {
       width: 18px;
       height: 18px;
       left: 0;
-      top: 4px;
+      top: 0;
       text-align: center;
       position: absolute; }
 

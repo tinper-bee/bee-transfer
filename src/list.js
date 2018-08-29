@@ -17,6 +17,10 @@ const defaultProps = {
   showSearch: false,
   render: noop,
 }; 
+function isRenderResultPlainObject(result) {
+  return result && !React.isValidElement(result) &&
+    Object.prototype.toString.call(result) === '[object Object]';
+}
 
 class TransferList extends React.Component {
 
@@ -43,6 +47,14 @@ class TransferList extends React.Component {
     return PureRenderMixin.shouldComponentUpdate.apply(this, args);
   }
 
+
+  matchFilter = (text,item) => {
+    const { filter, filterOption} = this.props;
+    if (filterOption) {
+      return filterOption(filter, item);
+    }
+    return text.indexOf(filter) >= 0;
+  }
   getCheckStatus(filteredDataSource) {
     const { checkedKeys } = this.props;
     if (checkedKeys.length === 0) {
@@ -66,7 +78,15 @@ class TransferList extends React.Component {
   handleClear = () => {
     this.props.handleClear();
   }
-
+  renderItem = (item) => {
+    const { render = noop } = this.props;
+    const renderResult = render(item);
+    const isRenderResultPlain = isRenderResultPlainObject(renderResult);
+    return {
+      renderedText: isRenderResultPlain ? renderResult.value : renderResult,
+      renderedEl: isRenderResultPlain ? renderResult.label : renderResult,
+    };
+  }
   renderCheckbox({ prefixCls, filteredDataSource, checked, checkPart, disabled, checkable }) {
     const checkAll = (!checkPart) && checked;
     prefixCls = "u"
@@ -103,11 +123,20 @@ class TransferList extends React.Component {
     });
 
     const filteredDataSource = [];
-
+    const totalDataSource = [];
     const showItems = dataSource.map((item) => {
+      const { renderedText, renderedEl } = this.renderItem(item);
+      if (filter && filter.trim() && !this.matchFilter(renderedText, item)) {
+        return null;
+      }
+
+      // all show items
+      totalDataSource.push(item);
+
       if (!item.disabled) {
         filteredDataSource.push(item);
       }
+      
       const checked = checkedKeys.indexOf(item.key) >= 0;
       return (
         <Item
@@ -115,6 +144,8 @@ class TransferList extends React.Component {
           item={item}
           lazy={lazy}
           render={render}
+          renderedText={renderedText}
+          renderedEl={renderedEl}
           filter={filter}
           filterOption={filterOption}
           checked={checked}
@@ -185,7 +216,7 @@ class TransferList extends React.Component {
           {renderedCheckbox}
           <span className={`${prefixCls}-header-selected`}>
             <span>
-              {(checkedKeys.length > 0 ? `${checkedKeys.length}/` : '') + dataSource.length} {unit}
+              {(checkedKeys.length > 0 ? `${checkedKeys.length}/` : '') + totalDataSource.length} {unit}
             </span>
             <span className={`${prefixCls}-header-title`}>
               {titleText}
