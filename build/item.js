@@ -115,7 +115,9 @@ var Item = function (_React$Component) {
             return onClick(item);
           }
         },
-        _react2["default"].createElement(_beeCheckbox2["default"], { checked: checked, disabled: item.disabled }),
+        _react2["default"].createElement(_beeCheckbox2["default"], { checked: checked, disabled: item.disabled, onClick: item.disabled ? undefined : function () {
+            return onClick(item);
+          } }),
         _react2["default"].createElement(
           'span',
           null,
@@ -135,7 +137,9 @@ var Item = function (_React$Component) {
               return onClick(item);
             }
           },
-          _react2["default"].createElement(_beeCheckbox2["default"], { checked: checked, disabled: item.disabled }),
+          _react2["default"].createElement(_beeCheckbox2["default"], { checked: checked, disabled: item.disabled, onClick: item.disabled ? undefined : function () {
+              return onClick(item);
+            } }),
           _react2["default"].createElement(
             'span',
             null,
