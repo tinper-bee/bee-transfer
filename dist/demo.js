@@ -50,7 +50,7 @@
 	
 	var _beePanel = __webpack_require__(8);
 	
-	var _beeButton = __webpack_require__(65);
+	var _beeButton = __webpack_require__(77);
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
@@ -76,7 +76,7 @@
 	
 	var CARETUP = _react2['default'].createElement('i', { className: 'uf uf-arrow-up' });
 	
-	var Demo1 = __webpack_require__(67);var Demo2 = __webpack_require__(94);var Demo3 = __webpack_require__(95);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 常用可选transfer", "code": "/**\n*\n* @title 常用可选transfer\n* @description \n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\n\nconst mockData = [];\nfor (let i = 0; i < 20; i++) {\n  mockData.push({\n    key: i.toString(),\n    title: `content${i + 1}`,\n    description: `description of content${i + 1}`,\n    disabled: i % 3 < 1,\n\n  });\n}\n\nconst targetKeys = mockData\n        .filter(item => +item.key % 3 > 1)\n        .map(item => item.key);\n\nclass Demo1 extends React.Component {\n  state = {\n    targetKeys,\n    selectedKeys: [],\n    showModal: false,\n    modalSize: ''\n  }\n\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\n    this.setState({ targetKeys: nextTargetKeys });\n\n    console.log('targetKeys: ', targetKeys);\n    console.log('direction: ', direction);\n    console.log('moveKeys: ', moveKeys);\n  }\n\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\n\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\n  }\n\n  handleScroll = (direction, e) => {\n    console.log('direction:', direction);\n    console.log('target:', e.target);\n  }\n\n\n  render() {\n    const state = this.state;\n\n    return (\n       <Transfer\n          dataSource={mockData}\n          titles={['Source', 'Target']}\n          targetKeys={state.targetKeys}\n          selectedKeys={state.selectedKeys}\n          onChange={this.handleChange}\n          onSelectChange={this.handleSelectChange}\n          onScroll={this.handleScroll}\n          render={item => item.title}\n        />\n    );\n  }\n}\n\n\n\n", "desc": " " }, { "example": _react2['default'].createElement(Demo2, null), "title": " 带搜索框的tranfer", "code": "/**\n*\n* @title 带搜索框的tranfer\n* @description\n*\n*/\n\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\n\n\nclass Demo2 extends React.Component {\n  state = {\n    mockData: [],\n    targetKeys: [],\n  }\n  componentDidMount() {\n    this.getMock();\n  }\n  getMock = () => {\n    const targetKeys = [];\n    const mockData = [];\n    for (let i = 0; i < 20; i++) {\n      const data = {\n        key: i.toString(),\n        title: `content${i + 1}`,\n        description: `description of content${i + 1}`,\n        chosen: Math.random() * 2 > 1,\n      };\n      if (data.chosen) {\n        targetKeys.push(data.key);\n      }\n      mockData.push(data);\n    }\n    this.setState({ mockData, targetKeys });\n  }\n  filterOption = (inputValue, option) => {\n    return option.title.indexOf(inputValue) > -1;\n  }\n  handleChange = (targetKeys) => {\n    this.setState({ targetKeys });\n  }\n  render() {\n    return (\n      <Transfer\n        dataSource={this.state.mockData}\n        showSearch\n        filterOption={this.filterOption}\n        targetKeys={this.state.targetKeys}\n        onChange={this.handleChange}\n        render={item => item.title}\n      />\n    );\n  }\n}\n\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 底部自定义的transfer", "code": "/**\n*\n* @title 底部自定义的transfer\n* @description \n*\n*/\n\nimport React, { Component } from 'react';\nimport { Transfer, Button } from 'tinper-bee';\n\nclass Demo3 extends React.Component {\n  state = {\n    mockData: [],\n    targetKeys: [],\n  }\n  componentDidMount() {\n    this.getMock();\n  }\n  getMock = () => {\n    const targetKeys = [];\n    const mockData = [];\n    for (let i = 0; i < 20; i++) {\n      const data = {\n        key: i.toString(),\n        title: `content${i + 1}`,\n        description: `description of content${i + 1}`,\n        chosen: Math.random() * 2 > 1,\n      };\n      if (data.chosen) {\n        targetKeys.push(data.key);\n      }\n      mockData.push(data);\n    }\n    this.setState({ mockData, targetKeys });\n  }\n  handleChange = (targetKeys) => {\n    this.setState({ targetKeys });\n  }\n  renderFooter = () => {\n    return (\n      <Button\n        size=\"sm\"\n        style={{ float: 'right', margin: 5 }}\n        onClick={this.getMock}\n      >\n        reload\n      </Button>\n    );\n  }\n  render() {\n    return (\n      <Transfer\n        dataSource={this.state.mockData}\n        showSearch\n        listStyle={{\n          width: 250,\n          height: 300,\n        }}\n        targetKeys={this.state.targetKeys}\n        onChange={this.handleChange}\n        render={item => `${item.title}-${item.description}`}\n        footer={this.renderFooter}\n      />\n    );\n  }\n}\n\n\n", "desc": " " }];
+	var Demo1 = __webpack_require__(79);var Demo2 = __webpack_require__(101);var Demo3 = __webpack_require__(102);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 常用可选transfer", "code": "/**\n*\n* @title 常用可选transfer\n* @description \n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\n\nconst mockData = [];\nfor (let i = 0; i < 20; i++) {\n  mockData.push({\n    key: i.toString(),\n    title: `content${i + 1}`,\n    description: `description of content${i + 1}`,\n    disabled: i % 3 < 1,\n\n  });\n}\n\nconst targetKeys = mockData\n        .filter(item => +item.key % 3 > 1)\n        .map(item => item.key);\n\nclass Demo1 extends React.Component {\n  state = {\n    targetKeys,\n    selectedKeys: [],\n    showModal: false,\n    modalSize: ''\n  }\n\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\n    this.setState({ targetKeys: nextTargetKeys });\n\n    console.log('targetKeys: ', targetKeys);\n    console.log('direction: ', direction);\n    console.log('moveKeys: ', moveKeys);\n  }\n\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\n\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\n  }\n\n  handleScroll = (direction, e) => {\n    console.log('direction:', direction);\n    console.log('target:', e.target);\n  }\n\n\n  render() {\n    const state = this.state;\n\n    return (\n       <Transfer\n          dataSource={mockData}\n          titles={['Source', 'Target']}\n          targetKeys={state.targetKeys}\n          selectedKeys={state.selectedKeys}\n          onChange={this.handleChange}\n          onSelectChange={this.handleSelectChange}\n          onScroll={this.handleScroll}\n          render={item => item.title}\n        />\n    );\n  }\n}\n\n\n\n", "desc": " " }, { "example": _react2['default'].createElement(Demo2, null), "title": " 带搜索框的tranfer", "code": "/**\n*\n* @title 带搜索框的tranfer\n* @description\n*\n*/\n\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\n\n\nclass Demo2 extends React.Component {\n  state = {\n    mockData: [],\n    targetKeys: [],\n  }\n  componentDidMount() {\n    this.getMock();\n  }\n  getMock = () => {\n    const targetKeys = [];\n    const mockData = [];\n    for (let i = 0; i < 20; i++) {\n      const data = {\n        key: i.toString(),\n        title: `content${i + 1}`,\n        description: `description of content${i + 1}`,\n        chosen: Math.random() * 2 > 1,\n      };\n      if (data.chosen) {\n        targetKeys.push(data.key);\n      }\n      mockData.push(data);\n    }\n    this.setState({ mockData, targetKeys });\n  }\n  filterOption = (inputValue, option) => {\n    return option.title.indexOf(inputValue) > -1;\n  }\n  handleChange = (targetKeys) => {\n    this.setState({ targetKeys });\n  }\n  render() {\n    return (\n      <Transfer\n        dataSource={this.state.mockData}\n        showSearch\n        filterOption={this.filterOption}\n        targetKeys={this.state.targetKeys}\n        onChange={this.handleChange}\n        render={item => item.title}\n      />\n    );\n  }\n}\n\n\n\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 底部自定义的transfer", "code": "/**\n*\n* @title 底部自定义的transfer\n* @description \n*\n*/\n\nimport React, { Component } from 'react';\nimport { Transfer, Button } from 'tinper-bee';\n\nclass Demo3 extends React.Component {\n  state = {\n    mockData: [],\n    targetKeys: [],\n  }\n  componentDidMount() {\n    this.getMock();\n  }\n  getMock = () => {\n    const targetKeys = [];\n    const mockData = [];\n    for (let i = 0; i < 20; i++) {\n      const data = {\n        key: i.toString(),\n        title: `content${i + 1}`,\n        description: `description of content${i + 1}`,\n        chosen: Math.random() * 2 > 1,\n      };\n      if (data.chosen) {\n        targetKeys.push(data.key);\n      }\n      mockData.push(data);\n    }\n    this.setState({ mockData, targetKeys });\n  }\n  handleChange = (targetKeys) => {\n    this.setState({ targetKeys });\n  }\n  renderFooter = () => {\n    return (\n      <Button\n        size=\"sm\"\n        style={{ float: 'right', margin: 5 }}\n        onClick={this.getMock}\n      >\n        reload\n      </Button>\n    );\n  }\n  render() {\n    return (\n      <Transfer\n        dataSource={this.state.mockData}\n        showSearch\n        listStyle={{\n          width: 250,\n          height: 300,\n        }}\n        targetKeys={this.state.targetKeys}\n        onChange={this.handleChange}\n        render={item => `${item.title}-${item.description}`}\n        footer={this.renderFooter}\n      />\n    );\n  }\n}\n\n\n", "desc": " " }];
 	
 	var Demo = function (_Component) {
 	    _inherits(Demo, _Component);
@@ -645,7 +645,7 @@
 	
 	var _Panel3 = _interopRequireDefault(_Panel2);
 	
-	var _PanelGroup2 = __webpack_require__(64);
+	var _PanelGroup2 = __webpack_require__(76);
 	
 	var _PanelGroup3 = _interopRequireDefault(_PanelGroup2);
 	
@@ -676,9 +676,17 @@
 	
 	var _beeTransition = __webpack_require__(10);
 	
+	var _beeMessage = __webpack_require__(64);
+	
+	var _beeMessage2 = _interopRequireDefault(_beeMessage);
+	
 	var _propTypes = __webpack_require__(5);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _copyToClipboard = __webpack_require__(74);
+	
+	var _copyToClipboard2 = _interopRequireDefault(_copyToClipboard);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -723,7 +731,9 @@
 	  onEntered: _propTypes2["default"].func,
 	  onExit: _propTypes2["default"].func,
 	  onExiting: _propTypes2["default"].func,
-	  onExited: _propTypes2["default"].func
+	  onExited: _propTypes2["default"].func,
+	  //是否可复制内容
+	  copyable: _propTypes2["default"].bool
 	};
 	
 	var defaultProps = {
@@ -820,10 +830,20 @@
 	    );
 	  };
 	
+	  //复制代码，弹出提示信息
+	
+	
+	  Panel.prototype.copyDemo = function copyDemo(e) {
+	    var panelTarget = e.target.parentNode;
+	    var clipBoardContent = panelTarget.firstChild.innerText;
+	    (0, _copyToClipboard2["default"])(clipBoardContent);
+	    _beeMessage2["default"].create({ content: '复制成功！', color: 'success', duration: 2 });
+	  };
+	
 	  //如果有折叠动画，渲染折叠动画
 	
 	
-	  Panel.prototype.renderCollapsibleBody = function renderCollapsibleBody(id, expanded, role, children, clsPrefix, animationHooks) {
+	  Panel.prototype.renderCollapsibleBody = function renderCollapsibleBody(id, expanded, role, children, clsPrefix, copyable, animationHooks) {
 	    return _react2["default"].createElement(
 	      _beeTransition.Collapse,
 	      _extends({ 'in': expanded }, animationHooks),
@@ -835,7 +855,7 @@
 	          className: clsPrefix + '-collapse',
 	          'aria-hidden': !expanded
 	        },
-	        this.renderBody(children, clsPrefix)
+	        this.renderBody(children, clsPrefix, copyable)
 	      )
 	    );
 	  };
@@ -843,43 +863,41 @@
 	  //渲染panelbody
 	
 	
-	  Panel.prototype.renderBody = function renderBody(rawChildren, clsPrefix) {
+	  Panel.prototype.renderBody = function renderBody(rawChildren, clsPrefix, copyable) {
+	    var self = this;
 	    var children = [];
 	    var bodyChildren = [];
 	
 	    var bodyClassName = clsPrefix + '-body';
-	
 	    //添加到body的children中
-	    function maybeAddBody() {
+	    function maybeAddBody(self) {
 	      if (!bodyChildren.length) {
 	        return;
 	      }
-	
 	      // 给子组件添加key，为了之后触发事件时使用
 	      children.push(_react2["default"].createElement(
 	        'div',
 	        { key: children.length, className: bodyClassName },
-	        bodyChildren
+	        bodyChildren,
+	        copyable && _react2["default"].createElement('i', { className: 'uf uf-files-o', onClick: self.copyDemo })
 	      ));
-	
 	      bodyChildren = [];
 	    }
 	
 	    //转换为数组，方便复用
 	    _react2["default"].Children.toArray(rawChildren).forEach(function (child) {
 	      if (_react2["default"].isValidElement(child) && child.props.fill) {
-	        maybeAddBody();
+	        maybeAddBody(self);
 	
 	        //将标示fill设置为undefined
 	        children.push((0, _react.cloneElement)(child, { fill: undefined }));
 	
 	        return;
 	      }
-	
 	      bodyChildren.push(child);
 	    });
 	
-	    maybeAddBody();
+	    maybeAddBody(self);
 	
 	    return children;
 	  };
@@ -909,7 +927,8 @@
 	        defaultExpanded = _props.defaultExpanded,
 	        eventKey = _props.eventKey,
 	        onSelect = _props.onSelect,
-	        props = _objectWithoutProperties(_props, ['collapsible', 'header', 'id', 'footer', 'expanded', 'footerStyle', 'headerStyle', 'headerRole', 'panelRole', 'className', 'colors', 'children', 'onEnter', 'onEntering', 'onEntered', 'clsPrefix', 'onExit', 'headerContent', 'onExiting', 'onExited', 'defaultExpanded', 'eventKey', 'onSelect']);
+	        copyable = _props.copyable,
+	        props = _objectWithoutProperties(_props, ['collapsible', 'header', 'id', 'footer', 'expanded', 'footerStyle', 'headerStyle', 'headerRole', 'panelRole', 'className', 'colors', 'children', 'onEnter', 'onEntering', 'onEntered', 'clsPrefix', 'onExit', 'headerContent', 'onExiting', 'onExited', 'defaultExpanded', 'eventKey', 'onSelect', 'copyable']);
 	
 	    var expanded = propsExpanded != null ? propsExpanded : this.state.expanded;
 	
@@ -919,6 +938,7 @@
 	
 	    var headerClass = _defineProperty({}, clsPrefix + '-heading', true);
 	
+	    copyable === false ? false : true;
 	    return _react2["default"].createElement(
 	      'div',
 	      _extends({}, props, {
@@ -930,7 +950,7 @@
 	        { className: (0, _classnames2["default"])(headerClass), style: headerStyle, onClick: this.handleClickTitle },
 	        this.renderHeader(collapsible, header, id, headerRole, expanded, clsPrefix)
 	      ),
-	      collapsible ? this.renderCollapsibleBody(id, expanded, panelRole, children, clsPrefix, { onEnter: onEnter, onEntering: onEntering, onEntered: onEntered, onExit: onExit, onExiting: onExiting, onExited: onExited }) : this.renderBody(children, clsPrefix),
+	      collapsible ? this.renderCollapsibleBody(id, expanded, panelRole, children, clsPrefix, copyable, { onEnter: onEnter, onEntering: onEntering, onEntered: onEntered, onExit: onExit, onExiting: onExiting, onExited: onExited }) : this.renderBody(children, clsPrefix, copyable),
 	      footer && _react2["default"].createElement(
 	        'div',
 	        { className: clsPrefix + '-footer', style: footerStyle },
@@ -6017,6 +6037,1429 @@
 	  value: true
 	});
 	
+	var _Message = __webpack_require__(65);
+	
+	var _Message2 = _interopRequireDefault(_Message);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	exports["default"] = _Message2["default"];
+	module.exports = exports['default'];
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _beeNotification = __webpack_require__(66);
+	
+	var _beeNotification2 = _interopRequireDefault(_beeNotification);
+	
+	var _classnames = __webpack_require__(3);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	var defaultDuration = 1.5;
+	var defaultTop = 0;
+	var defaultBottom = 48;
+	var bottom = 90;
+	var padding = 30;
+	var width = 200;
+	var messageInstance = void 0;
+	var key = 1;
+	var clsPrefix = 'u-message';
+	var noop = function noop() {};
+	
+	var positionObj = {
+	    "top": {
+	        messageStyle: {
+	            width: "100%"
+	        },
+	        notificationStyle: {
+	            top: defaultTop,
+	            width: "100%"
+	        },
+	        transitionName: 'top'
+	    },
+	    "bottom": {
+	        messageStyle: {
+	            width: "100%"
+	        },
+	        notificationStyle: {
+	            bottom: defaultBottom,
+	            width: "100%"
+	        },
+	        transitionName: 'bottom'
+	    },
+	    "topRight": {
+	        messageStyle: {
+	            width: width
+	        },
+	        notificationStyle: {
+	            top: padding,
+	            right: padding,
+	            width: width
+	        },
+	        transitionName: 'right'
+	    },
+	    "bottomRight": {
+	        messageStyle: {
+	            width: width
+	        },
+	        notificationStyle: {
+	            bottom: bottom,
+	            right: padding,
+	            width: width
+	        },
+	        transitionName: 'right'
+	    },
+	    "topLeft": {
+	        messageStyle: {
+	            width: width
+	        },
+	        notificationStyle: {
+	            top: padding,
+	            left: padding,
+	            width: width
+	        },
+	        transitionName: 'left'
+	    },
+	    "bottomLeft": {
+	        messageStyle: {
+	            width: width
+	        },
+	        notificationStyle: {
+	            bottom: bottom,
+	            left: padding,
+	            width: width
+	        },
+	        transitionName: 'left'
+	    }
+	};
+	
+	function getMessageInstance() {
+	    var position = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'top';
+	    var callback = arguments[1];
+	
+	    if (messageInstance) {
+	        callback(messageInstance);
+	        return;
+	    }
+	    var style = positionObj[position].notificationStyle;
+	    _beeNotification2["default"].newInstance({
+	        clsPrefix: clsPrefix,
+	        transitionName: clsPrefix + '-' + positionObj[position].transitionName,
+	        style: style, // 覆盖原来的样式
+	        position: ''
+	    }, function (instance) {
+	        messageInstance = instance;
+	        callback(instance);
+	    });
+	}
+	
+	function notice(content, duration, type, onClose, position, style) {
+	    var iconType = {
+	        info: 'uf uf-i-c-2',
+	        success: 'uf uf-correct',
+	        danger: 'uf uf-close-c',
+	        warning: 'uf uf-exc-t',
+	        light: 'uf uf-notification',
+	        dark: 'uf uf-bubble',
+	        news: 'uf uf-bell',
+	        infolight: 'uf uf-i-c-2',
+	        successlight: 'uf uf-correct',
+	        dangerlight: 'uf uf-close-c',
+	        warninglight: 'uf uf-exc-t'
+	    }[type];
+	
+	    var positionStyle = positionObj[position].messageStyle;
+	
+	    getMessageInstance(position, function (instance) {
+	        instance.notice({
+	            key: key,
+	            duration: duration,
+	            color: type,
+	            style: _extends({}, positionStyle, style),
+	            content: _react2["default"].createElement(
+	                'div',
+	                null,
+	                _react2["default"].createElement(
+	                    'div',
+	                    { className: clsPrefix + '-notice-description-icon' },
+	                    _react2["default"].createElement('i', { className: (0, _classnames2["default"])(iconType) })
+	                ),
+	                _react2["default"].createElement(
+	                    'div',
+	                    { className: clsPrefix + '-notice-description-content' },
+	                    content
+	                )
+	            ),
+	            onClose: onClose
+	        });
+	    });
+	    return function () {
+	        var target = key++;
+	        return function () {
+	            if (messageInstance) {
+	                messageInstance.removeNotice(target);
+	            }
+	        };
+	    }();
+	}
+	
+	exports["default"] = {
+	    create: function create(obj) {
+	        var content = obj.content || '';
+	        var duration = _typeof(obj.duration) == undefined ? defaultDuration : obj.duration;
+	        var color = obj.color || 'dark';
+	        var onClose = obj.onClose || noop;
+	        var position = obj.position || "top";
+	        var style = obj.style || {};
+	        return notice(content, duration, color, onClose, position, style);
+	    },
+	    config: function config(options) {
+	        if (options.top !== undefined) {
+	            defaultTop = options.top;
+	        }
+	        if (options.duration !== undefined) {
+	            defaultDuration = options.duration;
+	        }
+	        if (options.clsPrefix !== undefined) {
+	            clsPrefix = options.clsPrefix;
+	        }
+	        if (options.defaultBottom !== undefined) {
+	            defaultBottom = options.defaultBottom;
+	        }
+	        if (options.bottom !== undefined) {
+	            bottom = options.bottom;
+	        }
+	        if (options.width !== undefined) {
+	            bottom = options.width;
+	        }
+	    },
+	    destroy: function destroy() {
+	        if (messageInstance) {
+	            messageInstance.destroy();
+	            messageInstance = null;
+	        }
+	    }
+	};
+	module.exports = exports['default'];
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _Notification = __webpack_require__(67);
+	
+	var _Notification2 = _interopRequireDefault(_Notification);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	exports["default"] = _Notification2["default"];
+	module.exports = exports['default'];
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactDom = __webpack_require__(12);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _beeAnimate = __webpack_require__(68);
+	
+	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
+	
+	var _createChainedFunction = __webpack_require__(36);
+	
+	var _createChainedFunction2 = _interopRequireDefault(_createChainedFunction);
+	
+	var _classnames = __webpack_require__(3);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _Notice = __webpack_require__(73);
+	
+	var _Notice2 = _interopRequireDefault(_Notice);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var seed = 0;
+	var now = Date.now();
+	
+	function getUuid() {
+	  return 'uNotification_' + now + '_' + seed++;
+	}
+	
+	var propTypes = {
+	  show: _propTypes2["default"].bool,
+	  clsPrefix: _propTypes2["default"].string,
+	  style: _propTypes2["default"].object,
+	  position: _propTypes2["default"].oneOf(['topRight', 'bottomRight', '']),
+	  transitionName: _propTypes2["default"].string,
+	  animation: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object])
+	};
+	
+	var defaultProps = {
+	  clsPrefix: 'u-notification',
+	  animation: 'fade',
+	  position: 'topRight'
+	};
+	
+	var Notification = function (_Component) {
+	  _inherits(Notification, _Component);
+	
+	  function Notification(props) {
+	    _classCallCheck(this, Notification);
+	
+	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+	
+	    _this.state = {
+	      notices: []
+	    };
+	    _this.add = _this.add.bind(_this);
+	    _this.remove = _this.remove.bind(_this);
+	
+	    return _this;
+	  }
+	
+	  Notification.prototype.getTransitionName = function getTransitionName() {
+	    var props = this.props;
+	    var transitionName = props.transitionName;
+	    if (!transitionName && props.animation) {
+	      transitionName = props.clsPrefix + '-' + props.animation;
+	    }
+	    return transitionName;
+	  };
+	
+	  Notification.prototype.add = function add(notice) {
+	    var key = notice.key = notice.key || getUuid();
+	    this.setState(function (previousState) {
+	      var notices = previousState.notices;
+	      if (!notices.filter(function (v) {
+	        return v.key === key;
+	      }).length) {
+	        return {
+	          notices: notices.concat(notice)
+	        };
+	      }
+	    });
+	  };
+	
+	  Notification.prototype.remove = function remove(key) {
+	    this.setState(function (previousState) {
+	      return {
+	        notices: previousState.notices.filter(function (notice) {
+	          return notice.key !== key;
+	        })
+	      };
+	    });
+	  };
+	
+	  Notification.prototype.render = function render() {
+	    var _this2 = this,
+	        _classes;
+	
+	    var _props = this.props,
+	        clsPrefix = _props.clsPrefix,
+	        className = _props.className,
+	        position = _props.position,
+	        style = _props.style;
+	
+	    var noticeNodes = this.state.notices.map(function (notice) {
+	      var onClose = (0, _createChainedFunction2["default"])(_this2.remove.bind(_this2, notice.key), notice.onClose);
+	      return _react2["default"].createElement(
+	        _Notice2["default"],
+	        _extends({
+	          clsPrefix: clsPrefix
+	        }, notice, {
+	          onClose: onClose
+	        }),
+	        notice.content
+	      );
+	    });
+	    var classes = (_classes = {}, _defineProperty(_classes, clsPrefix, 1), _defineProperty(_classes, className, !!className), _classes);
+	    if (position) {
+	      classes[clsPrefix + '-' + position] = !!position;
+	    }
+	
+	    return _react2["default"].createElement(
+	      'div',
+	      { className: (0, _classnames2["default"])(className, classes), style: style },
+	      _react2["default"].createElement(
+	        _beeAnimate2["default"],
+	        { transitionName: this.getTransitionName() },
+	        noticeNodes
+	      )
+	    );
+	  };
+	
+	  return Notification;
+	}(_react.Component);
+	
+	;
+	
+	Notification.propTypes = propTypes;
+	Notification.defaultProps = defaultProps;
+	
+	Notification.newInstance = function newNotificationInstance(properties, callback) {
+	  var props = properties || {};
+	  var div = document.createElement('div');
+	  document.body.appendChild(div);
+	
+	  var called = false;
+	  function ref(notification) {
+	    if (called) {
+	      return;
+	    }
+	    called = true;
+	    callback({
+	      notice: function notice(noticeProps) {
+	        notification.add(noticeProps);
+	      },
+	      removeNotice: function removeNotice(key) {
+	        notification.remove(key);
+	      },
+	
+	      component: notification,
+	      destroy: function destroy() {
+	        _reactDom2["default"].unmountComponentAtNode(div);
+	        document.body.removeChild(div);
+	      }
+	    });
+	  }
+	  _reactDom2["default"].render(_react2["default"].createElement(Notification, _extends({}, props, { ref: ref })), div);
+	};
+	
+	exports["default"] = Notification;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _Animate = __webpack_require__(69);
+	
+	var _Animate2 = _interopRequireDefault(_Animate);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	exports["default"] = _Animate2["default"];
+	module.exports = exports['default'];
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _ChildrenUtils = __webpack_require__(70);
+	
+	var _AnimateChild = __webpack_require__(71);
+	
+	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
+	
+	var _util = __webpack_require__(72);
+	
+	var _util2 = _interopRequireDefault(_util);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var defaultKey = 'u_animate_' + Date.now();
+	
+	
+	function getChildrenFromProps(props) {
+	  var children = props.children;
+	  if (_react2["default"].isValidElement(children)) {
+	    if (!children.key) {
+	      return _react2["default"].cloneElement(children, {
+	        key: defaultKey
+	      });
+	    }
+	  }
+	  return children;
+	}
+	
+	function noop() {}
+	
+	var propTypes = {
+	  component: _propTypes2["default"].any,
+	  animation: _propTypes2["default"].object,
+	  transitionName: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object]),
+	  transitionEnter: _propTypes2["default"].bool,
+	  transitionAppear: _propTypes2["default"].bool,
+	  exclusive: _propTypes2["default"].bool,
+	  transitionLeave: _propTypes2["default"].bool,
+	  onEnd: _propTypes2["default"].func,
+	  onEnter: _propTypes2["default"].func,
+	  onLeave: _propTypes2["default"].func,
+	  onAppear: _propTypes2["default"].func,
+	  showProp: _propTypes2["default"].string
+	};
+	
+	var defaultProps = {
+	  animation: {},
+	  component: 'span',
+	  transitionEnter: true,
+	  transitionLeave: true,
+	  transitionAppear: false,
+	  onEnd: noop,
+	  onEnter: noop,
+	  onLeave: noop,
+	  onAppear: noop
+	};
+	
+	var Animate = function (_Component) {
+	  _inherits(Animate, _Component);
+	
+	  function Animate(props) {
+	    _classCallCheck(this, Animate);
+	
+	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+	
+	    _this.currentlyAnimatingKeys = {};
+	    _this.keysToEnter = [];
+	    _this.keysToLeave = [];
+	    _this.state = {
+	      children: (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(_this.props))
+	    };
+	
+	    _this.performEnter = _this.performEnter.bind(_this);
+	    _this.performAppear = _this.performAppear.bind(_this);
+	    _this.handleDoneAdding = _this.handleDoneAdding.bind(_this);
+	    _this.performLeave = _this.performLeave.bind(_this);
+	
+	    _this.performLeave = _this.performLeave.bind(_this);
+	    _this.handleDoneLeaving = _this.handleDoneLeaving.bind(_this);
+	    _this.isValidChildByKey = _this.isValidChildByKey.bind(_this);
+	    _this.stop = _this.stop.bind(_this);
+	    return _this;
+	  }
+	
+	  Animate.prototype.componentDidMount = function componentDidMount() {
+	    var _this2 = this;
+	
+	    this.mounted = true;
+	    var showProp = this.props.showProp;
+	    var children = this.state.children;
+	    if (showProp) {
+	      children = children.filter(function (child) {
+	        return !!child.props[showProp];
+	      });
+	    }
+	    children.forEach(function (child) {
+	      if (child) {
+	        _this2.performAppear(child.key);
+	      }
+	    });
+	  };
+	
+	  Animate.prototype.componentWillUnmount = function componentWillUnmount() {
+	    this.mounted = false;
+	  };
+	
+	  Animate.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	    var _this3 = this;
+	
+	    this.nextProps = nextProps;
+	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
+	    var props = this.props;
+	    // exclusive needs immediate response
+	    if (props.exclusive) {
+	      Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
+	        _this3.stop(key);
+	      });
+	    }
+	    var showProp = props.showProp;
+	    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
+	    // last props children if exclusive
+	    var currentChildren = props.exclusive ? (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props)) : this.state.children;
+	    // in case destroy in showProp mode
+	    var newChildren = [];
+	    if (showProp) {
+	      currentChildren.forEach(function (currentChild) {
+	        var nextChild = currentChild && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
+	        var newChild = void 0;
+	        if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
+	          newChild = _react2["default"].cloneElement(nextChild || currentChild, _defineProperty({}, showProp, true));
+	        } else {
+	          newChild = nextChild;
+	        }
+	        if (newChild) {
+	          newChildren.push(newChild);
+	        }
+	      });
+	      nextChildren.forEach(function (nextChild) {
+	        if (!nextChild || !(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
+	          newChildren.push(nextChild);
+	        }
+	      });
+	    } else {
+	      newChildren = (0, _ChildrenUtils.mergeChildren)(currentChildren, nextChildren);
+	    }
+	
+	    // need render to avoid update
+	    this.setState({
+	      children: newChildren
+	    });
+	
+	    nextChildren.forEach(function (child) {
+	      var key = child && child.key;
+	      if (child && currentlyAnimatingKeys[key]) {
+	        return;
+	      }
+	      var hasPrev = child && (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
+	      if (showProp) {
+	        var showInNext = child.props[showProp];
+	        if (hasPrev) {
+	          var showInNow = (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
+	          if (!showInNow && showInNext) {
+	            _this3.keysToEnter.push(key);
+	          }
+	        } else if (showInNext) {
+	          _this3.keysToEnter.push(key);
+	        }
+	      } else if (!hasPrev) {
+	        _this3.keysToEnter.push(key);
+	      }
+	    });
+	
+	    currentChildren.forEach(function (child) {
+	      var key = child && child.key;
+	      if (child && currentlyAnimatingKeys[key]) {
+	        return;
+	      }
+	      var hasNext = child && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
+	      if (showProp) {
+	        var showInNow = child.props[showProp];
+	        if (hasNext) {
+	          var showInNext = (0, _ChildrenUtils.findShownChildInChildrenByKey)(nextChildren, key, showProp);
+	          if (!showInNext && showInNow) {
+	            _this3.keysToLeave.push(key);
+	          }
+	        } else if (showInNow) {
+	          _this3.keysToLeave.push(key);
+	        }
+	      } else if (!hasNext) {
+	        _this3.keysToLeave.push(key);
+	      }
+	    });
+	  };
+	
+	  Animate.prototype.componentDidUpdate = function componentDidUpdate() {
+	    var keysToEnter = this.keysToEnter;
+	    this.keysToEnter = [];
+	    keysToEnter.forEach(this.performEnter);
+	    var keysToLeave = this.keysToLeave;
+	    this.keysToLeave = [];
+	    keysToLeave.forEach(this.performLeave);
+	  };
+	
+	  Animate.prototype.performEnter = function performEnter(key) {
+	    // may already remove by exclusive
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillEnter(this.handleDoneAdding.bind(this, key, 'enter'));
+	    }
+	  };
+	
+	  Animate.prototype.performAppear = function performAppear(key) {
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillAppear(this.handleDoneAdding.bind(this, key, 'appear'));
+	    }
+	  };
+	
+	  Animate.prototype.handleDoneAdding = function handleDoneAdding(key, type) {
+	    var props = this.props;
+	    delete this.currentlyAnimatingKeys[key];
+	    // if update on exclusive mode, skip check
+	    if (props.exclusive && props !== this.nextProps) {
+	      return;
+	    }
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+	    if (!this.isValidChildByKey(currentChildren, key)) {
+	      // exclusive will not need this
+	      this.performLeave(key);
+	    } else {
+	      if (type === 'appear') {
+	        if (_util2["default"].allowAppearCallback(props)) {
+	          props.onAppear(key);
+	          props.onEnd(key, true);
+	        }
+	      } else {
+	        if (_util2["default"].allowEnterCallback(props)) {
+	          props.onEnter(key);
+	          props.onEnd(key, true);
+	        }
+	      }
+	    }
+	  };
+	
+	  Animate.prototype.performLeave = function performLeave(key) {
+	    // may already remove by exclusive
+	    if (this.refs[key]) {
+	      this.currentlyAnimatingKeys[key] = true;
+	      this.refs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
+	    }
+	  };
+	
+	  Animate.prototype.handleDoneLeaving = function handleDoneLeaving(key) {
+	    var props = this.props;
+	    delete this.currentlyAnimatingKeys[key];
+	    // if update on exclusive mode, skip check
+	    if (props.exclusive && props !== this.nextProps) {
+	      return;
+	    }
+	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+	    // in case state change is too fast
+	    if (this.isValidChildByKey(currentChildren, key)) {
+	      this.performEnter(key);
+	    } else {
+	      var end = function end() {
+	        if (_util2["default"].allowLeaveCallback(props)) {
+	          props.onLeave(key);
+	          props.onEnd(key, false);
+	        }
+	      };
+	      /* eslint react/no-is-mounted:0 */
+	      if (this.mounted && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren, props.showProp)) {
+	        this.setState({
+	          children: currentChildren
+	        }, end);
+	      } else {
+	        end();
+	      }
+	    }
+	  };
+	
+	  Animate.prototype.isValidChildByKey = function isValidChildByKey(currentChildren, key) {
+	    var showProp = this.props.showProp;
+	    if (showProp) {
+	      return (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
+	    }
+	    return (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
+	  };
+	
+	  Animate.prototype.stop = function stop(key) {
+	    delete this.currentlyAnimatingKeys[key];
+	    var component = this.refs[key];
+	    if (component) {
+	      component.stop();
+	    }
+	  };
+	
+	  Animate.prototype.render = function render() {
+	    var props = this.props;
+	    this.nextProps = props;
+	    var stateChildren = this.state.children;
+	    var children = null;
+	    if (stateChildren) {
+	      children = stateChildren.map(function (child) {
+	        if (child === null || child === undefined) {
+	          return child;
+	        }
+	        if (!child.key) {
+	          throw new Error('must set key for <rc-animate> children');
+	        }
+	        return _react2["default"].createElement(
+	          _AnimateChild2["default"],
+	          {
+	            key: child.key,
+	            ref: child.key,
+	            animation: props.animation,
+	            transitionName: props.transitionName,
+	            transitionEnter: props.transitionEnter,
+	            transitionAppear: props.transitionAppear,
+	            transitionLeave: props.transitionLeave
+	          },
+	          child
+	        );
+	      });
+	    }
+	    var Component = props.component;
+	    if (Component) {
+	      var passedProps = props;
+	      if (typeof Component === 'string') {
+	        passedProps = {
+	          className: props.className,
+	          style: props.style
+	        };
+	      }
+	      return _react2["default"].createElement(
+	        Component,
+	        passedProps,
+	        children
+	      );
+	    }
+	    return children[0] || null;
+	  };
+	
+	  return Animate;
+	}(_react.Component);
+	
+	;
+	Animate.defaultProps = defaultProps;
+	Animate.propTypes = Animate.propTypes;
+	
+	exports["default"] = Animate;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.toArrayChildren = toArrayChildren;
+	exports.findChildInChildrenByKey = findChildInChildrenByKey;
+	exports.findShownChildInChildrenByKey = findShownChildInChildrenByKey;
+	exports.findHiddenChildInChildrenByKey = findHiddenChildInChildrenByKey;
+	exports.isSameChildren = isSameChildren;
+	exports.mergeChildren = mergeChildren;
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function toArrayChildren(children) {
+	  var ret = [];
+	  _react2["default"].Children.forEach(children, function (child) {
+	    ret.push(child);
+	  });
+	  return ret;
+	}
+	
+	function findChildInChildrenByKey(children, key) {
+	  var ret = null;
+	  if (children) {
+	    children.forEach(function (child) {
+	      if (ret) {
+	        return;
+	      }
+	      if (child && child.key === key) {
+	        ret = child;
+	      }
+	    });
+	  }
+	  return ret;
+	}
+	
+	function findShownChildInChildrenByKey(children, key, showProp) {
+	  var ret = null;
+	  if (children) {
+	    children.forEach(function (child) {
+	      if (child && child.key === key && child.props[showProp]) {
+	        if (ret) {
+	          throw new Error('two child with same key for <rc-animate> children');
+	        }
+	        ret = child;
+	      }
+	    });
+	  }
+	  return ret;
+	}
+	
+	function findHiddenChildInChildrenByKey(children, key, showProp) {
+	  var found = 0;
+	  if (children) {
+	    children.forEach(function (child) {
+	      if (found) {
+	        return;
+	      }
+	      found = child && child.key === key && !child.props[showProp];
+	    });
+	  }
+	  return found;
+	}
+	
+	function isSameChildren(c1, c2, showProp) {
+	  var same = c1.length === c2.length;
+	  if (same) {
+	    c1.forEach(function (child, index) {
+	      var child2 = c2[index];
+	      if (child && child2) {
+	        if (child && !child2 || !child && child2) {
+	          same = false;
+	        } else if (child.key !== child2.key) {
+	          same = false;
+	        } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
+	          same = false;
+	        }
+	      }
+	    });
+	  }
+	  return same;
+	}
+	
+	function mergeChildren(prev, next) {
+	  var ret = [];
+	
+	  // For each key of `next`, the list of keys to insert before that key in
+	  // the combined list
+	  var nextChildrenPending = {};
+	  var pendingChildren = [];
+	  prev.forEach(function (child) {
+	    if (child && findChildInChildrenByKey(next, child.key)) {
+	      if (pendingChildren.length) {
+	        nextChildrenPending[child.key] = pendingChildren;
+	        pendingChildren = [];
+	      }
+	    } else {
+	      pendingChildren.push(child);
+	    }
+	  });
+	
+	  next.forEach(function (child) {
+	    if (child && nextChildrenPending.hasOwnProperty(child.key)) {
+	      ret = ret.concat(nextChildrenPending[child.key]);
+	    }
+	    ret.push(child);
+	  });
+	
+	  ret = ret.concat(pendingChildren);
+	
+	  return ret;
+	}
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactDom = __webpack_require__(12);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _tinperBeeCore = __webpack_require__(26);
+	
+	var _util = __webpack_require__(72);
+	
+	var _util2 = _interopRequireDefault(_util);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var transitionMap = {
+	  enter: 'transitionEnter',
+	  appear: 'transitionAppear',
+	  leave: 'transitionLeave'
+	};
+	
+	var propTypes = {
+	  children: _propTypes2["default"].any
+	};
+	
+	var AnimateChild = function (_Component) {
+	  _inherits(AnimateChild, _Component);
+	
+	  function AnimateChild(props) {
+	    _classCallCheck(this, AnimateChild);
+	
+	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
+	
+	    _this.transition = _this.transition.bind(_this);
+	    _this.stop = _this.stop.bind(_this);
+	    return _this;
+	  }
+	
+	  AnimateChild.prototype.componentWillUnmount = function componentWillUnmount() {
+	    this.stop();
+	  };
+	
+	  AnimateChild.prototype.componentWillEnter = function componentWillEnter(done) {
+	    if (_util2["default"].isEnterSupported(this.props)) {
+	      this.transition('enter', done);
+	    } else {
+	      done();
+	    }
+	  };
+	
+	  AnimateChild.prototype.componentWillAppear = function componentWillAppear(done) {
+	    if (_util2["default"].isAppearSupported(this.props)) {
+	      this.transition('appear', done);
+	    } else {
+	      done();
+	    }
+	  };
+	
+	  AnimateChild.prototype.componentWillLeave = function componentWillLeave(done) {
+	    if (_util2["default"].isLeaveSupported(this.props)) {
+	      this.transition('leave', done);
+	    } else {
+	      // always sync, do not interupt with react component life cycle
+	      // update hidden -> animate hidden ->
+	      // didUpdate -> animate leave -> unmount (if animate is none)
+	      done();
+	    }
+	  };
+	
+	  AnimateChild.prototype.transition = function transition(animationType, finishCallback) {
+	    var _this2 = this;
+	
+	    var node = _reactDom2["default"].findDOMNode(this);
+	    var props = this.props;
+	    var transitionName = props.transitionName;
+	    var nameIsObj = (typeof transitionName === 'undefined' ? 'undefined' : _typeof(transitionName)) === 'object';
+	    this.stop();
+	    var end = function end() {
+	      _this2.stopper = null;
+	      finishCallback();
+	    };
+	    if ((_tinperBeeCore.cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
+	      var name = nameIsObj ? transitionName[animationType] : transitionName + '-' + animationType;
+	      var activeName = name + '-active';
+	      if (nameIsObj && transitionName[animationType + 'Active']) {
+	        activeName = transitionName[animationType + 'Active'];
+	      }
+	      this.stopper = (0, _tinperBeeCore.cssAnimation)(node, {
+	        name: name,
+	        active: activeName
+	      }, end);
+	    } else {
+	      this.stopper = props.animation[animationType](node, end);
+	    }
+	  };
+	
+	  AnimateChild.prototype.stop = function stop() {
+	    var stopper = this.stopper;
+	    if (stopper) {
+	      this.stopper = null;
+	      stopper.stop();
+	    }
+	  };
+	
+	  AnimateChild.prototype.render = function render() {
+	    return this.props.children;
+	  };
+	
+	  return AnimateChild;
+	}(_react.Component);
+	
+	;
+	
+	AnimateChild.propTypes = propTypes;
+	
+	exports["default"] = AnimateChild;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var util = {
+	  isAppearSupported: function isAppearSupported(props) {
+	    return props.transitionName && props.transitionAppear || props.animation.appear;
+	  },
+	  isEnterSupported: function isEnterSupported(props) {
+	    return props.transitionName && props.transitionEnter || props.animation.enter;
+	  },
+	  isLeaveSupported: function isLeaveSupported(props) {
+	    return props.transitionName && props.transitionLeave || props.animation.leave;
+	  },
+	  allowAppearCallback: function allowAppearCallback(props) {
+	    return props.transitionAppear || props.animation.appear;
+	  },
+	  allowEnterCallback: function allowEnterCallback(props) {
+	    return props.transitionEnter || props.animation.enter;
+	  },
+	  allowLeaveCallback: function allowLeaveCallback(props) {
+	    return props.transitionLeave || props.animation.leave;
+	  }
+	};
+	exports["default"] = util;
+	module.exports = exports["default"];
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(4);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _classnames = __webpack_require__(3);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _propTypes = __webpack_require__(5);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	var propTypes = {
+	  duration: _propTypes2["default"].number,
+	  onClose: _propTypes2["default"].func,
+	  children: _propTypes2["default"].any,
+	  color: _propTypes2["default"].oneOf(['light']),
+	  title: _propTypes2["default"].any
+	};
+	
+	function noop() {}
+	
+	var defaultProps = {
+	  onEnd: noop,
+	  onClose: noop,
+	  duration: 4.5,
+	  closable: true
+	};
+	
+	var Notice = function (_React$Component) {
+	  _inherits(Notice, _React$Component);
+	
+	  function Notice(props) {
+	    _classCallCheck(this, Notice);
+	
+	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+	
+	    _this.clearCloseTimer = _this.clearCloseTimer.bind(_this);
+	    _this.close = _this.close.bind(_this);
+	    return _this;
+	  }
+	
+	  Notice.prototype.componentDidMount = function componentDidMount() {
+	    var _this2 = this;
+	
+	    if (this.props.duration) {
+	      this.closeTimer = setTimeout(function () {
+	        _this2.close();
+	      }, this.props.duration * 1000);
+	    }
+	  };
+	
+	  Notice.prototype.componentWillUnmount = function componentWillUnmount() {
+	    this.clearCloseTimer();
+	  };
+	
+	  Notice.prototype.clearCloseTimer = function clearCloseTimer() {
+	    if (this.closeTimer) {
+	      clearTimeout(this.closeTimer);
+	      this.closeTimer = null;
+	    }
+	  };
+	
+	  Notice.prototype.close = function close() {
+	    this.clearCloseTimer();
+	    this.props.onClose();
+	  };
+	
+	  Notice.prototype.render = function render() {
+	    var _classes;
+	
+	    var _props = this.props,
+	        closable = _props.closable,
+	        clsPrefix = _props.clsPrefix,
+	        className = _props.className,
+	        style = _props.style,
+	        children = _props.children,
+	        color = _props.color,
+	        title = _props.title;
+	
+	    var componentClass = clsPrefix + '-notice';
+	    var classes = (_classes = {}, _defineProperty(_classes, '' + componentClass, 1), _defineProperty(_classes, componentClass + '-closable', closable), _defineProperty(_classes, className, !!className), _classes);
+	    if (color) {
+	      classes[componentClass + '-' + color] = true;
+	    }
+	    return _react2["default"].createElement(
+	      'div',
+	      { className: (0, _classnames2["default"])(classes), style: style, onClick: this.close },
+	      _react2["default"].createElement(
+	        'div',
+	        { className: componentClass + '-content' },
+	        title && _react2["default"].createElement(
+	          'div',
+	          { className: componentClass + '-title' },
+	          title
+	        ),
+	        _react2["default"].createElement(
+	          'div',
+	          { className: componentClass + '-description' },
+	          children
+	        )
+	      ),
+	      closable ? _react2["default"].createElement(
+	        'a',
+	        { tabIndex: '0', onClick: this.close, className: componentClass + '-close' },
+	        _react2["default"].createElement('span', { className: componentClass + '-close-x' })
+	      ) : null
+	    );
+	  };
+	
+	  return Notice;
+	}(_react2["default"].Component);
+	
+	;
+	
+	Notice.PropTypes = _propTypes2["default"];
+	Notice.defaultProps = defaultProps;
+	
+	exports["default"] = Notice;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var deselectCurrent = __webpack_require__(75);
+	
+	var defaultMessage = 'Copy to clipboard: #{key}, Enter';
+	
+	function format(message) {
+	  var copyKey = (/mac os x/i.test(navigator.userAgent) ? '⌘' : 'Ctrl') + '+C';
+	  return message.replace(/#{\s*key\s*}/g, copyKey);
+	}
+	
+	function copy(text, options) {
+	  var debug, message, reselectPrevious, range, selection, mark, success = false;
+	  if (!options) { options = {}; }
+	  debug = options.debug || false;
+	  try {
+	    reselectPrevious = deselectCurrent();
+	
+	    range = document.createRange();
+	    selection = document.getSelection();
+	
+	    mark = document.createElement('span');
+	    mark.textContent = text;
+	    // reset user styles for span element
+	    mark.style.all = 'unset';
+	    // prevents scrolling to the end of the page
+	    mark.style.position = 'fixed';
+	    mark.style.top = 0;
+	    mark.style.clip = 'rect(0, 0, 0, 0)';
+	    // used to preserve spaces and line breaks
+	    mark.style.whiteSpace = 'pre';
+	    // do not inherit user-select (it may be `none`)
+	    mark.style.webkitUserSelect = 'text';
+	    mark.style.MozUserSelect = 'text';
+	    mark.style.msUserSelect = 'text';
+	    mark.style.userSelect = 'text';
+	
+	    document.body.appendChild(mark);
+	
+	    range.selectNode(mark);
+	    selection.addRange(range);
+	
+	    var successful = document.execCommand('copy');
+	    if (!successful) {
+	      throw new Error('copy command was unsuccessful');
+	    }
+	    success = true;
+	  } catch (err) {
+	    debug && console.error('unable to copy using execCommand: ', err);
+	    debug && console.warn('trying IE specific stuff');
+	    try {
+	      window.clipboardData.setData('text', text);
+	      success = true;
+	    } catch (err) {
+	      debug && console.error('unable to copy using clipboardData: ', err);
+	      debug && console.error('falling back to prompt');
+	      message = format('message' in options ? options.message : defaultMessage);
+	      window.prompt(message, text);
+	    }
+	  } finally {
+	    if (selection) {
+	      if (typeof selection.removeRange == 'function') {
+	        selection.removeRange(range);
+	      } else {
+	        selection.removeAllRanges();
+	      }
+	    }
+	
+	    if (mark) {
+	      document.body.removeChild(mark);
+	    }
+	    reselectPrevious();
+	  }
+	
+	  return success;
+	}
+	
+	module.exports = copy;
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports) {
+
+	
+	module.exports = function () {
+	  var selection = document.getSelection();
+	  if (!selection.rangeCount) {
+	    return function () {};
+	  }
+	  var active = document.activeElement;
+	
+	  var ranges = [];
+	  for (var i = 0; i < selection.rangeCount; i++) {
+	    ranges.push(selection.getRangeAt(i));
+	  }
+	
+	  switch (active.tagName.toUpperCase()) { // .toUpperCase handles XHTML
+	    case 'INPUT':
+	    case 'TEXTAREA':
+	      active.blur();
+	      break;
+	
+	    default:
+	      active = null;
+	      break;
+	  }
+	
+	  selection.removeAllRanges();
+	  return function () {
+	    selection.type === 'Caret' &&
+	    selection.removeAllRanges();
+	
+	    if (!selection.rangeCount) {
+	      ranges.forEach(function(range) {
+	        selection.addRange(range);
+	      });
+	    }
+	
+	    active &&
+	    active.focus();
+	  };
+	};
+
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _classnames = __webpack_require__(3);
@@ -6155,7 +7598,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 65 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6164,7 +7607,7 @@
 	  value: true
 	});
 	
-	var _Button = __webpack_require__(66);
+	var _Button = __webpack_require__(78);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -6174,7 +7617,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 66 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6343,7 +7786,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 67 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6356,7 +7799,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(68);
+	var _src = __webpack_require__(80);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -6452,7 +7895,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 68 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6461,7 +7904,7 @@
 	  value: true
 	});
 	
-	var _Transfer = __webpack_require__(69);
+	var _Transfer = __webpack_require__(81);
 	
 	var _Transfer2 = _interopRequireDefault(_Transfer);
 	
@@ -6471,7 +7914,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 69 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6488,15 +7931,15 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _list = __webpack_require__(70);
+	var _list = __webpack_require__(82);
 	
 	var _list2 = _interopRequireDefault(_list);
 	
-	var _operation = __webpack_require__(93);
+	var _operation = __webpack_require__(100);
 	
 	var _operation2 = _interopRequireDefault(_operation);
 	
-	var _search = __webpack_require__(71);
+	var _search = __webpack_require__(83);
 	
 	var _search2 = _interopRequireDefault(_search);
 	
@@ -6904,7 +8347,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 70 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6917,7 +8360,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _search = __webpack_require__(71);
+	var _search = __webpack_require__(83);
 	
 	var _search2 = _interopRequireDefault(_search);
 	
@@ -6925,11 +8368,11 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _beeAnimate = __webpack_require__(76);
+	var _beeAnimate = __webpack_require__(68);
 	
 	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
 	
-	var _PureRenderMixin = __webpack_require__(81);
+	var _PureRenderMixin = __webpack_require__(88);
 	
 	var _PureRenderMixin2 = _interopRequireDefault(_PureRenderMixin);
 	
@@ -6937,13 +8380,13 @@
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
-	var _index = __webpack_require__(68);
+	var _index = __webpack_require__(80);
 	
-	var _item = __webpack_require__(83);
+	var _item = __webpack_require__(90);
 	
 	var _item2 = _interopRequireDefault(_item);
 	
-	var _beeCheckbox = __webpack_require__(91);
+	var _beeCheckbox = __webpack_require__(98);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -7249,7 +8692,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 71 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7262,11 +8705,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeIcon = __webpack_require__(72);
+	var _beeIcon = __webpack_require__(84);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeFormControl = __webpack_require__(74);
+	var _beeFormControl = __webpack_require__(86);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
@@ -7362,7 +8805,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 72 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7371,7 +8814,7 @@
 	  value: true
 	});
 	
-	var _Icon = __webpack_require__(73);
+	var _Icon = __webpack_require__(85);
 	
 	var _Icon2 = _interopRequireDefault(_Icon);
 	
@@ -7381,7 +8824,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 73 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7460,7 +8903,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 74 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7469,7 +8912,7 @@
 	  value: true
 	});
 	
-	var _FormControl = __webpack_require__(75);
+	var _FormControl = __webpack_require__(87);
 	
 	var _FormControl2 = _interopRequireDefault(_FormControl);
 	
@@ -7479,7 +8922,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 75 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7498,7 +8941,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _beeIcon = __webpack_require__(72);
+	var _beeIcon = __webpack_require__(84);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
@@ -7525,17 +8968,14 @@
 	    onSearch: _propTypes2["default"].func,
 	    onChange: _propTypes2["default"].func,
 	    onBlur: _propTypes2["default"].func,
-	    showClose: _propTypes2["default"].bool,
-	    showPop: _propTypes2["default"].bool
+	    showClose: _propTypes2["default"].bool
 	};
 	
 	var defaultProps = {
 	    componentClass: 'input',
 	    clsPrefix: 'u-form-control',
 	    type: 'text',
-	    size: 'md',
-	    showClose: false,
-	    showPop: false
+	    size: 'md'
 	};
 	
 	var FormControl = function (_React$Component) {
@@ -7632,7 +9072,8 @@
 	                onChange = _this$props2.onChange,
 	                onSearch = _this$props2.onSearch,
 	                onBlur = _this$props2.onBlur,
-	                others = _objectWithoutProperties(_this$props2, ['componentClass', 'type', 'className', 'size', 'clsPrefix', 'value', 'onChange', 'onSearch', 'onBlur']);
+	                showClose = _this$props2.showClose,
+	                others = _objectWithoutProperties(_this$props2, ['componentClass', 'type', 'className', 'size', 'clsPrefix', 'value', 'onChange', 'onSearch', 'onBlur', 'showClose']);
 	            // input[type="file"] 不应该有类名 .form-control.
 	
 	
@@ -7646,7 +9087,7 @@
 	                classNames = (0, _classnames2["default"])(clsPrefix, classes);
 	            }
 	
-	            return _this.props.showClose ? _react2["default"].createElement(
+	            return showClose ? _react2["default"].createElement(
 	                'div',
 	                { className: (0, _classnames2["default"])(clsPrefix + '-close', clsPrefix + '-affix-wrapper', className) },
 	                _react2["default"].createElement(Component, _extends({}, others, {
@@ -7756,703 +9197,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _Animate = __webpack_require__(77);
-	
-	var _Animate2 = _interopRequireDefault(_Animate);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	exports["default"] = _Animate2["default"];
-	module.exports = exports['default'];
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _ChildrenUtils = __webpack_require__(78);
-	
-	var _AnimateChild = __webpack_require__(79);
-	
-	var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
-	
-	var _util = __webpack_require__(80);
-	
-	var _util2 = _interopRequireDefault(_util);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var defaultKey = 'u_animate_' + Date.now();
-	
-	
-	function getChildrenFromProps(props) {
-	  var children = props.children;
-	  if (_react2["default"].isValidElement(children)) {
-	    if (!children.key) {
-	      return _react2["default"].cloneElement(children, {
-	        key: defaultKey
-	      });
-	    }
-	  }
-	  return children;
-	}
-	
-	function noop() {}
-	
-	var propTypes = {
-	  component: _propTypes2["default"].any,
-	  animation: _propTypes2["default"].object,
-	  transitionName: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object]),
-	  transitionEnter: _propTypes2["default"].bool,
-	  transitionAppear: _propTypes2["default"].bool,
-	  exclusive: _propTypes2["default"].bool,
-	  transitionLeave: _propTypes2["default"].bool,
-	  onEnd: _propTypes2["default"].func,
-	  onEnter: _propTypes2["default"].func,
-	  onLeave: _propTypes2["default"].func,
-	  onAppear: _propTypes2["default"].func,
-	  showProp: _propTypes2["default"].string
-	};
-	
-	var defaultProps = {
-	  animation: {},
-	  component: 'span',
-	  transitionEnter: true,
-	  transitionLeave: true,
-	  transitionAppear: false,
-	  onEnd: noop,
-	  onEnter: noop,
-	  onLeave: noop,
-	  onAppear: noop
-	};
-	
-	var Animate = function (_Component) {
-	  _inherits(Animate, _Component);
-	
-	  function Animate(props) {
-	    _classCallCheck(this, Animate);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    _this.currentlyAnimatingKeys = {};
-	    _this.keysToEnter = [];
-	    _this.keysToLeave = [];
-	    _this.state = {
-	      children: (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(_this.props))
-	    };
-	
-	    _this.performEnter = _this.performEnter.bind(_this);
-	    _this.performAppear = _this.performAppear.bind(_this);
-	    _this.handleDoneAdding = _this.handleDoneAdding.bind(_this);
-	    _this.performLeave = _this.performLeave.bind(_this);
-	
-	    _this.performLeave = _this.performLeave.bind(_this);
-	    _this.handleDoneLeaving = _this.handleDoneLeaving.bind(_this);
-	    _this.isValidChildByKey = _this.isValidChildByKey.bind(_this);
-	    _this.stop = _this.stop.bind(_this);
-	    return _this;
-	  }
-	
-	  Animate.prototype.componentDidMount = function componentDidMount() {
-	    var _this2 = this;
-	
-	    this.mounted = true;
-	    var showProp = this.props.showProp;
-	    var children = this.state.children;
-	    if (showProp) {
-	      children = children.filter(function (child) {
-	        return !!child.props[showProp];
-	      });
-	    }
-	    children.forEach(function (child) {
-	      if (child) {
-	        _this2.performAppear(child.key);
-	      }
-	    });
-	  };
-	
-	  Animate.prototype.componentWillUnmount = function componentWillUnmount() {
-	    this.mounted = false;
-	  };
-	
-	  Animate.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	    var _this3 = this;
-	
-	    this.nextProps = nextProps;
-	    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
-	    var props = this.props;
-	    // exclusive needs immediate response
-	    if (props.exclusive) {
-	      Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
-	        _this3.stop(key);
-	      });
-	    }
-	    var showProp = props.showProp;
-	    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
-	    // last props children if exclusive
-	    var currentChildren = props.exclusive ? (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props)) : this.state.children;
-	    // in case destroy in showProp mode
-	    var newChildren = [];
-	    if (showProp) {
-	      currentChildren.forEach(function (currentChild) {
-	        var nextChild = currentChild && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
-	        var newChild = void 0;
-	        if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
-	          newChild = _react2["default"].cloneElement(nextChild || currentChild, _defineProperty({}, showProp, true));
-	        } else {
-	          newChild = nextChild;
-	        }
-	        if (newChild) {
-	          newChildren.push(newChild);
-	        }
-	      });
-	      nextChildren.forEach(function (nextChild) {
-	        if (!nextChild || !(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
-	          newChildren.push(nextChild);
-	        }
-	      });
-	    } else {
-	      newChildren = (0, _ChildrenUtils.mergeChildren)(currentChildren, nextChildren);
-	    }
-	
-	    // need render to avoid update
-	    this.setState({
-	      children: newChildren
-	    });
-	
-	    nextChildren.forEach(function (child) {
-	      var key = child && child.key;
-	      if (child && currentlyAnimatingKeys[key]) {
-	        return;
-	      }
-	      var hasPrev = child && (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
-	      if (showProp) {
-	        var showInNext = child.props[showProp];
-	        if (hasPrev) {
-	          var showInNow = (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
-	          if (!showInNow && showInNext) {
-	            _this3.keysToEnter.push(key);
-	          }
-	        } else if (showInNext) {
-	          _this3.keysToEnter.push(key);
-	        }
-	      } else if (!hasPrev) {
-	        _this3.keysToEnter.push(key);
-	      }
-	    });
-	
-	    currentChildren.forEach(function (child) {
-	      var key = child && child.key;
-	      if (child && currentlyAnimatingKeys[key]) {
-	        return;
-	      }
-	      var hasNext = child && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
-	      if (showProp) {
-	        var showInNow = child.props[showProp];
-	        if (hasNext) {
-	          var showInNext = (0, _ChildrenUtils.findShownChildInChildrenByKey)(nextChildren, key, showProp);
-	          if (!showInNext && showInNow) {
-	            _this3.keysToLeave.push(key);
-	          }
-	        } else if (showInNow) {
-	          _this3.keysToLeave.push(key);
-	        }
-	      } else if (!hasNext) {
-	        _this3.keysToLeave.push(key);
-	      }
-	    });
-	  };
-	
-	  Animate.prototype.componentDidUpdate = function componentDidUpdate() {
-	    var keysToEnter = this.keysToEnter;
-	    this.keysToEnter = [];
-	    keysToEnter.forEach(this.performEnter);
-	    var keysToLeave = this.keysToLeave;
-	    this.keysToLeave = [];
-	    keysToLeave.forEach(this.performLeave);
-	  };
-	
-	  Animate.prototype.performEnter = function performEnter(key) {
-	    // may already remove by exclusive
-	    if (this.refs[key]) {
-	      this.currentlyAnimatingKeys[key] = true;
-	      this.refs[key].componentWillEnter(this.handleDoneAdding.bind(this, key, 'enter'));
-	    }
-	  };
-	
-	  Animate.prototype.performAppear = function performAppear(key) {
-	    if (this.refs[key]) {
-	      this.currentlyAnimatingKeys[key] = true;
-	      this.refs[key].componentWillAppear(this.handleDoneAdding.bind(this, key, 'appear'));
-	    }
-	  };
-	
-	  Animate.prototype.handleDoneAdding = function handleDoneAdding(key, type) {
-	    var props = this.props;
-	    delete this.currentlyAnimatingKeys[key];
-	    // if update on exclusive mode, skip check
-	    if (props.exclusive && props !== this.nextProps) {
-	      return;
-	    }
-	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
-	    if (!this.isValidChildByKey(currentChildren, key)) {
-	      // exclusive will not need this
-	      this.performLeave(key);
-	    } else {
-	      if (type === 'appear') {
-	        if (_util2["default"].allowAppearCallback(props)) {
-	          props.onAppear(key);
-	          props.onEnd(key, true);
-	        }
-	      } else {
-	        if (_util2["default"].allowEnterCallback(props)) {
-	          props.onEnter(key);
-	          props.onEnd(key, true);
-	        }
-	      }
-	    }
-	  };
-	
-	  Animate.prototype.performLeave = function performLeave(key) {
-	    // may already remove by exclusive
-	    if (this.refs[key]) {
-	      this.currentlyAnimatingKeys[key] = true;
-	      this.refs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
-	    }
-	  };
-	
-	  Animate.prototype.handleDoneLeaving = function handleDoneLeaving(key) {
-	    var props = this.props;
-	    delete this.currentlyAnimatingKeys[key];
-	    // if update on exclusive mode, skip check
-	    if (props.exclusive && props !== this.nextProps) {
-	      return;
-	    }
-	    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
-	    // in case state change is too fast
-	    if (this.isValidChildByKey(currentChildren, key)) {
-	      this.performEnter(key);
-	    } else {
-	      var end = function end() {
-	        if (_util2["default"].allowLeaveCallback(props)) {
-	          props.onLeave(key);
-	          props.onEnd(key, false);
-	        }
-	      };
-	      /* eslint react/no-is-mounted:0 */
-	      if (this.mounted && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren, props.showProp)) {
-	        this.setState({
-	          children: currentChildren
-	        }, end);
-	      } else {
-	        end();
-	      }
-	    }
-	  };
-	
-	  Animate.prototype.isValidChildByKey = function isValidChildByKey(currentChildren, key) {
-	    var showProp = this.props.showProp;
-	    if (showProp) {
-	      return (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
-	    }
-	    return (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
-	  };
-	
-	  Animate.prototype.stop = function stop(key) {
-	    delete this.currentlyAnimatingKeys[key];
-	    var component = this.refs[key];
-	    if (component) {
-	      component.stop();
-	    }
-	  };
-	
-	  Animate.prototype.render = function render() {
-	    var props = this.props;
-	    this.nextProps = props;
-	    var stateChildren = this.state.children;
-	    var children = null;
-	    if (stateChildren) {
-	      children = stateChildren.map(function (child) {
-	        if (child === null || child === undefined) {
-	          return child;
-	        }
-	        if (!child.key) {
-	          throw new Error('must set key for <rc-animate> children');
-	        }
-	        return _react2["default"].createElement(
-	          _AnimateChild2["default"],
-	          {
-	            key: child.key,
-	            ref: child.key,
-	            animation: props.animation,
-	            transitionName: props.transitionName,
-	            transitionEnter: props.transitionEnter,
-	            transitionAppear: props.transitionAppear,
-	            transitionLeave: props.transitionLeave
-	          },
-	          child
-	        );
-	      });
-	    }
-	    var Component = props.component;
-	    if (Component) {
-	      var passedProps = props;
-	      if (typeof Component === 'string') {
-	        passedProps = {
-	          className: props.className,
-	          style: props.style
-	        };
-	      }
-	      return _react2["default"].createElement(
-	        Component,
-	        passedProps,
-	        children
-	      );
-	    }
-	    return children[0] || null;
-	  };
-	
-	  return Animate;
-	}(_react.Component);
-	
-	;
-	Animate.defaultProps = defaultProps;
-	Animate.propTypes = Animate.propTypes;
-	
-	exports["default"] = Animate;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.toArrayChildren = toArrayChildren;
-	exports.findChildInChildrenByKey = findChildInChildrenByKey;
-	exports.findShownChildInChildrenByKey = findShownChildInChildrenByKey;
-	exports.findHiddenChildInChildrenByKey = findHiddenChildInChildrenByKey;
-	exports.isSameChildren = isSameChildren;
-	exports.mergeChildren = mergeChildren;
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function toArrayChildren(children) {
-	  var ret = [];
-	  _react2["default"].Children.forEach(children, function (child) {
-	    ret.push(child);
-	  });
-	  return ret;
-	}
-	
-	function findChildInChildrenByKey(children, key) {
-	  var ret = null;
-	  if (children) {
-	    children.forEach(function (child) {
-	      if (ret) {
-	        return;
-	      }
-	      if (child && child.key === key) {
-	        ret = child;
-	      }
-	    });
-	  }
-	  return ret;
-	}
-	
-	function findShownChildInChildrenByKey(children, key, showProp) {
-	  var ret = null;
-	  if (children) {
-	    children.forEach(function (child) {
-	      if (child && child.key === key && child.props[showProp]) {
-	        if (ret) {
-	          throw new Error('two child with same key for <rc-animate> children');
-	        }
-	        ret = child;
-	      }
-	    });
-	  }
-	  return ret;
-	}
-	
-	function findHiddenChildInChildrenByKey(children, key, showProp) {
-	  var found = 0;
-	  if (children) {
-	    children.forEach(function (child) {
-	      if (found) {
-	        return;
-	      }
-	      found = child && child.key === key && !child.props[showProp];
-	    });
-	  }
-	  return found;
-	}
-	
-	function isSameChildren(c1, c2, showProp) {
-	  var same = c1.length === c2.length;
-	  if (same) {
-	    c1.forEach(function (child, index) {
-	      var child2 = c2[index];
-	      if (child && child2) {
-	        if (child && !child2 || !child && child2) {
-	          same = false;
-	        } else if (child.key !== child2.key) {
-	          same = false;
-	        } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
-	          same = false;
-	        }
-	      }
-	    });
-	  }
-	  return same;
-	}
-	
-	function mergeChildren(prev, next) {
-	  var ret = [];
-	
-	  // For each key of `next`, the list of keys to insert before that key in
-	  // the combined list
-	  var nextChildrenPending = {};
-	  var pendingChildren = [];
-	  prev.forEach(function (child) {
-	    if (child && findChildInChildrenByKey(next, child.key)) {
-	      if (pendingChildren.length) {
-	        nextChildrenPending[child.key] = pendingChildren;
-	        pendingChildren = [];
-	      }
-	    } else {
-	      pendingChildren.push(child);
-	    }
-	  });
-	
-	  next.forEach(function (child) {
-	    if (child && nextChildrenPending.hasOwnProperty(child.key)) {
-	      ret = ret.concat(nextChildrenPending[child.key]);
-	    }
-	    ret.push(child);
-	  });
-	
-	  ret = ret.concat(pendingChildren);
-	
-	  return ret;
-	}
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _propTypes = __webpack_require__(5);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _reactDom = __webpack_require__(12);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _tinperBeeCore = __webpack_require__(26);
-	
-	var _util = __webpack_require__(80);
-	
-	var _util2 = _interopRequireDefault(_util);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var transitionMap = {
-	  enter: 'transitionEnter',
-	  appear: 'transitionAppear',
-	  leave: 'transitionLeave'
-	};
-	
-	var propTypes = {
-	  children: _propTypes2["default"].any
-	};
-	
-	var AnimateChild = function (_Component) {
-	  _inherits(AnimateChild, _Component);
-	
-	  function AnimateChild(props) {
-	    _classCallCheck(this, AnimateChild);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	    _this.transition = _this.transition.bind(_this);
-	    _this.stop = _this.stop.bind(_this);
-	    return _this;
-	  }
-	
-	  AnimateChild.prototype.componentWillUnmount = function componentWillUnmount() {
-	    this.stop();
-	  };
-	
-	  AnimateChild.prototype.componentWillEnter = function componentWillEnter(done) {
-	    if (_util2["default"].isEnterSupported(this.props)) {
-	      this.transition('enter', done);
-	    } else {
-	      done();
-	    }
-	  };
-	
-	  AnimateChild.prototype.componentWillAppear = function componentWillAppear(done) {
-	    if (_util2["default"].isAppearSupported(this.props)) {
-	      this.transition('appear', done);
-	    } else {
-	      done();
-	    }
-	  };
-	
-	  AnimateChild.prototype.componentWillLeave = function componentWillLeave(done) {
-	    if (_util2["default"].isLeaveSupported(this.props)) {
-	      this.transition('leave', done);
-	    } else {
-	      // always sync, do not interupt with react component life cycle
-	      // update hidden -> animate hidden ->
-	      // didUpdate -> animate leave -> unmount (if animate is none)
-	      done();
-	    }
-	  };
-	
-	  AnimateChild.prototype.transition = function transition(animationType, finishCallback) {
-	    var _this2 = this;
-	
-	    var node = _reactDom2["default"].findDOMNode(this);
-	    var props = this.props;
-	    var transitionName = props.transitionName;
-	    var nameIsObj = (typeof transitionName === 'undefined' ? 'undefined' : _typeof(transitionName)) === 'object';
-	    this.stop();
-	    var end = function end() {
-	      _this2.stopper = null;
-	      finishCallback();
-	    };
-	    if ((_tinperBeeCore.cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
-	      var name = nameIsObj ? transitionName[animationType] : transitionName + '-' + animationType;
-	      var activeName = name + '-active';
-	      if (nameIsObj && transitionName[animationType + 'Active']) {
-	        activeName = transitionName[animationType + 'Active'];
-	      }
-	      this.stopper = (0, _tinperBeeCore.cssAnimation)(node, {
-	        name: name,
-	        active: activeName
-	      }, end);
-	    } else {
-	      this.stopper = props.animation[animationType](node, end);
-	    }
-	  };
-	
-	  AnimateChild.prototype.stop = function stop() {
-	    var stopper = this.stopper;
-	    if (stopper) {
-	      this.stopper = null;
-	      stopper.stop();
-	    }
-	  };
-	
-	  AnimateChild.prototype.render = function render() {
-	    return this.props.children;
-	  };
-	
-	  return AnimateChild;
-	}(_react.Component);
-	
-	;
-	
-	AnimateChild.propTypes = propTypes;
-	
-	exports["default"] = AnimateChild;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var util = {
-	  isAppearSupported: function isAppearSupported(props) {
-	    return props.transitionName && props.transitionAppear || props.animation.appear;
-	  },
-	  isEnterSupported: function isEnterSupported(props) {
-	    return props.transitionName && props.transitionEnter || props.animation.enter;
-	  },
-	  isLeaveSupported: function isLeaveSupported(props) {
-	    return props.transitionName && props.transitionLeave || props.animation.leave;
-	  },
-	  allowAppearCallback: function allowAppearCallback(props) {
-	    return props.transitionAppear || props.animation.appear;
-	  },
-	  allowEnterCallback: function allowEnterCallback(props) {
-	    return props.transitionEnter || props.animation.enter;
-	  },
-	  allowLeaveCallback: function allowLeaveCallback(props) {
-	    return props.transitionLeave || props.animation.leave;
-	  }
-	};
-	exports["default"] = util;
-	module.exports = exports["default"];
-
-/***/ }),
-/* 81 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8468,7 +9213,7 @@
 	 * @providesModule ReactComponentWithPureRenderMixin
 	 */
 	
-	var shallowEqual = __webpack_require__(82);
+	var shallowEqual = __webpack_require__(89);
 	
 	function shallowCompare(instance, nextProps, nextState) {
 	  return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
@@ -8509,7 +9254,7 @@
 	module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ }),
-/* 82 */
+/* 89 */
 /***/ (function(module, exports) {
 
 	//
@@ -8561,7 +9306,7 @@
 
 
 /***/ }),
-/* 83 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8578,7 +9323,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _PureRenderMixin = __webpack_require__(81);
+	var _PureRenderMixin = __webpack_require__(88);
 	
 	var _PureRenderMixin2 = _interopRequireDefault(_PureRenderMixin);
 	
@@ -8586,11 +9331,11 @@
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
-	var _reactLazyLoad = __webpack_require__(84);
+	var _reactLazyLoad = __webpack_require__(91);
 	
 	var _reactLazyLoad2 = _interopRequireDefault(_reactLazyLoad);
 	
-	var _beeCheckbox = __webpack_require__(91);
+	var _beeCheckbox = __webpack_require__(98);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -8681,7 +9426,9 @@
 	            return onClick(item);
 	          }
 	        },
-	        _react2['default'].createElement(_beeCheckbox2['default'], { checked: checked, disabled: item.disabled }),
+	        _react2['default'].createElement(_beeCheckbox2['default'], { checked: checked, disabled: item.disabled, onClick: item.disabled ? undefined : function () {
+	            return onClick(item);
+	          } }),
 	        _react2['default'].createElement(
 	          'span',
 	          null,
@@ -8701,7 +9448,9 @@
 	              return onClick(item);
 	            }
 	          },
-	          _react2['default'].createElement(_beeCheckbox2['default'], { checked: checked, disabled: item.disabled }),
+	          _react2['default'].createElement(_beeCheckbox2['default'], { checked: checked, disabled: item.disabled, onClick: item.disabled ? undefined : function () {
+	              return onClick(item);
+	            } }),
 	          _react2['default'].createElement(
 	            'span',
 	            null,
@@ -8719,7 +9468,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 84 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8740,21 +9489,21 @@
 	
 	var _reactDom = __webpack_require__(12);
 	
-	var _eventlistener = __webpack_require__(85);
+	var _eventlistener = __webpack_require__(92);
 	
-	var _lodash = __webpack_require__(86);
+	var _lodash = __webpack_require__(93);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _lodash3 = __webpack_require__(87);
+	var _lodash3 = __webpack_require__(94);
 	
 	var _lodash4 = _interopRequireDefault(_lodash3);
 	
-	var _parentScroll = __webpack_require__(88);
+	var _parentScroll = __webpack_require__(95);
 	
 	var _parentScroll2 = _interopRequireDefault(_parentScroll);
 	
-	var _inViewport = __webpack_require__(89);
+	var _inViewport = __webpack_require__(96);
 	
 	var _inViewport2 = _interopRequireDefault(_inViewport);
 	
@@ -8945,7 +9694,7 @@
 	};
 
 /***/ }),
-/* 85 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(root,factory){
@@ -8974,7 +9723,7 @@
 	}));
 
 /***/ }),
-/* 86 */
+/* 93 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -9358,7 +10107,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 87 */
+/* 94 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -9804,7 +10553,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 88 */
+/* 95 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -9849,7 +10598,7 @@
 	exports.default = scrollParent;
 
 /***/ }),
-/* 89 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9859,7 +10608,7 @@
 	});
 	exports.default = inViewport;
 	
-	var _getElementPosition = __webpack_require__(90);
+	var _getElementPosition = __webpack_require__(97);
 	
 	var _getElementPosition2 = _interopRequireDefault(_getElementPosition);
 	
@@ -9899,7 +10648,7 @@
 	}
 
 /***/ }),
-/* 90 */
+/* 97 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -9922,7 +10671,7 @@
 	}
 
 /***/ }),
-/* 91 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9931,7 +10680,7 @@
 	  value: true
 	});
 	
-	var _Checkbox = __webpack_require__(92);
+	var _Checkbox = __webpack_require__(99);
 	
 	var _Checkbox2 = _interopRequireDefault(_Checkbox);
 	
@@ -9941,7 +10690,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 92 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10094,6 +10843,8 @@
 	        } else {
 	            _this2.change(props, checked);
 	        }
+	        e.stopPropagation();
+	        e.preventDefault();
 	        //执行延时
 	    };
 	
@@ -10127,7 +10878,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 93 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10140,11 +10891,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeButton = __webpack_require__(65);
+	var _beeButton = __webpack_require__(77);
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _beeIcon = __webpack_require__(72);
+	var _beeIcon = __webpack_require__(84);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
@@ -10238,7 +10989,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 94 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10251,7 +11002,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(68);
+	var _src = __webpack_require__(80);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -10332,7 +11083,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 95 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10345,11 +11096,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeButton = __webpack_require__(65);
+	var _beeButton = __webpack_require__(77);
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _src = __webpack_require__(68);
+	var _src = __webpack_require__(80);
 	
 	var _src2 = _interopRequireDefault(_src);
 	

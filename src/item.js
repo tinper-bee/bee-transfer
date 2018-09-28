@@ -48,7 +48,7 @@ class Item extends React.Component{
           title={renderedText}
           onClick={item.disabled ? undefined : () => onClick(item)}
         >
-          <Checkbox checked={checked} disabled={item.disabled} />
+          <Checkbox checked={checked} disabled={item.disabled} onClick={item.disabled ? undefined : () => onClick(item)}/>
           <span>{renderedEl}</span>
         </li>
       )
@@ -60,7 +60,7 @@ class Item extends React.Component{
               title={renderedText}
               onClick={item.disabled ? undefined : () => onClick(item)}
             >
-              <Checkbox checked={checked} disabled={item.disabled} />
+              <Checkbox checked={checked} disabled={item.disabled} onClick={item.disabled ? undefined : () => onClick(item)}/>
               <span>{renderedEl}</span>
             </li>
           </Lazyload>
