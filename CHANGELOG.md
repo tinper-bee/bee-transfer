@@ -1,3 +1,8 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/tinper-bee/bee-transfer/compare/v1.0.8...v2.0.0) (2019-01-22)
+
+
+
 <a name="1.0.8"></a>
 ## [1.0.8](https://github.com/tinper-bee/bee-transfer/compare/v1.0.7...v1.0.8) (2018-09-28)
 
