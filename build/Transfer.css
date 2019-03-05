@@ -31,7 +31,7 @@
   .u-button:active {
     background-color: rgb(189,189,189); }
   .u-button.colored {
-    color: rgb(225, 76, 70); }
+    color: rgb(245, 60, 50); }
     .u-button.colored:focus:not(:active) {
       background-color: rgb(189,189,189); }
   .u-button.disable {
@@ -81,14 +81,14 @@ input.u-button[type="submit"] {
 
 .u-button-primary {
   color: rgb(255,255,255);
-  background-color: rgb(225, 76, 70);
-  border: 1px rgb(225, 76, 70) solid; }
+  background-color: rgb(245, 60, 50);
+  border: 1px rgb(245, 60, 50) solid; }
   .u-button-primary.focus, .u-button-primary:focus, .u-button-primary:hover {
-    background-color: rgb(208, 0, 16);
-    border-color: rgb(208, 0, 16); }
+    background-color: rgb(230, 0, 18);
+    border-color: rgb(230, 0, 18); }
   .u-button-primary.active, .u-button-primary:active {
-    background-color: rgb(178, 51, 46);
-    border-color: rgb(178, 51, 46); }
+    background-color: rgb(230, 0, 18);
+    border-color: rgb(230, 0, 18); }
 
 .u-button-danger {
   color: rgb(255,255,255);
@@ -183,16 +183,16 @@ input.u-button[type="submit"] {
     border-color: rgb(0,151,167); }
 
 .u-button-border.u-button-primary {
-  color: rgb(225, 76, 70);
-  border: 1px rgb(225, 76, 70) solid; }
+  color: rgb(245, 60, 50);
+  border: 1px rgb(245, 60, 50) solid; }
   .u-button-border.u-button-primary.focus, .u-button-border.u-button-primary:focus, .u-button-border.u-button-primary:hover {
-    background-color: rgb(208, 0, 16);
-    border-color: rgb(208, 0, 16);
+    background-color: rgb(230, 0, 18);
+    border-color: rgb(230, 0, 18);
     color: #fff; }
   .u-button-border.u-button-primary.active, .u-button-border.u-button-primary:active {
     color: #fff;
-    background-color: rgb(178, 51, 46);
-    border-color: rgb(178, 51, 46); }
+    background-color: rgb(230, 0, 18);
+    border-color: rgb(230, 0, 18); }
 
 .u-button-border {
   color: rgb(0,0,0);
@@ -254,14 +254,14 @@ input.u-button[type="submit"] {
   display: inline-block;
   padding: 0 12px;
   width: 100%;
-  height: 32px;
+  height: 30px;
   cursor: text;
   font-size: 14px;
   line-height: 1.5;
   color: #424242;
   background-color: #fff;
   background-image: none;
-  border: 1px solid rgb(224,224,224);
+  border: 1px solid #bdbdbd;
   border-radius: 3px;
   transition: all .3s; }
   .u-form-control:focus {
@@ -277,12 +277,12 @@ input.u-button[type="submit"] {
   cursor: not-allowed; }
 
 .u-form-control.lg {
-  height: 40px;
+  height: 38px;
   font-size: 14px; }
 
 .u-form-control.sm {
   font-size: 12px;
-  height: 26px; }
+  height: 24px; }
 
 .u-form-control-search-wrapper {
   position: absolute;
@@ -354,12 +354,12 @@ input.u-button[type="submit"] {
   .u-checkbox input[disabled] {
     cursor: not-allowed; }
   .u-checkbox input[type='checkbox']:focus + .u-checkbox-label:before {
-    border-color: rgb(225, 76, 70); }
+    border-color: rgb(245, 60, 50); }
   .u-checkbox.is-checked .u-checkbox-label:before {
-    -moz-box-shadow: inset 0 0 0 10px rgb(225, 76, 70);
-    -webkit-box-shadow: inset 0 0 0 10px rgb(225, 76, 70);
-    box-shadow: inset 0 0 0 10px rgb(225, 76, 70);
-    border-color: rgb(225, 76, 70); }
+    -moz-box-shadow: inset 0 0 0 10px rgb(245, 60, 50);
+    -webkit-box-shadow: inset 0 0 0 10px rgb(245, 60, 50);
+    box-shadow: inset 0 0 0 10px rgb(245, 60, 50);
+    border-color: rgb(245, 60, 50); }
   .u-checkbox.is-checked .u-checkbox-label:after {
     color: #fff;
     content: "\e658";
@@ -406,8 +406,8 @@ input.u-button[type="submit"] {
   font-size: 14px; }
 
 .u-checkbox.u-checkbox-indeterminate .u-checkbox-label:before {
-  box-shadow: inset 0 0 0 10px rgb(225, 76, 70);
-  border-color: rgb(225, 76, 70); }
+  box-shadow: inset 0 0 0 10px rgb(245, 60, 50);
+  border-color: rgb(245, 60, 50); }
 
 .u-checkbox.u-checkbox-success.is-checked .u-checkbox-label:before {
   -moz-box-shadow: inset 0 0 0 10px rgb(76,175,80);
@@ -1418,36 +1418,6 @@ input.u-button[type="submit"] {
 .uf-filterno:before {
   content: "\e9d1"; }
 
-.uf-clean:before {
-  content: "\e9d2"; }
-
-.uf-save:before {
-  content: "\e9d3"; }
-
-.uf-export:before {
-  content: "\e9d4"; }
-
-.uf-import:before {
-  content: "\e9d5"; }
-
-.uf-stop-c:before {
-  content: "\e9d6"; }
-
-.uf-rubber:before {
-  content: "\e9d7"; }
-
-.uf-bediting:before {
-  content: "\e9d8"; }
-
-.uf-maxmize:before {
-  content: "\e9d9"; }
-
-.uf-minimize:before {
-  content: "\e9da"; }
-
-.uf-globe:before {
-  content: "\e9db"; }
-
 .u-transfer {
   position: relative;
   line-height: 1.5; }
@@ -1567,6 +1537,10 @@ input.u-button[type="submit"] {
     font-size: 14px; }
   .u-transfer .u-checkbox .u-checkbox-label:before, .u-transfer .u-checkbox .u-checkbox-label:after {
     top: 0; }
+  .u-transfer .u-button.disabled, .u-transfer .u-button[disabled]:hover {
+    background: #fff;
+    color: #9a9898;
+    border-color: #e0e0e0; }
 
 .u-transfer-operation .u-button-sm {
   padding: 0;
@@ -1576,20 +1550,15 @@ input.u-button[type="submit"] {
   min-width: 3rem; }
 
 .u-transfer-operation .u-button-sm {
-  background: rgb(225, 76, 70);
+  background: rgb(245, 60, 50);
   color: #fff;
-  border-color: rgb(225, 76, 70); }
+  border-color: rgb(245, 60, 50); }
 
 .u-transfer-operation .u-button-sm:hover {
-  background: rgb(225, 76, 70);
-  border-color: rgb(225, 76, 70); }
+  background: rgb(245, 60, 50);
+  border-color: rgb(245, 60, 50); }
 
 .u-transfer-operation .u-button-sm[disabled] {
-  background: #fff;
-  color: #9a9898;
-  border-color: #e0e0e0; }
-
-.u-button.disabled, .u-button[disabled]:hover {
   background: #fff;
   color: #9a9898;
   border-color: #e0e0e0; }
@@ -1601,6 +1570,6 @@ input.u-button[type="submit"] {
 
 @keyframes transferHighlightIn {
   0% {
-    background: rgb(225, 76, 70); }
+    background: rgb(245, 60, 50); }
   100% {
     background: transparent; } }
