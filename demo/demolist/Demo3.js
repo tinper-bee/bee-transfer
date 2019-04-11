@@ -50,18 +50,19 @@ class Demo3 extends React.Component {
   }
   render() {
     return (
-      <Transfer
-        dataSource={this.state.mockData}
-        showSearch
-        listStyle={{
-          width: 250,
-          height: 300,
-        }}
-        targetKeys={this.state.targetKeys}
-        onChange={this.handleChange}
-        render={item => `${item.title}-${item.description}`}
-        footer={this.renderFooter}
-      />
+      // <Transfer
+      //   dataSource={this.state.mockData}
+      //   showSearch
+      //   listStyle={{
+      //     width: 250,
+      //     height: 300,
+      //   }}
+      //   targetKeys={this.state.targetKeys}
+      //   onChange={this.handleChange}
+      //   render={item => `${item.title}-${item.description}`}
+      //   footer={this.renderFooter}
+      // />
+      <div></div>
     );
   }
 }

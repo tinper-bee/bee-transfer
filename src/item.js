@@ -14,13 +14,13 @@ class Item extends React.Component{
   shouldComponentUpdate(...args) {
     return PureRenderMixin.shouldComponentUpdate.apply(this, args);
   }
-  matchFilter = (text) => {
-    const { filter, filterOption, item } = this.props;
-    if (filterOption) {
-      return filterOption(filter, item);
-    }
-    return text.indexOf(filter) >= 0;
-  }
+  // matchFilter = (text) => {
+  //   const { filter, filterOption, item } = this.props;
+  //   if (filterOption) {
+  //     return filterOption(filter, item);
+  //   }
+  //   return text.indexOf(filter) >= 0;
+  // }
   render() {
     const { render, filter, item, lazy, checked, prefixCls, onClick,renderedText,renderedEl } = this.props;
     const className = classNames({

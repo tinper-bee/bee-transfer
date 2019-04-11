@@ -4,6 +4,8 @@ import List from './list';
 import Operation from './operation';
 import Search from './search';
 import PropTypes from 'prop-types';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { reorder,move } from './utils';
 
 function noop() {
 }
@@ -11,7 +13,9 @@ function noop() {
 const defaultProps = {
 	dataSource: [],
 	render: noop,
-	showSearch: false,
+  showSearch: false,
+  searchPlaceholder: 'Search',
+  notFoundContent: 'Not Found',
 };
 
 const propTypes = {
@@ -78,6 +82,7 @@ class Transfer extends React.Component{
     }
   }
   splitDataSource() {
+    // targetKeys：展示在右边列表的数据集
     if (this.splitedDataSource) {
       return this.splitedDataSource;
     }
@@ -90,13 +95,15 @@ class Transfer extends React.Component{
     }
 
     const leftDataSource = dataSource.filter(({ key }) => targetKeys.indexOf(key) === -1);
-    const rightDataSource = [];
-    targetKeys.forEach((targetKey) => {
-      const targetItem = dataSource.filter(record => record.key === targetKey)[0];
-      if (targetItem) {
-        rightDataSource.push(targetItem);
-      }
-    });
+    // Why?
+    // const rightDataSource = [];
+    // targetKeys.forEach((targetKey) => {
+    //   const targetItem = dataSource.filter(record => record.key === targetKey)[0];
+    //   if (targetItem) {
+    //     rightDataSource.push(targetItem);
+    //   }
+    // });
+    const rightDataSource = dataSource.filter(({key}) => targetKeys.indexOf(key) > -1);
 
     this.splitedDataSource = {
       leftDataSource,
@@ -130,7 +137,13 @@ class Transfer extends React.Component{
   moveToLeft = () => this.moveTo('left')
   moveToRight = () => this.moveTo('right')
 
+  /**
+   * List中的item选中/未选中状态改变时触发
+   * @param {*} direction 'left' or 'right'
+   * @param {*} holder 更新后的'sourceSelectedKeys' or 'targetSelectedKeys'
+   */
   handleSelectChange(direction, holder) {
+    // onSelectChange：当选中的item发生改变时的回调 参数(sourceSelectedKeys, targetSelectedKeys)
     const { sourceSelectedKeys, targetSelectedKeys } = this.state;
     const onSelectChange = this.props.onSelectChange;
     if (!onSelectChange) {
@@ -155,23 +168,37 @@ class Transfer extends React.Component{
     }
   }
 
-  handleLeftSelectAll = (filteredDataSource, checkAll) => (
+  /**
+   * 左侧列表全选事件
+   * @param filteredDataSource dataSource中刨去设置为disabled的部分
+   * @param checkAll 是否是全选状态 true：全选
+   */
+  handleLeftSelectAll = (filteredDataSource, checkAll) => {
     this.handleSelectAll('left', filteredDataSource, checkAll)
-  )
+  }
   handleRightSelectAll = (filteredDataSource, checkAll) => (
     this.handleSelectAll('right', filteredDataSource, checkAll)
   )
 
-  handleFilter = (direction, e) => {
+  /**
+   * 搜索框值更改事件
+   * @param direction 'left' or 'right'
+   * @param value 输入的值
+   */
+  handleFilter = (direction, value) => {
     this.setState({
       // add filter
-      [`${direction}Filter`]: e,
+      [`${direction}Filter`]: value,
     });
   }
 
-  handleLeftFilter = (e) => this.handleFilter('left', e)
-  handleRightFilter = (e) => this.handleFilter('right', e)
+  handleLeftFilter = (v) => this.handleFilter('left', value)
+  handleRightFilter = (v) => this.handleFilter('right', value)
 
+  /**
+   * 清空搜索框内容
+   * @param direction 'left' or 'right'
+   */
   handleClear = (direction) => {
     this.setState({
       [`${direction}Filter`]: '',
@@ -181,14 +208,19 @@ class Transfer extends React.Component{
   handleLeftClear = () => this.handleClear('left')
   handleRightClear = () => this.handleClear('right')
 
+  /**
+   * 点击list item，选中或取消选中
+   * @param direction 'left' or 'right'
+   * @param selectedItem 选中的item的信息，和dataSource数据源中的item信息一致
+   * @param checked 是否已勾选，true：已勾选 false：未勾选
+   */
   handleSelect = (direction, selectedItem, checked) => {
     const { sourceSelectedKeys, targetSelectedKeys } = this.state;
     const holder = direction === 'left' ? [...sourceSelectedKeys] : [...targetSelectedKeys];
     const index = holder.indexOf(selectedItem.key);
-    if (index > -1) {
+    if (checked) {  //已勾选
       holder.splice(index, 1);
-    }
-    if (checked) {
+    }else if(index === -1){  //未勾选
       holder.push(selectedItem.key);
     }
     this.handleSelectChange(direction, holder);
@@ -220,6 +252,79 @@ class Transfer extends React.Component{
     return direction === 'left' ? 'sourceSelectedKeys' : 'targetSelectedKeys';
   }
 
+  id2List = {
+    droppable_1: 'sourceSelectedKeys',
+    droppable_2: 'targetSelectedKeys'
+  };
+
+  getList = id => this.state[this.id2List[id]];
+
+  onDragEnd = result => {
+    console.log(result);
+    const { source, destination } = result;
+
+    // dropped outside the list
+    if (!destination) {
+        return;
+    }
+    // let list=this.state.sourceSelectedKeys;
+    // let otherList=this.state.targetSelectedKeys;
+    // debugger
+    // 在同一个Droppable容器中拖拽
+    if (source.droppableId === destination.droppableId) {
+        // const items = this.reorder(
+        //     this.getList(source.droppableId),
+        //     source.index,
+        //     destination.index
+        // );
+
+        // let state = { sourceSelectedKeys: items };
+        // list=items;
+
+        // if (source.droppableId === 'droppable_2') {
+        //     state = { targetSelectedKeys: items };
+        //     otherList=items;
+        //     list=this.state.sourceSelectedKeys;
+        // }
+        // this.setState(state);
+    } else {  // 从一个Droppable容器拖拽到另一Droppable容器
+      if(source.droppableId === 'droppable_1'){  // moveToRight
+        this.moveTo('right');
+      }else if(source.droppableId === 'droppable_2'){  // moveToLeft
+        this.moveTo('left')
+      }
+        // const result = move(
+        //     this.getList(source.droppableId),
+        //     this.getList(destination.droppableId),
+        //     source,
+        //     destination
+        // );
+        // debugger
+        // this.setState({
+        //   sourceSelectedKeys: result.droppable_1,
+        //   targetSelectedKeys: result.droppable_2
+        // });
+        // list=result.droppable_1;
+        // otherList=result.droppable_2;
+    }
+    // this.props.onStop(result,{
+    //     list:list,
+    //     otherList:otherList
+    // })
+  };
+
+  onDragStart = result =>{
+    // debugger
+    let selectedItem = {};
+    const { source } = result; 
+    selectedItem.key = result.draggableId;
+    if(source.droppableId === 'droppable_1'){  // leftMenu
+      this.handleLeftSelect(selectedItem);
+    }else if(source.droppableId === 'droppable_2'){  // rightMenu
+      this.handleRightSelect(selectedItem);
+    }
+  }
+
   render() {
     const {
       prefixCls = 'u-transfer', operations = [], showSearch, notFoundContent,
@@ -237,55 +342,59 @@ class Transfer extends React.Component{
     const titles = this.getTitles();
     return (
       <div className={cls}>
-        <List
-          titleText={titles[0]}
-          dataSource={leftDataSource}
-          filter={leftFilter}
-          filterOption={filterOption}
-          style={listStyle}
-          checkedKeys={sourceSelectedKeys}
-          handleFilter={this.handleLeftFilter}
-          handleClear={this.handleLeftClear}
-          handleSelect={this.handleLeftSelect}
-          handleSelectAll={this.handleLeftSelectAll}
-          render={render}
-          showSearch={showSearch}
-          searchPlaceholder={searchPlaceholder}
-          notFoundContent={notFoundContent}
-          body={body}
-          footer={footer}
-          prefixCls={`${prefixCls}-list`}
-          lazy={lazy}
-        />
-        <Operation
-          rightActive={rightActive}
-          rightArrowText={operations[0]}
-          moveToRight={this.moveToRight}
-          leftActive={leftActive}
-          leftArrowText={operations[1]}
-          moveToLeft={this.moveToLeft}
-          className={`${prefixCls}-operation`}
-        />
-        <List
-          titleText={titles[1]}
-          dataSource={rightDataSource}
-          filter={rightFilter}
-          filterOption={filterOption}
-          style={listStyle}
-          checkedKeys={targetSelectedKeys}
-          handleFilter={this.handleRightFilter}
-          handleClear={this.handleRightClear}
-          handleSelect={this.handleRightSelect}
-          handleSelectAll={this.handleRightSelectAll}
-          render={render}
-          showSearch={showSearch}
-          searchPlaceholder={searchPlaceholder}
-          notFoundContent={notFoundContent}
-          body={body}
-          footer={footer}
-          prefixCls={`${prefixCls}-list`}
-          lazy={lazy}
-        />
+        <DragDropContext onDragEnd={this.onDragEnd} onDragStart={this.onDragStart} >
+          <List
+            titleText={titles[0]}    //左侧标题
+            dataSource={leftDataSource} //左侧数据源
+            filter={leftFilter}    //搜索框中输入的内容
+            filterOption={filterOption} //搜索过滤方法 参数(inputValue, option)
+            style={listStyle}  //自定义的columns的样式表
+            checkedKeys={sourceSelectedKeys}  //左侧已勾选的item的keys
+            handleFilter={this.handleLeftFilter}  //左侧搜索框值更改事件
+            handleClear={this.handleLeftClear}   //清空左侧搜索框内容
+            handleSelect={this.handleLeftSelect}  //点击左侧列表中的item，改变选中或取消选中状态
+            handleSelectAll={this.handleLeftSelectAll} //点击左侧全选
+            render={render}
+            showSearch={showSearch} //是否显示搜索框
+            searchPlaceholder={searchPlaceholder} //搜索框placeholder
+            notFoundContent={notFoundContent} //当没有相关内容的显示内容
+            body={body}
+            footer={footer}
+            prefixCls={`${prefixCls}-list`}
+            lazy={lazy}
+            id={'1'}
+          />
+          <Operation
+            rightActive={rightActive}
+            rightArrowText={operations[0]}
+            moveToRight={this.moveToRight}
+            leftActive={leftActive}
+            leftArrowText={operations[1]}
+            moveToLeft={this.moveToLeft}
+            className={`${prefixCls}-operation`}
+          />
+          <List
+            titleText={titles[1]}  //右侧标题
+            dataSource={rightDataSource}   //右侧数据源
+            filter={rightFilter}    //搜索框中输入的内容
+            filterOption={filterOption}  //搜索过滤方法 参数(inputValue, option)
+            style={listStyle}  //自定义的columns的样式表
+            checkedKeys={targetSelectedKeys}  //右侧已勾选的item的keys
+            handleFilter={this.handleRightFilter}  //右侧搜索框值更改事件
+            handleClear={this.handleRightClear}  //清空右侧搜索框内容
+            handleSelect={this.handleRightSelect}  //点击右侧列表中的item，改变选中或取消选中状态
+            handleSelectAll={this.handleRightSelectAll} //点击右侧全选
+            render={render}
+            showSearch={showSearch}  //是否显示搜索框
+            searchPlaceholder={searchPlaceholder} //搜索框placeholder
+            notFoundContent={notFoundContent} //当没有相关内容的显示内容
+            body={body}
+            footer={footer}
+            prefixCls={`${prefixCls}-list`}
+            lazy={lazy}
+            id={'2'}
+          />
+        </DragDropContext>
       </div>
     );
   }
