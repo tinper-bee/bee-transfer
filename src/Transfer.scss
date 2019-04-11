@@ -1,9 +1,9 @@
 @import "../node_modules/tinper-bee-core/scss/minxin-variables";
 @import "../node_modules/tinper-bee-core/scss/minxin-mixins";
-@import '../node_modules/bee-button/src/Button.scss';
-@import '../node_modules/bee-form-control/src/FormControl.scss';
-@import '../node_modules/bee-checkbox/src/Checkbox.scss';
-@import "../node_modules/bee-icon/src/Icon.scss";
+// @import '../node_modules/bee-button/src/Button.scss';
+// @import '../node_modules/bee-form-control/src/FormControl.scss';
+// @import '../node_modules/bee-checkbox/src/Checkbox.scss';
+// @import "../node_modules/bee-icon/src/Icon.scss";
 
 
 
@@ -28,20 +28,20 @@
 
     &-search {
       &-action {
-        color: #ccc;
+        color: #505F79;
         position: absolute;
         top: 2px;
         right: 2px;
-        width: 32px;
-        height: 32px;
-        line-height: 32px;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
         text-align: center;
-        font-size: 14px;
+        font-size: 16px;
         text-decoration: none;
         .uf {
           transition: all .3s;
-          font-size: 12px;
-          color: #ccc;
+          font-size: 16px;
+          color: #505F79;
           &:hover {
             color: rgba(0,0,0,.43);
           }
@@ -53,7 +53,7 @@
       padding: 7px 15px;
       border-radius: $border-radius-base $border-radius 0 0;
       background: #fff;
-      color: rgba(0,0,0,.65);
+      color: $font-color-base;
       border-bottom: 1px solid #e9e9e9;//$transfer-border-gap-color;
       overflow: hidden;
       position: absolute;
@@ -76,7 +76,6 @@
         position: absolute;
         top: 0;
         left: 0;
-        height: 28px;
         padding: 4px;
         width: 100%;
       }
@@ -98,6 +97,10 @@
         padding: 7px 15px;
         min-height: 32px;
         transition: all 0.3s ease;
+        color: $font-color-base;
+      }
+      &-item-selected{
+        background: $selected-bg-color-base;
       }
 
       &-item:not(&-item-disabled):hover {
@@ -107,7 +110,7 @@
 
       &-item-disabled {
         cursor: not-allowed;
-        color: rgba(0,0,0,.25);
+        color: $disabled-color-base;
       }
 
       &-item-highlight-enter {

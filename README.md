@@ -81,6 +81,7 @@ import "./node_modules/bee-transfer/build/Transfer.css"
 |footer|渲染底部的dom|ReactNode|-|
 |lazy|懒加载dom|object|当tranfer放在bee-modal里 添加参数 lazy={{container:"modal"}}|
 |onSearchChange|当搜索域变化的回调函数 参数(direction: 'left'|'right', event: Event)|func|-|
+|showCheckbox|是否显示Checkbox复选框|bool|true|
 
 
 #### 开发调试

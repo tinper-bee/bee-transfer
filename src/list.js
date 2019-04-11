@@ -193,7 +193,7 @@ class TransferList extends React.Component {
 
   render() {
     const { prefixCls, dataSource, titleText, filter, checkedKeys, lazy, filterOption,
-            body = noop, footer = noop, showSearch, render = noop, style, id } = this.props;
+            body = noop, footer = noop, showSearch, render = noop, style, id, showCheckbox } = this.props;
 
     let { searchPlaceholder, notFoundContent } = this.props;
 
@@ -249,6 +249,7 @@ class TransferList extends React.Component {
                   checked={checked}
                   prefixCls={prefixCls}
                   onClick={this.handleSelect}
+                  showCheckbox={showCheckbox}
                 />
             </div>
           )}
@@ -333,7 +334,7 @@ class TransferList extends React.Component {
     return (
       <div className={listCls} style={style}>
         <div className={`${prefixCls}-header`}>
-          {renderedCheckbox}
+          {showCheckbox ? renderedCheckbox : ''}
           <span className={`${prefixCls}-header-selected`}>
             <span>
               {(checkedKeys.length > 0 ? `${checkedKeys.length}/` : '') + totalDataSource.length} {unit}

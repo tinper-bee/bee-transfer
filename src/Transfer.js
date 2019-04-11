@@ -16,6 +16,7 @@ const defaultProps = {
   showSearch: false,
   searchPlaceholder: 'Search',
   notFoundContent: 'Not Found',
+  showCheckbox: true
 };
 
 const propTypes = {
@@ -37,6 +38,7 @@ const propTypes = {
     footer: PropTypes.func,
     rowKey: PropTypes.func,
     lazy: PropTypes.object,
+    showCheckbox: PropTypes.bool
 };
 
 const defaultTitles = ['', ''];
@@ -329,7 +331,7 @@ class Transfer extends React.Component{
     const {
       prefixCls = 'u-transfer', operations = [], showSearch, notFoundContent,
       searchPlaceholder, body, footer, listStyle, className = '',
-      filterOption, render, lazy
+      filterOption, render, lazy, showCheckbox
     } = this.props;
     const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys } = this.state;
 
@@ -362,6 +364,7 @@ class Transfer extends React.Component{
             footer={footer}
             prefixCls={`${prefixCls}-list`}
             lazy={lazy}
+            showCheckbox={showCheckbox}
             id={'1'}
           />
           <Operation
@@ -392,6 +395,7 @@ class Transfer extends React.Component{
             footer={footer}
             prefixCls={`${prefixCls}-list`}
             lazy={lazy}
+            showCheckbox={showCheckbox}
             id={'2'}
           />
         </DragDropContext>

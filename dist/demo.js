@@ -80,7 +80,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
-	var Demo1 = __webpack_require__(275);var Demo2 = __webpack_require__(276);var Demo3 = __webpack_require__(277);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 常用可选transfer", "code": "/**\r\n*\r\n* @title 常用可选transfer\r\n* @description \r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Transfer } from 'tinper-bee';\r\n\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo1 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', targetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n\r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  handleScroll = (direction, e) => {\r\n    console.log('direction:', direction);\r\n    console.log('target:', e.target);\r\n  }\r\n\r\n\r\n  render() {\r\n    const state = this.state;\r\n\r\n    return (\r\n       <Transfer\r\n          dataSource={mockData}\r\n          titles={['Source', 'Target']}\r\n          targetKeys={state.targetKeys}\r\n          selectedKeys={state.selectedKeys}\r\n          onChange={this.handleChange}\r\n          onSelectChange={this.handleSelectChange}\r\n          onScroll={this.handleScroll}\r\n          render={item => item.title}\r\n        />\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": " " }, { "example": _react2['default'].createElement(Demo2, null), "title": " 带搜索框的tranfer", "code": "/**\r\n*\r\n* @title 带搜索框的tranfer\r\n* @description\r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\r\nimport { Transfer } from 'tinper-bee';\r\n\r\n\r\nclass Demo2 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  filterOption = (inputValue, option) => {\r\n    return option.title.indexOf(inputValue) > -1;\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  render() {\r\n    return (\r\n      <Transfer\r\n        dataSource={this.state.mockData}\r\n        showSearch\r\n        filterOption={this.filterOption}\r\n        targetKeys={this.state.targetKeys}\r\n        onChange={this.handleChange}\r\n        render={item => item.title}\r\n      />\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 底部自定义的transfer", "code": "/**\r\n*\r\n* @title 底部自定义的transfer\r\n* @description \r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\r\n\nimport { Transfer, Button } from 'tinper-bee';\r\n\r\nclass Demo3 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  renderFooter = () => {\r\n    return (\r\n      <Button\r\n        size=\"sm\"\r\n        style={{ float: 'right', margin: 5 }}\r\n        onClick={this.getMock}\r\n      >\r\n        reload\r\n      </Button>\r\n    );\r\n  }\r\n  render() {\r\n    return (\r\n      // <Transfer\r\n      //   dataSource={this.state.mockData}\r\n      //   showSearch\r\n      //   listStyle={{\r\n      //     width: 250,\r\n      //     height: 300,\r\n      //   }}\r\n      //   targetKeys={this.state.targetKeys}\r\n      //   onChange={this.handleChange}\r\n      //   render={item => `${item.title}-${item.description}`}\r\n      //   footer={this.renderFooter}\r\n      // />\r\n      <div></div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " " }];
+	var Demo1 = __webpack_require__(275);var Demo2 = __webpack_require__(276);var Demo3 = __webpack_require__(277);var Demo4 = __webpack_require__(278);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 常用可选transfer", "code": "/**\r\n*\r\n* @title 常用可选transfer\r\n* @description \r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Transfer } from 'tinper-bee';\r\n\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo1 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', targetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n\r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  handleScroll = (direction, e) => {\r\n    console.log('direction:', direction);\r\n    console.log('target:', e.target);\r\n  }\r\n\r\n\r\n  render() {\r\n    const state = this.state;\r\n\r\n    return (\r\n       <Transfer\r\n          dataSource={mockData}\r\n          titles={['Source', 'Target']}\r\n          targetKeys={state.targetKeys}\r\n          selectedKeys={state.selectedKeys}\r\n          onChange={this.handleChange}\r\n          onSelectChange={this.handleSelectChange}\r\n          onScroll={this.handleScroll}\r\n          render={item => item.title}\r\n        />\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": " " }, { "example": _react2['default'].createElement(Demo2, null), "title": " 带搜索框的tranfer", "code": "/**\r\n*\r\n* @title 带搜索框的tranfer\r\n* @description\r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\r\nimport { Transfer } from 'tinper-bee';\r\n\r\n\r\nclass Demo2 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  filterOption = (inputValue, option) => {\r\n    return option.title.indexOf(inputValue) > -1;\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  render() {\r\n    return (\r\n      <Transfer\r\n        dataSource={this.state.mockData}\r\n        showSearch\r\n        filterOption={this.filterOption}\r\n        targetKeys={this.state.targetKeys}\r\n        onChange={this.handleChange}\r\n        render={item => item.title}\r\n      />\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 底部自定义的transfer", "code": "/**\r\n*\r\n* @title 底部自定义的transfer\r\n* @description \r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\r\n\nimport { Transfer, Button } from 'tinper-bee';\r\n\r\nclass Demo3 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  renderFooter = () => {\r\n    return (\r\n      <Button\r\n        size=\"sm\"\r\n        style={{ float: 'right', margin: 5 }}\r\n        onClick={this.getMock}\r\n      >\r\n        reload\r\n      </Button>\r\n    );\r\n  }\r\n  render() {\r\n    return (\r\n      // <Transfer\r\n      //   dataSource={this.state.mockData}\r\n      //   showSearch\r\n      //   listStyle={{\r\n      //     width: 250,\r\n      //     height: 300,\r\n      //   }}\r\n      //   targetKeys={this.state.targetKeys}\r\n      //   onChange={this.handleChange}\r\n      //   render={item => `${item.title}-${item.description}`}\r\n      //   footer={this.renderFooter}\r\n      // />\r\n      <div></div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " " }, { "example": _react2['default'].createElement(Demo4, null), "title": " 隐藏复选框", "code": "/**\r\n*\r\n* @title 隐藏复选框\r\n* @description 通过`showCheckbox`参数控制复选框显示和隐藏\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Transfer } from 'tinper-bee';\r\n\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo4 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', targetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n\r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  handleScroll = (direction, e) => {\r\n    console.log('direction:', direction);\r\n    console.log('target:', e.target);\r\n  }\r\n\r\n\r\n  render() {\r\n    const state = this.state;\r\n\r\n    return (\r\n       <Transfer\r\n          dataSource={mockData}\r\n          showCheckbox={false}\r\n          titles={['Source', 'Target']}\r\n          targetKeys={state.targetKeys}\r\n          selectedKeys={state.selectedKeys}\r\n          onChange={this.handleChange}\r\n          onSelectChange={this.handleSelectChange}\r\n          onScroll={this.handleScroll}\r\n          render={item => item.title}\r\n        />\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": " 通过`showCheckbox`参数控制复选框显示和隐藏" }];
 	
 	var Demo = function (_Component) {
 	    _inherits(Demo, _Component);
@@ -16406,7 +16406,8 @@
 	  render: noop,
 	  showSearch: false,
 	  searchPlaceholder: 'Search',
-	  notFoundContent: 'Not Found'
+	  notFoundContent: 'Not Found',
+	  showCheckbox: true
 	};
 	
 	var propTypes = {
@@ -16427,7 +16428,8 @@
 	  body: _propTypes2['default'].func,
 	  footer: _propTypes2['default'].func,
 	  rowKey: _propTypes2['default'].func,
-	  lazy: _propTypes2['default'].object
+	  lazy: _propTypes2['default'].object,
+	  showCheckbox: _propTypes2['default'].bool
 	};
 	
 	var defaultTitles = ['', ''];
@@ -16621,7 +16623,8 @@
 	        className = _props2$className === undefined ? '' : _props2$className,
 	        filterOption = _props2.filterOption,
 	        render = _props2.render,
-	        lazy = _props2.lazy;
+	        lazy = _props2.lazy,
+	        showCheckbox = _props2.showCheckbox;
 	    var _state3 = this.state,
 	        leftFilter = _state3.leftFilter,
 	        rightFilter = _state3.rightFilter,
@@ -16663,6 +16666,7 @@
 	          footer: footer,
 	          prefixCls: prefixCls + '-list',
 	          lazy: lazy,
+	          showCheckbox: showCheckbox,
 	          id: '1'
 	        }),
 	        _react2['default'].createElement(_operation2['default'], {
@@ -16693,6 +16697,7 @@
 	          footer: footer,
 	          prefixCls: prefixCls + '-list',
 	          lazy: lazy,
+	          showCheckbox: showCheckbox,
 	          id: '2'
 	        })
 	      )
@@ -17215,7 +17220,8 @@
 	        _props$render = _props.render,
 	        render = _props$render === undefined ? noop : _props$render,
 	        style = _props.style,
-	        id = _props.id;
+	        id = _props.id,
+	        showCheckbox = _props.showCheckbox;
 	    var _props2 = this.props,
 	        searchPlaceholder = _props2.searchPlaceholder,
 	        notFoundContent = _props2.notFoundContent;
@@ -17277,7 +17283,8 @@
 	              filterOption: filterOption,
 	              checked: checked,
 	              prefixCls: prefixCls,
-	              onClick: _this4.handleSelect
+	              onClick: _this4.handleSelect,
+	              showCheckbox: showCheckbox
 	            })
 	          );
 	        }
@@ -17373,7 +17380,7 @@
 	      _react2['default'].createElement(
 	        'div',
 	        { className: prefixCls + '-header' },
-	        renderedCheckbox,
+	        showCheckbox ? renderedCheckbox : '',
 	        _react2['default'].createElement(
 	          'span',
 	          { className: prefixCls + '-header-selected' },
@@ -17497,6 +17504,7 @@
 	      'div',
 	      null,
 	      _react2['default'].createElement(_beeFormControl2['default'], {
+	        size: 'sm',
 	        placeholder: placeholder,
 	        className: prefixCls,
 	        value: value,
@@ -17712,9 +17720,10 @@
 	        prefixCls = _props.prefixCls,
 	        onClick = _props.onClick,
 	        renderedText = _props.renderedText,
-	        renderedEl = _props.renderedEl;
+	        renderedEl = _props.renderedEl,
+	        showCheckbox = _props.showCheckbox;
 	
-	    var className = (0, _classnames2['default'])((_classNames = {}, _defineProperty(_classNames, prefixCls + '-content-item', true), _defineProperty(_classNames, prefixCls + '-content-item-disabled', item.disabled), _classNames));
+	    var className = (0, _classnames2['default'])((_classNames = {}, _defineProperty(_classNames, prefixCls + '-content-item', true), _defineProperty(_classNames, prefixCls + '-content-item-disabled', item.disabled), _defineProperty(_classNames, prefixCls + '-content-item-selected', checked), _classNames));
 	
 	    var lazyProps = (0, _objectAssign2['default'])({
 	      height: 32,
@@ -17760,9 +17769,9 @@
 	              return onClick(item);
 	            }
 	          },
-	          _react2['default'].createElement(_beeCheckbox2['default'], { checked: checked, disabled: item.disabled, onClick: item.disabled ? undefined : function () {
+	          showCheckbox ? _react2['default'].createElement(_beeCheckbox2['default'], { checked: checked, disabled: item.disabled, onClick: item.disabled ? undefined : function () {
 	              return onClick(item);
-	            } }),
+	            } }) : '',
 	          _react2['default'].createElement(
 	            'span',
 	            null,
@@ -33033,6 +33042,116 @@
 	}(_react2['default'].Component);
 	
 	exports['default'] = Demo3;
+	module.exports = exports['default'];
+
+/***/ }),
+/* 278 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _src = __webpack_require__(157);
+	
+	var _src2 = _interopRequireDefault(_src);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @title 隐藏复选框
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @description 通过`showCheckbox`参数控制复选框显示和隐藏
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               *
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
+	
+	var mockData = [];
+	for (var i = 0; i < 20; i++) {
+	  mockData.push({
+	    key: i.toString(),
+	    title: 'content' + (i + 1),
+	    description: 'description of content' + (i + 1),
+	    disabled: i % 3 < 1
+	
+	  });
+	}
+	
+	var targetKeys = mockData.filter(function (item) {
+	  return +item.key % 3 > 1;
+	}).map(function (item) {
+	  return item.key;
+	});
+	
+	var Demo4 = function (_React$Component) {
+	  _inherits(Demo4, _React$Component);
+	
+	  function Demo4() {
+	    var _temp, _this, _ret;
+	
+	    _classCallCheck(this, Demo4);
+	
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {
+	      targetKeys: targetKeys,
+	      selectedKeys: [],
+	      showModal: false,
+	      modalSize: ''
+	    }, _this.handleChange = function (nextTargetKeys, direction, moveKeys) {
+	      _this.setState({ targetKeys: nextTargetKeys });
+	
+	      console.log('targetKeys: ', targetKeys);
+	      console.log('direction: ', direction);
+	      console.log('moveKeys: ', moveKeys);
+	    }, _this.handleSelectChange = function (sourceSelectedKeys, targetSelectedKeys) {
+	      _this.setState({ selectedKeys: [].concat(_toConsumableArray(sourceSelectedKeys), _toConsumableArray(targetSelectedKeys)) });
+	
+	      console.log('sourceSelectedKeys: ', sourceSelectedKeys);
+	      console.log('targetSelectedKeys: ', targetSelectedKeys);
+	    }, _this.handleScroll = function (direction, e) {
+	      console.log('direction:', direction);
+	      console.log('target:', e.target);
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
+	  }
+	
+	  Demo4.prototype.render = function render() {
+	    var state = this.state;
+	
+	    return _react2['default'].createElement(_src2['default'], {
+	      dataSource: mockData,
+	      showCheckbox: false,
+	      titles: ['Source', 'Target'],
+	      targetKeys: state.targetKeys,
+	      selectedKeys: state.selectedKeys,
+	      onChange: this.handleChange,
+	      onSelectChange: this.handleSelectChange,
+	      onScroll: this.handleScroll,
+	      render: function render(item) {
+	        return item.title;
+	      }
+	    });
+	  };
+	
+	  return Demo4;
+	}(_react2['default'].Component);
+	
+	exports['default'] = Demo4;
 	module.exports = exports['default'];
 
 /***/ })
