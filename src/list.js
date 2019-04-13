@@ -203,7 +203,7 @@ class TransferList extends React.Component {
 
   render() {
     const { prefixCls, dataSource, titleText, filter, checkedKeys, lazy, filterOption,
-            body = noop, footer = noop, showSearch, render = noop, style, id, showCheckbox, dragging } = this.props;
+            body = noop, footer = noop, showSearch, render = noop, style, id, showCheckbox, dragging, draggable } = this.props;
 
     let { searchPlaceholder, notFoundContent } = this.props;
 
@@ -232,7 +232,7 @@ class TransferList extends React.Component {
       
       const checked = checkedKeys.indexOf(item.key) >= 0;
       return (
-        <Draggable key={item.key} index={index} draggableId={`${item.key}`} isDragDisabled={item.disabled}>
+        <Draggable key={item.key} index={index} draggableId={`${item.key}`} isDragDisabled={draggable ? item.disabled : !draggable}>
           {(provided, snapshot) => (
             <div
               ref={provided.innerRef}
@@ -307,7 +307,7 @@ class TransferList extends React.Component {
     const listBody = bodyDom || (
       <div className={showSearch ? `${prefixCls}-body ${prefixCls}-body-with-search` : `${prefixCls}-body`}>
         {search}
-        <Droppable droppableId={`droppable_${id}`} direction='vertical'>
+        <Droppable droppableId={`droppable_${id}`} direction='vertical' isDropDisabled={!draggable}>
           {(provided, snapshot) => (
             <div ref={provided.innerRef} key={id} className={`${prefixCls}-content`}>
               {/* Animate component is a list container. And it's scrollable. */}

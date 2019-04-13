@@ -80,7 +80,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
-	var Demo1 = __webpack_require__(275);var Demo2 = __webpack_require__(276);var Demo3 = __webpack_require__(277);var Demo4 = __webpack_require__(278);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 常用可选transfer", "code": "/**\r\n*\r\n* @title 常用可选transfer\r\n* @description \r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Transfer } from 'tinper-bee';\r\n\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo1 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', nextTargetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n\r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  handleScroll = (direction, e) => {\r\n    console.log('direction:', direction);\r\n    console.log('target:', e.target);\r\n  }\r\n\r\n\r\n  render() {\r\n    const state = this.state;\r\n    const targetKeys = [...this.state.targetKeys];\r\n    return (\r\n       <Transfer\r\n          dataSource={mockData}\r\n          titles={['Source', 'Target']}\r\n          targetKeys={targetKeys}\r\n          selectedKeys={state.selectedKeys}\r\n          onChange={this.handleChange}\r\n          onSelectChange={this.handleSelectChange}\r\n          onScroll={this.handleScroll}\r\n          render={item => item.title}\r\n        />\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": " " }, { "example": _react2['default'].createElement(Demo2, null), "title": " 带搜索框的tranfer", "code": "/**\r\n*\r\n* @title 带搜索框的tranfer\r\n* @description\r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\r\nimport { Transfer } from 'tinper-bee';\r\n\r\n\r\nclass Demo2 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  filterOption = (inputValue, option) => {\r\n    return option.title.indexOf(inputValue) > -1;\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  render() {\r\n    return (\r\n      // <Transfer\r\n      //   dataSource={this.state.mockData}\r\n      //   showSearch\r\n      //   filterOption={this.filterOption}\r\n      //   targetKeys={this.state.targetKeys}\r\n      //   onChange={this.handleChange}\r\n      //   render={item => item.title}\r\n      // />\r\n      <a/>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 底部自定义的transfer", "code": "/**\r\n*\r\n* @title 底部自定义的transfer\r\n* @description \r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\r\n\nimport { Transfer, Button } from 'tinper-bee';\r\n\r\nclass Demo3 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  renderFooter = () => {\r\n    return (\r\n      <Button\r\n        size=\"sm\"\r\n        style={{ float: 'right', margin: 5 }}\r\n        onClick={this.getMock}\r\n      >\r\n        reload\r\n      </Button>\r\n    );\r\n  }\r\n  render() {\r\n    return (\r\n      // <Transfer\r\n      //   dataSource={this.state.mockData}\r\n      //   showSearch\r\n      //   listStyle={{\r\n      //     width: 250,\r\n      //     height: 300,\r\n      //   }}\r\n      //   targetKeys={this.state.targetKeys}\r\n      //   onChange={this.handleChange}\r\n      //   render={item => `${item.title}-${item.description}`}\r\n      //   footer={this.renderFooter}\r\n      // />\r\n      <a/>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " " }, { "example": _react2['default'].createElement(Demo4, null), "title": " 隐藏复选框", "code": "/**\r\n*\r\n* @title 隐藏复选框\r\n* @description 通过`showCheckbox`参数控制复选框显示和隐藏\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Transfer } from 'tinper-bee';\r\n\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo4 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', targetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n\r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  handleScroll = (direction, e) => {\r\n    console.log('direction:', direction);\r\n    console.log('target:', e.target);\r\n  }\r\n\r\n\r\n  render() {\r\n    const state = this.state;\r\n\r\n    return (\r\n      //  <Transfer\r\n      //     dataSource={mockData}\r\n      //     showCheckbox={false}\r\n      //     titles={['Source', 'Target']}\r\n      //     targetKeys={state.targetKeys}\r\n      //     selectedKeys={state.selectedKeys}\r\n      //     onChange={this.handleChange}\r\n      //     onSelectChange={this.handleSelectChange}\r\n      //     onScroll={this.handleScroll}\r\n      //     render={item => item.title}\r\n      //   />\r\n      <a/>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": " 通过`showCheckbox`参数控制复选框显示和隐藏" }];
+	var Demo1 = __webpack_require__(275);var Demo2 = __webpack_require__(276);var Demo3 = __webpack_require__(277);var Demo4 = __webpack_require__(278);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 常用可选transfer", "code": "/**\r\n*\r\n* @title 常用可选transfer\r\n* @description targetKeys需要通过ES6的扩展运算符进行赋值，实现对象的深拷贝\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Transfer } from 'tinper-bee';\r\n\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo1 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', nextTargetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n\r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  handleScroll = (direction, e) => {\r\n    console.log('direction:', direction);\r\n    console.log('target:', e.target);\r\n  }\r\n\r\n\r\n  render() {\r\n    const state = this.state;\r\n    const targetKeys = [...this.state.targetKeys];\r\n    return (\r\n       <Transfer\r\n          draggable={true}\r\n          dataSource={mockData}\r\n          titles={['Source', 'Target']}\r\n          targetKeys={targetKeys}\r\n          selectedKeys={state.selectedKeys}\r\n          onChange={this.handleChange}\r\n          onSelectChange={this.handleSelectChange}\r\n          onScroll={this.handleScroll}\r\n          render={item => item.title}\r\n        />\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": " targetKeys需要通过ES6的扩展运算符进行赋值，实现对象的深拷贝" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 带搜索框的tranfer", "code": "/**\r\n*\r\n* @title 带搜索框的tranfer\r\n* @description\r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\r\nimport { Transfer } from 'tinper-bee';\r\n\r\n\r\nclass Demo2 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  filterOption = (inputValue, option) => {\r\n    return option.title.indexOf(inputValue) > -1;\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  render() {\r\n    return (\r\n      // <Transfer\r\n      //   dataSource={this.state.mockData}\r\n      //   showSearch\r\n      //   filterOption={this.filterOption}\r\n      //   targetKeys={this.state.targetKeys}\r\n      //   onChange={this.handleChange}\r\n      //   render={item => item.title}\r\n      // />\r\n      <a/>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 底部自定义的transfer", "code": "/**\r\n*\r\n* @title 底部自定义的transfer\r\n* @description \r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\r\n\nimport { Transfer, Button } from 'tinper-bee';\r\n\r\nclass Demo3 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  renderFooter = () => {\r\n    return (\r\n      <Button\r\n        size=\"sm\"\r\n        style={{ float: 'right', margin: 5 }}\r\n        onClick={this.getMock}\r\n      >\r\n        reload\r\n      </Button>\r\n    );\r\n  }\r\n  render() {\r\n    return (\r\n      // <Transfer\r\n      //   dataSource={this.state.mockData}\r\n      //   showSearch\r\n      //   listStyle={{\r\n      //     width: 250,\r\n      //     height: 300,\r\n      //   }}\r\n      //   targetKeys={this.state.targetKeys}\r\n      //   onChange={this.handleChange}\r\n      //   render={item => `${item.title}-${item.description}`}\r\n      //   footer={this.renderFooter}\r\n      // />\r\n      <a/>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n", "desc": " " }, { "example": _react2['default'].createElement(Demo4, null), "title": " 隐藏复选框", "code": "/**\r\n*\r\n* @title 隐藏复选框\r\n* @description 通过`showCheckbox`参数控制复选框显示和隐藏\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\r\nimport { Transfer } from 'tinper-bee';\r\n\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo4 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', targetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n\r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  handleScroll = (direction, e) => {\r\n    console.log('direction:', direction);\r\n    console.log('target:', e.target);\r\n  }\r\n\r\n\r\n  render() {\r\n    const state = this.state;\r\n\r\n    return (\r\n      //  <Transfer\r\n      //     dataSource={mockData}\r\n      //     showCheckbox={false}\r\n      //     titles={['Source', 'Target']}\r\n      //     targetKeys={state.targetKeys}\r\n      //     selectedKeys={state.selectedKeys}\r\n      //     onChange={this.handleChange}\r\n      //     onSelectChange={this.handleSelectChange}\r\n      //     onScroll={this.handleScroll}\r\n      //     render={item => item.title}\r\n      //   />\r\n      <a/>\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n", "desc": " 通过`showCheckbox`参数控制复选框显示和隐藏" }];
 	
 	var Demo = function (_Component) {
 	    _inherits(Demo, _Component);
@@ -16407,7 +16407,8 @@
 	  showSearch: false,
 	  searchPlaceholder: 'Search',
 	  notFoundContent: 'Not Found',
-	  showCheckbox: true
+	  showCheckbox: true,
+	  draggable: false
 	};
 	
 	var propTypes = {
@@ -16429,7 +16430,8 @@
 	  footer: _propTypes2['default'].func,
 	  rowKey: _propTypes2['default'].func,
 	  lazy: _propTypes2['default'].object,
-	  showCheckbox: _propTypes2['default'].bool
+	  showCheckbox: _propTypes2['default'].bool,
+	  draggable: _propTypes2['default'].bool
 	};
 	
 	var defaultTitles = ['', ''];
@@ -16645,7 +16647,8 @@
 	        filterOption = _props2.filterOption,
 	        render = _props2.render,
 	        lazy = _props2.lazy,
-	        showCheckbox = _props2.showCheckbox;
+	        showCheckbox = _props2.showCheckbox,
+	        draggable = _props2.draggable;
 	    var _state3 = this.state,
 	        leftFilter = _state3.leftFilter,
 	        rightFilter = _state3.rightFilter,
@@ -16689,6 +16692,7 @@
 	          prefixCls: prefixCls + '-list',
 	          lazy: lazy,
 	          showCheckbox: showCheckbox,
+	          draggable: draggable,
 	          id: '1'
 	        }),
 	        _react2['default'].createElement(_operation2['default'], {
@@ -16720,6 +16724,7 @@
 	          prefixCls: prefixCls + '-list',
 	          lazy: lazy,
 	          showCheckbox: showCheckbox,
+	          draggable: draggable,
 	          dragging: dragging,
 	          id: '2'
 	        })
@@ -16875,9 +16880,6 @@
 	    var _props4 = _this2.props,
 	        targetKeys = _props4.targetKeys,
 	        onChange = _props4.onChange;
-	    var _state6 = _this2.state,
-	        leftDataSource = _state6.leftDataSource,
-	        rightDataSource = _state6.rightDataSource;
 	
 	    var sourceIndex = source.index; //初始位置
 	    var disIndex = destination.index; //移动后的位置
@@ -16886,71 +16888,25 @@
 	    // 在同一个Droppable容器中拖拽
 	    if (source.droppableId === destination.droppableId) {
 	      console.log(_this2.getList(source.droppableId), "==拖拽前==");
-	      var items = (0, _utils.reorder)(_this2.getList(source.droppableId), source.index, destination.index);
-	      var state = { leftDataSource: items };
+	      var items = (0, _utils.reorder)(_this2.getList(source.droppableId), targetKeys, source.index, destination.index);
+	      var state = { leftDataSource: items.dataArr };
 	      if (source.droppableId === 'droppable_2') {
-	        state = { rightDataSource: items };
+	        state = { rightDataSource: items.dataArr };
 	      }
-	      console.log(items, '==拖拽后==');
+	      console.log(items.dataArr, '==拖拽后==');
 	      _this2.setState(state);
-	      // switch(source.droppableId){
-	      //   case 'droppable_1': //left
-	      // temp = leftDataSource.splice(sourceIndex,1); //拖拽的元素，Array
-	      // leftDataSource.splice(disIndex,0,temp[0]); //插入新的位置
-	      // targetKeys.splice(sourceIndex,1); //同时更新targetKeys
-	      // targetKeys.splice(disIndex,0,draggableId);
-	      // console.log(leftDataSource,'==拖拽后==');
-	      //   break;
-	      // case 'droppable_2': //right
-	      // temp = rightDataSource.splice(sourceIndex,1);
-	      // rightDataSource.splice(disIndex,0,temp[0]);
-	      // targetKeys.splice(sourceIndex,1);
-	      // targetKeys.splice(disIndex,0,draggableId);
-	      // console.log(rightDataSource,'==拖拽后==');
-	      //     break;
-	      //   default:
-	      //     break;
-	      // }
 	      if (onChange) {
-	        onChange(targetKeys, "", draggableId);
+	        onChange(items.targetKeyArr, "", draggableId);
 	      }
-	      // const items = this.reorder(
-	      //     this.getList(source.droppableId),
-	      //     source.index,
-	      //     destination.index
-	      // );
-	
-	      // let state = { sourceSelectedKeys: items };
-	      // list=items;
-	
-	      // if (source.droppableId === 'droppable_2') {
-	      //     state = { targetSelectedKeys: items };
-	      //     otherList=items;
-	      //     list=this.state.sourceSelectedKeys;
-	      // }
-	      // this.setState(state);
 	    } else {
 	      // 从一个Droppable容器拖拽到另一Droppable容器
-	      if (source.droppableId === 'droppable_1') {
-	        // moveToRight
-	        _this2.moveTo('right');
-	      } else if (source.droppableId === 'droppable_2') {
-	        // moveToLeft
-	        _this2.moveTo('left');
-	      }
-	      // const result = move(
-	      //     this.getList(source.droppableId),
-	      //     this.getList(destination.droppableId),
-	      //     source,
-	      //     destination
-	      // );
-	      // debugger
-	      // this.setState({
-	      //   sourceSelectedKeys: result.droppable_1,
-	      //   targetSelectedKeys: result.droppable_2
-	      // });
-	      // list=result.droppable_1;
-	      // otherList=result.droppable_2;
+	      console.log(_this2.getList(source.droppableId), "==拖拽前==");
+	      var _result = (0, _utils.move)(_this2.getList(source.droppableId), _this2.getList(destination.droppableId), source, destination);
+	      console.log(_result, '==拖拽后==');
+	      _this2.setState({
+	        leftDataSource: _result.droppable_1,
+	        rightDataSource: _result.droppable_2
+	      });
 	    }
 	    // this.props.onStop(result,{
 	    //     list:list,
@@ -17305,7 +17261,8 @@
 	        style = _props.style,
 	        id = _props.id,
 	        showCheckbox = _props.showCheckbox,
-	        dragging = _props.dragging;
+	        dragging = _props.dragging,
+	        draggable = _props.draggable;
 	    var _props2 = this.props,
 	        searchPlaceholder = _props2.searchPlaceholder,
 	        notFoundContent = _props2.notFoundContent;
@@ -17338,7 +17295,7 @@
 	      var checked = checkedKeys.indexOf(item.key) >= 0;
 	      return _react2['default'].createElement(
 	        _reactBeautifulDnd.Draggable,
-	        { key: item.key, index: index, draggableId: '' + item.key, isDragDisabled: item.disabled },
+	        { key: item.key, index: index, draggableId: '' + item.key, isDragDisabled: draggable ? item.disabled : !draggable },
 	        function (provided, snapshot) {
 	          return _react2['default'].createElement(
 	            'div',
@@ -17419,7 +17376,7 @@
 	      search,
 	      _react2['default'].createElement(
 	        _reactBeautifulDnd.Droppable,
-	        { droppableId: 'droppable_' + id, direction: 'vertical' },
+	        { droppableId: 'droppable_' + id, direction: 'vertical', isDropDisabled: !draggable },
 	        function (provided, snapshot) {
 	          return _react2['default'].createElement(
 	            'div',
@@ -32772,17 +32729,30 @@
 	/**
 	 * a little function to help us with reordering the result
 	 * @param {*} list 
+	 * @param {*} targetKeys
 	 * @param {*} startIndex 
 	 * @param {*} endIndex 
 	 */
-	var reorder = function reorder(list, startIndex, endIndex) {
-	    var result = Array.from(list);
+	var reorder = function reorder(list, targetKeys, startIndex, endIndex) {
+	    var result1 = Array.from(list);
 	
-	    var _result$splice = result.splice(startIndex, 1),
-	        _result$splice2 = _slicedToArray(_result$splice, 1),
-	        removed = _result$splice2[0];
+	    var _result1$splice = result1.splice(startIndex, 1),
+	        _result1$splice2 = _slicedToArray(_result1$splice, 1),
+	        removed1 = _result1$splice2[0];
 	
-	    result.splice(endIndex, 0, removed);
+	    result1.splice(endIndex, 0, removed1);
+	
+	    var result2 = Array.from(targetKeys);
+	
+	    var _result2$splice = result2.splice(startIndex, 1),
+	        _result2$splice2 = _slicedToArray(_result2$splice, 1),
+	        removed2 = _result2$splice2[0];
+	
+	    result2.splice(endIndex, 0, removed2);
+	
+	    var result = {};
+	    result.dataArr = result1;
+	    result.targetKeyArr = result2;
 	
 	    return result;
 	};
@@ -32807,7 +32777,6 @@
 	    var result = {};
 	    result[droppableSource.droppableId] = sourceClone;
 	    result[droppableDestination.droppableId] = destClone;
-	    debugger;
 	    return result;
 	};
 	
@@ -32845,7 +32814,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); } /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               *
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @title 常用可选transfer
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @description 
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * @description targetKeys需要通过ES6的扩展运算符进行赋值，实现对象的深拷贝
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               *
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */
 	
@@ -32904,6 +32873,7 @@
 	    var state = this.state;
 	    var targetKeys = [].concat(_toConsumableArray(this.state.targetKeys));
 	    return _react2['default'].createElement(_src2['default'], {
+	      draggable: true,
 	      dataSource: mockData,
 	      titles: ['Source', 'Target'],
 	      targetKeys: targetKeys,

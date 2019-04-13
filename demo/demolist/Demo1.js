@@ -1,7 +1,7 @@
 /**
 *
 * @title 常用可选transfer
-* @description 
+* @description targetKeys需要通过ES6的扩展运算符进行赋值，实现对象的深拷贝
 *
 */
 
@@ -58,6 +58,7 @@ class Demo1 extends React.Component {
     const targetKeys = [...this.state.targetKeys];
     return (
        <Transfer
+          draggable={true}
           dataSource={mockData}
           titles={['Source', 'Target']}
           targetKeys={targetKeys}

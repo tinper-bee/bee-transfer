@@ -16,7 +16,8 @@ const defaultProps = {
   showSearch: false,
   searchPlaceholder: 'Search',
   notFoundContent: 'Not Found',
-  showCheckbox: true
+  showCheckbox: true,
+  draggable: false
 };
 
 const propTypes = {
@@ -38,7 +39,8 @@ const propTypes = {
     footer: PropTypes.func,
     rowKey: PropTypes.func,
     lazy: PropTypes.object,
-    showCheckbox: PropTypes.bool
+    showCheckbox: PropTypes.bool,
+    draggable: PropTypes.bool
 };
 
 const defaultTitles = ['', ''];
@@ -292,7 +294,6 @@ class Transfer extends React.Component{
         return;
     }
     let { targetKeys, onChange } = this.props;
-    let { leftDataSource, rightDataSource } = this.state;
     let sourceIndex = source.index; //初始位置
     let disIndex = destination.index; //移动后的位置
     let temp; //拖拽的元素
@@ -302,70 +303,32 @@ class Transfer extends React.Component{
       console.log(this.getList(source.droppableId),"==拖拽前==");
       const items = reorder(
         this.getList(source.droppableId),
+        targetKeys,
         source.index,
         destination.index
       );
-      let state = {leftDataSource:items}
+      let state = { leftDataSource:items.dataArr }
       if (source.droppableId === 'droppable_2'){
-        state = {rightDataSource:items}
+        state = { rightDataSource:items.dataArr }
       }
-      console.log(items,'==拖拽后==');
+      console.log(items.dataArr,'==拖拽后==');
       this.setState(state);
-      // switch(source.droppableId){
-      //   case 'droppable_1': //left
-          // temp = leftDataSource.splice(sourceIndex,1); //拖拽的元素，Array
-          // leftDataSource.splice(disIndex,0,temp[0]); //插入新的位置
-          // targetKeys.splice(sourceIndex,1); //同时更新targetKeys
-          // targetKeys.splice(disIndex,0,draggableId);
-          // console.log(leftDataSource,'==拖拽后==');
-        //   break;
-        // case 'droppable_2': //right
-          // temp = rightDataSource.splice(sourceIndex,1);
-          // rightDataSource.splice(disIndex,0,temp[0]);
-          // targetKeys.splice(sourceIndex,1);
-          // targetKeys.splice(disIndex,0,draggableId);
-          // console.log(rightDataSource,'==拖拽后==');
-      //     break;
-      //   default:
-      //     break;
-      // }
       if (onChange) {
-        onChange(targetKeys, "", draggableId);
+        onChange(items.targetKeyArr, "", draggableId);
       }
-      // const items = this.reorder(
-      //     this.getList(source.droppableId),
-      //     source.index,
-      //     destination.index
-      // );
-
-      // let state = { sourceSelectedKeys: items };
-      // list=items;
-
-      // if (source.droppableId === 'droppable_2') {
-      //     state = { targetSelectedKeys: items };
-      //     otherList=items;
-      //     list=this.state.sourceSelectedKeys;
-      // }
-      // this.setState(state);
     } else {  // 从一个Droppable容器拖拽到另一Droppable容器
-      if(source.droppableId === 'droppable_1'){  // moveToRight
-        this.moveTo('right');
-      }else if(source.droppableId === 'droppable_2'){  // moveToLeft
-        this.moveTo('left')
-      }
-      // const result = move(
-      //     this.getList(source.droppableId),
-      //     this.getList(destination.droppableId),
-      //     source,
-      //     destination
-      // );
-      // debugger
-      // this.setState({
-      //   sourceSelectedKeys: result.droppable_1,
-      //   targetSelectedKeys: result.droppable_2
-      // });
-      // list=result.droppable_1;
-      // otherList=result.droppable_2;
+      console.log(this.getList(source.droppableId),"==拖拽前==");
+      const result = move(
+          this.getList(source.droppableId),
+          this.getList(destination.droppableId),
+          source,
+          destination
+      )
+      console.log(result,'==拖拽后==');
+      this.setState({
+        leftDataSource: result.droppable_1,
+        rightDataSource: result.droppable_2
+      })
     }
     // this.props.onStop(result,{
     //     list:list,
@@ -392,7 +355,7 @@ class Transfer extends React.Component{
     const {
       prefixCls = 'u-transfer', operations = [], showSearch, notFoundContent,
       searchPlaceholder, body, footer, listStyle, className = '',
-      filterOption, render, lazy, showCheckbox
+      filterOption, render, lazy, showCheckbox, draggable
     } = this.props;
     const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys, dragging, leftDataSource, rightDataSource } = this.state;
 
@@ -426,6 +389,7 @@ class Transfer extends React.Component{
             prefixCls={`${prefixCls}-list`}
             lazy={lazy}
             showCheckbox={showCheckbox}
+            draggable={draggable}
             id={'1'}
           />
           <Operation
@@ -457,6 +421,7 @@ class Transfer extends React.Component{
             prefixCls={`${prefixCls}-list`}
             lazy={lazy}
             showCheckbox={showCheckbox}
+            draggable={draggable}
             dragging={dragging}
             id={'2'}
           />
