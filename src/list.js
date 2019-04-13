@@ -7,6 +7,7 @@ import assign from 'object-assign';
 import { TransferItem } from './index';
 import Item from './item';
 import Checkbox from 'bee-checkbox';
+import Icon from 'bee-icon';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { KeyCode} from 'tinper-bee-core';
 
@@ -190,10 +191,19 @@ class TransferList extends React.Component {
     toggleSelection(task.id);
   };
 
+  /**
+   * 删除右侧已选的item
+   */
+  handleDeleteSelected = (e) => {
+    e.preventDefault();
+    e.stoppropagation();
+    debugger
+  }
+
 
   render() {
     const { prefixCls, dataSource, titleText, filter, checkedKeys, lazy, filterOption,
-            body = noop, footer = noop, showSearch, render = noop, style, id, showCheckbox } = this.props;
+            body = noop, footer = noop, showSearch, render = noop, style, id, showCheckbox, dragging } = this.props;
 
     let { searchPlaceholder, notFoundContent } = this.props;
 
@@ -300,6 +310,7 @@ class TransferList extends React.Component {
         <Droppable droppableId={`droppable_${id}`} direction='vertical'>
           {(provided, snapshot) => (
             <div ref={provided.innerRef} key={id} className={`${prefixCls}-content`}>
+              {/* Animate component is a list container. And it's scrollable. */}
               <Animate
                 component="ul"
                 transitionName={this.state.mounted ? `${prefixCls}-content-item-highlight` : ''}
@@ -307,6 +318,14 @@ class TransferList extends React.Component {
               >
                 {showItems}
               </Animate>
+              {/* div component is the delete button at the bottom of container */}
+              {/* <div 
+                className={dragging ? `${prefixCls}-delete-selected-btn` : ''}
+                ondragenter={()=>{debugger}} //ondragenter and ondrop events won't be triggered when the mouse key is released。
+                ondrop={this.handleDeleteSelected}
+                >
+                <Icon type="uf-del"></Icon>
+              </div> */}
             </div>
           )}
         </Droppable>

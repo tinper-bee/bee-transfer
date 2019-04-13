@@ -4,6 +4,7 @@
   position: relative;
   line-height: 1.5; }
   .u-transfer-list {
+    position: relative;
     font-size: 12px;
     border: 1px solid #d9d9d9;
     display: inline-block;
@@ -82,6 +83,17 @@
       .u-transfer-list-content-item-highlight-enter {
         animation: transferHighlightIn 1s ease;
         transition: none; }
+    .u-transfer-list-delete-selected-btn {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 32px;
+      background: #505F79;
+      opacity: 0.65;
+      text-align: center;
+      line-height: 32px; }
+      .u-transfer-list-delete-selected-btn .uf {
+        color: #fff; }
     .u-transfer-list-body-not-found {
       padding-top: 0;
       color: #ccc;

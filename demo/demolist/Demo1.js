@@ -35,7 +35,7 @@ class Demo1 extends React.Component {
   handleChange = (nextTargetKeys, direction, moveKeys) => {
     this.setState({ targetKeys: nextTargetKeys });
 
-    console.log('targetKeys: ', targetKeys);
+    console.log('targetKeys: ', nextTargetKeys);
     console.log('direction: ', direction);
     console.log('moveKeys: ', moveKeys);
   }
@@ -55,12 +55,12 @@ class Demo1 extends React.Component {
 
   render() {
     const state = this.state;
-
+    const targetKeys = [...this.state.targetKeys];
     return (
        <Transfer
           dataSource={mockData}
           titles={['Source', 'Target']}
-          targetKeys={state.targetKeys}
+          targetKeys={targetKeys}
           selectedKeys={state.selectedKeys}
           onChange={this.handleChange}
           onSelectChange={this.handleSelectChange}

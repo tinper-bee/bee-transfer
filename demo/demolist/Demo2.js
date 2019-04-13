@@ -42,14 +42,15 @@ class Demo2 extends React.Component {
   }
   render() {
     return (
-      <Transfer
-        dataSource={this.state.mockData}
-        showSearch
-        filterOption={this.filterOption}
-        targetKeys={this.state.targetKeys}
-        onChange={this.handleChange}
-        render={item => item.title}
-      />
+      // <Transfer
+      //   dataSource={this.state.mockData}
+      //   showSearch
+      //   filterOption={this.filterOption}
+      //   targetKeys={this.state.targetKeys}
+      //   onChange={this.handleChange}
+      //   render={item => item.title}
+      // />
+      <a/>
     );
   }
 }

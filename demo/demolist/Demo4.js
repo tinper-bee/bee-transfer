@@ -57,17 +57,18 @@ class Demo4 extends React.Component {
     const state = this.state;
 
     return (
-       <Transfer
-          dataSource={mockData}
-          showCheckbox={false}
-          titles={['Source', 'Target']}
-          targetKeys={state.targetKeys}
-          selectedKeys={state.selectedKeys}
-          onChange={this.handleChange}
-          onSelectChange={this.handleSelectChange}
-          onScroll={this.handleScroll}
-          render={item => item.title}
-        />
+      //  <Transfer
+      //     dataSource={mockData}
+      //     showCheckbox={false}
+      //     titles={['Source', 'Target']}
+      //     targetKeys={state.targetKeys}
+      //     selectedKeys={state.selectedKeys}
+      //     onChange={this.handleChange}
+      //     onSelectChange={this.handleSelectChange}
+      //     onScroll={this.handleScroll}
+      //     render={item => item.title}
+      //   />
+      <a/>
     );
   }
 }

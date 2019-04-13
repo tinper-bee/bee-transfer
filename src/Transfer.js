@@ -52,13 +52,22 @@ class Transfer extends React.Component{
       rightFilter: '',
       sourceSelectedKeys: selectedKeys.filter(key => targetKeys.indexOf(key) === -1),
       targetSelectedKeys: selectedKeys.filter(key => targetKeys.indexOf(key) > -1),
+      dragging: false,
+      leftDataSource: [],
+      rightDataSource: []
     };
+    this.cacheTargetKeys = [...targetKeys];
+  }
+  componentDidMount(){
+    const { leftDataSource, rightDataSource } = this.splitDataSource();
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.targetKeys !== this.cacheTargetKeys, '0000000000000000')
     const { sourceSelectedKeys, targetSelectedKeys } = this.state;
     if (nextProps.targetKeys !== this.props.targetKeys ||
-        nextProps.dataSource !== this.props.dataSource) {
+        nextProps.dataSource !== this.props.dataSource ||
+        nextProps.targetKeys !== this.cacheTargetKeys) {
       // clear cached splited dataSource
       this.splitedDataSource = null;
 
@@ -83,7 +92,11 @@ class Transfer extends React.Component{
       });
     }
   }
-  splitDataSource() {
+  /**
+   * 从dataSource中分离出leftDataSource和rightDataSource
+   * @param {*} newTargetKeys 
+   */
+  splitDataSource(newTargetKeys) {
     // targetKeys：展示在右边列表的数据集
     if (this.splitedDataSource) {
       return this.splitedDataSource;
@@ -96,7 +109,8 @@ class Transfer extends React.Component{
       });
     }
 
-    const leftDataSource = dataSource.filter(({ key }) => targetKeys.indexOf(key) === -1);
+    let tempTargetKeys = newTargetKeys ? newTargetKeys : targetKeys;
+    const leftDataSource = dataSource.filter(({ key }) => tempTargetKeys.indexOf(key) === -1);
     // Why?
     // const rightDataSource = [];
     // targetKeys.forEach((targetKey) => {
@@ -105,12 +119,16 @@ class Transfer extends React.Component{
     //     rightDataSource.push(targetItem);
     //   }
     // });
-    const rightDataSource = dataSource.filter(({key}) => targetKeys.indexOf(key) > -1);
+    const rightDataSource = dataSource.filter(({key}) => tempTargetKeys.indexOf(key) > -1);
 
     this.splitedDataSource = {
       leftDataSource,
       rightDataSource,
     };
+    this.setState({
+      leftDataSource,
+      rightDataSource,
+    })
 
     return this.splitedDataSource;
   }
@@ -134,6 +152,7 @@ class Transfer extends React.Component{
     if (onChange) {
       onChange(newTargetKeys, direction, moveKeys);
     }
+    this.splitDataSource(newTargetKeys);
   }
 
   moveToLeft = () => this.moveTo('left')
@@ -255,59 +274,98 @@ class Transfer extends React.Component{
   }
 
   id2List = {
-    droppable_1: 'sourceSelectedKeys',
-    droppable_2: 'targetSelectedKeys'
+    droppable_1: 'leftDataSource',
+    droppable_2: 'rightDataSource'
   };
 
   getList = id => this.state[this.id2List[id]];
 
   onDragEnd = result => {
+    this.setState({
+      dragging: false
+    });
     console.log(result);
-    const { source, destination } = result;
+    const { source, destination,draggableId } = result;
 
     // dropped outside the list
     if (!destination) {
         return;
     }
-    // let list=this.state.sourceSelectedKeys;
-    // let otherList=this.state.targetSelectedKeys;
+    let { targetKeys, onChange } = this.props;
+    let { leftDataSource, rightDataSource } = this.state;
+    let sourceIndex = source.index; //初始位置
+    let disIndex = destination.index; //移动后的位置
+    let temp; //拖拽的元素
     // debugger
     // 在同一个Droppable容器中拖拽
     if (source.droppableId === destination.droppableId) {
-        // const items = this.reorder(
-        //     this.getList(source.droppableId),
-        //     source.index,
-        //     destination.index
-        // );
+      console.log(this.getList(source.droppableId),"==拖拽前==");
+      const items = reorder(
+        this.getList(source.droppableId),
+        source.index,
+        destination.index
+      );
+      let state = {leftDataSource:items}
+      if (source.droppableId === 'droppable_2'){
+        state = {rightDataSource:items}
+      }
+      console.log(items,'==拖拽后==');
+      this.setState(state);
+      // switch(source.droppableId){
+      //   case 'droppable_1': //left
+          // temp = leftDataSource.splice(sourceIndex,1); //拖拽的元素，Array
+          // leftDataSource.splice(disIndex,0,temp[0]); //插入新的位置
+          // targetKeys.splice(sourceIndex,1); //同时更新targetKeys
+          // targetKeys.splice(disIndex,0,draggableId);
+          // console.log(leftDataSource,'==拖拽后==');
+        //   break;
+        // case 'droppable_2': //right
+          // temp = rightDataSource.splice(sourceIndex,1);
+          // rightDataSource.splice(disIndex,0,temp[0]);
+          // targetKeys.splice(sourceIndex,1);
+          // targetKeys.splice(disIndex,0,draggableId);
+          // console.log(rightDataSource,'==拖拽后==');
+      //     break;
+      //   default:
+      //     break;
+      // }
+      if (onChange) {
+        onChange(targetKeys, "", draggableId);
+      }
+      // const items = this.reorder(
+      //     this.getList(source.droppableId),
+      //     source.index,
+      //     destination.index
+      // );
 
-        // let state = { sourceSelectedKeys: items };
-        // list=items;
+      // let state = { sourceSelectedKeys: items };
+      // list=items;
 
-        // if (source.droppableId === 'droppable_2') {
-        //     state = { targetSelectedKeys: items };
-        //     otherList=items;
-        //     list=this.state.sourceSelectedKeys;
-        // }
-        // this.setState(state);
+      // if (source.droppableId === 'droppable_2') {
+      //     state = { targetSelectedKeys: items };
+      //     otherList=items;
+      //     list=this.state.sourceSelectedKeys;
+      // }
+      // this.setState(state);
     } else {  // 从一个Droppable容器拖拽到另一Droppable容器
       if(source.droppableId === 'droppable_1'){  // moveToRight
         this.moveTo('right');
       }else if(source.droppableId === 'droppable_2'){  // moveToLeft
         this.moveTo('left')
       }
-        // const result = move(
-        //     this.getList(source.droppableId),
-        //     this.getList(destination.droppableId),
-        //     source,
-        //     destination
-        // );
-        // debugger
-        // this.setState({
-        //   sourceSelectedKeys: result.droppable_1,
-        //   targetSelectedKeys: result.droppable_2
-        // });
-        // list=result.droppable_1;
-        // otherList=result.droppable_2;
+      // const result = move(
+      //     this.getList(source.droppableId),
+      //     this.getList(destination.droppableId),
+      //     source,
+      //     destination
+      // );
+      // debugger
+      // this.setState({
+      //   sourceSelectedKeys: result.droppable_1,
+      //   targetSelectedKeys: result.droppable_2
+      // });
+      // list=result.droppable_1;
+      // otherList=result.droppable_2;
     }
     // this.props.onStop(result,{
     //     list:list,
@@ -324,6 +382,9 @@ class Transfer extends React.Component{
       this.handleLeftSelect(selectedItem);
     }else if(source.droppableId === 'droppable_2'){  // rightMenu
       this.handleRightSelect(selectedItem);
+      this.setState({
+        dragging: true
+      });
     }
   }
 
@@ -333,9 +394,9 @@ class Transfer extends React.Component{
       searchPlaceholder, body, footer, listStyle, className = '',
       filterOption, render, lazy, showCheckbox
     } = this.props;
-    const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys } = this.state;
+    const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys, dragging, leftDataSource, rightDataSource } = this.state;
 
-    const { leftDataSource, rightDataSource } = this.splitDataSource(this.props);
+    // const { leftDataSource, rightDataSource } = this.splitDataSource(this.props);
     const leftActive = targetSelectedKeys.length > 0;
     const rightActive = sourceSelectedKeys.length > 0;
 
@@ -396,6 +457,7 @@ class Transfer extends React.Component{
             prefixCls={`${prefixCls}-list`}
             lazy={lazy}
             showCheckbox={showCheckbox}
+            dragging={dragging}
             id={'2'}
           />
         </DragDropContext>
