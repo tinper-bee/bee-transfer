@@ -66,6 +66,11 @@
       overflow: auto;
       margin: 0;
       padding: 0; }
+      .u-transfer-list-content.delbtn-backdrop {
+        background: #505F79;
+        opacity: 0.65; }
+        .u-transfer-list-content.delbtn-backdrop.uf-del {
+          color: #fff; }
       .u-transfer-list-content-item {
         overflow: hidden;
         white-space: nowrap;
@@ -85,20 +90,6 @@
       .u-transfer-list-content-item-highlight-enter {
         animation: transferHighlightIn 1s ease;
         transition: none; }
-    .u-transfer-list-delete-selected-btn {
-      position: absolute;
-      bottom: -32px;
-      width: 100%;
-      height: 32px;
-      background: #505F79;
-      opacity: 0.65;
-      text-align: center;
-      line-height: 32px;
-      z-index: 10; }
-      .u-transfer-list-delete-selected-btn.hide {
-        display: none; }
-      .u-transfer-list-delete-selected-btn .uf {
-        color: #fff; }
     .u-transfer-list-body-not-found {
       padding-top: 0;
       color: #ccc;

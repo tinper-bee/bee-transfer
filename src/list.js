@@ -203,7 +203,7 @@ class TransferList extends React.Component {
 
   render() {
     const { prefixCls, dataSource, titleText, filter, checkedKeys, lazy, filterOption,
-            body = noop, footer = noop, showSearch, render = noop, style, id, showCheckbox, dragging, draggable } = this.props;
+            body = noop, footer = noop, showSearch, render = noop, style, id, showCheckbox, draggable } = this.props;
 
     let { searchPlaceholder, notFoundContent } = this.props;
 
@@ -295,7 +295,8 @@ class TransferList extends React.Component {
         {search}
         <Droppable droppableId={`droppable_${id}`} direction='vertical' isDropDisabled={!draggable}>
           {(provided, snapshot) => (
-            <div ref={provided.innerRef} key={id} className={`${prefixCls}-content`}>
+            <div ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver} key={id} className={`${prefixCls}-content`}>
+              {/* {snapshot.isDraggingOver ? <Icon type="uf-del"></Icon> : ''} */}
               <Animate
                 component="ul"
                 transitionName={this.state.mounted ? `${prefixCls}-content-item-highlight` : ''}
@@ -313,7 +314,7 @@ class TransferList extends React.Component {
             </div>
           )}
         </Droppable>
-        <Droppable droppableId={`droppable_delbtn`} direction='vertical' isDropDisabled={!draggable}>
+        {/* <Droppable droppableId={`droppable_delbtn`} direction='vertical' isDropDisabled={!draggable}>
           {(provided, snapshot) => (
             <div 
               ref={provided.innerRef}
@@ -324,7 +325,7 @@ class TransferList extends React.Component {
               {dragging ? <Icon type="uf-del"></Icon> : ''}
             </div>
           )}
-        </Droppable>
+        </Droppable> */}
         <div className={`${prefixCls}-body-not-found ${dataSource.length == 0? "show" : ""}`}>
           {notFoundContent}
         </div>

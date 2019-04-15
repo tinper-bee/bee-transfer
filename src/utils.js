@@ -27,17 +27,20 @@ const reorder = (list,targetKeys, startIndex, endIndex) => {
  * @param {*} destination 
  * @param {*} droppableSource 
  * @param {*} droppableDestination 
+ * @param {*} targetKeys
  */
-const move = (source, destination, droppableSource, droppableDestination) => {
+const move = (source, destination, droppableSource, droppableDestination, targetKeys) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
     const [removed] = sourceClone.splice(droppableSource.index, 1);
 
     destClone.splice(droppableDestination.index, 0, removed);
+    targetKeys.splice(droppableDestination.index, 0, removed.key);
 
     const result = {};
     result[droppableSource.droppableId] = sourceClone;
     result[droppableDestination.droppableId] = destClone;
+    result.newTargetKeys = targetKeys;
     return result;
 };
 

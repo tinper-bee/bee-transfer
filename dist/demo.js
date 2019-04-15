@@ -16460,7 +16460,6 @@
 	      targetSelectedKeys: selectedKeys.filter(function (key) {
 	        return targetKeys.indexOf(key) > -1;
 	      }),
-	      dragging: false,
 	      leftDataSource: [],
 	      rightDataSource: []
 	    };
@@ -16659,7 +16658,6 @@
 	        rightFilter = _state3.rightFilter,
 	        sourceSelectedKeys = _state3.sourceSelectedKeys,
 	        targetSelectedKeys = _state3.targetSelectedKeys,
-	        dragging = _state3.dragging,
 	        leftDataSource = _state3.leftDataSource,
 	        rightDataSource = _state3.rightDataSource;
 	
@@ -16730,7 +16728,6 @@
 	          lazy: lazy,
 	          showCheckbox: showCheckbox,
 	          draggable: draggable,
-	          dragging: dragging,
 	          id: '2'
 	        })
 	      )
@@ -16748,6 +16745,8 @@
 	        _props3$targetKeys = _props3.targetKeys,
 	        targetKeys = _props3$targetKeys === undefined ? [] : _props3$targetKeys,
 	        onChange = _props3.onChange;
+	    // debugger
+	
 	    var _state4 = _this2.state,
 	        sourceSelectedKeys = _state4.sourceSelectedKeys,
 	        targetSelectedKeys = _state4.targetSelectedKeys;
@@ -16761,6 +16760,7 @@
 	    // empty checked keys
 	    var oppositeDirection = direction === 'right' ? 'left' : 'right';
 	    _this2.setState(_defineProperty({}, _this2.getSelectedKeysName(oppositeDirection), []));
+	    // debugger
 	    _this2.handleSelectChange(oppositeDirection, []);
 	
 	    if (onChange) {
@@ -16869,24 +16869,10 @@
 	  };
 	
 	  this.onDragEnd = function (result) {
-	    _this2.setState({
-	      dragging: false
-	    });
 	    console.log(result);
 	    var source = result.source,
 	        destination = result.destination,
 	        draggableId = result.draggableId;
-	
-	    // dropped outside the list
-	
-	    if (!destination) {
-	      return;
-	    }
-	    if (destination.droppableId === 'droppable_delbtn') {
-	      _this2.moveTo('left');
-	      return;
-	    }
-	
 	    var _props4 = _this2.props,
 	        targetKeys = _props4.targetKeys,
 	        onChange = _props4.onChange;
@@ -16894,8 +16880,18 @@
 	    var sourceIndex = source.index; //初始位置
 	    var disIndex = destination.index; //移动后的位置
 	    var temp = void 0; //拖拽的元素
-	    // debugger
-	    // 在同一个Droppable容器中拖拽
+	
+	    // dropped outside the list
+	    if (!destination) {
+	      return;
+	    }
+	    // 从右往左拖拽 或 在左侧列表中拖拽
+	    if (destination.droppableId === 'droppable_1') {
+	      if (source.droppableId === destination.droppableId) return;
+	      _this2.moveToLeft();
+	      return;
+	    }
+	    // 在右侧列表中上下拖拽
 	    if (source.droppableId === destination.droppableId) {
 	      console.log(_this2.getList(source.droppableId), "==拖拽前==");
 	      var items = (0, _utils.reorder)(_this2.getList(source.droppableId), targetKeys, source.index, destination.index);
@@ -16909,23 +16905,23 @@
 	        onChange(items.targetKeyArr, "", draggableId);
 	      }
 	    } else {
-	      // 从一个Droppable容器拖拽到另一Droppable容器
+	      // 从左往右拖拽
 	      console.log(_this2.getList(source.droppableId), "==拖拽前==");
-	      var _result = (0, _utils.move)(_this2.getList(source.droppableId), _this2.getList(destination.droppableId), source, destination);
+	      var _result = (0, _utils.move)(_this2.getList(source.droppableId), _this2.getList(destination.droppableId), source, destination, targetKeys);
 	      console.log(_result, '==拖拽后==');
+	      if (onChange) {
+	        onChange(_result.newTargetKeys, "", draggableId);
+	      }
 	      _this2.setState({
 	        leftDataSource: _result.droppable_1,
-	        rightDataSource: _result.droppable_2
+	        rightDataSource: _result.droppable_2,
+	        sourceSelectedKeys: [],
+	        targetSelectedKeys: []
 	      });
 	    }
-	    // this.props.onStop(result,{
-	    //     list:list,
-	    //     otherList:otherList
-	    // })
 	  };
 	
 	  this.onDragStart = function (result) {
-	    // debugger
 	    var selectedItem = {};
 	    var source = result.source;
 	
@@ -16936,9 +16932,6 @@
 	    } else if (source.droppableId === 'droppable_2') {
 	      // rightMenu
 	      _this2.handleRightSelect(selectedItem);
-	      _this2.setState({
-	        dragging: true
-	      });
 	    }
 	  };
 	};
@@ -17272,7 +17265,6 @@
 	        style = _props.style,
 	        id = _props.id,
 	        showCheckbox = _props.showCheckbox,
-	        dragging = _props.dragging,
 	        draggable = _props.draggable;
 	    var _props2 = this.props,
 	        searchPlaceholder = _props2.searchPlaceholder,
@@ -17376,7 +17368,7 @@
 	        function (provided, snapshot) {
 	          return _react2['default'].createElement(
 	            'div',
-	            { ref: provided.innerRef, key: id, className: prefixCls + '-content' },
+	            { ref: provided.innerRef, isDraggingOver: snapshot.isDraggingOver, key: id, className: prefixCls + '-content' },
 	            _react2['default'].createElement(
 	              _beeAnimate2['default'],
 	              {
@@ -17386,24 +17378,6 @@
 	              },
 	              showItems
 	            )
-	          );
-	        }
-	      ),
-	      _react2['default'].createElement(
-	        _reactBeautifulDnd.Droppable,
-	        { droppableId: 'droppable_delbtn', direction: 'vertical', isDropDisabled: !draggable },
-	        function (provided, snapshot) {
-	          return _react2['default'].createElement(
-	            'div',
-	            {
-	              ref: provided.innerRef,
-	              className: dragging ? prefixCls + '-delete-selected-btn' : '',
-	              ondragenter: function ondragenter() {
-	                debugger;
-	              } //ondragenter and ondrop events won't be triggered when the mouse key is released。
-	              , ondrop: _this4.handleDeleteSelected
-	            },
-	            dragging ? _react2['default'].createElement(_beeIcon2['default'], { type: 'uf-del' }) : ''
 	          );
 	        }
 	      ),
@@ -32777,8 +32751,9 @@
 	 * @param {*} destination 
 	 * @param {*} droppableSource 
 	 * @param {*} droppableDestination 
+	 * @param {*} targetKeys
 	 */
-	var move = function move(source, destination, droppableSource, droppableDestination) {
+	var move = function move(source, destination, droppableSource, droppableDestination, targetKeys) {
 	    var sourceClone = Array.from(source);
 	    var destClone = Array.from(destination);
 	
@@ -32787,10 +32762,12 @@
 	        removed = _sourceClone$splice2[0];
 	
 	    destClone.splice(droppableDestination.index, 0, removed);
+	    targetKeys.splice(droppableDestination.index, 0, removed.key);
 	
 	    var result = {};
 	    result[droppableSource.droppableId] = sourceClone;
 	    result[droppableDestination.droppableId] = destClone;
+	    result.newTargetKeys = targetKeys;
 	    return result;
 	};
 	

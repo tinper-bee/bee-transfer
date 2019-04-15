@@ -54,7 +54,6 @@ class Transfer extends React.Component{
       rightFilter: '',
       sourceSelectedKeys: selectedKeys.filter(key => targetKeys.indexOf(key) === -1),
       targetSelectedKeys: selectedKeys.filter(key => targetKeys.indexOf(key) > -1),
-      dragging: false,
       leftDataSource: [],
       rightDataSource: []
     };
@@ -139,6 +138,7 @@ class Transfer extends React.Component{
 
   moveTo = (direction) => {
     const { targetKeys = [], onChange } = this.props;
+    // debugger
     const { sourceSelectedKeys, targetSelectedKeys } = this.state;
     const moveKeys = direction === 'right' ? sourceSelectedKeys : targetSelectedKeys;
     // move items to target box
@@ -151,6 +151,7 @@ class Transfer extends React.Component{
     this.setState({
       [this.getSelectedKeysName(oppositeDirection)]: [],
     });
+    // debugger
     this.handleSelectChange(oppositeDirection, []);
 
     if (onChange) {
@@ -285,27 +286,24 @@ class Transfer extends React.Component{
   getList = id => this.state[this.id2List[id]];
 
   onDragEnd = result => {
-    this.setState({
-      dragging: false
-    });
     console.log(result);
     const { source, destination,draggableId } = result;
+    let { targetKeys, onChange } = this.props;
+    let sourceIndex = source.index; //初始位置
+    let disIndex = destination.index; //移动后的位置
+    let temp; //拖拽的元素
 
     // dropped outside the list
     if (!destination) {
       return;
     }
-    if(destination.droppableId === 'droppable_delbtn') {
-      this.moveTo('left');
+    // 从右往左拖拽 或 在左侧列表中拖拽
+    if (destination.droppableId === 'droppable_1') {
+      if(source.droppableId === destination.droppableId) return;
+      this.moveToLeft();
       return;
     }
-
-    let { targetKeys, onChange } = this.props;
-    let sourceIndex = source.index; //初始位置
-    let disIndex = destination.index; //移动后的位置
-    let temp; //拖拽的元素
-    // debugger
-    // 在同一个Droppable容器中拖拽
+    // 在右侧列表中上下拖拽
     if (source.droppableId === destination.droppableId) {
       console.log(this.getList(source.droppableId),"==拖拽前==");
       const items = reorder(
@@ -323,28 +321,29 @@ class Transfer extends React.Component{
       if (onChange) {
         onChange(items.targetKeyArr, "", draggableId);
       }
-    } else {  // 从一个Droppable容器拖拽到另一Droppable容器
+    } else {  // 从左往右拖拽
       console.log(this.getList(source.droppableId),"==拖拽前==");
       const result = move(
           this.getList(source.droppableId),
           this.getList(destination.droppableId),
           source,
-          destination
+          destination,
+          targetKeys
       )
       console.log(result,'==拖拽后==');
+      if (onChange) {
+        onChange(result.newTargetKeys, "", draggableId);
+      }
       this.setState({
         leftDataSource: result.droppable_1,
-        rightDataSource: result.droppable_2
+        rightDataSource: result.droppable_2,
+        sourceSelectedKeys: [],
+        targetSelectedKeys: []
       })
     }
-    // this.props.onStop(result,{
-    //     list:list,
-    //     otherList:otherList
-    // })
   };
 
-  onDragStart = result =>{
-    // debugger
+  onDragStart = result => {
     let selectedItem = {};
     const { source } = result; 
     selectedItem.key = result.draggableId;
@@ -352,9 +351,6 @@ class Transfer extends React.Component{
       this.handleLeftSelect(selectedItem);
     }else if(source.droppableId === 'droppable_2'){  // rightMenu
       this.handleRightSelect(selectedItem);
-      this.setState({
-        dragging: true
-      });
     }
   }
 
@@ -364,7 +360,7 @@ class Transfer extends React.Component{
       searchPlaceholder, body, footer, listStyle, className = '',
       filterOption, render, lazy, showCheckbox, draggable
     } = this.props;
-    const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys, dragging, leftDataSource, rightDataSource } = this.state;
+    const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys, leftDataSource, rightDataSource } = this.state;
 
     // const { leftDataSource, rightDataSource } = this.splitDataSource(this.props);
     const leftActive = targetSelectedKeys.length > 0;
@@ -432,7 +428,6 @@ class Transfer extends React.Component{
             lazy={lazy}
             showCheckbox={showCheckbox}
             draggable={draggable}
-            dragging={dragging}
             id={'2'}
           />
         </DragDropContext>

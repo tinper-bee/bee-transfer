@@ -94,6 +94,13 @@
       overflow: auto;
       margin: 0;
       padding: 0;
+      &.delbtn-backdrop{
+        background: #505F79;
+        opacity: 0.65;
+        &.uf-del{
+          color: #fff;
+        }
+      }
       &-item {
         overflow: hidden;
         white-space: nowrap;
@@ -122,23 +129,23 @@
         transition: none;
       }
     }
-    &-delete-selected-btn{
-      &.hide{
-        display: none;
-      }
-      position: absolute;
-      bottom: -32px;
-      width: 100%;
-      height: 32px;
-      background: #505F79;
-      opacity: 0.65;
-      text-align: center;
-      line-height: 32px;
-      z-index: 10;
-      .uf{
-        color: #fff;
-      }
-    }
+    // &-delete-selected-btn{
+    //   &.hide{
+    //     display: none;
+    //   }
+    //   position: absolute;
+    //   bottom: -32px;
+    //   width: 100%;
+    //   height: 32px;
+    //   background: #505F79;
+    //   opacity: 0.65;
+    //   text-align: center;
+    //   line-height: 32px;
+    //   z-index: 10;
+    //   .uf{
+    //     color: #fff;
+    //   }
+    // }
 
     &-body-not-found {
       padding-top: 0;
