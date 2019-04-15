@@ -58,7 +58,6 @@ class Demo1 extends React.Component {
     const targetKeys = [...this.state.targetKeys];
     return (
        <Transfer
-          draggable={true}
           dataSource={mockData}
           titles={['Source', 'Target']}
           targetKeys={targetKeys}

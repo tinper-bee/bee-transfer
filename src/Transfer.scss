@@ -22,6 +22,9 @@
     width: 180px;
     height: 200px;
     padding-top: 33px;
+    &.u-transfer-list-draggable:first-child{
+      margin-right: 16px;
+    }
 
     &-with-footer {
       padding-bottom: 33px;
@@ -119,16 +122,19 @@
         transition: none;
       }
     }
-
     &-delete-selected-btn{
+      &.hide{
+        display: none;
+      }
       position: absolute;
-      bottom: 0;
+      bottom: -32px;
       width: 100%;
       height: 32px;
       background: #505F79;
       opacity: 0.65;
       text-align: center;
       line-height: 32px;
+      z-index: 10;
       .uf{
         color: #fff;
       }

@@ -79,6 +79,8 @@ class Transfer extends React.Component{
       }
       // clear key nolonger existed
       // clear checkedKeys according to targetKeys
+      console.log(sourceSelectedKeys.filter(existInDateSourcekey)
+      .filter(data => targetKeys.filter(key => key === data).length === 0))
       this.setState({
         sourceSelectedKeys: sourceSelectedKeys.filter(existInDateSourcekey)
           .filter(data => targetKeys.filter(key => key === data).length === 0),
@@ -291,8 +293,13 @@ class Transfer extends React.Component{
 
     // dropped outside the list
     if (!destination) {
-        return;
+      return;
     }
+    if(destination.droppableId === 'droppable_delbtn') {
+      this.moveTo('left');
+      return;
+    }
+
     let { targetKeys, onChange } = this.props;
     let sourceIndex = source.index; //初始位置
     let disIndex = destination.index; //移动后的位置
@@ -392,15 +399,18 @@ class Transfer extends React.Component{
             draggable={draggable}
             id={'1'}
           />
-          <Operation
-            rightActive={rightActive}
-            rightArrowText={operations[0]}
-            moveToRight={this.moveToRight}
-            leftActive={leftActive}
-            leftArrowText={operations[1]}
-            moveToLeft={this.moveToLeft}
-            className={`${prefixCls}-operation`}
-          />
+          {!draggable? 
+            <Operation
+              rightActive={rightActive}
+              rightArrowText={operations[0]}
+              moveToRight={this.moveToRight}
+              leftActive={leftActive}
+              leftArrowText={operations[1]}
+              moveToLeft={this.moveToLeft}
+              className={`${prefixCls}-operation`}
+            />
+            : ''
+          }
           <List
             titleText={titles[1]}  //右侧标题
             dataSource={rightDataSource}   //右侧数据源

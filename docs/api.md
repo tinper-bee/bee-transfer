@@ -14,7 +14,7 @@ import { Transfer } from 'tinper-bee';
 or
 
 import Transfer from 'bee-transfer';
-import bee-transfer/build/Transfer.css;
+import 'bee-transfer/build/Transfer.css';
 
 ```
 

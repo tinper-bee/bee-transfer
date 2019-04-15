@@ -213,6 +213,7 @@ class TransferList extends React.Component {
 
     const listCls = classNames(prefixCls, {
       [`${prefixCls}-with-footer`]: !!footerDom,
+      [`${prefixCls}-draggable`]: !!draggable
     });
 
     const filteredDataSource = [];
@@ -264,21 +265,6 @@ class TransferList extends React.Component {
             </div>
           )}
         </Draggable>)
-      // return (
-      //   <Item
-      //     key={item.key}
-      //     item={item}
-      //     lazy={lazy}
-      //     render={render}
-      //     renderedText={renderedText}
-      //     renderedEl={renderedEl}
-      //     filter={filter}
-      //     filterOption={filterOption}
-      //     checked={checked}
-      //     prefixCls={prefixCls}
-      //     onClick={this.handleSelect}
-      //   />
-      // );
     });
 
     let unit = '';
@@ -310,7 +296,6 @@ class TransferList extends React.Component {
         <Droppable droppableId={`droppable_${id}`} direction='vertical' isDropDisabled={!draggable}>
           {(provided, snapshot) => (
             <div ref={provided.innerRef} key={id} className={`${prefixCls}-content`}>
-              {/* Animate component is a list container. And it's scrollable. */}
               <Animate
                 component="ul"
                 transitionName={this.state.mounted ? `${prefixCls}-content-item-highlight` : ''}
@@ -318,7 +303,6 @@ class TransferList extends React.Component {
               >
                 {showItems}
               </Animate>
-              {/* div component is the delete button at the bottom of container */}
               {/* <div 
                 className={dragging ? `${prefixCls}-delete-selected-btn` : ''}
                 ondragenter={()=>{debugger}} //ondragenter and ondrop events won't be triggered when the mouse key is released。
@@ -326,6 +310,18 @@ class TransferList extends React.Component {
                 >
                 <Icon type="uf-del"></Icon>
               </div> */}
+            </div>
+          )}
+        </Droppable>
+        <Droppable droppableId={`droppable_delbtn`} direction='vertical' isDropDisabled={!draggable}>
+          {(provided, snapshot) => (
+            <div 
+              ref={provided.innerRef}
+              className={dragging ? `${prefixCls}-delete-selected-btn` : ''}
+              ondragenter={()=>{debugger}} //ondragenter and ondrop events won't be triggered when the mouse key is released。
+              ondrop={this.handleDeleteSelected}
+              >
+              {dragging ? <Icon type="uf-del"></Icon> : ''}
             </div>
           )}
         </Droppable>
