@@ -7,8 +7,7 @@ import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { reorder,move } from './utils';
 
-function noop() {
-}
+function noop() {}
 
 const defaultProps = {
 	dataSource: [],
@@ -64,7 +63,6 @@ class Transfer extends React.Component{
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.targetKeys !== this.cacheTargetKeys, '0000000000000000')
     const { sourceSelectedKeys, targetSelectedKeys } = this.state;
     if (nextProps.targetKeys !== this.props.targetKeys ||
         nextProps.dataSource !== this.props.dataSource ||
@@ -78,8 +76,6 @@ class Transfer extends React.Component{
       }
       // clear key nolonger existed
       // clear checkedKeys according to targetKeys
-      console.log(sourceSelectedKeys.filter(existInDateSourcekey)
-      .filter(data => targetKeys.filter(key => key === data).length === 0))
       this.setState({
         sourceSelectedKeys: sourceSelectedKeys.filter(existInDateSourcekey)
           .filter(data => targetKeys.filter(key => key === data).length === 0),
@@ -114,14 +110,6 @@ class Transfer extends React.Component{
 
     let tempTargetKeys = newTargetKeys ? newTargetKeys : targetKeys;
     const leftDataSource = dataSource.filter(({ key }) => tempTargetKeys.indexOf(key) === -1);
-    // Why?
-    // const rightDataSource = [];
-    // targetKeys.forEach((targetKey) => {
-    //   const targetItem = dataSource.filter(record => record.key === targetKey)[0];
-    //   if (targetItem) {
-    //     rightDataSource.push(targetItem);
-    //   }
-    // });
     const rightDataSource = dataSource.filter(({key}) => tempTargetKeys.indexOf(key) > -1);
 
     this.splitedDataSource = {
@@ -285,6 +273,9 @@ class Transfer extends React.Component{
 
   getList = id => this.state[this.id2List[id]];
 
+  /**
+   * 拖拽结束时触发
+   */
   onDragEnd = result => {
     console.log(result);
     const { source, destination,draggableId } = result;
@@ -297,13 +288,15 @@ class Transfer extends React.Component{
     if (!destination) {
       return;
     }
+
     // 从右往左拖拽 或 在左侧列表中拖拽
     if (destination.droppableId === 'droppable_1') {
       if(source.droppableId === destination.droppableId) return;
       this.moveToLeft();
       return;
     }
-    // 在右侧列表中上下拖拽
+    
+    // 在右侧列表中上下拖拽进行排序
     if (source.droppableId === destination.droppableId) {
       console.log(this.getList(source.droppableId),"==拖拽前==");
       const items = reorder(
@@ -317,6 +310,9 @@ class Transfer extends React.Component{
         state = { rightDataSource:items.dataArr }
       }
       console.log(items.dataArr,'==拖拽后==');
+      state.sourceSelectedKeys = [];
+      state.targetSelectedKeys = [];
+      console.log(state)
       this.setState(state);
       if (onChange) {
         onChange(items.targetKeyArr, "", draggableId);
@@ -343,6 +339,9 @@ class Transfer extends React.Component{
     }
   };
 
+  /**
+   * 拖拽开始时触发
+   */
   onDragStart = result => {
     let selectedItem = {};
     const { source } = result; 

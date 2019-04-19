@@ -16474,7 +16474,6 @@
 	  };
 	
 	  Transfer.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	    console.log(nextProps.targetKeys !== this.cacheTargetKeys, '0000000000000000');
 	    var _state = this.state,
 	        sourceSelectedKeys = _state.sourceSelectedKeys,
 	        targetSelectedKeys = _state.targetSelectedKeys;
@@ -16495,11 +16494,6 @@
 	      var dataSource = nextProps.dataSource,
 	          _nextProps$targetKeys = nextProps.targetKeys,
 	          targetKeys = _nextProps$targetKeys === undefined ? [] : _nextProps$targetKeys;
-	      console.log(sourceSelectedKeys.filter(existInDateSourcekey).filter(function (data) {
-	        return targetKeys.filter(function (key) {
-	          return key === data;
-	        }).length === 0;
-	      }));
 	      this.setState({
 	        sourceSelectedKeys: sourceSelectedKeys.filter(existInDateSourcekey).filter(function (data) {
 	          return targetKeys.filter(function (key) {
@@ -16554,14 +16548,6 @@
 	      var key = _ref.key;
 	      return tempTargetKeys.indexOf(key) === -1;
 	    });
-	    // Why?
-	    // const rightDataSource = [];
-	    // targetKeys.forEach((targetKey) => {
-	    //   const targetItem = dataSource.filter(record => record.key === targetKey)[0];
-	    //   if (targetItem) {
-	    //     rightDataSource.push(targetItem);
-	    //   }
-	    // });
 	    var rightDataSource = dataSource.filter(function (_ref2) {
 	      var key = _ref2.key;
 	      return tempTargetKeys.indexOf(key) > -1;
@@ -16633,6 +16619,16 @@
 	  Transfer.prototype.getSelectedKeysName = function getSelectedKeysName(direction) {
 	    return direction === 'left' ? 'sourceSelectedKeys' : 'targetSelectedKeys';
 	  };
+	
+	  /**
+	   * 拖拽结束时触发
+	   */
+	
+	
+	  /**
+	   * 拖拽开始时触发
+	   */
+	
 	
 	  Transfer.prototype.render = function render() {
 	    var _props2 = this.props,
@@ -16885,13 +16881,15 @@
 	    if (!destination) {
 	      return;
 	    }
+	
 	    // 从右往左拖拽 或 在左侧列表中拖拽
 	    if (destination.droppableId === 'droppable_1') {
 	      if (source.droppableId === destination.droppableId) return;
 	      _this2.moveToLeft();
 	      return;
 	    }
-	    // 在右侧列表中上下拖拽
+	
+	    // 在右侧列表中上下拖拽进行排序
 	    if (source.droppableId === destination.droppableId) {
 	      console.log(_this2.getList(source.droppableId), "==拖拽前==");
 	      var items = (0, _utils.reorder)(_this2.getList(source.droppableId), targetKeys, source.index, destination.index);
@@ -16900,6 +16898,9 @@
 	        state = { rightDataSource: items.dataArr };
 	      }
 	      console.log(items.dataArr, '==拖拽后==');
+	      state.sourceSelectedKeys = [];
+	      state.targetSelectedKeys = [];
+	      console.log(state);
 	      _this2.setState(state);
 	      if (onChange) {
 	        onChange(items.targetKeyArr, "", draggableId);
@@ -17099,56 +17100,6 @@
 	      _this.performAction(event, item);
 	    };
 	
-	    _this.handleDrag = function (event, provided, snapshot, item) {
-	      if (event.defaultPrevented) {
-	        return;
-	      }
-	
-	      if (event.button !== primaryButton) {
-	        return;
-	      }
-	
-	      // 标记此事件被使用了
-	      event.preventDefault();
-	
-	      _this.performAction(event, item);
-	    };
-	
-	    _this.wasToggleInSelectionGroupKeyUsed = function (event) {
-	      var isUsingWindows = navigator.platform.indexOf('Win') >= 0;
-	      return isUsingWindows ? event.ctrlKey : event.metaKey;
-	    };
-	
-	    _this.wasMultiSelectKeyUsed = function (event) {
-	      return event.shiftKey;
-	    };
-	
-	    _this.performAction = function (event, task) {
-	      var _this$props2 = _this.props,
-	          toggleSelection = _this$props2.toggleSelection,
-	          toggleSelectionInGroup = _this$props2.toggleSelectionInGroup,
-	          multiSelectTo = _this$props2.multiSelectTo;
-	
-	
-	      if (_this.wasToggleInSelectionGroupKeyUsed(event)) {
-	        toggleSelectionInGroup(task.id);
-	        return;
-	      }
-	
-	      if (_this.wasMultiSelectKeyUsed(event)) {
-	        multiSelectTo(task.id);
-	        return;
-	      }
-	
-	      toggleSelection(task.id);
-	    };
-	
-	    _this.handleDeleteSelected = function (e) {
-	      e.preventDefault();
-	      e.stoppropagation();
-	      debugger;
-	    };
-	
 	    _this.state = {
 	      mounted: false
 	    };
@@ -17229,20 +17180,6 @@
 	    );
 	  };
 	
-	  // 使用 onClick ，若是个拖动行为，将有效阻止
-	
-	
-	  // 确定是否使用了组密钥中，特定于平台的切换选择
-	
-	
-	  // 确定是否使用了multiSelect键
-	
-	
-	  /**
-	   * 删除右侧已选的item
-	   */
-	
-	
 	  TransferList.prototype.render = function render() {
 	    var _classNames2,
 	        _this4 = this;
@@ -17305,9 +17242,7 @@
 	            _extends({
 	              ref: provided.innerRef
 	            }, provided.draggableProps, provided.dragHandleProps, {
-	              onClick: function onClick(event) {
-	                return _this4.handleDrag(event, provided, snapshot, item);
-	              },
+	              // onClick={(event) =>this.handleDrag(event, provided, snapshot, item)}
 	              onKeyDown: function onKeyDown(event) {
 	                return _this4.onKeyDown(event, provided, snapshot, item);
 	              }

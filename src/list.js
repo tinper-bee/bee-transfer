@@ -146,60 +146,6 @@ class TransferList extends React.Component {
     this.performAction(event,item);
   };
 
-  // 使用 onClick ，若是个拖动行为，将有效阻止
-  handleDrag = (event,provided,snapshot,item) => {
-    if (event.defaultPrevented) {
-      return;
-    }
-
-    if (event.button !== primaryButton) {
-      return;
-    }
-
-    // 标记此事件被使用了
-    event.preventDefault();
-
-    this.performAction(event,item);
-  };
-
-  // 确定是否使用了组密钥中，特定于平台的切换选择
-  wasToggleInSelectionGroupKeyUsed = (event) => {
-    const isUsingWindows = navigator.platform.indexOf('Win') >= 0;
-    return isUsingWindows ? event.ctrlKey : event.metaKey;
-  };
-
-  // 确定是否使用了multiSelect键
-  wasMultiSelectKeyUsed = (event) => event.shiftKey;
-
-  performAction = (event,task) => {
-    const {
-      toggleSelection,
-      toggleSelectionInGroup,
-      multiSelectTo,
-    } = this.props;
-
-    if (this.wasToggleInSelectionGroupKeyUsed(event)) {
-      toggleSelectionInGroup(task.id);
-      return;
-    }
-
-    if (this.wasMultiSelectKeyUsed(event)) {
-      multiSelectTo(task.id);
-      return;
-    }
-
-    toggleSelection(task.id);
-  };
-
-  /**
-   * 删除右侧已选的item
-   */
-  handleDeleteSelected = (e) => {
-    e.preventDefault();
-    e.stoppropagation();
-    debugger
-  }
-
 
   render() {
     const { prefixCls, dataSource, titleText, filter, checkedKeys, lazy, filterOption,
@@ -239,7 +185,7 @@ class TransferList extends React.Component {
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
-              onClick={(event) =>this.handleDrag(event, provided, snapshot, item)}
+              // onClick={(event) =>this.handleDrag(event, provided, snapshot, item)}
               onKeyDown={(event) =>
                 this.onKeyDown(event, provided, snapshot, item)
               }
@@ -296,7 +242,6 @@ class TransferList extends React.Component {
         <Droppable droppableId={`droppable_${id}`} direction='vertical' isDropDisabled={!draggable}>
           {(provided, snapshot) => (
             <div ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver} key={id} className={`${prefixCls}-content`}>
-              {/* {snapshot.isDraggingOver ? <Icon type="uf-del"></Icon> : ''} */}
               <Animate
                 component="ul"
                 transitionName={this.state.mounted ? `${prefixCls}-content-item-highlight` : ''}
@@ -304,28 +249,9 @@ class TransferList extends React.Component {
               >
                 {showItems}
               </Animate>
-              {/* <div 
-                className={dragging ? `${prefixCls}-delete-selected-btn` : ''}
-                ondragenter={()=>{debugger}} //ondragenter and ondrop events won't be triggered when the mouse key is released。
-                ondrop={this.handleDeleteSelected}
-                >
-                <Icon type="uf-del"></Icon>
-              </div> */}
             </div>
           )}
         </Droppable>
-        {/* <Droppable droppableId={`droppable_delbtn`} direction='vertical' isDropDisabled={!draggable}>
-          {(provided, snapshot) => (
-            <div 
-              ref={provided.innerRef}
-              className={dragging ? `${prefixCls}-delete-selected-btn` : ''}
-              ondragenter={()=>{debugger}} //ondragenter and ondrop events won't be triggered when the mouse key is released。
-              ondrop={this.handleDeleteSelected}
-              >
-              {dragging ? <Icon type="uf-del"></Icon> : ''}
-            </div>
-          )}
-        </Droppable> */}
         <div className={`${prefixCls}-body-not-found ${dataSource.length == 0? "show" : ""}`}>
           {notFoundContent}
         </div>
