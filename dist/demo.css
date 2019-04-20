@@ -90,6 +90,32 @@
       .u-transfer-list-content-item-highlight-enter {
         animation: transferHighlightIn 1s ease;
         transition: none; }
+    .u-transfer-list-delete-selected {
+      display: none;
+      width: 100%;
+      height: 100%;
+      background: rgba(52, 69, 99, 0.2);
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #fff; }
+      .u-transfer-list-delete-selected.show {
+        display: block; }
+      .u-transfer-list-delete-selected .u-transfer-list-del-btn {
+        width: 78px;
+        height: 78px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-top: -39px;
+        margin-left: -39px;
+        padding: 13px;
+        background: #5e6c84;
+        border-radius: 3px;
+        text-align: center;
+        vertical-align: middle; }
+        .u-transfer-list-delete-selected .u-transfer-list-del-btn span {
+          display: block; }
     .u-transfer-list-body-not-found {
       padding-top: 0;
       color: #ccc;

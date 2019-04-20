@@ -249,6 +249,12 @@ class TransferList extends React.Component {
               >
                 {showItems}
               </Animate>
+              <div className={`${prefixCls}-delete-selected ${snapshot.isDraggingOver && id === '1'? 'show': ''}`}>
+                <div className={`${prefixCls}-del-btn`}>
+                  <Icon type="uf-arrow-down-2"></Icon>
+                  <span>移除已选</span>
+                </div>
+              </div>
             </div>
           )}
         </Droppable>

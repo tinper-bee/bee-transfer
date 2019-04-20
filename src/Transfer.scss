@@ -129,23 +129,36 @@
         transition: none;
       }
     }
-    // &-delete-selected-btn{
-    //   &.hide{
-    //     display: none;
-    //   }
-    //   position: absolute;
-    //   bottom: -32px;
-    //   width: 100%;
-    //   height: 32px;
-    //   background: #505F79;
-    //   opacity: 0.65;
-    //   text-align: center;
-    //   line-height: 32px;
-    //   z-index: 10;
-    //   .uf{
-    //     color: #fff;
-    //   }
-    // }
+    &-delete-selected{
+      display: none;
+      width: 100%;
+      height: 100%;
+      background: rgba(52, 69, 99, 0.2);
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #fff;
+      &.show{
+        display: block;
+      }
+      .u-transfer-list-del-btn{
+        width:78px;
+        height:78px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-top: -39px;
+        margin-left: -39px;
+        padding: 13px;
+        background:rgba(94,108,132,1);
+        border-radius:$border-radius-base;
+        text-align: center;
+        vertical-align: middle;
+        span{
+          display: block;
+        }
+      }
+    }
 
     &-body-not-found {
       padding-top: 0;
