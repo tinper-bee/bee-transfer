@@ -1,7 +1,7 @@
 /**
 *
 * @title 拖拽穿梭
-* @description 通过`draggable`参数设置是否可以通过拖拽进行穿梭和排序，`showCheckbox`设置是否隐藏复选框
+* @description 通过`draggable`参数设置是否可以通过拖拽进行穿梭和排序
 *
 */
 

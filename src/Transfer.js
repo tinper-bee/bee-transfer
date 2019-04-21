@@ -59,7 +59,7 @@ class Transfer extends React.Component{
     this.cacheTargetKeys = [...targetKeys];
   }
   componentDidMount(){
-    const { leftDataSource, rightDataSource } = this.splitDataSource();
+    this.splitDataSource();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -82,6 +82,7 @@ class Transfer extends React.Component{
         targetSelectedKeys: targetSelectedKeys.filter(existInDateSourcekey)
           .filter(data => targetKeys.filter(key => key === data).length > 0),
       });
+      this.splitDataSource(targetKeys,dataSource);
     }
     if (nextProps.selectedKeys) {
       const targetKeys = nextProps.targetKeys;
@@ -93,24 +94,27 @@ class Transfer extends React.Component{
   }
   /**
    * 从dataSource中分离出leftDataSource和rightDataSource
-   * @param {*} newTargetKeys 
+   * @param {*} newTargetKeys 更新后的targetKeys
+   * @param {*} newDataSource 异步加载数据源时，从nextProps中获取的dataSource
    */
-  splitDataSource(newTargetKeys) {
+  splitDataSource(newTargetKeys, newDataSource) {
     // targetKeys：展示在右边列表的数据集
     if (this.splitedDataSource) {
       return this.splitedDataSource;
     }
 
-    const { rowKey, dataSource, targetKeys = [] } = this.props;
+    const { rowKey } = this.props;
+    let targetKeys = newTargetKeys || this.props.targetKeys;
+    //异步加载数据源时
+    let dataSource = newDataSource || this.props.dataSource;
     if (rowKey) {
       dataSource.forEach(record => {
         record.key = rowKey(record);
       });
     }
 
-    let tempTargetKeys = newTargetKeys ? newTargetKeys : targetKeys;
-    const leftDataSource = dataSource.filter(({ key }) => tempTargetKeys.indexOf(key) === -1);
-    const rightDataSource = dataSource.filter(({key}) => tempTargetKeys.indexOf(key) > -1);
+    const leftDataSource = dataSource.filter(({ key }) => targetKeys.indexOf(key) === -1);
+    const rightDataSource = dataSource.filter(({key}) => targetKeys.indexOf(key) > -1);
 
     this.splitedDataSource = {
       leftDataSource,
@@ -277,7 +281,6 @@ class Transfer extends React.Component{
    * 拖拽结束时触发
    */
   onDragEnd = result => {
-    console.log(result);
     const { source, destination,draggableId } = result;
     let { targetKeys, onChange } = this.props;
     let sourceIndex = source.index; //初始位置
@@ -298,7 +301,6 @@ class Transfer extends React.Component{
     
     // 在右侧列表中上下拖拽进行排序
     if (source.droppableId === destination.droppableId) {
-      console.log(this.getList(source.droppableId),"==拖拽前==");
       const items = reorder(
         this.getList(source.droppableId),
         targetKeys,
@@ -309,16 +311,13 @@ class Transfer extends React.Component{
       if (source.droppableId === 'droppable_2'){
         state = { rightDataSource:items.dataArr }
       }
-      console.log(items.dataArr,'==拖拽后==');
       state.sourceSelectedKeys = [];
       state.targetSelectedKeys = [];
-      console.log(state)
       this.setState(state);
       if (onChange) {
         onChange(items.targetKeyArr, "", draggableId);
       }
     } else {  // 从左往右拖拽
-      console.log(this.getList(source.droppableId),"==拖拽前==");
       const result = move(
           this.getList(source.droppableId),
           this.getList(destination.droppableId),
@@ -326,7 +325,6 @@ class Transfer extends React.Component{
           destination,
           targetKeys
       )
-      console.log(result,'==拖拽后==');
       if (onChange) {
         onChange(result.newTargetKeys, "", draggableId);
       }
