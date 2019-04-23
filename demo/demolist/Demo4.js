@@ -1,7 +1,7 @@
 /**
 *
-* @title 常用可选transfer
-* @description targetKeys需要通过ES6的扩展运算符进行赋值，实现对象的深拷贝
+* @title 隐藏复选框
+* @description 通过`showCheckbox`参数控制复选框显示和隐藏
 *
 */
 
@@ -24,7 +24,7 @@ const targetKeys = mockData
         .filter(item => +item.key % 3 > 1)
         .map(item => item.key);
 
-class Demo1 extends React.Component {
+class Demo4 extends React.Component {
   state = {
     targetKeys,
     selectedKeys: [],
@@ -35,7 +35,7 @@ class Demo1 extends React.Component {
   handleChange = (nextTargetKeys, direction, moveKeys) => {
     this.setState({ targetKeys: nextTargetKeys });
 
-    console.log('targetKeys: ', nextTargetKeys);
+    console.log('targetKeys: ', targetKeys);
     console.log('direction: ', direction);
     console.log('moveKeys: ', moveKeys);
   }
@@ -55,12 +55,13 @@ class Demo1 extends React.Component {
 
   render() {
     const state = this.state;
-    const targetKeys = [...this.state.targetKeys];
+
     return (
        <Transfer
           dataSource={mockData}
+          showCheckbox={false}
           titles={['Source', 'Target']}
-          targetKeys={targetKeys}
+          targetKeys={state.targetKeys}
           selectedKeys={state.selectedKeys}
           onChange={this.handleChange}
           onSelectChange={this.handleSelectChange}
@@ -72,4 +73,4 @@ class Demo1 extends React.Component {
 }
 
 
-export default Demo1
+export default Demo4;
