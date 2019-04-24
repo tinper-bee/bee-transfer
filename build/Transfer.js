@@ -169,31 +169,28 @@ var Transfer = function (_React$Component) {
       });
     }
   };
+
   /**
-   * 从dataSource中分离出leftDataSource和rightDataSource
-   * @param {*} newTargetKeys 更新后的targetKeys
-   * @param {*} newDataSource 异步加载数据源时，从nextProps中获取的dataSource
+   * 给dataSource里的数据值指定唯一 key 值
    */
 
 
+  /**
+   * 从源dataSource中分离出leftDataSource和rightDataSource（点击按钮穿梭时调用）
+   * @param {*} newTargetKeys 更新后的targetKeys
+   * @param {*} newDataSource 异步加载数据源时，从nextProps中获取的dataSource
+   */
   Transfer.prototype.splitDataSource = function splitDataSource(newTargetKeys, newDataSource) {
     // targetKeys：展示在右边列表的数据集
     if (this.splitedDataSource) {
       return this.splitedDataSource;
     }
 
-    var rowKey = this.props.rowKey;
-
     var targetKeys = newTargetKeys || this.props.targetKeys;
     //异步加载数据源时/移除已选时
     var dataSource = newDataSource || this.props.dataSource;
-    //TODO:移除已选时，不能自定义顺序
-    // let dataSource = isMove ? this.props.dataSource : newDataSource || this.props.dataSource;
-    if (rowKey) {
-      dataSource.forEach(function (record) {
-        record.key = rowKey(record);
-      });
-    }
+
+    dataSource = this.addUniqueKey(dataSource);
 
     var leftDataSource = dataSource.filter(function (_ref) {
       var key = _ref.key;
@@ -217,9 +214,9 @@ var Transfer = function (_React$Component) {
   };
 
   /**
-   * 从dataSource中分离出leftDataSource和rightDataSource
+   * 从自定义顺序的dataSource中分离出leftDataSource和rightDataSource（拖拽场景调用）
    * @param {*} newTargetKeys 更新后的targetKeys
-   * @param {*} newDataSource 移除已选操作时改变了顺序后的dataSource
+   * @param {*} newDataSource 通过 leftDataSource.concat(rightDataSource) 得到的newDataSource
    */
 
 
@@ -229,23 +226,14 @@ var Transfer = function (_React$Component) {
       return this.splitedDataSource;
     }
 
-    var rowKey = this.props.rowKey;
-
     var targetKeys = newTargetKeys || this.props.targetKeys;
     //异步加载数据源时/移除已选时
-    var dataSource = newDataSource || this.props.dataSource;
-    //TODO:移除已选时，不能自定义顺序
-    // let dataSource = isMove ? this.props.dataSource : newDataSource || this.props.dataSource;
-    if (rowKey) {
-      newDataSource.forEach(function (record) {
-        record.key = rowKey(record);
-      });
-      this.props.dataSource.forEach(function (record) {
-        record.key = rowKey(record);
-      });
-    }
+    var sourceDataSource = this.props.dataSource;
 
-    var leftDataSource = this.props.dataSource.filter(function (_ref3) {
+    newDataSource = this.addUniqueKey(newDataSource);
+    sourceDataSource = this.addUniqueKey(sourceDataSource);
+
+    var leftDataSource = sourceDataSource.filter(function (_ref3) {
       var key = _ref3.key;
       return targetKeys.indexOf(key) === -1;
     });
@@ -438,6 +426,17 @@ var Transfer = function (_React$Component) {
 
 var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
+
+  this.addUniqueKey = function (dataSource) {
+    var rowKey = _this2.props.rowKey;
+
+    if (rowKey) {
+      dataSource.forEach(function (record) {
+        record.key = rowKey(record);
+      });
+    }
+    return dataSource;
+  };
 
   this.moveTo = function (direction) {
     var _props2 = _this2.props,

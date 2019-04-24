@@ -96,8 +96,22 @@ class Transfer extends React.Component{
       });
     }
   }
+
   /**
-   * 从dataSource中分离出leftDataSource和rightDataSource
+   * 给dataSource里的数据值指定唯一 key 值
+   */
+  addUniqueKey = (dataSource) => {
+    const { rowKey } = this.props;
+    if (rowKey) {
+      dataSource.forEach(record => {
+        record.key = rowKey(record);
+      });
+    }
+    return dataSource;
+  }
+
+  /**
+   * 从源dataSource中分离出leftDataSource和rightDataSource（点击按钮穿梭时调用）
    * @param {*} newTargetKeys 更新后的targetKeys
    * @param {*} newDataSource 异步加载数据源时，从nextProps中获取的dataSource
    */
@@ -107,17 +121,11 @@ class Transfer extends React.Component{
       return this.splitedDataSource;
     }
 
-    const { rowKey } = this.props;
     let targetKeys = newTargetKeys || this.props.targetKeys;
     //异步加载数据源时/移除已选时
     let dataSource = newDataSource || this.props.dataSource;
-    //TODO:移除已选时，不能自定义顺序
-    // let dataSource = isMove ? this.props.dataSource : newDataSource || this.props.dataSource;
-    if (rowKey) {
-      dataSource.forEach(record => {
-        record.key = rowKey(record);
-      });
-    }
+
+    dataSource = this.addUniqueKey(dataSource);
 
     const leftDataSource = dataSource.filter(({ key }) => targetKeys.indexOf(key) === -1);
     const rightDataSource = dataSource.filter(({key}) => targetKeys.indexOf(key) > -1);
@@ -135,9 +143,9 @@ class Transfer extends React.Component{
   }
 
   /**
-   * 从dataSource中分离出leftDataSource和rightDataSource
+   * 从自定义顺序的dataSource中分离出leftDataSource和rightDataSource（拖拽场景调用）
    * @param {*} newTargetKeys 更新后的targetKeys
-   * @param {*} newDataSource 移除已选操作时改变了顺序后的dataSource
+   * @param {*} newDataSource 通过 leftDataSource.concat(rightDataSource) 得到的newDataSource
    */
   splitDataSource2(newTargetKeys, newDataSource) {
     // targetKeys：展示在右边列表的数据集
@@ -145,22 +153,14 @@ class Transfer extends React.Component{
       return this.splitedDataSource;
     }
 
-    const { rowKey } = this.props;
     let targetKeys = newTargetKeys || this.props.targetKeys;
     //异步加载数据源时/移除已选时
-    let dataSource = newDataSource || this.props.dataSource;
-    //TODO:移除已选时，不能自定义顺序
-    // let dataSource = isMove ? this.props.dataSource : newDataSource || this.props.dataSource;
-    if (rowKey) {
-      newDataSource.forEach(record => {
-        record.key = rowKey(record);
-      });
-      this.props.dataSource.forEach(record => {
-        record.key = rowKey(record);
-      })
-    }
+    let sourceDataSource = this.props.dataSource;
 
-    const leftDataSource = this.props.dataSource.filter(({ key }) => targetKeys.indexOf(key) === -1);
+    newDataSource = this.addUniqueKey(newDataSource);
+    sourceDataSource = this.addUniqueKey(sourceDataSource);
+
+    const leftDataSource = sourceDataSource.filter(({ key }) => targetKeys.indexOf(key) === -1);
     const rightDataSource = newDataSource.filter(({key}) => targetKeys.indexOf(key) > -1);
 
     this.splitedDataSource = {
