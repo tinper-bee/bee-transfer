@@ -116,13 +116,16 @@
           margin-right:0;
         }
       }
-      &-item-selected{
-        background: $selected-bg-color-base;
-      }
-
       &-item:not(&-item-disabled):hover {
         cursor: pointer;
         background-color: $hover-bg-color-base;
+      }
+      
+      &-item-selected{
+        background: $selected-bg-color-base;
+        &:not(&-item-disabled):hover{
+          background: $selected-bg-color-base;
+        }
       }
 
       &-item-disabled {
