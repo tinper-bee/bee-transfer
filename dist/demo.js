@@ -37407,7 +37407,10 @@
 	  notFoundContent: 'Not Found',
 	  showCheckbox: true,
 	  draggable: false,
-	  appendToBottom: false
+	  appendToBottom: false,
+	  renderOperation: function renderOperation() {
+	    return '';
+	  } //自定义操作
 	};
 	
 	var propTypes = {
@@ -37431,7 +37434,8 @@
 	  lazy: _propTypes2['default'].object,
 	  showCheckbox: _propTypes2['default'].bool,
 	  draggable: _propTypes2['default'].bool,
-	  appendToBottom: _propTypes2['default'].bool
+	  appendToBottom: _propTypes2['default'].bool,
+	  renderOperation: _propTypes2['default'].func
 	};
 	
 	var defaultTitles = ['', ''];
@@ -37700,7 +37704,8 @@
 	        render = _props.render,
 	        lazy = _props.lazy,
 	        showCheckbox = _props.showCheckbox,
-	        draggable = _props.draggable;
+	        draggable = _props.draggable,
+	        renderOperation = _props.renderOperation;
 	    var _state3 = this.state,
 	        leftFilter = _state3.leftFilter,
 	        rightFilter = _state3.rightFilter,
@@ -37755,7 +37760,8 @@
 	          leftActive: leftActive,
 	          leftArrowText: operations[1],
 	          moveToLeft: this.moveToLeft,
-	          className: prefixCls + '-operation'
+	          className: prefixCls + '-operation',
+	          renderOperation: renderOperation
 	        }) : '',
 	        _react2['default'].createElement(_list2['default'], {
 	          titleText: titles[1] //右侧标题
@@ -40525,7 +40531,8 @@
 	        rightArrowText = _props.rightArrowText,
 	        leftActive = _props.leftActive,
 	        rightActive = _props.rightActive,
-	        className = _props.className;
+	        className = _props.className,
+	        renderOperation = _props.renderOperation;
 	
 	
 	    var moveToLeftButton = _react2['default'].createElement(
@@ -40552,7 +40559,8 @@
 	      'div',
 	      { className: className },
 	      moveToLeftButton,
-	      moveToRightButton
+	      moveToRightButton,
+	      renderOperation()
 	    );
 	  };
 	
