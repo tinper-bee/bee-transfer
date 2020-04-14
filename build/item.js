@@ -66,6 +66,11 @@ var Item = function (_React$Component) {
         return filterOption(filter, item);
       }
       return text.indexOf(filter) >= 0;
+    }, _this.highlightFilter = function (text, filter) {
+      var prefixCls = _this.props.prefixCls;
+
+      text = text.replace(filter, '<i class="' + prefixCls + '-content-item-filter">' + filter + '</i>');
+      return text;
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -118,11 +123,7 @@ var Item = function (_React$Component) {
         _react2["default"].createElement(_beeCheckbox2["default"], { checked: checked, disabled: item.disabled, onClick: item.disabled ? undefined : function () {
             return onClick(item);
           } }),
-        _react2["default"].createElement(
-          'span',
-          null,
-          renderedEl
-        )
+        _react2["default"].createElement('span', { dangerouslySetInnerHTML: { __html: this.highlightFilter(renderedEl, filter) } })
       );
     } else {
       return _react2["default"].createElement(
@@ -140,11 +141,7 @@ var Item = function (_React$Component) {
           _react2["default"].createElement(_beeCheckbox2["default"], { checked: checked, disabled: item.disabled, onClick: item.disabled ? undefined : function () {
               return onClick(item);
             } }),
-          _react2["default"].createElement(
-            'span',
-            null,
-            renderedEl
-          )
+          _react2["default"].createElement('span', { dangerouslySetInnerHTML: { __html: this.highlightFilter(renderedEl, filter) } })
         )
       );
     }

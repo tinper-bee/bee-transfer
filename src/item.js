@@ -21,6 +21,11 @@ class Item extends React.Component{
     }
     return text.indexOf(filter) >= 0;
   }
+  highlightFilter = (text,filter) =>{
+    let { prefixCls } = this.props;
+    text = text.replace(filter,'<i class="'+prefixCls+'-content-item-filter">'+filter+'</i>');
+    return text;
+  }
   render() {
     const { render, filter, item, lazy, checked, prefixCls, onClick,renderedText,renderedEl } = this.props;
     const className = classNames({
@@ -39,7 +44,7 @@ class Item extends React.Component{
     if(lazy && lazy.container == "modal")
     {
       lazyFlag = false
-    }
+    }   
 
     if(!lazyFlag) {
       return (
@@ -49,7 +54,7 @@ class Item extends React.Component{
           onClick={item.disabled ? undefined : () => onClick(item)}
         >
           <Checkbox checked={checked} disabled={item.disabled} onClick={item.disabled ? undefined : () => onClick(item)}/>
-          <span>{renderedEl}</span>
+          <span dangerouslySetInnerHTML={{__html:this.highlightFilter(renderedEl,filter)}}></span>
         </li>
       )
     }else {
@@ -61,7 +66,7 @@ class Item extends React.Component{
               onClick={item.disabled ? undefined : () => onClick(item)}
             >
               <Checkbox checked={checked} disabled={item.disabled} onClick={item.disabled ? undefined : () => onClick(item)}/>
-              <span>{renderedEl}</span>
+              <span dangerouslySetInnerHTML={{__html:this.highlightFilter(renderedEl,filter)}}></span>
             </li>
           </Lazyload>
         );

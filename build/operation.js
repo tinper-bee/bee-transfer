@@ -66,7 +66,8 @@ var TransferOperation = function (_React$Component) {
         rightArrowText = _props.rightArrowText,
         leftActive = _props.leftActive,
         rightActive = _props.rightActive,
-        className = _props.className;
+        className = _props.className,
+        renderOperation = _props.renderOperation;
 
 
     var moveToLeftButton = _react2["default"].createElement(
@@ -92,8 +93,13 @@ var TransferOperation = function (_React$Component) {
     return _react2["default"].createElement(
       'div',
       { className: className },
-      moveToLeftButton,
-      moveToRightButton
+      _react2["default"].createElement(
+        'div',
+        { className: className + '-btns' },
+        moveToLeftButton,
+        moveToRightButton
+      ),
+      renderOperation()
     );
   };
 

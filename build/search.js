@@ -75,12 +75,21 @@ var Search = function (_React$Component) {
         prefixCls = _props.prefixCls;
 
     var icon = value && value.length > 0 ? _react2["default"].createElement(
-      'a',
-      { href: '#', className: prefixCls + '-action', onClick: this.handleClear },
-      _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-close-c' })
+      'span',
+      null,
+      _react2["default"].createElement(
+        'a',
+        { href: '#', className: prefixCls + '-action close', onClick: this.handleClear },
+        _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-close-c' })
+      ),
+      _react2["default"].createElement(
+        'span',
+        { className: prefixCls + '-action search' },
+        _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-search' })
+      )
     ) : _react2["default"].createElement(
       'span',
-      { className: prefixCls + '-action' },
+      { className: prefixCls + '-action search' },
       _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-search' })
     );
 

@@ -11,7 +11,8 @@ function noop() {
 const defaultProps = {
 	dataSource: [],
 	render: noop,
-	showSearch: false,
+  showSearch: false,
+  renderOperation:()=>''
 };
 
 const propTypes = {
@@ -33,6 +34,7 @@ const propTypes = {
     footer: PropTypes.func,
     rowKey: PropTypes.func,
     lazy: PropTypes.object,
+    renderOperation:PropTypes.func
 };
 
 const defaultTitles = ['', ''];
@@ -224,7 +226,7 @@ class Transfer extends React.Component{
     const {
       prefixCls = 'u-transfer', operations = [], showSearch, notFoundContent,
       searchPlaceholder, body, footer, listStyle, className = '',
-      filterOption, render, lazy
+      filterOption, render, lazy,renderOperation
     } = this.props;
     const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys } = this.state;
 
@@ -265,6 +267,7 @@ class Transfer extends React.Component{
           leftArrowText={operations[1]}
           moveToLeft={this.moveToLeft}
           className={`${prefixCls}-operation`}
+          renderOperation={renderOperation}
         />
         <List
           titleText={titles[1]}

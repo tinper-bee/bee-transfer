@@ -34,11 +34,14 @@ class Search extends React.Component {
   render() {
     const { placeholder, value, prefixCls } = this.props;
     const icon = (value && value.length > 0) ? (
-      <a href="#" className={`${prefixCls}-action`} onClick={this.handleClear}>
-        <Icon type="uf-close-c" />
-      </a>
+      <span>
+        <a href="#" className={`${prefixCls}-action close`} onClick={this.handleClear}>
+          <Icon type="uf-close-c" />
+        </a>
+        <span className={`${prefixCls}-action search`}><Icon type="uf-search" /></span>
+      </span>
     ) : (
-      <span className={`${prefixCls}-action`}><Icon type="uf-search" /></span>
+      <span className={`${prefixCls}-action search`}><Icon type="uf-search" /></span>
     );
 
     return (

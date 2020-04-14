@@ -47,7 +47,10 @@ function noop() {}
 var defaultProps = {
   dataSource: [],
   render: noop,
-  showSearch: false
+  showSearch: false,
+  renderOperation: function renderOperation() {
+    return '';
+  }
 };
 
 var propTypes = {
@@ -68,7 +71,8 @@ var propTypes = {
   body: _propTypes2["default"].func,
   footer: _propTypes2["default"].func,
   rowKey: _propTypes2["default"].func,
-  lazy: _propTypes2["default"].object
+  lazy: _propTypes2["default"].object,
+  renderOperation: _propTypes2["default"].func
 };
 
 var defaultTitles = ['', ''];
@@ -224,7 +228,8 @@ var Transfer = function (_React$Component) {
         className = _props2$className === undefined ? '' : _props2$className,
         filterOption = _props2.filterOption,
         render = _props2.render,
-        lazy = _props2.lazy;
+        lazy = _props2.lazy,
+        renderOperation = _props2.renderOperation;
     var _state3 = this.state,
         leftFilter = _state3.leftFilter,
         rightFilter = _state3.rightFilter,
@@ -271,7 +276,8 @@ var Transfer = function (_React$Component) {
         leftActive: leftActive,
         leftArrowText: operations[1],
         moveToLeft: this.moveToLeft,
-        className: prefixCls + '-operation'
+        className: prefixCls + '-operation',
+        renderOperation: renderOperation
       }),
       _react2["default"].createElement(_list2["default"], {
         titleText: titles[1],

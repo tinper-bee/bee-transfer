@@ -47,6 +47,9 @@
           }
         }
       }
+      &-action.close{
+        right: 20px;
+      }
     }
 
     &-header {
@@ -98,6 +101,10 @@
         padding: 7px 15px;
         min-height: 32px;
         transition: all 0.3s ease;
+      }
+      &-item-filter{
+        color: #e14c46;
+        font-style: normal;
       }
 
       &-item:not(&-item-disabled):hover {

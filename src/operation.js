@@ -34,6 +34,7 @@ class TransferOperation extends React.Component{
       leftActive,
       rightActive,
       className,
+      renderOperation
     } = this.props;
 
     const moveToLeftButton = (
@@ -48,8 +49,11 @@ class TransferOperation extends React.Component{
     );
     return (
       <div className={className}>
-        {moveToLeftButton}
-        {moveToRightButton}
+        <div className={`${className}-btns`}>
+          {moveToLeftButton}
+          {moveToRightButton}
+        </div>
+        {renderOperation()}
       </div>
     );
   }
