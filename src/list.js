@@ -79,8 +79,8 @@ class TransferList extends React.Component {
     this.props.handleClear();
   }
   renderItem = (item) => {
-    const { render = noop } = this.props;
-    const renderResult = render(item);
+    const { render = noop,filter,position } = this.props;
+    const renderResult = render(item,filter,position);
     const isRenderResultPlain = isRenderResultPlainObject(renderResult);
     return {
       renderedText: isRenderResultPlain ? renderResult.value : renderResult,

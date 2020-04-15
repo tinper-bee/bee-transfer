@@ -250,6 +250,7 @@ var Transfer = function (_React$Component) {
       'div',
       { className: cls },
       _react2["default"].createElement(_list2["default"], {
+        position: 'left',
         titleText: titles[0],
         dataSource: leftDataSource,
         filter: leftFilter,
@@ -280,6 +281,7 @@ var Transfer = function (_React$Component) {
         renderOperation: renderOperation
       }),
       _react2["default"].createElement(_list2["default"], {
+        position: 'right',
         titleText: titles[1],
         dataSource: rightDataSource,
         filter: rightFilter,

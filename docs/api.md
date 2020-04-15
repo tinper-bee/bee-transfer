@@ -9,7 +9,7 @@
 |参数|说明|类型|默认值|
 |:--|:---:|:--:|---:|
 |dataSource|设置数据源。当有targetKey props存在时，dataSource的数据刨去targetKey数据,剩下的都放在左边列表|[]|[]|
-|render|自定义的展示出来的item,需要展示哪些字段|Function(record)|-|
+|render|自定义的展示出来的item,需要展示哪些字段|Function(record,'left'|'right',filter)|-|
 |targetKeys|展示在右边列表的数据集|[]|[]|
 |selectedKeys|所有选中的item的keys|[]|[]|
 |onChange|当item在穿梭成功后的回调 参数(targetKeys, direction, moveKeys)|func|-|

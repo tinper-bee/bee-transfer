@@ -240,6 +240,7 @@ class Transfer extends React.Component{
     return (
       <div className={cls}>
         <List
+          position="left"
           titleText={titles[0]}
           dataSource={leftDataSource}
           filter={leftFilter}
@@ -270,6 +271,7 @@ class Transfer extends React.Component{
           renderOperation={renderOperation}
         />
         <List
+          position="right"
           titleText={titles[1]}
           dataSource={rightDataSource}
           filter={rightFilter}

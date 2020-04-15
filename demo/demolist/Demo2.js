@@ -48,7 +48,11 @@ class Demo2 extends React.Component {
         filterOption={this.filterOption}
         targetKeys={this.state.targetKeys}
         onChange={this.handleChange}
-        render={item => item.title}
+        render={(item,position,filter) => {
+          // console.log('position',position)
+          // console.log('filter',filter)
+          return item.title
+        }}
       />
     );
   }

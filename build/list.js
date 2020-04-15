@@ -99,10 +99,13 @@ var TransferList = function (_React$Component) {
     };
 
     _this.renderItem = function (item) {
-      var _this$props$render = _this.props.render,
-          render = _this$props$render === undefined ? noop : _this$props$render;
+      var _this$props2 = _this.props,
+          _this$props2$render = _this$props2.render,
+          render = _this$props2$render === undefined ? noop : _this$props2$render,
+          filter = _this$props2.filter,
+          position = _this$props2.position;
 
-      var renderResult = render(item);
+      var renderResult = render(item, filter, position);
       var isRenderResultPlain = isRenderResultPlainObject(renderResult);
       return {
         renderedText: isRenderResultPlain ? renderResult.value : renderResult,
