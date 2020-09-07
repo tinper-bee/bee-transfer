@@ -149,8 +149,7 @@ class TransferList extends React.Component {
 
   render() {
     const { prefixCls, dataSource, titleText, filter, checkedKeys, lazy, filterOption,
-            body = noop, footer = noop, showSearch, render = noop, style, id, showCheckbox, draggable, droppableId } = this.props;
-
+            body = noop, footer = noop, showSearch, render = noop, style, id, showCheckbox, draggable, droppableId, draggingItemId } = this.props;
     let { searchPlaceholder, notFoundContent } = this.props;
 
     // Custom Layout
@@ -205,9 +204,12 @@ class TransferList extends React.Component {
                   filter={filter}
                   filterOption={filterOption}
                   checked={checked}
+                  checkedKeys={checkedKeys}
                   prefixCls={prefixCls}
                   onClick={this.handleSelect}
                   showCheckbox={showCheckbox}
+                  isMultiDragSource={draggingItemId === item.key}
+                  draggingItemId={draggingItemId}
                 />
             </div>
           )}

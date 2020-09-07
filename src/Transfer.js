@@ -59,7 +59,8 @@ class Transfer extends React.Component{
       targetSelectedKeys: selectedKeys.filter(key => targetKeys.indexOf(key) > -1),
       leftDataSource: [],
       rightDataSource: [],
-      droppableId: ''
+      droppableId: '',
+      draggingItemId: ''
     };
     this.cacheTargetKeys = [...targetKeys];
   }
@@ -168,13 +169,12 @@ class Transfer extends React.Component{
     let targetKeys = newTargetKeys || this.props.targetKeys;
     //异步加载数据源时/移除已选时
     let sourceDataSource = this.props.dataSource;
-
     newDataSource = this.addUniqueKey(newDataSource);
     sourceDataSource = this.addUniqueKey(sourceDataSource);
-
     const leftDataSource = sourceDataSource.filter(({ key }) => targetKeys.indexOf(key) === -1);
-    const rightDataSource = newDataSource.filter(({key}) => targetKeys.indexOf(key) > -1);
-
+    const rightDataSource = targetKeys.map(key => {
+      return newDataSource.find(data => data.key === key)
+    })
     this.splitedDataSource = {
       leftDataSource,
       rightDataSource,
@@ -187,11 +187,20 @@ class Transfer extends React.Component{
     return this.splitedDataSource;
   }
 
-  moveTo = (direction) => {
+  moveTo = (direction, insertIndex) => {
     const { targetKeys = [], onChange, appendToBottom } = this.props;
     const { sourceSelectedKeys, targetSelectedKeys, leftDataSource, rightDataSource, droppableId } = this.state;
     const moveKeys = direction === 'right' ? sourceSelectedKeys : targetSelectedKeys;
-    let temp = appendToBottom ? targetKeys.concat(moveKeys) : moveKeys.concat(targetKeys);
+    // let temp = appendToBottom ? targetKeys.concat(moveKeys) : moveKeys.concat(targetKeys); // 在这里
+    let temp = []
+    if (appendToBottom) {
+      temp = targetKeys.concat(moveKeys)
+    } else if (insertIndex) {
+      targetKeys.splice(insertIndex, 0, ...moveKeys)
+      temp = targetKeys
+    } else {
+      temp = moveKeys.concat(targetKeys);
+    }
     // move items to target box
     const newTargetKeys = direction === 'right'
       ? temp
@@ -213,7 +222,7 @@ class Transfer extends React.Component{
   }
 
   moveToLeft = () => this.moveTo('left')
-  moveToRight = () => this.moveTo('right')
+  moveToRight = insertIndex => this.moveTo('right', insertIndex)
 
   /**
    * List中的item选中/未选中状态改变时触发
@@ -341,6 +350,9 @@ class Transfer extends React.Component{
    * 拖拽结束时触发
    */
   onDragEnd = result => {
+    this.setState({
+      draggingItemId: ''
+    })
     const { source, destination,draggableId } = result;
     let { targetKeys, onChange } = this.props;
     let sourceIndex = source ? source.index : ''; //初始位置
@@ -377,14 +389,17 @@ class Transfer extends React.Component{
         onChange(items.targetKeyArr, "", draggableId);
       }
     } else {  // case5：从左往右拖拽（添加已选）
-      const result = move(
+      if (this.state.sourceSelectedKeys.length > 1) {
+        return this.moveToRight(destination.index)
+      }
+      const result = move( // 一次移动的方法
           this.getList(source.droppableId),
           this.getList(destination.droppableId),
           source,
           destination,
           targetKeys
       )
-      if (onChange) {
+      if (onChange) { // onChange事件
         onChange(result.newTargetKeys, "", draggableId);
       }
       this.setState({
@@ -409,7 +424,8 @@ class Transfer extends React.Component{
       this.handleRightSelect(selectedItem);
     }
     this.setState({
-      droppableId : source.droppableId
+      droppableId : source.droppableId,
+      draggingItemId: result.draggableId
     })
   }
 
@@ -419,7 +435,7 @@ class Transfer extends React.Component{
       searchPlaceholder, body, footer, listStyle, className = '',
       filterOption, render, lazy, showCheckbox, draggable,renderOperation
     } = this.props;
-    const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys, leftDataSource, rightDataSource, droppableId } = this.state;
+    const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys, leftDataSource, rightDataSource, droppableId, draggingItemId } = this.state;
 
     // const { leftDataSource, rightDataSource } = this.splitDataSource(this.props);
     const leftActive = targetSelectedKeys.length > 0;
@@ -454,6 +470,7 @@ class Transfer extends React.Component{
             draggable={draggable}
             id={'1'}
             droppableId={droppableId}
+            draggingItemId={draggingItemId}
           />
           {!draggable? 
             <Operation

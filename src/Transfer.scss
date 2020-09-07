@@ -105,7 +105,8 @@
         }
       }
       &-item {
-        overflow: hidden;
+        position: relative;
+        overflow: visible;
         white-space: nowrap;
         text-overflow: ellipsis;
         padding: 7px 15px;
@@ -114,6 +115,19 @@
         color: $font-color-base;
         .u-checkbox{ 
           margin-right:0;
+        }
+        .multi-drag-count {
+          position: absolute;
+          right: -11px;
+          top: -8px;
+          z-index: 999;
+          width: 26px;
+          height: 26px;
+          line-height: 26px;
+          border-radius: 99px;
+          text-align: center;
+          background: #FFD700;
+          color: #999;
         }
       }
       &-item:not(&-item-disabled):hover {

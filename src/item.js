@@ -22,11 +22,12 @@ class Item extends React.Component{
   //   return text.indexOf(filter) >= 0;
   // }
   render() {
-    const { render, filter, item, lazy, checked, prefixCls, onClick,renderedText,renderedEl, showCheckbox } = this.props;
+    const { render, filter, item, lazy, checked, prefixCls, onClick,renderedText,renderedEl, showCheckbox, checkedKeys, isMultiDragSource, draggingItemId } = this.props;
+    const isAttachedDraggingItem = checked && !isMultiDragSource && draggingItemId
     const className = classNames({
       [`${prefixCls}-content-item`]: true,
-      [`${prefixCls}-content-item-disabled`]: item.disabled,
-      [`${prefixCls}-content-item-selected`]: checked
+      [`${prefixCls}-content-item-disabled`]: item.disabled || isAttachedDraggingItem,
+      [`${prefixCls}-content-item-selected`]: checked && !isAttachedDraggingItem
     });
 
     const lazyProps = assign({
@@ -41,7 +42,6 @@ class Item extends React.Component{
     {
       lazyFlag = false
     }
-
     if(!lazyFlag) {
       return (
         <li
@@ -53,7 +53,7 @@ class Item extends React.Component{
           <span>{renderedEl}</span>
         </li>
       )
-    }else {
+    } else {
         return (
           <Lazyload {...lazyProps}>
             <li
@@ -63,10 +63,14 @@ class Item extends React.Component{
             >
             {
               showCheckbox?
-              <Checkbox checked={checked} disabled={item.disabled} onClick={item.disabled ? undefined : () => onClick(item)}/>
-              :''
+              <Checkbox
+                checked={checked && !isAttachedDraggingItem}
+                disabled={item.disabled || isAttachedDraggingItem}
+                onClick={item.disabled ? undefined : () => onClick(item)}
+              /> :''
             }
               <span>{renderedEl}</span>
+            { (isMultiDragSource && checkedKeys.length > 1) && <span className="multi-drag-count">{checkedKeys.length}</span> }
             </li>
           </Lazyload>
         );
