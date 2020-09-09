@@ -1,3 +1,7 @@
+## [2.0.20](https://github.com/tinper-bee/bee-transfer/compare/v2.0.17...v2.0.20) (2020-09-09)
+
+
+
 <a name="2.0.17"></a>
 ## [2.0.17](https://github.com/tinper-bee/bee-transfer/compare/v2.0.16...v2.0.17) (2020-09-09)
 
