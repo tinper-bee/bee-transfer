@@ -115,7 +115,8 @@ var Transfer = function (_React$Component) {
       }),
       leftDataSource: [],
       rightDataSource: [],
-      droppableId: ''
+      droppableId: '',
+      draggingItemId: ''
     };
     _this.cacheTargetKeys = [].concat(_toConsumableArray(targetKeys));
     return _this;
@@ -245,19 +246,17 @@ var Transfer = function (_React$Component) {
     var targetKeys = newTargetKeys || this.props.targetKeys;
     //异步加载数据源时/移除已选时
     var sourceDataSource = this.props.dataSource;
-
     newDataSource = this.addUniqueKey(newDataSource);
     sourceDataSource = this.addUniqueKey(sourceDataSource);
-
     var leftDataSource = sourceDataSource.filter(function (_ref3) {
       var key = _ref3.key;
       return targetKeys.indexOf(key) === -1;
     });
-    var rightDataSource = newDataSource.filter(function (_ref4) {
-      var key = _ref4.key;
-      return targetKeys.indexOf(key) > -1;
+    var rightDataSource = targetKeys.map(function (key) {
+      return newDataSource.find(function (data) {
+        return data.key === key;
+      });
     });
-
     this.splitedDataSource = {
       leftDataSource: leftDataSource,
       rightDataSource: rightDataSource
@@ -362,7 +361,8 @@ var Transfer = function (_React$Component) {
         targetSelectedKeys = _state3.targetSelectedKeys,
         leftDataSource = _state3.leftDataSource,
         rightDataSource = _state3.rightDataSource,
-        droppableId = _state3.droppableId;
+        droppableId = _state3.droppableId,
+        draggingItemId = _state3.draggingItemId;
 
     // const { leftDataSource, rightDataSource } = this.splitDataSource(this.props);
 
@@ -400,7 +400,8 @@ var Transfer = function (_React$Component) {
           showCheckbox: showCheckbox,
           draggable: draggable,
           id: '1',
-          droppableId: droppableId
+          droppableId: droppableId,
+          draggingItemId: draggingItemId
         }),
         !draggable ? _react2["default"].createElement(_operation2["default"], {
           rightActive: rightActive,
@@ -456,7 +457,7 @@ var _initialiseProps = function _initialiseProps() {
     return dataSource;
   };
 
-  this.moveTo = function (direction) {
+  this.moveTo = function (direction, insertIndex) {
     var _props2 = _this3.props,
         _props2$targetKeys = _props2.targetKeys,
         targetKeys = _props2$targetKeys === undefined ? [] : _props2$targetKeys,
@@ -470,7 +471,16 @@ var _initialiseProps = function _initialiseProps() {
         droppableId = _state4.droppableId;
 
     var moveKeys = direction === 'right' ? sourceSelectedKeys : targetSelectedKeys;
-    var temp = appendToBottom ? targetKeys.concat(moveKeys) : moveKeys.concat(targetKeys);
+    // let temp = appendToBottom ? targetKeys.concat(moveKeys) : moveKeys.concat(targetKeys); // 在这里
+    var temp = [];
+    if (appendToBottom) {
+      temp = targetKeys.concat(moveKeys);
+    } else if (insertIndex) {
+      targetKeys.splice.apply(targetKeys, [insertIndex, 0].concat(_toConsumableArray(moveKeys)));
+      temp = targetKeys;
+    } else {
+      temp = moveKeys.concat(targetKeys);
+    }
     // move items to target box
     var newTargetKeys = direction === 'right' ? temp : targetKeys.filter(function (targetKey) {
       return moveKeys.indexOf(targetKey) === -1;
@@ -493,8 +503,8 @@ var _initialiseProps = function _initialiseProps() {
     return _this3.moveTo('left');
   };
 
-  this.moveToRight = function () {
-    return _this3.moveTo('right');
+  this.moveToRight = function (insertIndex) {
+    return _this3.moveTo('right', insertIndex);
   };
 
   this.handleSelectAll = function (direction, filteredDataSource, checkAll) {
@@ -589,6 +599,9 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onDragEnd = function (result) {
+    _this3.setState({
+      draggingItemId: ''
+    });
     var source = result.source,
         destination = result.destination,
         draggableId = result.draggableId;
@@ -626,8 +639,13 @@ var _initialiseProps = function _initialiseProps() {
       }
     } else {
       // case5：从左往右拖拽（添加已选）
-      var _result = (0, _utils.move)(_this3.getList(source.droppableId), _this3.getList(destination.droppableId), source, destination, targetKeys);
+      if (_this3.state.sourceSelectedKeys.length > 1) {
+        return _this3.moveToRight(destination.index);
+      }
+      var _result = (0, _utils.move)( // 一次移动的方法
+      _this3.getList(source.droppableId), _this3.getList(destination.droppableId), source, destination, targetKeys);
       if (onChange) {
+        // onChange事件
         onChange(_result.newTargetKeys, "", draggableId);
       }
       _this3.setState({
@@ -652,7 +670,8 @@ var _initialiseProps = function _initialiseProps() {
       _this3.handleRightSelect(selectedItem);
     }
     _this3.setState({
-      droppableId: source.droppableId
+      droppableId: source.droppableId,
+      draggingItemId: result.draggableId
     });
   };
 };

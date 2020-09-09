@@ -1,3 +1,19 @@
+<a name="2.0.17"></a>
+## [2.0.17](https://github.com/tinper-bee/bee-transfer/compare/v2.0.16...v2.0.17) (2020-09-09)
+
+
+
+<a name="2.0.16"></a>
+## [2.0.16](https://github.com/tinper-bee/bee-transfer/compare/v2.0.15...v2.0.16) (2020-09-09)
+
+
+### Bug Fixes
+
+* enable to drag multiple items ([05c6abb](https://github.com/tinper-bee/bee-transfer/commit/05c6abb))
+* 自动化 ([d2143aa](https://github.com/tinper-bee/bee-transfer/commit/d2143aa))
+
+
+
 <a name="2.0.13"></a>
 ## [2.0.13](https://github.com/tinper-bee/bee-transfer/compare/v2.0.12...v2.0.13) (2020-04-14)
 

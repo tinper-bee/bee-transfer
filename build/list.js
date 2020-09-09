@@ -250,7 +250,8 @@ var TransferList = function (_React$Component) {
         id = _props.id,
         showCheckbox = _props.showCheckbox,
         draggable = _props.draggable,
-        droppableId = _props.droppableId;
+        droppableId = _props.droppableId,
+        draggingItemId = _props.draggingItemId;
     var _props2 = this.props,
         searchPlaceholder = _props2.searchPlaceholder,
         notFoundContent = _props2.notFoundContent;
@@ -313,9 +314,12 @@ var TransferList = function (_React$Component) {
               filter: filter,
               filterOption: filterOption,
               checked: checked,
+              checkedKeys: checkedKeys,
               prefixCls: prefixCls,
               onClick: _this4.handleSelect,
-              showCheckbox: showCheckbox
+              showCheckbox: showCheckbox,
+              isMultiDragSource: draggingItemId === item.key,
+              draggingItemId: draggingItemId
             })
           );
         }

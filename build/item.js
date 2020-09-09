@@ -82,9 +82,13 @@ var Item = function (_React$Component) {
         onClick = _props.onClick,
         renderedText = _props.renderedText,
         renderedEl = _props.renderedEl,
-        showCheckbox = _props.showCheckbox;
+        showCheckbox = _props.showCheckbox,
+        checkedKeys = _props.checkedKeys,
+        isMultiDragSource = _props.isMultiDragSource,
+        draggingItemId = _props.draggingItemId;
 
-    var className = (0, _classnames2["default"])((_classNames = {}, _defineProperty(_classNames, prefixCls + '-content-item', true), _defineProperty(_classNames, prefixCls + '-content-item-disabled', item.disabled), _defineProperty(_classNames, prefixCls + '-content-item-selected', checked), _classNames));
+    var isAttachedDraggingItem = checked && !isMultiDragSource && draggingItemId;
+    var className = (0, _classnames2["default"])((_classNames = {}, _defineProperty(_classNames, prefixCls + '-content-item', true), _defineProperty(_classNames, prefixCls + '-content-item-disabled', item.disabled || isAttachedDraggingItem), _defineProperty(_classNames, prefixCls + '-content-item-selected', checked && !isAttachedDraggingItem), _classNames));
 
     var lazyProps = (0, _objectAssign2["default"])({
       height: 32,
@@ -97,7 +101,6 @@ var Item = function (_React$Component) {
     if (lazy && lazy.container == "modal") {
       lazyFlag = false;
     }
-
     if (!lazyFlag) {
       return _react2["default"].createElement(
         'li',
@@ -130,13 +133,22 @@ var Item = function (_React$Component) {
               return onClick(item);
             }
           },
-          showCheckbox ? _react2["default"].createElement(_beeCheckbox2["default"], { checked: checked, disabled: item.disabled, onClick: item.disabled ? undefined : function () {
+          showCheckbox ? _react2["default"].createElement(_beeCheckbox2["default"], {
+            checked: checked && !isAttachedDraggingItem,
+            disabled: item.disabled || isAttachedDraggingItem,
+            onClick: item.disabled ? undefined : function () {
               return onClick(item);
-            } }) : '',
+            }
+          }) : '',
           _react2["default"].createElement(
             'span',
             null,
             renderedEl
+          ),
+          isMultiDragSource && checkedKeys.length > 1 && _react2["default"].createElement(
+            'span',
+            { className: 'multi-drag-count' },
+            checkedKeys.length
           )
         )
       );
