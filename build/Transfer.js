@@ -59,7 +59,8 @@ var defaultProps = {
   appendToBottom: false,
   renderOperation: function renderOperation() {
     return '';
-  } //自定义操作
+  }, //自定义操作,
+  pagination: false
 };
 
 var propTypes = {
@@ -84,7 +85,8 @@ var propTypes = {
   showCheckbox: _propTypes2["default"].bool,
   draggable: _propTypes2["default"].bool,
   appendToBottom: _propTypes2["default"].bool,
-  renderOperation: _propTypes2["default"].func
+  renderOperation: _propTypes2["default"].func,
+  pagination: _propTypes2["default"].bool
 };
 
 var defaultTitles = ['', ''];
@@ -348,6 +350,7 @@ var Transfer = function (_React$Component) {
         listStyle = _props.listStyle,
         _props$className = _props.className,
         className = _props$className === undefined ? '' : _props$className,
+        pagination = _props.pagination,
         filterOption = _props.filterOption,
         render = _props.render,
         lazy = _props.lazy,
@@ -401,7 +404,8 @@ var Transfer = function (_React$Component) {
           draggable: draggable,
           id: '1',
           droppableId: droppableId,
-          draggingItemId: draggingItemId
+          draggingItemId: draggingItemId,
+          pagination: pagination
         }),
         !draggable ? _react2["default"].createElement(_operation2["default"], {
           rightActive: rightActive,
@@ -434,7 +438,8 @@ var Transfer = function (_React$Component) {
           lazy: lazy,
           showCheckbox: showCheckbox,
           draggable: draggable,
-          id: '2'
+          id: '2',
+          pagination: pagination
         })
       )
     );

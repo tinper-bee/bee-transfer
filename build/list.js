@@ -44,6 +44,10 @@ var _beeIcon = require('bee-icon');
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
 
+var _beeFormControl = require('bee-form-control');
+
+var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
+
 var _reactBeautifulDnd = require('react-beautiful-dnd');
 
 var _tinperBeeCore = require('tinper-bee-core');
@@ -66,7 +70,8 @@ var defaultProps = {
   dataSource: [],
   titleText: '',
   showSearch: false,
-  render: noop
+  render: noop,
+  pagination: false
 };
 function isRenderResultPlainObject(result) {
   return result && !_react2["default"].isValidElement(result) && Object.prototype.toString.call(result) === '[object Object]';
@@ -80,75 +85,19 @@ var TransferList = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 
-    _this.matchFilter = function (text, item) {
-      //filter：搜索框中的内容
-      //filterOption：用户自定义的搜索过滤方法
-      var _this$props = _this.props,
-          filter = _this$props.filter,
-          filterOption = _this$props.filterOption;
+    _initialiseProps.call(_this);
 
-      if (filterOption) {
-        return filterOption(filter, item);
-      }
-      return text.indexOf(filter) >= 0;
-    };
+    var pagination = props.pagination,
+        dataSource = props.dataSource;
 
-    _this.handleSelect = function (selectedItem) {
-      // checkedKeys：已勾选的Keys数组
-      // result：是否已勾选，true：已勾选  false：未勾选
-      var checkedKeys = _this.props.checkedKeys;
-
-      var result = checkedKeys.some(function (key) {
-        return key === selectedItem.key;
-      });
-      _this.props.handleSelect(selectedItem, result);
-    };
-
-    _this.handleFilter = function (e) {
-      _this.props.handleFilter(e);
-    };
-
-    _this.handleClear = function () {
-      _this.props.handleClear();
-    };
-
-    _this.renderItem = function (item) {
-      var _this$props$render = _this.props.render,
-          render = _this$props$render === undefined ? noop : _this$props$render;
-
-      var renderResult = render(item);
-      var isRenderResultPlain = isRenderResultPlainObject(renderResult);
-      return {
-        renderedText: isRenderResultPlain ? renderResult.value : renderResult,
-        renderedEl: isRenderResultPlain ? renderResult.label : renderResult
-      };
-    };
-
-    _this.onKeyDown = function (event, provided, snapshot, item) {
-      if (provided.dragHandleProps) {
-        provided.dragHandleProps.onKeyDown(event);
-      }
-
-      if (event.defaultPrevented) {
-        return;
-      }
-
-      if (snapshot.isDragging) {
-        return;
-      }
-
-      if (event.keyCode !== _tinperBeeCore.KeyCode.ENTER) {
-        return;
-      }
-
-      // 为了选择，我们使用此事件 we are using the event for selection
-      event.preventDefault();
-
-      _this.performAction(event, item);
-    };
-
+    var totalPages = Math.ceil(dataSource.length / 10);
+    var paginationInfo = pagination ? {
+      currentPage: 1,
+      totalPages: totalPages === 0 ? 1 : totalPages
+    } : {};
     _this.state = {
-      mounted: false
+      mounted: false,
+      paginationInfo: paginationInfo
     };
     return _this;
   }
@@ -161,6 +110,25 @@ var TransferList = function (_React$Component) {
         mounted: true
       });
     }, 0);
+  };
+
+  TransferList.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, prevState) {
+    var paginationInfo = prevState.paginationInfo;
+    var pagination = nextProps.pagination,
+        dataSource = nextProps.dataSource;
+
+    if (pagination) {
+      var totalPages = Math.ceil(dataSource.length / 10);
+      var currentPage = paginationInfo.currentPage;
+      console.log('walieva', currentPage, totalPages);
+      return {
+        paginationInfo: {
+          totalPages: totalPages === 0 ? 1 : totalPages,
+          currentPage: totalPages === 0 ? 1 : currentPage && totalPages && totalPages < currentPage ? totalPages : currentPage // 在最后一页移除元素之后，当前页设置为最后一页
+        }
+      };
+    }
+    return {};
   };
 
   TransferList.prototype.componentWillUnmount = function componentWillUnmount() {
@@ -239,6 +207,7 @@ var TransferList = function (_React$Component) {
         checkedKeys = _props.checkedKeys,
         lazy = _props.lazy,
         filterOption = _props.filterOption,
+        pagination = _props.pagination,
         _props$body = _props.body,
         body = _props$body === undefined ? noop : _props$body,
         _props$footer = _props.footer,
@@ -258,14 +227,22 @@ var TransferList = function (_React$Component) {
 
     // Custom Layout
 
+    var paginationInfo = this.state.paginationInfo;
+
     var footerDom = footer((0, _objectAssign2["default"])({}, this.props));
     var bodyDom = body((0, _objectAssign2["default"])({}, this.props));
 
-    var listCls = (0, _classnames2["default"])(prefixCls, (_classNames2 = {}, _defineProperty(_classNames2, prefixCls + '-with-footer', !!footerDom), _defineProperty(_classNames2, prefixCls + '-draggable', !!draggable), _classNames2));
+    var listCls = (0, _classnames2["default"])(prefixCls, (_classNames2 = {}, _defineProperty(_classNames2, prefixCls + '-with-footer', !!footerDom), _defineProperty(_classNames2, prefixCls + '-draggable', !!draggable), _defineProperty(_classNames2, prefixCls + '-with-pagination', !!pagination), _classNames2));
 
     var filteredDataSource = [];
-    var totalDataSource = [];
-    var showItems = dataSource.map(function (item, index) {
+    var totalDataSource = pagination ? dataSource : [];
+    var splitedDataSource = !pagination ? dataSource.concat() : dataSource.slice(10 * (paginationInfo.currentPage - 1), 10 * paginationInfo.currentPage);
+    if (pagination) {
+      filteredDataSource = dataSource.filter(function (item) {
+        return !item.disabled;
+      });
+    }
+    var showItems = splitedDataSource.map(function (item, index) {
       if (!item) {
         return;
       }
@@ -279,9 +256,11 @@ var TransferList = function (_React$Component) {
       }
 
       // all show items
-      totalDataSource.push(item);
+      if (!pagination) {
+        totalDataSource.push(item);
+      }
 
-      if (!item.disabled) {
+      if (!item.disabled && !pagination) {
         filteredDataSource.push(item);
       }
 
@@ -391,6 +370,7 @@ var TransferList = function (_React$Component) {
           );
         }
       ),
+      pagination ? this.createListPagination() : null,
       _react2["default"].createElement(
         'div',
         { className: prefixCls + '-body-not-found ' + (dataSource.length == 0 ? "show" : "") },
@@ -444,6 +424,164 @@ var TransferList = function (_React$Component) {
 
   return TransferList;
 }(_react2["default"].Component);
+
+var _initialiseProps = function _initialiseProps() {
+  var _this5 = this;
+
+  this.matchFilter = function (text, item) {
+    //filter：搜索框中的内容
+    //filterOption：用户自定义的搜索过滤方法
+    var _props3 = _this5.props,
+        filter = _props3.filter,
+        filterOption = _props3.filterOption;
+
+    if (filterOption) {
+      return filterOption(filter, item);
+    }
+    return text.indexOf(filter) >= 0;
+  };
+
+  this.handleSelect = function (selectedItem) {
+    // checkedKeys：已勾选的Keys数组
+    // result：是否已勾选，true：已勾选  false：未勾选
+    var checkedKeys = _this5.props.checkedKeys;
+
+    var result = checkedKeys.some(function (key) {
+      return key === selectedItem.key;
+    });
+    _this5.props.handleSelect(selectedItem, result);
+  };
+
+  this.handleFilter = function (e) {
+    _this5.props.handleFilter(e);
+  };
+
+  this.handleClear = function () {
+    _this5.props.handleClear();
+  };
+
+  this.renderItem = function (item) {
+    var _props$render2 = _this5.props.render,
+        render = _props$render2 === undefined ? noop : _props$render2;
+
+    var renderResult = render(item);
+    var isRenderResultPlain = isRenderResultPlainObject(renderResult);
+    return {
+      renderedText: isRenderResultPlain ? renderResult.value : renderResult,
+      renderedEl: isRenderResultPlain ? renderResult.label : renderResult
+    };
+  };
+
+  this.onKeyDown = function (event, provided, snapshot, item) {
+    if (provided.dragHandleProps) {
+      provided.dragHandleProps.onKeyDown(event);
+    }
+
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    if (snapshot.isDragging) {
+      return;
+    }
+
+    if (event.keyCode !== _tinperBeeCore.KeyCode.ENTER) {
+      return;
+    }
+
+    // 为了选择，我们使用此事件 we are using the event for selection
+    event.preventDefault();
+
+    _this5.performAction(event, item);
+  };
+
+  this.handleChangePage = function (value) {
+    var val = +value;
+    var paginationInfo = _this5.state.paginationInfo;
+
+    if (Number.isNaN(val) || typeof val !== 'number' || val % 1 !== 0) {
+      return;
+    }
+    if (val > paginationInfo.totalPages) {
+      val = paginationInfo.totalPages;
+    }
+    if (val < 1) {
+      val = 1;
+    }
+    _this5.setState({
+      paginationInfo: _extends({}, paginationInfo, {
+        currentPage: val
+      })
+    });
+  };
+
+  this.handleMove = function (step) {
+    var _state$paginationInfo = _this5.state.paginationInfo,
+        currentPage = _state$paginationInfo.currentPage,
+        totalPages = _state$paginationInfo.totalPages;
+
+    var newCurrentPage = currentPage + step;
+    if (newCurrentPage < 1 || newCurrentPage > totalPages) {
+      return;
+    }
+    _this5.setState({
+      paginationInfo: {
+        totalPages: totalPages,
+        currentPage: newCurrentPage
+      }
+    });
+  };
+
+  this.createListPagination = function () {
+    var prefixCls = _this5.props.prefixCls;
+    var paginationInfo = _this5.state.paginationInfo;
+    var currentPage = paginationInfo.currentPage,
+        totalPages = paginationInfo.totalPages;
+
+    return _react2["default"].createElement(
+      'div',
+      { className: prefixCls + '-pagination' },
+      _react2["default"].createElement(
+        'span',
+        {
+          onClick: function onClick() {
+            return _this5.handleMove(-1);
+          },
+          className: 'prev-link ' + (currentPage === 1 ? 'disabled' : '')
+        },
+        _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-arrow-left' })
+      ),
+      _react2["default"].createElement(_beeFormControl2["default"], {
+        size: 'sm',
+        value: currentPage,
+        ref: 'input',
+        onChange: _this5.handleChangePage
+      }),
+      _react2["default"].createElement(
+        'span',
+        {
+          className: prefixCls + '-pagination-slash'
+        },
+        '/'
+      ),
+      _react2["default"].createElement(
+        'span',
+        null,
+        totalPages
+      ),
+      _react2["default"].createElement(
+        'span',
+        {
+          onClick: function onClick() {
+            return _this5.handleMove(1);
+          },
+          className: 'next-link ' + (currentPage === totalPages ? 'disabled' : '')
+        },
+        _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-arrow-right' })
+      )
+    );
+  };
+};
 
 TransferList.defaultProps = defaultProps;
 exports["default"] = TransferList;
