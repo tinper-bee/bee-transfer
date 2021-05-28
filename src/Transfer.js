@@ -18,7 +18,8 @@ const defaultProps = {
   showCheckbox: true,
   draggable: false,
   appendToBottom: false,
-  renderOperation:()=>'',//自定义操作
+  renderOperation:()=>'',//自定义操作,
+  pagination: false
 };
 
 const propTypes = {
@@ -43,7 +44,8 @@ const propTypes = {
     showCheckbox: PropTypes.bool,
     draggable: PropTypes.bool,
     appendToBottom: PropTypes.bool,
-    renderOperation:PropTypes.func
+    renderOperation:PropTypes.func,
+    pagination: PropTypes.bool
 };
 
 const defaultTitles = ['', ''];
@@ -432,7 +434,7 @@ class Transfer extends React.Component{
   render() {
     const {
       prefixCls = 'u-transfer', operations = [], showSearch, notFoundContent,
-      searchPlaceholder, body, footer, listStyle, className = '',
+      searchPlaceholder, body, footer, listStyle, className = '', pagination,
       filterOption, render, lazy, showCheckbox, draggable,renderOperation
     } = this.props;
     const { leftFilter, rightFilter, sourceSelectedKeys, targetSelectedKeys, leftDataSource, rightDataSource, droppableId, draggingItemId } = this.state;
@@ -471,6 +473,7 @@ class Transfer extends React.Component{
             id={'1'}
             droppableId={droppableId}
             draggingItemId={draggingItemId}
+            pagination={pagination}
           />
           {!draggable? 
             <Operation
@@ -507,6 +510,7 @@ class Transfer extends React.Component{
             showCheckbox={showCheckbox}
             draggable={draggable}
             id={'2'}
+            pagination={pagination}
           />
         </DragDropContext>
       </div>

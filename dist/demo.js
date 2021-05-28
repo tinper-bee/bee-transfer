@@ -66,7 +66,7 @@
 	
 	var _beeClipboard2 = _interopRequireDefault(_beeClipboard);
 	
-	var _src = __webpack_require__(292);
+	var _src = __webpack_require__(293);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -80,7 +80,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
-	var Demo1 = __webpack_require__(311);var Demo2 = __webpack_require__(312);var Demo3 = __webpack_require__(313);var Demo4 = __webpack_require__(314);var Demo5 = __webpack_require__(315);var Demo6 = __webpack_require__(316);var Demo7 = __webpack_require__(317);var Demo8 = __webpack_require__(318);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 常用可选transfer", "code": "/**\r\n*\r\n* @title 常用可选transfer\r\n* @description targetKeys需要通过ES6的扩展运算符进行赋值，实现对象的深拷贝\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\nimport { Button, Transfer } from 'tinper-bee';\r\n\n\r\n\r\nconst AllTargetKeys = [];\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n  AllTargetKeys.push(i.toString());\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo1 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', nextTargetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n\r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  handleScroll = (direction, e) => {\r\n    console.log('direction:', direction);\r\n    console.log('target:', e.target);\r\n  }\r\n\r\n  moveAllToRight = () => {\r\n    this.setState({\r\n      targetKeys: AllTargetKeys\r\n    })\r\n  }\r\n  moveAllToLeft = () => {\r\n    this.setState({\r\n      targetKeys: []\r\n    })\r\n  }\r\n\r\n  render() {\r\n    const state = this.state;\r\n    const targetKeys = [...this.state.targetKeys];\r\n    return (\r\n      <div>\r\n        <Button onClick={this.moveAllToRight} style={{margin:'8px'}}>全部移到右边</Button>\r\n        <Button onClick={this.moveAllToLeft} style={{margin:'8px'}}>全部移到左边</Button>\r\n        <Transfer\r\n          dataSource={mockData}\r\n          titles={['Source', 'Target']}\r\n          targetKeys={targetKeys}\r\n          selectedKeys={state.selectedKeys}\r\n          onChange={this.handleChange}\r\n          onSelectChange={this.handleSelectChange}\r\n          onScroll={this.handleScroll}\r\n          render={item => item.title}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\nexport default Demo1\r\n", "desc": " targetKeys需要通过ES6的扩展运算符进行赋值，实现对象的深拷贝" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 带搜索框的tranfer", "code": "/**\r\n*\r\n* @title 带搜索框的tranfer\r\n* @description\r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\r\n\r\n\r\n\r\nclass Demo2 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  filterOption = (inputValue, option) => {\r\n    return option.title.indexOf(inputValue) > -1;\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  render() {\r\n    return (\r\n      <Transfer\r\n        dataSource={this.state.mockData}\r\n        showSearch\r\n        filterOption={this.filterOption}\r\n        targetKeys={this.state.targetKeys}\r\n        onChange={this.handleChange}\r\n        render={item => item.title}\r\n      />\r\n    );\r\n  }\r\n}\r\n\r\n\r\nexport default Demo2\r\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 底部自定义的transfer", "code": "/**\r\n*\r\n* @title 底部自定义的transfer\r\n* @description \r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\nimport { Button, Transfer } from 'tinper-bee';\r\n\n\r\n\r\nclass Demo3 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  renderFooter = () => {\r\n    return (\r\n      <Button\r\n        size=\"sm\"\r\n        style={{ float: 'right', margin: 5 }}\r\n        onClick={this.getMock}\r\n      >\r\n        reload\r\n      </Button>\r\n    );\r\n  }\r\n  render() {\r\n    return (\r\n      <Transfer\r\n        dataSource={this.state.mockData}\r\n        showSearch\r\n        listStyle={{\r\n          width: 250,\r\n          height: 300,\r\n        }}\r\n        targetKeys={this.state.targetKeys}\r\n        onChange={this.handleChange}\r\n        render={item => `${item.title}-${item.description}`}\r\n        footer={this.renderFooter}\r\n      />\r\n    );\r\n  }\r\n}\r\n\r\nexport default Demo3\r\n", "desc": " " }, { "example": _react2['default'].createElement(Demo4, null), "title": " 隐藏复选框", "code": "/**\r\n*\r\n* @title 隐藏复选框\r\n* @description 通过`showCheckbox`参数控制复选框显示和隐藏\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\r\n\r\n\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo4 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', targetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n\r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  handleScroll = (direction, e) => {\r\n    console.log('direction:', direction);\r\n    console.log('target:', e.target);\r\n  }\r\n\r\n\r\n  render() {\r\n    const state = this.state;\r\n\r\n    return (\r\n       <Transfer\r\n          dataSource={mockData}\r\n          showCheckbox={false}\r\n          titles={['Source', 'Target']}\r\n          targetKeys={state.targetKeys}\r\n          selectedKeys={state.selectedKeys}\r\n          onChange={this.handleChange}\r\n          onSelectChange={this.handleSelectChange}\r\n          onScroll={this.handleScroll}\r\n          render={item => item.title}\r\n        />\r\n    );\r\n  }\r\n}\r\n\r\n\r\nexport default Demo4;\r\n", "desc": " 通过`showCheckbox`参数控制复选框显示和隐藏" }, { "example": _react2['default'].createElement(Demo5, null), "title": " 拖拽穿梭", "code": "/**\n*\n* @title 拖拽穿梭\n* @description 通过`draggable`参数设置是否可以通过拖拽进行穿梭和排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\n\n\nconst mockData = [];\nfor (let i = 0; i < 20; i++) {\n  mockData.push({\n    key: i.toString(),\n    title: `content${i + 1}`,\n    description: `description of content${i + 1}`,\n    disabled: i % 3 < 1,\n\n  });\n}\n\nconst targetKeys = mockData\n        .filter(item => +item.key % 3 > 1)\n        .map(item => item.key);\n\nclass Demo5 extends React.Component {\n  state = {\n    targetKeys,\n    selectedKeys: [],\n    showModal: false,\n    modalSize: ''\n  }\n\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\n    this.setState({ targetKeys: nextTargetKeys });\n\n    console.log('targetKeys: ', nextTargetKeys);\n    console.log('direction: ', direction);\n    console.log('moveKeys: ', moveKeys);\n  }\n\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\n\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\n  }\n\n  handleScroll = (direction, e) => {\n    console.log('direction:', direction);\n    console.log('target:', e.target);\n  }\n\n\n  render() {\n    const state = this.state;\n    // targetKeys需要通过数组的扩展运算符进行赋值\n    const targetKeys = [...this.state.targetKeys];\n    return (\n       <Transfer\n          draggable={true}\n          dataSource={mockData}\n          titles={['Source', 'Target']}\n          targetKeys={targetKeys}\n          selectedKeys={state.selectedKeys}\n          onChange={this.handleChange}\n          onSelectChange={this.handleSelectChange}\n          onScroll={this.handleScroll}\n          render={item => item.title}\n        />\n    );\n  }\n}\n\n\nexport default Demo5\n", "desc": " 通过`draggable`参数设置是否可以通过拖拽进行穿梭和排序" }, { "example": _react2['default'].createElement(Demo6, null), "title": " 自定义渲染行数据", "code": "/**\r\n*\r\n* @title 自定义渲染行数据\r\n* @description 自定义渲染每一个 Transfer Item，可用于渲染复杂数据。\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\nimport { Button, Transfer } from 'tinper-bee';\r\n\n\r\n\r\nconst AllTargetKeys = [];\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n  AllTargetKeys.push(i.toString());\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo6 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', nextTargetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n  \r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  /**\r\n   * 自定义渲染行数据\r\n   */\r\n  renderItem = (item) => {\r\n    const customLabel = (\r\n      <span className=\"custom-item\">\r\n        {item.title}\r\n      </span>\r\n    );\r\n\r\n    return {\r\n      label: customLabel, // 显示的ReactElement节点\r\n      value: item.title, // 作为title显示\r\n    };\r\n  }\r\n\r\n  render() {\r\n    const state = this.state;\r\n    const targetKeys = [...this.state.targetKeys];\r\n    return (\r\n      <div>\r\n        <Transfer\r\n          dataSource={mockData}\r\n          titles={['Source', 'Target']}\r\n          targetKeys={targetKeys}\r\n          selectedKeys={state.selectedKeys}\r\n          onChange={this.handleChange}\r\n          onSelectChange={this.handleSelectChange}\r\n          render={this.renderItem}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\nexport default Demo6\r\n", "desc": " 自定义渲染每一个 Transfer Item，可用于渲染复杂数据。" }, { "example": _react2['default'].createElement(Demo7, null), "title": " 自定义右侧已选列表的排列顺序", "code": "/**\r\n*\r\n* @title 自定义右侧已选列表的排列顺序\r\n* @description `appendToBottom` 参数控制是否将已选项追加到右侧列表末尾，其默认值为false（即将已选项添加到右侧列表最上方）。可在项目中动态改变参数数组targetKeys，穿梭框会根据targetKeys中的顺序进行排序。应用场景：通过上移/下移改变右侧数据顺序。\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\nimport { Icon, Button, Transfer } from 'tinper-bee';\r\n\n\n\r\n\r\nconst AllTargetKeys = [];\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n  });\r\n  AllTargetKeys.push(i.toString());\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 7 === 0)\r\n        .map(item => item.key);\r\n\r\nclass Demo7 extends React.Component {\r\n    state = {\r\n        targetKeys,\r\n        selectedKeys: [],\r\n        showModal: false,\r\n        modalSize: ''\r\n    }\r\n\r\n    handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n        this.setState({ targetKeys: nextTargetKeys });\r\n\r\n        console.log('targetKeys: ', nextTargetKeys);\r\n        console.log('direction: ', direction);\r\n        console.log('moveKeys: ', moveKeys);\r\n    }\r\n\r\n    handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n        this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n        console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n        console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n    }\r\n\r\n    moveAllToRight = () => {\r\n        this.setState({\r\n        targetKeys: AllTargetKeys\r\n        })\r\n    }\r\n    moveAllToLeft = () => {\r\n        this.setState({\r\n        targetKeys: []\r\n        })\r\n    }\r\n\r\n    swapItems(arr, index1, index2) {\r\n\t\tarr[index1] = arr.splice(index2, 1, arr[index1])[0];\r\n\t\treturn arr;\r\n\t};\r\n\r\n    scopeupRecord(arr, $index) {\r\n\t\tif ($index == 0) {\r\n\t\t\treturn;\r\n\t\t}\r\n\t\tthis.swapItems(arr, $index, $index - 1);\r\n\t};\r\n    \r\n    scopedownRecord(arr, $index) {\r\n\t\tif ($index == arr.length - 1) {\r\n\t\t\treturn;\r\n\t\t}\r\n\t\tthis.swapItems(arr, $index, $index + 1);\r\n\t};\r\n\r\n    moveUp = () => {\r\n        let { targetKeys, selectedKeys } = this.state\r\n\t\tlet selectedTargetKeys = []\r\n\t\ttargetKeys.forEach((v, i) => {\r\n\t\t\tselectedKeys.forEach((v2, i2) => {\r\n\t\t\t\tif (v2 == v) {\r\n\t\t\t\t\tselectedTargetKeys.push({ key: v, index: i })\r\n\t\t\t\t}\r\n\t\t\t})\r\n\t\t})\r\n\t\tif (selectedTargetKeys.length == 1) {\r\n\t\t\tthis.scopeupRecord(targetKeys, selectedTargetKeys[0].index)\r\n\t\t\tthis.setState({\r\n\t\t\t\ttargetKeys\r\n\t\t\t});\r\n\t\t}\r\n    }\r\n\r\n    moveDown = () => {\r\n        let { targetKeys, selectedKeys } = this.state\r\n\t\tlet selectedTargetKeys = []\r\n\t\ttargetKeys.forEach((v, i) => {\r\n\t\t\tselectedKeys.forEach((v2, i2) => {\r\n\t\t\t\tif (v2 == v) {\r\n\t\t\t\t\tselectedTargetKeys.push({ key: v, index: i })\r\n\t\t\t\t}\r\n\t\t\t})\r\n\t\t})\r\n\t\tconsole.log(targetKeys, selectedKeys, selectedTargetKeys)\r\n\t\tif (selectedTargetKeys.length == 1) {\r\n\t\t\tthis.scopedownRecord(targetKeys, selectedTargetKeys[0].index)\r\n\t\t\tthis.setState({\r\n\t\t\t\ttargetKeys\r\n\t\t\t});\r\n\t\t}\r\n    }\r\n\r\n    render() {\r\n        const state = this.state;\r\n        const targetKeys = [...this.state.targetKeys];\r\n        return (\r\n        <div className=\"demo7\">\r\n            <Button onClick={this.moveUp} size=\"sm\" className=\"moveUpBtn moveBtn\"><Icon type=\"uf-arrow-up\" /></Button>\r\n            <Button onClick={this.moveDown} size=\"sm\" className=\"moveDownBtn moveBtn\"><Icon type=\"uf-arrow-down\" /></Button>\r\n            <Transfer\r\n            appendToBottom={true}\r\n            dataSource={mockData}\r\n            titles={['Source', 'Target']}\r\n            targetKeys={targetKeys}\r\n            selectedKeys={state.selectedKeys}\r\n            onChange={this.handleChange}\r\n            onSelectChange={this.handleSelectChange}\r\n            render={item => item.title}\r\n            />\r\n        </div>\r\n        );\r\n    }\r\n}\r\n\r\n\r\nexport default Demo7\r\n", "desc": " `appendToBottom` 参数控制是否将已选项追加到右侧列表末尾，其默认值为false（即将已选项添加到右侧列表最上方）。可在项目中动态改变参数数组targetKeys，穿梭框会根据targetKeys中的顺序进行排序。应用场景：通过上移/下移改变右侧数据顺序。", "scss_code": ".demo7{\r\n    width: 476px;\r\n    position: relative;\r\n    .moveBtn{\r\n        position: absolute;\r\n        right: 0;\r\n        margin: 8px;\r\n        min-width: 40px;\r\n        z-index: 10;\r\n        color: #86939E;\r\n        cursor: pointer;\r\n        &.moveUpBtn{\r\n            margin-top: 69px;\r\n        }\r\n        &.moveDownBtn{\r\n            margin-top: 100px;\r\n        }\r\n    }\r\n}" }, { "example": _react2['default'].createElement(Demo8, null), "title": " 树穿梭", "code": "/**\r\n*\r\n* @title 树穿梭\r\n* @description 结合 Tree 和 Transfer 的使用示例，解决多级数据穿梭问题。\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\nimport { Tree, Transfer } from 'tinper-bee';\r\n\n\r\n\r\nconst TreeNode = Tree.TreeNode;\r\nconst valueField = \"refcode\";\r\nconst AllTargetKeys = [];\r\n\r\nconst treeData = [{\"children\":[{\"children\":[],\"pid\":\"lkp\",\"refpk\":\"857c41b7-e1a3-11e5-aa70-0242ac11001d\",\"refcode\":\"wujd\",\"id\":\"wujd\",\"isLeaf\":\"true\",\"refname\":\"开发部\"},{\"children\":[],\"pid\":\"lkp\",\"refpk\":\"780aca16-e1a3-11e5-aa70-0242ac11001d\",\"refcode\":\"fzl\",\"id\":\"fzl\",\"isLeaf\":\"true\",\"refname\":\"人事部\"}],\"pid\":\"\",\"refpk\":\"708918f5-e1a3-11e5-aa70-0242ac11001d\",\"refcode\":\"lkp\",\"id\":\"lkp\",\"refname\":\"总公司\"}];\r\n\r\nclass Demo8 extends React.Component {\r\n    constructor(props){\r\n        super(props);\r\n        this.state = {\r\n            targetKeys: [],\r\n            selectedKeys: [],\r\n            expandedKeys: [],//记录展开节点\r\n            searchValue: '',//记录搜索内容\r\n            autoExpandParent: true,\r\n            dataList: [],\r\n            transferData : [{\"rownum_\":1,\"login_name\":\"43\",\"name\":\"花43\",\"refcode\":\"43\",\"refpk\":\"718dda50629e4f8a8833b5d17de85280\",\"id\":\"718dda50629e4f8a8833b5d17de85280\",\"refname\":\"花43\",\"key\":\"43\",\"title\":\"花43-43\"},{\"rownum_\":2,\"login_name\":\"46\",\"name\":\"花46\",\"refcode\":\"46\",\"refpk\":\"b595b95cf45348d7aadb7ae349a89a76\",\"id\":\"b595b95cf45348d7aadb7ae349a89a76\",\"refname\":\"花46\",\"key\":\"46\",\"title\":\"花46-46\"},{\"rownum_\":3,\"login_name\":\"48\",\"name\":\"花48\",\"refcode\":\"48\",\"refpk\":\"62310dd3677440ef96042b9c3ad135e2\",\"id\":\"62310dd3677440ef96042b9c3ad135e2\",\"refname\":\"花48\",\"key\":\"48\",\"title\":\"花48-48\"},{\"rownum_\":4,\"login_name\":\"53\",\"name\":\"花53\",\"refcode\":\"53\",\"refpk\":\"d64f7d6e6d014d40841415cd35a43dcf\",\"id\":\"d64f7d6e6d014d40841415cd35a43dcf\",\"refname\":\"花53\",\"key\":\"53\",\"title\":\"花53-53\"},{\"rownum_\":5,\"login_name\":\"70\",\"name\":\"花70\",\"refcode\":\"70\",\"refpk\":\"2ff33db8d1e94bcbaf9ba45e1ad6ea9c\",\"id\":\"2ff33db8d1e94bcbaf9ba45e1ad6ea9c\",\"refname\":\"花70\",\"key\":\"70\",\"title\":\"花70-70\"},{\"rownum_\":6,\"login_name\":\"73\",\"name\":\"花73\",\"refcode\":\"73\",\"refpk\":\"6d8328debfc94d5b8446f58d2b0b3cdc\",\"id\":\"6d8328debfc94d5b8446f58d2b0b3cdc\",\"refname\":\"花73\",\"key\":\"73\",\"title\":\"花73-73\"},{\"rownum_\":7,\"login_name\":\"76\",\"name\":\"花76\",\"refcode\":\"76\",\"refpk\":\"7768b51dc14544669f2cffa840edb049\",\"id\":\"7768b51dc14544669f2cffa840edb049\",\"refname\":\"花76\",\"key\":\"76\",\"title\":\"花76-76\"},{\"rownum_\":8,\"login_name\":\"80\",\"name\":\"花80\",\"refcode\":\"80\",\"refpk\":\"a89cc45ed1ec49f19bb608c18c958359\",\"id\":\"a89cc45ed1ec49f19bb608c18c958359\",\"refname\":\"花80\",\"key\":\"80\",\"title\":\"花80-80\"},{\"rownum_\":9,\"login_name\":\"78\",\"name\":\"花78\",\"refcode\":\"78\",\"refpk\":\"438d0cce9ae442e586940a582c7ee054\",\"id\":\"438d0cce9ae442e586940a582c7ee054\",\"refname\":\"花78\",\"key\":\"78\",\"title\":\"花78-78\"},{\"rownum_\":10,\"login_name\":\"79\",\"name\":\"花79\",\"refcode\":\"79\",\"refpk\":\"60adbcb7d4cb49449bc7879dd4fbf1f5\",\"id\":\"60adbcb7d4cb49449bc7879dd4fbf1f5\",\"refname\":\"花79\",\"key\":\"79\",\"title\":\"花79-79\"},{\"login_name\":\"zhao\",\"refpk\":\"14e0220f-1a86-4861-8f74-f7134cb3235b\",\"id\":\"14e0220f-1a86-4861-8f74-f7134cb3235b\",\"refcode\":\"zhao\",\"name\":\"赵宇\",\"refname\":\"赵宇\",\"key\":\"zhao\",\"title\":\"赵宇-zhao\"},{\"login_name\":\"chen\",\"refpk\":\"14e0220f-1a86-4861-8f74-f71343333b5b\",\"id\":\"14e0220f-1a86-4861-8f74-f71343333b5b\",\"refcode\":\"chen\",\"name\":\"陈辉\",\"refname\":\"陈辉\",\"key\":\"chen\",\"title\":\"陈辉-chen\"},{\"login_name\":\"yue\",\"refpk\":\"14e0220f-1a86-4861-8f74-545454547489\",\"id\":\"14e0220f-1a86-4861-8f74-545454547489\",\"refcode\":\"yue\",\"name\":\"岳明\",\"refname\":\"岳明\",\"key\":\"yue\",\"title\":\"岳明-yue\"},{\"login_name\":\"xiao\",\"refpk\":\"14e0220f-1a86-4861-8f74-543434537379\",\"id\":\"14e0220f-1a86-4861-8f74-543434537379\",\"refcode\":\"xiao\",\"name\":\"小羽\",\"refname\":\"小羽\",\"key\":\"xiao\",\"title\":\"小羽-xiao\"},{\"login_name\":\"123\",\"refpk\":\"14e0220f-1a86-4861-8f74-334455643336\",\"id\":\"14e0220f-1a86-4861-8f74-334455643336\",\"refcode\":\"123\",\"name\":\"123\",\"refname\":\"123\",\"key\":\"123\",\"title\":\"123-123\"},{\"login_name\":\"huang\",\"refpk\":\"14e0220f-1a86-4861-8f74-333387127390\",\"id\":\"14e0220f-1a86-4861-8f74-333387127390\",\"refcode\":\"huang\",\"name\":\"黄东东\",\"refname\":\"黄东东\",\"key\":\"huang\",\"title\":\"黄东东-huang\"},{\"login_name\":\"liu\",\"refpk\":\"14e0220f-1a86-4861-8f74-3332332kjffo\",\"id\":\"14e0220f-1a86-4861-8f74-3332332kjffo\",\"refcode\":\"liu\",\"name\":\"刘志鹏\",\"refname\":\"刘志鹏\",\"key\":\"liu\",\"title\":\"刘志鹏-liu\"},{\"login_name\":\"liukunlin\",\"refpk\":\"14e0220f-1a86-4861-8f74-23323e321263\",\"id\":\"14e0220f-1a86-4861-8f74-23323e321263\",\"refcode\":\"liukunlin\",\"name\":\"刘坤琳\",\"refname\":\"刘坤琳\",\"key\":\"liukunlin\",\"title\":\"刘坤琳-liukunlin\"}]\r\n        }\r\n        this.transferData = [{\"rownum_\":1,\"login_name\":\"43\",\"name\":\"花43\",\"refcode\":\"43\",\"refpk\":\"718dda50629e4f8a8833b5d17de85280\",\"id\":\"718dda50629e4f8a8833b5d17de85280\",\"refname\":\"花43\",\"key\":\"43\",\"title\":\"花43-43\"},{\"rownum_\":2,\"login_name\":\"46\",\"name\":\"花46\",\"refcode\":\"46\",\"refpk\":\"b595b95cf45348d7aadb7ae349a89a76\",\"id\":\"b595b95cf45348d7aadb7ae349a89a76\",\"refname\":\"花46\",\"key\":\"46\",\"title\":\"花46-46\"},{\"rownum_\":3,\"login_name\":\"48\",\"name\":\"花48\",\"refcode\":\"48\",\"refpk\":\"62310dd3677440ef96042b9c3ad135e2\",\"id\":\"62310dd3677440ef96042b9c3ad135e2\",\"refname\":\"花48\",\"key\":\"48\",\"title\":\"花48-48\"},{\"rownum_\":4,\"login_name\":\"53\",\"name\":\"花53\",\"refcode\":\"53\",\"refpk\":\"d64f7d6e6d014d40841415cd35a43dcf\",\"id\":\"d64f7d6e6d014d40841415cd35a43dcf\",\"refname\":\"花53\",\"key\":\"53\",\"title\":\"花53-53\"},{\"rownum_\":5,\"login_name\":\"70\",\"name\":\"花70\",\"refcode\":\"70\",\"refpk\":\"2ff33db8d1e94bcbaf9ba45e1ad6ea9c\",\"id\":\"2ff33db8d1e94bcbaf9ba45e1ad6ea9c\",\"refname\":\"花70\",\"key\":\"70\",\"title\":\"花70-70\"},{\"rownum_\":6,\"login_name\":\"73\",\"name\":\"花73\",\"refcode\":\"73\",\"refpk\":\"6d8328debfc94d5b8446f58d2b0b3cdc\",\"id\":\"6d8328debfc94d5b8446f58d2b0b3cdc\",\"refname\":\"花73\",\"key\":\"73\",\"title\":\"花73-73\"},{\"rownum_\":7,\"login_name\":\"76\",\"name\":\"花76\",\"refcode\":\"76\",\"refpk\":\"7768b51dc14544669f2cffa840edb049\",\"id\":\"7768b51dc14544669f2cffa840edb049\",\"refname\":\"花76\",\"key\":\"76\",\"title\":\"花76-76\"},{\"rownum_\":8,\"login_name\":\"80\",\"name\":\"花80\",\"refcode\":\"80\",\"refpk\":\"a89cc45ed1ec49f19bb608c18c958359\",\"id\":\"a89cc45ed1ec49f19bb608c18c958359\",\"refname\":\"花80\",\"key\":\"80\",\"title\":\"花80-80\"},{\"rownum_\":9,\"login_name\":\"78\",\"name\":\"花78\",\"refcode\":\"78\",\"refpk\":\"438d0cce9ae442e586940a582c7ee054\",\"id\":\"438d0cce9ae442e586940a582c7ee054\",\"refname\":\"花78\",\"key\":\"78\",\"title\":\"花78-78\"},{\"rownum_\":10,\"login_name\":\"79\",\"name\":\"花79\",\"refcode\":\"79\",\"refpk\":\"60adbcb7d4cb49449bc7879dd4fbf1f5\",\"id\":\"60adbcb7d4cb49449bc7879dd4fbf1f5\",\"refname\":\"花79\",\"key\":\"79\",\"title\":\"花79-79\"},{\"login_name\":\"zhao\",\"refpk\":\"14e0220f-1a86-4861-8f74-f7134cb3235b\",\"id\":\"14e0220f-1a86-4861-8f74-f7134cb3235b\",\"refcode\":\"zhao\",\"name\":\"赵宇\",\"refname\":\"赵宇\",\"key\":\"zhao\",\"title\":\"赵宇-zhao\"},{\"login_name\":\"chen\",\"refpk\":\"14e0220f-1a86-4861-8f74-f71343333b5b\",\"id\":\"14e0220f-1a86-4861-8f74-f71343333b5b\",\"refcode\":\"chen\",\"name\":\"陈辉\",\"refname\":\"陈辉\",\"key\":\"chen\",\"title\":\"陈辉-chen\"},{\"login_name\":\"yue\",\"refpk\":\"14e0220f-1a86-4861-8f74-545454547489\",\"id\":\"14e0220f-1a86-4861-8f74-545454547489\",\"refcode\":\"yue\",\"name\":\"岳明\",\"refname\":\"岳明\",\"key\":\"yue\",\"title\":\"岳明-yue\"},{\"login_name\":\"xiao\",\"refpk\":\"14e0220f-1a86-4861-8f74-543434537379\",\"id\":\"14e0220f-1a86-4861-8f74-543434537379\",\"refcode\":\"xiao\",\"name\":\"小羽\",\"refname\":\"小羽\",\"key\":\"xiao\",\"title\":\"小羽-xiao\"},{\"login_name\":\"123\",\"refpk\":\"14e0220f-1a86-4861-8f74-334455643336\",\"id\":\"14e0220f-1a86-4861-8f74-334455643336\",\"refcode\":\"123\",\"name\":\"123\",\"refname\":\"123\",\"key\":\"123\",\"title\":\"123-123\"},{\"login_name\":\"huang\",\"refpk\":\"14e0220f-1a86-4861-8f74-333387127390\",\"id\":\"14e0220f-1a86-4861-8f74-333387127390\",\"refcode\":\"huang\",\"name\":\"黄东东\",\"refname\":\"黄东东\",\"key\":\"huang\",\"title\":\"黄东东-huang\"},{\"login_name\":\"liu\",\"refpk\":\"14e0220f-1a86-4861-8f74-3332332kjffo\",\"id\":\"14e0220f-1a86-4861-8f74-3332332kjffo\",\"refcode\":\"liu\",\"name\":\"刘志鹏\",\"refname\":\"刘志鹏\",\"key\":\"liu\",\"title\":\"刘志鹏-liu\"},{\"login_name\":\"liukunlin\",\"refpk\":\"14e0220f-1a86-4861-8f74-23323e321263\",\"id\":\"14e0220f-1a86-4861-8f74-23323e321263\",\"refcode\":\"liukunlin\",\"name\":\"刘坤琳\",\"refname\":\"刘坤琳\",\"key\":\"liukunlin\",\"title\":\"刘坤琳-liukunlin\"}];\r\n    }\r\n    componentWillReceiveProps(nextProps) {\r\n\t\tconst dataList = [];\r\n\t\tconst generateList = (data) => {\r\n\t\t\tfor (let i = 0; i < data.length; i++) {\r\n\t\t\t\tconst node = data[i];\r\n\t\t\t\tconst key = node[valueField];\r\n\t\t\t\tconst title = node.refname;\r\n\t\t\t\tdataList.push({\r\n\t\t\t\t\tkey,\r\n\t\t\t\t\ttitle\r\n\t\t\t\t});\r\n\t\t\t\tif (node.children) {\r\n\t\t\t\t\tgenerateList(node.children, node.key);\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t};\r\n\t\tgenerateList(nextProps.data);\r\n\t\tthis.setState({\r\n\t\t\tdataList\r\n\t\t})\r\n\t}\r\n\r\n    handleTransferChange = (nextTargetKeys, direction, moveKeys) => {\r\n        this.setState({ targetKeys: nextTargetKeys });\r\n\r\n        console.log('targetKeys: ', nextTargetKeys);\r\n        console.log('direction: ', direction);\r\n        console.log('moveKeys: ', moveKeys);\r\n    }\r\n\r\n    handleTransferSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n        this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n    \r\n        console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n        console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n    }\r\n\r\n    handleTreeSelect = (selectNode = {}) => {\r\n        let {targetKeys,transferData}  = this.state;\r\n        let startFlag,endFlag;\r\n        if(selectNode.refcode===\"fzl\"){\r\n            startFlag = 10;\r\n            endFlag = 18\r\n        }else if(selectNode.refcode === 'wujd'){\r\n            startFlag = 0;\r\n            endFlag = 10;\r\n        }else{\r\n            startFlag=0;\r\n            endFlag=18;\r\n        }\r\n        let selectedData = this.transferData.filter(v => {\r\n\t\t\treturn targetKeys.some(key => key == v['refcode'])\r\n\t\t});\r\n\t\tlet temp = this.transferData.slice(startFlag,endFlag)\r\n        let tempTransferData = temp.concat(selectedData);\r\n        console.log('=====',targetKeys,'=====')\r\n\t\tthis.setState({\r\n\t\t\ttransferData:tempTransferData,\r\n\t\t});\r\n\t}\r\n\r\n    onTreeSelect = (selectedKeys, e) => {\r\n\t\tif (selectedKeys.length === 0) {\r\n\t\t\treturn\r\n\t\t}\r\n\t\tvar fullInfo = {};\r\n\t\tconst loopSearch = (arr, key) => {\r\n\t\t\tif (!arr) { return }\r\n\t\t\tfor (let i = 0; i < arr.length; i++) {\r\n\t\t\t\tif (arr[i][valueField] == key) {\r\n\t\t\t\t\tfullInfo = arr[i];\r\n\t\t\t\t} else {\r\n\t\t\t\t\tloopSearch(arr[i].children, key)\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n        loopSearch(treeData, selectedKeys[0])\r\n\t\tthis.handleTreeSelect(fullInfo)\r\n    }\r\n    \r\n    onExpand = (expandedKeys) => {\r\n        this.setState({\r\n            expandedKeys,\r\n            autoExpandParent: false,\r\n        });\r\n    }\r\n\r\n    render() {\r\n        const {\r\n            selectedKeys,\r\n\t\t\texpandedKeys,\r\n            autoExpandParent,\r\n            transferData,\r\n            targetKeys\r\n\t\t} = this.state;\r\n        const loop = treeData => treeData.map((item) => {\r\n            if (item.children && item.children.length > 0) {\r\n                return (\r\n                    <TreeNode key={item[valueField]} title={item.refname}>\r\n                        {loop(item.children)}\r\n                    </TreeNode>\r\n                );\r\n            }\r\n            return <TreeNode key={item[valueField]} title={item.refname} isLeaf={true} />;\r\n        });\r\n        return (\r\n        <div className=\"demo8\">\r\n            <Tree\r\n                checkStrictly={false}\r\n                multiple={false}\r\n                onExpand={this.onExpand}\r\n                defaultExpandAll={true}\r\n                expandedKeys={expandedKeys}\r\n                autoExpandParent={autoExpandParent}\r\n                onSelect={this.onTreeSelect}\r\n            >\r\n                {loop(treeData)}\r\n            </Tree>\r\n            <Transfer\r\n            dataSource={transferData}\r\n            targetKeys={targetKeys}\r\n            selectedKeys={selectedKeys}\r\n            onChange={this.handleTransferChange}\r\n            onSelectChange={this.handleTransferSelectChange}\r\n            render={item => item.title}\r\n            />\r\n        </div>\r\n        );\r\n    }\r\n}\r\n\r\n\r\nexport default Demo8\r\n", "desc": " 结合 Tree 和 Transfer 的使用示例，解决多级数据穿梭问题。", "scss_code": ".demo8{\r\n    .u-tree{\r\n        max-width: 220px;\r\n        display: inline-block;\r\n        vertical-align: top;\r\n        width: 220px;\r\n        max-height: 525px;\r\n        box-sizing: border-box;\r\n        text-align: left;\r\n    }\r\n    .u-transfer{\r\n        display: inline-block;\r\n        vertical-align: top;\r\n        width: calc(100% - 235px);\r\n        max-height: 525px;\r\n        box-sizing: border-box;\r\n        text-align: left;\r\n        overflow: auto;\r\n    }\r\n}" }];
+	var Demo1 = __webpack_require__(312);var Demo2 = __webpack_require__(313);var Demo3 = __webpack_require__(314);var Demo4 = __webpack_require__(315);var Demo5 = __webpack_require__(316);var Demo6 = __webpack_require__(317);var Demo7 = __webpack_require__(318);var Demo8 = __webpack_require__(319);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 常用可选transfer", "code": "/**\r\n*\r\n* @title 常用可选transfer\r\n* @description targetKeys需要通过ES6的扩展运算符进行赋值，实现对象的深拷贝\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\nimport { Button, Transfer } from 'tinper-bee';\r\n\n\r\n\r\nconst AllTargetKeys = [];\r\nconst mockData = [];\r\nfor (let i = 0; i < 20000; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n  AllTargetKeys.push(i.toString());\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo1 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', nextTargetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n\r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  handleScroll = (direction, e) => {\r\n    console.log('direction:', direction);\r\n    console.log('target:', e.target);\r\n  }\r\n\r\n  moveAllToRight = () => {\r\n    this.setState({\r\n      targetKeys: AllTargetKeys\r\n    })\r\n  }\r\n  moveAllToLeft = () => {\r\n    this.setState({\r\n      targetKeys: []\r\n    })\r\n  }\r\n\r\n  render() {\r\n    const state = this.state;\r\n    const targetKeys = [...this.state.targetKeys];\r\n    return (\r\n      <div>\r\n        <Button onClick={this.moveAllToRight} style={{margin:'8px'}}>全部移到右边</Button>\r\n        <Button onClick={this.moveAllToLeft} style={{margin:'8px'}}>全部移到左边</Button>\r\n        <Transfer\r\n          pagination\r\n          dataSource={mockData}\r\n          titles={['Source', 'Target']}\r\n          targetKeys={targetKeys}\r\n          selectedKeys={state.selectedKeys}\r\n          onChange={this.handleChange}\r\n          onSelectChange={this.handleSelectChange}\r\n          onScroll={this.handleScroll}\r\n          render={item => item.title}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\nexport default Demo1\r\n", "desc": " targetKeys需要通过ES6的扩展运算符进行赋值，实现对象的深拷贝" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 带搜索框的tranfer", "code": "/**\r\n*\r\n* @title 带搜索框的tranfer\r\n* @description\r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\r\n\r\n\r\n\r\nclass Demo2 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  filterOption = (inputValue, option) => {\r\n    return option.title.indexOf(inputValue) > -1;\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  render() {\r\n    return (\r\n      <Transfer\r\n        dataSource={this.state.mockData}\r\n        showSearch\r\n        filterOption={this.filterOption}\r\n        targetKeys={this.state.targetKeys}\r\n        onChange={this.handleChange}\r\n        render={item => item.title}\r\n      />\r\n    );\r\n  }\r\n}\r\n\r\n\r\nexport default Demo2\r\n", "desc": "" }, { "example": _react2['default'].createElement(Demo3, null), "title": " 底部自定义的transfer", "code": "/**\r\n*\r\n* @title 底部自定义的transfer\r\n* @description \r\n*\r\n*/\r\n\r\nimport React, { Component } from 'react';\nimport { Button, Transfer } from 'tinper-bee';\r\n\n\r\n\r\nclass Demo3 extends React.Component {\r\n  state = {\r\n    mockData: [],\r\n    targetKeys: [],\r\n  }\r\n  componentDidMount() {\r\n    this.getMock();\r\n  }\r\n  getMock = () => {\r\n    const targetKeys = [];\r\n    const mockData = [];\r\n    for (let i = 0; i < 20; i++) {\r\n      const data = {\r\n        key: i.toString(),\r\n        title: `content${i + 1}`,\r\n        description: `description of content${i + 1}`,\r\n        chosen: Math.random() * 2 > 1,\r\n      };\r\n      if (data.chosen) {\r\n        targetKeys.push(data.key);\r\n      }\r\n      mockData.push(data);\r\n    }\r\n    this.setState({ mockData, targetKeys });\r\n  }\r\n  handleChange = (targetKeys) => {\r\n    this.setState({ targetKeys });\r\n  }\r\n  renderFooter = () => {\r\n    return (\r\n      <Button\r\n        size=\"sm\"\r\n        style={{ float: 'right', margin: 5 }}\r\n        onClick={this.getMock}\r\n      >\r\n        reload\r\n      </Button>\r\n    );\r\n  }\r\n  render() {\r\n    return (\r\n      <Transfer\r\n        dataSource={this.state.mockData}\r\n        showSearch\r\n        listStyle={{\r\n          width: 250,\r\n          height: 300,\r\n        }}\r\n        targetKeys={this.state.targetKeys}\r\n        onChange={this.handleChange}\r\n        render={item => `${item.title}-${item.description}`}\r\n        footer={this.renderFooter}\r\n      />\r\n    );\r\n  }\r\n}\r\n\r\nexport default Demo3\r\n", "desc": " " }, { "example": _react2['default'].createElement(Demo4, null), "title": " 隐藏复选框", "code": "/**\r\n*\r\n* @title 隐藏复选框\r\n* @description 通过`showCheckbox`参数控制复选框显示和隐藏\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\r\n\r\n\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo4 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', targetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n\r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  handleScroll = (direction, e) => {\r\n    console.log('direction:', direction);\r\n    console.log('target:', e.target);\r\n  }\r\n\r\n\r\n  render() {\r\n    const state = this.state;\r\n\r\n    return (\r\n       <Transfer\r\n          dataSource={mockData}\r\n          showCheckbox={false}\r\n          titles={['Source', 'Target']}\r\n          targetKeys={state.targetKeys}\r\n          selectedKeys={state.selectedKeys}\r\n          onChange={this.handleChange}\r\n          onSelectChange={this.handleSelectChange}\r\n          onScroll={this.handleScroll}\r\n          render={item => item.title}\r\n        />\r\n    );\r\n  }\r\n}\r\n\r\n\r\nexport default Demo4;\r\n", "desc": " 通过`showCheckbox`参数控制复选框显示和隐藏" }, { "example": _react2['default'].createElement(Demo5, null), "title": " 拖拽穿梭", "code": "/**\n*\n* @title 拖拽穿梭\n* @description 通过`draggable`参数设置是否可以通过拖拽进行穿梭和排序\n*\n*/\n\n\nimport React, { Component } from 'react';\nimport { Transfer } from 'tinper-bee';\n\n\nconst mockData = [];\nfor (let i = 0; i < 20; i++) {\n  mockData.push({\n    key: i.toString(),\n    title: `content${i + 1}`,\n    description: `description of content${i + 1}`,\n    disabled: i % 3 < 1,\n\n  });\n}\n\nconst targetKeys = mockData\n        .filter(item => +item.key % 3 > 1)\n        .map(item => item.key);\n\nclass Demo5 extends React.Component {\n  state = {\n    targetKeys,\n    selectedKeys: [],\n    showModal: false,\n    modalSize: ''\n  }\n\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\n    this.setState({ targetKeys: nextTargetKeys });\n\n    console.log('targetKeys: ', nextTargetKeys);\n    console.log('direction: ', direction);\n    console.log('moveKeys: ', moveKeys);\n  }\n\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\n\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\n  }\n\n  handleScroll = (direction, e) => {\n    console.log('direction:', direction);\n    console.log('target:', e.target);\n  }\n\n\n  render() {\n    const state = this.state;\n    // targetKeys需要通过数组的扩展运算符进行赋值\n    const targetKeys = [...this.state.targetKeys];\n    return (\n       <Transfer\n          draggable={true}\n          dataSource={mockData}\n          titles={['Source', 'Target']}\n          targetKeys={targetKeys}\n          selectedKeys={state.selectedKeys}\n          onChange={this.handleChange}\n          onSelectChange={this.handleSelectChange}\n          onScroll={this.handleScroll}\n          render={item => item.title}\n        />\n    );\n  }\n}\n\n\nexport default Demo5\n", "desc": " 通过`draggable`参数设置是否可以通过拖拽进行穿梭和排序" }, { "example": _react2['default'].createElement(Demo6, null), "title": " 自定义渲染行数据", "code": "/**\r\n*\r\n* @title 自定义渲染行数据\r\n* @description 自定义渲染每一个 Transfer Item，可用于渲染复杂数据。\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\nimport { Button, Transfer } from 'tinper-bee';\r\n\n\r\n\r\nconst AllTargetKeys = [];\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n    disabled: i % 3 < 1,\r\n\r\n  });\r\n  AllTargetKeys.push(i.toString());\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 3 > 1)\r\n        .map(item => item.key);\r\n\r\nclass Demo6 extends React.Component {\r\n  state = {\r\n    targetKeys,\r\n    selectedKeys: [],\r\n    showModal: false,\r\n    modalSize: ''\r\n  }\r\n\r\n  handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n    this.setState({ targetKeys: nextTargetKeys });\r\n\r\n    console.log('targetKeys: ', nextTargetKeys);\r\n    console.log('direction: ', direction);\r\n    console.log('moveKeys: ', moveKeys);\r\n  }\r\n  \r\n  handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n    this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n    console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n    console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n  }\r\n\r\n  /**\r\n   * 自定义渲染行数据\r\n   */\r\n  renderItem = (item) => {\r\n    const customLabel = (\r\n      <span className=\"custom-item\">\r\n        {item.title}\r\n      </span>\r\n    );\r\n\r\n    return {\r\n      label: customLabel, // 显示的ReactElement节点\r\n      value: item.title, // 作为title显示\r\n    };\r\n  }\r\n\r\n  render() {\r\n    const state = this.state;\r\n    const targetKeys = [...this.state.targetKeys];\r\n    return (\r\n      <div>\r\n        <Transfer\r\n          dataSource={mockData}\r\n          titles={['Source', 'Target']}\r\n          targetKeys={targetKeys}\r\n          selectedKeys={state.selectedKeys}\r\n          onChange={this.handleChange}\r\n          onSelectChange={this.handleSelectChange}\r\n          render={this.renderItem}\r\n        />\r\n      </div>\r\n    );\r\n  }\r\n}\r\n\r\n\r\nexport default Demo6\r\n", "desc": " 自定义渲染每一个 Transfer Item，可用于渲染复杂数据。" }, { "example": _react2['default'].createElement(Demo7, null), "title": " 自定义右侧已选列表的排列顺序", "code": "/**\r\n*\r\n* @title 自定义右侧已选列表的排列顺序\r\n* @description `appendToBottom` 参数控制是否将已选项追加到右侧列表末尾，其默认值为false（即将已选项添加到右侧列表最上方）。可在项目中动态改变参数数组targetKeys，穿梭框会根据targetKeys中的顺序进行排序。应用场景：通过上移/下移改变右侧数据顺序。\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\nimport { Icon, Button, Transfer } from 'tinper-bee';\r\n\n\n\r\n\r\nconst AllTargetKeys = [];\r\nconst mockData = [];\r\nfor (let i = 0; i < 20; i++) {\r\n  mockData.push({\r\n    key: i.toString(),\r\n    title: `content${i + 1}`,\r\n    description: `description of content${i + 1}`,\r\n  });\r\n  AllTargetKeys.push(i.toString());\r\n}\r\n\r\nconst targetKeys = mockData\r\n        .filter(item => +item.key % 7 === 0)\r\n        .map(item => item.key);\r\n\r\nclass Demo7 extends React.Component {\r\n    state = {\r\n        targetKeys,\r\n        selectedKeys: [],\r\n        showModal: false,\r\n        modalSize: ''\r\n    }\r\n\r\n    handleChange = (nextTargetKeys, direction, moveKeys) => {\r\n        this.setState({ targetKeys: nextTargetKeys });\r\n\r\n        console.log('targetKeys: ', nextTargetKeys);\r\n        console.log('direction: ', direction);\r\n        console.log('moveKeys: ', moveKeys);\r\n    }\r\n\r\n    handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n        this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n\r\n        console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n        console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n    }\r\n\r\n    moveAllToRight = () => {\r\n        this.setState({\r\n        targetKeys: AllTargetKeys\r\n        })\r\n    }\r\n    moveAllToLeft = () => {\r\n        this.setState({\r\n        targetKeys: []\r\n        })\r\n    }\r\n\r\n    swapItems(arr, index1, index2) {\r\n\t\tarr[index1] = arr.splice(index2, 1, arr[index1])[0];\r\n\t\treturn arr;\r\n\t};\r\n\r\n    scopeupRecord(arr, $index) {\r\n\t\tif ($index == 0) {\r\n\t\t\treturn;\r\n\t\t}\r\n\t\tthis.swapItems(arr, $index, $index - 1);\r\n\t};\r\n    \r\n    scopedownRecord(arr, $index) {\r\n\t\tif ($index == arr.length - 1) {\r\n\t\t\treturn;\r\n\t\t}\r\n\t\tthis.swapItems(arr, $index, $index + 1);\r\n\t};\r\n\r\n    moveUp = () => {\r\n        let { targetKeys, selectedKeys } = this.state\r\n\t\tlet selectedTargetKeys = []\r\n\t\ttargetKeys.forEach((v, i) => {\r\n\t\t\tselectedKeys.forEach((v2, i2) => {\r\n\t\t\t\tif (v2 == v) {\r\n\t\t\t\t\tselectedTargetKeys.push({ key: v, index: i })\r\n\t\t\t\t}\r\n\t\t\t})\r\n\t\t})\r\n\t\tif (selectedTargetKeys.length == 1) {\r\n\t\t\tthis.scopeupRecord(targetKeys, selectedTargetKeys[0].index)\r\n\t\t\tthis.setState({\r\n\t\t\t\ttargetKeys\r\n\t\t\t});\r\n\t\t}\r\n    }\r\n\r\n    moveDown = () => {\r\n        let { targetKeys, selectedKeys } = this.state\r\n\t\tlet selectedTargetKeys = []\r\n\t\ttargetKeys.forEach((v, i) => {\r\n\t\t\tselectedKeys.forEach((v2, i2) => {\r\n\t\t\t\tif (v2 == v) {\r\n\t\t\t\t\tselectedTargetKeys.push({ key: v, index: i })\r\n\t\t\t\t}\r\n\t\t\t})\r\n\t\t})\r\n\t\tconsole.log(targetKeys, selectedKeys, selectedTargetKeys)\r\n\t\tif (selectedTargetKeys.length == 1) {\r\n\t\t\tthis.scopedownRecord(targetKeys, selectedTargetKeys[0].index)\r\n\t\t\tthis.setState({\r\n\t\t\t\ttargetKeys\r\n\t\t\t});\r\n\t\t}\r\n    }\r\n\r\n    render() {\r\n        const state = this.state;\r\n        const targetKeys = [...this.state.targetKeys];\r\n        return (\r\n        <div className=\"demo7\">\r\n            <Button onClick={this.moveUp} size=\"sm\" className=\"moveUpBtn moveBtn\"><Icon type=\"uf-arrow-up\" /></Button>\r\n            <Button onClick={this.moveDown} size=\"sm\" className=\"moveDownBtn moveBtn\"><Icon type=\"uf-arrow-down\" /></Button>\r\n            <Transfer\r\n            appendToBottom={true}\r\n            dataSource={mockData}\r\n            titles={['Source', 'Target']}\r\n            targetKeys={targetKeys}\r\n            selectedKeys={state.selectedKeys}\r\n            onChange={this.handleChange}\r\n            onSelectChange={this.handleSelectChange}\r\n            render={item => item.title}\r\n            />\r\n        </div>\r\n        );\r\n    }\r\n}\r\n\r\n\r\nexport default Demo7\r\n", "desc": " `appendToBottom` 参数控制是否将已选项追加到右侧列表末尾，其默认值为false（即将已选项添加到右侧列表最上方）。可在项目中动态改变参数数组targetKeys，穿梭框会根据targetKeys中的顺序进行排序。应用场景：通过上移/下移改变右侧数据顺序。", "scss_code": ".demo7{\r\n    width: 476px;\r\n    position: relative;\r\n    .moveBtn{\r\n        position: absolute;\r\n        right: 0;\r\n        margin: 8px;\r\n        min-width: 40px;\r\n        z-index: 10;\r\n        color: #86939E;\r\n        cursor: pointer;\r\n        &.moveUpBtn{\r\n            margin-top: 69px;\r\n        }\r\n        &.moveDownBtn{\r\n            margin-top: 100px;\r\n        }\r\n    }\r\n}" }, { "example": _react2['default'].createElement(Demo8, null), "title": " 树穿梭", "code": "/**\r\n*\r\n* @title 树穿梭\r\n* @description 结合 Tree 和 Transfer 的使用示例，解决多级数据穿梭问题。\r\n*\r\n*/\r\n\r\n\r\nimport React, { Component } from 'react';\nimport { Tree, Transfer } from 'tinper-bee';\r\n\n\r\n\r\nconst TreeNode = Tree.TreeNode;\r\nconst valueField = \"refcode\";\r\nconst AllTargetKeys = [];\r\n\r\nconst treeData = [{\"children\":[{\"children\":[],\"pid\":\"lkp\",\"refpk\":\"857c41b7-e1a3-11e5-aa70-0242ac11001d\",\"refcode\":\"wujd\",\"id\":\"wujd\",\"isLeaf\":\"true\",\"refname\":\"开发部\"},{\"children\":[],\"pid\":\"lkp\",\"refpk\":\"780aca16-e1a3-11e5-aa70-0242ac11001d\",\"refcode\":\"fzl\",\"id\":\"fzl\",\"isLeaf\":\"true\",\"refname\":\"人事部\"}],\"pid\":\"\",\"refpk\":\"708918f5-e1a3-11e5-aa70-0242ac11001d\",\"refcode\":\"lkp\",\"id\":\"lkp\",\"refname\":\"总公司\"}];\r\n\r\nclass Demo8 extends React.Component {\r\n    constructor(props){\r\n        super(props);\r\n        this.state = {\r\n            targetKeys: [],\r\n            selectedKeys: [],\r\n            expandedKeys: [],//记录展开节点\r\n            searchValue: '',//记录搜索内容\r\n            autoExpandParent: true,\r\n            dataList: [],\r\n            transferData : [{\"rownum_\":1,\"login_name\":\"43\",\"name\":\"花43\",\"refcode\":\"43\",\"refpk\":\"718dda50629e4f8a8833b5d17de85280\",\"id\":\"718dda50629e4f8a8833b5d17de85280\",\"refname\":\"花43\",\"key\":\"43\",\"title\":\"花43-43\"},{\"rownum_\":2,\"login_name\":\"46\",\"name\":\"花46\",\"refcode\":\"46\",\"refpk\":\"b595b95cf45348d7aadb7ae349a89a76\",\"id\":\"b595b95cf45348d7aadb7ae349a89a76\",\"refname\":\"花46\",\"key\":\"46\",\"title\":\"花46-46\"},{\"rownum_\":3,\"login_name\":\"48\",\"name\":\"花48\",\"refcode\":\"48\",\"refpk\":\"62310dd3677440ef96042b9c3ad135e2\",\"id\":\"62310dd3677440ef96042b9c3ad135e2\",\"refname\":\"花48\",\"key\":\"48\",\"title\":\"花48-48\"},{\"rownum_\":4,\"login_name\":\"53\",\"name\":\"花53\",\"refcode\":\"53\",\"refpk\":\"d64f7d6e6d014d40841415cd35a43dcf\",\"id\":\"d64f7d6e6d014d40841415cd35a43dcf\",\"refname\":\"花53\",\"key\":\"53\",\"title\":\"花53-53\"},{\"rownum_\":5,\"login_name\":\"70\",\"name\":\"花70\",\"refcode\":\"70\",\"refpk\":\"2ff33db8d1e94bcbaf9ba45e1ad6ea9c\",\"id\":\"2ff33db8d1e94bcbaf9ba45e1ad6ea9c\",\"refname\":\"花70\",\"key\":\"70\",\"title\":\"花70-70\"},{\"rownum_\":6,\"login_name\":\"73\",\"name\":\"花73\",\"refcode\":\"73\",\"refpk\":\"6d8328debfc94d5b8446f58d2b0b3cdc\",\"id\":\"6d8328debfc94d5b8446f58d2b0b3cdc\",\"refname\":\"花73\",\"key\":\"73\",\"title\":\"花73-73\"},{\"rownum_\":7,\"login_name\":\"76\",\"name\":\"花76\",\"refcode\":\"76\",\"refpk\":\"7768b51dc14544669f2cffa840edb049\",\"id\":\"7768b51dc14544669f2cffa840edb049\",\"refname\":\"花76\",\"key\":\"76\",\"title\":\"花76-76\"},{\"rownum_\":8,\"login_name\":\"80\",\"name\":\"花80\",\"refcode\":\"80\",\"refpk\":\"a89cc45ed1ec49f19bb608c18c958359\",\"id\":\"a89cc45ed1ec49f19bb608c18c958359\",\"refname\":\"花80\",\"key\":\"80\",\"title\":\"花80-80\"},{\"rownum_\":9,\"login_name\":\"78\",\"name\":\"花78\",\"refcode\":\"78\",\"refpk\":\"438d0cce9ae442e586940a582c7ee054\",\"id\":\"438d0cce9ae442e586940a582c7ee054\",\"refname\":\"花78\",\"key\":\"78\",\"title\":\"花78-78\"},{\"rownum_\":10,\"login_name\":\"79\",\"name\":\"花79\",\"refcode\":\"79\",\"refpk\":\"60adbcb7d4cb49449bc7879dd4fbf1f5\",\"id\":\"60adbcb7d4cb49449bc7879dd4fbf1f5\",\"refname\":\"花79\",\"key\":\"79\",\"title\":\"花79-79\"},{\"login_name\":\"zhao\",\"refpk\":\"14e0220f-1a86-4861-8f74-f7134cb3235b\",\"id\":\"14e0220f-1a86-4861-8f74-f7134cb3235b\",\"refcode\":\"zhao\",\"name\":\"赵宇\",\"refname\":\"赵宇\",\"key\":\"zhao\",\"title\":\"赵宇-zhao\"},{\"login_name\":\"chen\",\"refpk\":\"14e0220f-1a86-4861-8f74-f71343333b5b\",\"id\":\"14e0220f-1a86-4861-8f74-f71343333b5b\",\"refcode\":\"chen\",\"name\":\"陈辉\",\"refname\":\"陈辉\",\"key\":\"chen\",\"title\":\"陈辉-chen\"},{\"login_name\":\"yue\",\"refpk\":\"14e0220f-1a86-4861-8f74-545454547489\",\"id\":\"14e0220f-1a86-4861-8f74-545454547489\",\"refcode\":\"yue\",\"name\":\"岳明\",\"refname\":\"岳明\",\"key\":\"yue\",\"title\":\"岳明-yue\"},{\"login_name\":\"xiao\",\"refpk\":\"14e0220f-1a86-4861-8f74-543434537379\",\"id\":\"14e0220f-1a86-4861-8f74-543434537379\",\"refcode\":\"xiao\",\"name\":\"小羽\",\"refname\":\"小羽\",\"key\":\"xiao\",\"title\":\"小羽-xiao\"},{\"login_name\":\"123\",\"refpk\":\"14e0220f-1a86-4861-8f74-334455643336\",\"id\":\"14e0220f-1a86-4861-8f74-334455643336\",\"refcode\":\"123\",\"name\":\"123\",\"refname\":\"123\",\"key\":\"123\",\"title\":\"123-123\"},{\"login_name\":\"huang\",\"refpk\":\"14e0220f-1a86-4861-8f74-333387127390\",\"id\":\"14e0220f-1a86-4861-8f74-333387127390\",\"refcode\":\"huang\",\"name\":\"黄东东\",\"refname\":\"黄东东\",\"key\":\"huang\",\"title\":\"黄东东-huang\"},{\"login_name\":\"liu\",\"refpk\":\"14e0220f-1a86-4861-8f74-3332332kjffo\",\"id\":\"14e0220f-1a86-4861-8f74-3332332kjffo\",\"refcode\":\"liu\",\"name\":\"刘志鹏\",\"refname\":\"刘志鹏\",\"key\":\"liu\",\"title\":\"刘志鹏-liu\"},{\"login_name\":\"liukunlin\",\"refpk\":\"14e0220f-1a86-4861-8f74-23323e321263\",\"id\":\"14e0220f-1a86-4861-8f74-23323e321263\",\"refcode\":\"liukunlin\",\"name\":\"刘坤琳\",\"refname\":\"刘坤琳\",\"key\":\"liukunlin\",\"title\":\"刘坤琳-liukunlin\"}]\r\n        }\r\n        this.transferData = [{\"rownum_\":1,\"login_name\":\"43\",\"name\":\"花43\",\"refcode\":\"43\",\"refpk\":\"718dda50629e4f8a8833b5d17de85280\",\"id\":\"718dda50629e4f8a8833b5d17de85280\",\"refname\":\"花43\",\"key\":\"43\",\"title\":\"花43-43\"},{\"rownum_\":2,\"login_name\":\"46\",\"name\":\"花46\",\"refcode\":\"46\",\"refpk\":\"b595b95cf45348d7aadb7ae349a89a76\",\"id\":\"b595b95cf45348d7aadb7ae349a89a76\",\"refname\":\"花46\",\"key\":\"46\",\"title\":\"花46-46\"},{\"rownum_\":3,\"login_name\":\"48\",\"name\":\"花48\",\"refcode\":\"48\",\"refpk\":\"62310dd3677440ef96042b9c3ad135e2\",\"id\":\"62310dd3677440ef96042b9c3ad135e2\",\"refname\":\"花48\",\"key\":\"48\",\"title\":\"花48-48\"},{\"rownum_\":4,\"login_name\":\"53\",\"name\":\"花53\",\"refcode\":\"53\",\"refpk\":\"d64f7d6e6d014d40841415cd35a43dcf\",\"id\":\"d64f7d6e6d014d40841415cd35a43dcf\",\"refname\":\"花53\",\"key\":\"53\",\"title\":\"花53-53\"},{\"rownum_\":5,\"login_name\":\"70\",\"name\":\"花70\",\"refcode\":\"70\",\"refpk\":\"2ff33db8d1e94bcbaf9ba45e1ad6ea9c\",\"id\":\"2ff33db8d1e94bcbaf9ba45e1ad6ea9c\",\"refname\":\"花70\",\"key\":\"70\",\"title\":\"花70-70\"},{\"rownum_\":6,\"login_name\":\"73\",\"name\":\"花73\",\"refcode\":\"73\",\"refpk\":\"6d8328debfc94d5b8446f58d2b0b3cdc\",\"id\":\"6d8328debfc94d5b8446f58d2b0b3cdc\",\"refname\":\"花73\",\"key\":\"73\",\"title\":\"花73-73\"},{\"rownum_\":7,\"login_name\":\"76\",\"name\":\"花76\",\"refcode\":\"76\",\"refpk\":\"7768b51dc14544669f2cffa840edb049\",\"id\":\"7768b51dc14544669f2cffa840edb049\",\"refname\":\"花76\",\"key\":\"76\",\"title\":\"花76-76\"},{\"rownum_\":8,\"login_name\":\"80\",\"name\":\"花80\",\"refcode\":\"80\",\"refpk\":\"a89cc45ed1ec49f19bb608c18c958359\",\"id\":\"a89cc45ed1ec49f19bb608c18c958359\",\"refname\":\"花80\",\"key\":\"80\",\"title\":\"花80-80\"},{\"rownum_\":9,\"login_name\":\"78\",\"name\":\"花78\",\"refcode\":\"78\",\"refpk\":\"438d0cce9ae442e586940a582c7ee054\",\"id\":\"438d0cce9ae442e586940a582c7ee054\",\"refname\":\"花78\",\"key\":\"78\",\"title\":\"花78-78\"},{\"rownum_\":10,\"login_name\":\"79\",\"name\":\"花79\",\"refcode\":\"79\",\"refpk\":\"60adbcb7d4cb49449bc7879dd4fbf1f5\",\"id\":\"60adbcb7d4cb49449bc7879dd4fbf1f5\",\"refname\":\"花79\",\"key\":\"79\",\"title\":\"花79-79\"},{\"login_name\":\"zhao\",\"refpk\":\"14e0220f-1a86-4861-8f74-f7134cb3235b\",\"id\":\"14e0220f-1a86-4861-8f74-f7134cb3235b\",\"refcode\":\"zhao\",\"name\":\"赵宇\",\"refname\":\"赵宇\",\"key\":\"zhao\",\"title\":\"赵宇-zhao\"},{\"login_name\":\"chen\",\"refpk\":\"14e0220f-1a86-4861-8f74-f71343333b5b\",\"id\":\"14e0220f-1a86-4861-8f74-f71343333b5b\",\"refcode\":\"chen\",\"name\":\"陈辉\",\"refname\":\"陈辉\",\"key\":\"chen\",\"title\":\"陈辉-chen\"},{\"login_name\":\"yue\",\"refpk\":\"14e0220f-1a86-4861-8f74-545454547489\",\"id\":\"14e0220f-1a86-4861-8f74-545454547489\",\"refcode\":\"yue\",\"name\":\"岳明\",\"refname\":\"岳明\",\"key\":\"yue\",\"title\":\"岳明-yue\"},{\"login_name\":\"xiao\",\"refpk\":\"14e0220f-1a86-4861-8f74-543434537379\",\"id\":\"14e0220f-1a86-4861-8f74-543434537379\",\"refcode\":\"xiao\",\"name\":\"小羽\",\"refname\":\"小羽\",\"key\":\"xiao\",\"title\":\"小羽-xiao\"},{\"login_name\":\"123\",\"refpk\":\"14e0220f-1a86-4861-8f74-334455643336\",\"id\":\"14e0220f-1a86-4861-8f74-334455643336\",\"refcode\":\"123\",\"name\":\"123\",\"refname\":\"123\",\"key\":\"123\",\"title\":\"123-123\"},{\"login_name\":\"huang\",\"refpk\":\"14e0220f-1a86-4861-8f74-333387127390\",\"id\":\"14e0220f-1a86-4861-8f74-333387127390\",\"refcode\":\"huang\",\"name\":\"黄东东\",\"refname\":\"黄东东\",\"key\":\"huang\",\"title\":\"黄东东-huang\"},{\"login_name\":\"liu\",\"refpk\":\"14e0220f-1a86-4861-8f74-3332332kjffo\",\"id\":\"14e0220f-1a86-4861-8f74-3332332kjffo\",\"refcode\":\"liu\",\"name\":\"刘志鹏\",\"refname\":\"刘志鹏\",\"key\":\"liu\",\"title\":\"刘志鹏-liu\"},{\"login_name\":\"liukunlin\",\"refpk\":\"14e0220f-1a86-4861-8f74-23323e321263\",\"id\":\"14e0220f-1a86-4861-8f74-23323e321263\",\"refcode\":\"liukunlin\",\"name\":\"刘坤琳\",\"refname\":\"刘坤琳\",\"key\":\"liukunlin\",\"title\":\"刘坤琳-liukunlin\"}];\r\n    }\r\n    componentWillReceiveProps(nextProps) {\r\n\t\tconst dataList = [];\r\n\t\tconst generateList = (data) => {\r\n\t\t\tfor (let i = 0; i < data.length; i++) {\r\n\t\t\t\tconst node = data[i];\r\n\t\t\t\tconst key = node[valueField];\r\n\t\t\t\tconst title = node.refname;\r\n\t\t\t\tdataList.push({\r\n\t\t\t\t\tkey,\r\n\t\t\t\t\ttitle\r\n\t\t\t\t});\r\n\t\t\t\tif (node.children) {\r\n\t\t\t\t\tgenerateList(node.children, node.key);\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t};\r\n\t\tgenerateList(nextProps.data);\r\n\t\tthis.setState({\r\n\t\t\tdataList\r\n\t\t})\r\n\t}\r\n\r\n    handleTransferChange = (nextTargetKeys, direction, moveKeys) => {\r\n        this.setState({ targetKeys: nextTargetKeys });\r\n\r\n        console.log('targetKeys: ', nextTargetKeys);\r\n        console.log('direction: ', direction);\r\n        console.log('moveKeys: ', moveKeys);\r\n    }\r\n\r\n    handleTransferSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {\r\n        this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] });\r\n    \r\n        console.log('sourceSelectedKeys: ', sourceSelectedKeys);\r\n        console.log('targetSelectedKeys: ', targetSelectedKeys);\r\n    }\r\n\r\n    handleTreeSelect = (selectNode = {}) => {\r\n        let {targetKeys,transferData}  = this.state;\r\n        let startFlag,endFlag;\r\n        if(selectNode.refcode===\"fzl\"){\r\n            startFlag = 10;\r\n            endFlag = 18\r\n        }else if(selectNode.refcode === 'wujd'){\r\n            startFlag = 0;\r\n            endFlag = 10;\r\n        }else{\r\n            startFlag=0;\r\n            endFlag=18;\r\n        }\r\n        let selectedData = this.transferData.filter(v => {\r\n\t\t\treturn targetKeys.some(key => key == v['refcode'])\r\n\t\t});\r\n\t\tlet temp = this.transferData.slice(startFlag,endFlag)\r\n        let tempTransferData = temp.concat(selectedData);\r\n        console.log('=====',targetKeys,'=====')\r\n\t\tthis.setState({\r\n\t\t\ttransferData:tempTransferData,\r\n\t\t});\r\n\t}\r\n\r\n    onTreeSelect = (selectedKeys, e) => {\r\n\t\tif (selectedKeys.length === 0) {\r\n\t\t\treturn\r\n\t\t}\r\n\t\tvar fullInfo = {};\r\n\t\tconst loopSearch = (arr, key) => {\r\n\t\t\tif (!arr) { return }\r\n\t\t\tfor (let i = 0; i < arr.length; i++) {\r\n\t\t\t\tif (arr[i][valueField] == key) {\r\n\t\t\t\t\tfullInfo = arr[i];\r\n\t\t\t\t} else {\r\n\t\t\t\t\tloopSearch(arr[i].children, key)\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n        loopSearch(treeData, selectedKeys[0])\r\n\t\tthis.handleTreeSelect(fullInfo)\r\n    }\r\n    \r\n    onExpand = (expandedKeys) => {\r\n        this.setState({\r\n            expandedKeys,\r\n            autoExpandParent: false,\r\n        });\r\n    }\r\n\r\n    render() {\r\n        const {\r\n            selectedKeys,\r\n\t\t\texpandedKeys,\r\n            autoExpandParent,\r\n            transferData,\r\n            targetKeys\r\n\t\t} = this.state;\r\n        const loop = treeData => treeData.map((item) => {\r\n            if (item.children && item.children.length > 0) {\r\n                return (\r\n                    <TreeNode key={item[valueField]} title={item.refname}>\r\n                        {loop(item.children)}\r\n                    </TreeNode>\r\n                );\r\n            }\r\n            return <TreeNode key={item[valueField]} title={item.refname} isLeaf={true} />;\r\n        });\r\n        return (\r\n        <div className=\"demo8\">\r\n            <Tree\r\n                checkStrictly={false}\r\n                multiple={false}\r\n                onExpand={this.onExpand}\r\n                defaultExpandAll={true}\r\n                expandedKeys={expandedKeys}\r\n                autoExpandParent={autoExpandParent}\r\n                onSelect={this.onTreeSelect}\r\n            >\r\n                {loop(treeData)}\r\n            </Tree>\r\n            <Transfer\r\n            dataSource={transferData}\r\n            targetKeys={targetKeys}\r\n            selectedKeys={selectedKeys}\r\n            onChange={this.handleTransferChange}\r\n            onSelectChange={this.handleTransferSelectChange}\r\n            render={item => item.title}\r\n            />\r\n        </div>\r\n        );\r\n    }\r\n}\r\n\r\n\r\nexport default Demo8\r\n", "desc": " 结合 Tree 和 Transfer 的使用示例，解决多级数据穿梭问题。", "scss_code": ".demo8{\r\n    .u-tree{\r\n        max-width: 220px;\r\n        display: inline-block;\r\n        vertical-align: top;\r\n        width: 220px;\r\n        max-height: 525px;\r\n        box-sizing: border-box;\r\n        text-align: left;\r\n    }\r\n    .u-transfer{\r\n        display: inline-block;\r\n        vertical-align: top;\r\n        width: calc(100% - 235px);\r\n        max-height: 525px;\r\n        box-sizing: border-box;\r\n        text-align: left;\r\n        overflow: auto;\r\n    }\r\n}" }];
 	
 	var Demo = function (_Component) {
 	    _inherits(Demo, _Component);
@@ -1184,6 +1184,8 @@
 	    _this.state = { status: initialStatus };
 	
 	    _this.nextCallback = null;
+	
+	    _this.timer = null;
 	    return _this;
 	  }
 	
@@ -1239,6 +1241,8 @@
 	  };
 	
 	  Transition.prototype.componentWillUnmount = function componentWillUnmount() {
+	    clearTimeout(this.timer);
+	    this.timer = null;
 	    this.cancelNextCallback();
 	  };
 	
@@ -1323,9 +1327,11 @@
 	      } else {
 	        (0, _on2["default"])(node, transitionEndEvent, this.nextCallback);
 	      }
-	      setTimeout(this.nextCallback, this.props.timeout);
+	      clearTimeout(this.timer);
+	      this.timer = setTimeout(this.nextCallback, this.props.timeout);
 	    } else {
-	      setTimeout(this.nextCallback, 0);
+	      clearTimeout(this.timer);
+	      this.timer = setTimeout(this.nextCallback, 0);
 	    }
 	  };
 	
@@ -6779,12 +6785,15 @@
 	  };
 	
 	  Animate.prototype.componentDidUpdate = function componentDidUpdate() {
-	    var keysToEnter = this.keysToEnter;
-	    this.keysToEnter = [];
-	    keysToEnter.forEach(this.performEnter);
-	    var keysToLeave = this.keysToLeave;
-	    this.keysToLeave = [];
-	    keysToLeave.forEach(this.performLeave);
+	    console.log('Ayima')
+	    window.requestAnimationFrame(() => {
+	      var keysToEnter = this.keysToEnter;
+	      this.keysToEnter = [];
+	      keysToEnter.forEach(this.performEnter);
+	      var keysToLeave = this.keysToLeave;
+	      this.keysToLeave = [];
+	      keysToLeave.forEach(this.performLeave);
+	    })
 	  };
 	
 	  Animate.prototype.performEnter = function performEnter(key) {
@@ -10104,11 +10113,11 @@
 	
 	var _beeModal2 = _interopRequireDefault(_beeModal);
 	
-	var _beeFormControl = __webpack_require__(268);
+	var _beeFormControl = __webpack_require__(269);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
-	var _beeButton = __webpack_require__(265);
+	var _beeButton = __webpack_require__(266);
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
@@ -14101,7 +14110,7 @@
 	
 	var _Modal2 = _interopRequireDefault(_Modal);
 	
-	var _confirm = __webpack_require__(264);
+	var _confirm = __webpack_require__(265);
 	
 	var _confirm2 = _interopRequireDefault(_confirm);
 	
@@ -14247,15 +14256,15 @@
 	
 	var _ModalDialog2 = _interopRequireDefault(_ModalDialog);
 	
-	var _ModalFooter = __webpack_require__(261);
+	var _ModalFooter = __webpack_require__(262);
 	
 	var _ModalFooter2 = _interopRequireDefault(_ModalFooter);
 	
-	var _ModalHeader = __webpack_require__(262);
+	var _ModalHeader = __webpack_require__(263);
 	
 	var _ModalHeader2 = _interopRequireDefault(_ModalHeader);
 	
-	var _ModalTitle = __webpack_require__(263);
+	var _ModalTitle = __webpack_require__(264);
 	
 	var _ModalTitle2 = _interopRequireDefault(_ModalTitle);
 	
@@ -14336,7 +14345,7 @@
 	  onExited: _propTypes2["default"].func,
 	
 	  containerClassName: _propTypes2["default"].string
-	}, _defineProperty(_extends2, 'containerClassName', _propTypes2["default"].string), _defineProperty(_extends2, 'container', _Modal2["default"].propTypes.container), _defineProperty(_extends2, 'size', _propTypes2["default"].oneOf(["sm", "lg", "xlg", ""])), _defineProperty(_extends2, 'width', _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string])), _defineProperty(_extends2, 'draggable', _propTypes2["default"].bool), _defineProperty(_extends2, 'resizable', _propTypes2["default"].bool), _defineProperty(_extends2, 'resizeClassName', _propTypes2["default"].string), _defineProperty(_extends2, 'onResizeStart', _propTypes2["default"].func), _defineProperty(_extends2, 'onResize', _propTypes2["default"].func), _defineProperty(_extends2, 'onResizeStop', _propTypes2["default"].func), _defineProperty(_extends2, 'minWidth', _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string])), _defineProperty(_extends2, 'minHeight', _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string])), _defineProperty(_extends2, 'maxWidth', _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string])), _defineProperty(_extends2, 'maxHeight', _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string])), _defineProperty(_extends2, 'bounds', _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object])), _defineProperty(_extends2, 'className', _propTypes2["default"].string), _defineProperty(_extends2, 'centered', _propTypes2["default"].bool), _extends2));
+	}, _defineProperty(_extends2, 'containerClassName', _propTypes2["default"].string), _defineProperty(_extends2, 'container', _Modal2["default"].propTypes.container), _defineProperty(_extends2, 'size', _propTypes2["default"].oneOf(["sm", "lg", "xlg", ""])), _defineProperty(_extends2, 'width', _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string])), _defineProperty(_extends2, 'draggable', _propTypes2["default"].bool), _defineProperty(_extends2, 'resizable', _propTypes2["default"].bool), _defineProperty(_extends2, 'resizeClassName', _propTypes2["default"].string), _defineProperty(_extends2, 'onResizeStart', _propTypes2["default"].func), _defineProperty(_extends2, 'onResize', _propTypes2["default"].func), _defineProperty(_extends2, 'onResizeStop', _propTypes2["default"].func), _defineProperty(_extends2, 'minWidth', _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string])), _defineProperty(_extends2, 'minHeight', _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string])), _defineProperty(_extends2, 'maxWidth', _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string])), _defineProperty(_extends2, 'maxHeight', _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].string])), _defineProperty(_extends2, 'bounds', _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object])), _defineProperty(_extends2, 'className', _propTypes2["default"].string), _defineProperty(_extends2, 'centered', _propTypes2["default"].bool), _defineProperty(_extends2, 'needScroll', _propTypes2["default"].oneOfType([_propTypes2["default"].number, _propTypes2["default"].bool])), _extends2));
 	
 	var defaultProps = _extends({}, _Modal2["default"].defaultProps, {
 	  backdropClosable: true,
@@ -14345,7 +14354,8 @@
 	  draggable: false,
 	  resizable: false,
 	  clsPrefix: 'u-modal',
-	  className: ''
+	  className: '',
+	  needScroll: false
 	});
 	
 	var ModalFuncProps = {
@@ -14385,6 +14395,34 @@
 	
 	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props, context));
 	
+	    _this.scrollTo = function () {
+	      var needScroll = _this.props.needScroll;
+	      if (needScroll) {
+	        if (typeof needScroll == 'number') {
+	          window.scrollTo(0, needScroll);
+	        } else {
+	          window.scrollTo(0, _this.scrollY);
+	        }
+	      }
+	    };
+	
+	    _this.onEnter = function (param) {
+	      if (_this.props.needScroll) {
+	        _this.scrollY = window.scrollY;
+	      }
+	      _this.props.onEnter && _this.props.onEnter(param);
+	    };
+	
+	    _this.onEntered = function (param) {
+	      if (_this.props.needScroll) {
+	        var scrollY = window.scrollY;
+	        if (scrollY != _this.scrollY || typeof _this.props.needScroll == 'number') {
+	          _this.scrollTo();
+	        }
+	      }
+	      _this.props.onEntered && _this.props.onEntered(param);
+	    };
+	
 	    _this.clearCenteredCls = function () {
 	      var centered = _this.state.centered;
 	
@@ -14401,7 +14439,8 @@
 	      style: {},
 	      centered: props.centered,
 	      draging: false,
-	      draged: false
+	      draged: false,
+	      resized: false
 	    };
 	    _this.offsetTop = 0;
 	    _this.handleEntering = _this.handleEntering.bind(_this);
@@ -14424,6 +14463,17 @@
 	    this.handleExited();
 	  };
 	
+	  Modal.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+	    if (!nextProps.show) {
+	      // 关闭modal时，重置相关属性
+	      this.offsetTop = 0;
+	      this.setState({
+	        centered: nextProps.centered,
+	        resized: false
+	      });
+	    }
+	  };
+	
 	  Modal.prototype.handleEntering = function handleEntering() {
 	    // FIXME: This should work even when animation is disabled.
 	    _events2["default"].on(window, 'resize', this.handleWindowResize);
@@ -14431,6 +14481,7 @@
 	  };
 	
 	  Modal.prototype.handleExited = function handleExited() {
+	    this.scrollTo();
 	    this.setState({
 	      draging: false,
 	      draged: false
@@ -14447,7 +14498,6 @@
 	    if (e.target !== e.currentTarget) {
 	      return;
 	    }
-	
 	    this.props.onHide();
 	  };
 	
@@ -14515,11 +14565,12 @@
 	    var _state = this.state,
 	        centered = _state.centered,
 	        draging = _state.draging,
-	        draged = _state.draged;
+	        draged = _state.draged,
+	        resized = _state.resized;
 	
 	    var dialogMarginTop = 30;
 	    //ResizeStart 时，计算 ModalDialog 的 offsetTop
-	    var topPosStyle = this.offsetTop > 0 ? { top: this.offsetTop - dialogMarginTop } : null;
+	    var topPosStyle = this.offsetTop > 0 && !draging && !resized ? { top: this.offsetTop - dialogMarginTop } : null;
 	
 	    var _splitComponent = (0, _tinperBeeCore.splitComponent)(props, _Modal2["default"]),
 	        _splitComponent2 = _slicedToArray(_splitComponent, 2),
@@ -14552,6 +14603,8 @@
 	          _this2._modal = c;
 	        },
 	        show: show,
+	        onEnter: this.onEnter,
+	        onEntered: this.onEntered,
 	        onEntering: (0, _tinperBeeCore.createChainedFunction)(onEntering, this.handleEntering),
 	        onExited: (0, _tinperBeeCore.createChainedFunction)(onExited, this.handleExited),
 	        backdrop: backdrop,
@@ -14575,6 +14628,7 @@
 	          clearCenteredCls: this.clearCenteredCls,
 	          onStart: function onStart() {
 	            _this2.setState({
+	              resized: true,
 	              draging: true,
 	              draged: false
 	            });
@@ -16125,7 +16179,7 @@
 	
 	var _beeDnd2 = _interopRequireDefault(_beeDnd);
 	
-	var _reResizable = __webpack_require__(260);
+	var _reResizable = __webpack_require__(261);
 	
 	var _reResizable2 = _interopRequireDefault(_reResizable);
 	
@@ -16142,6 +16196,16 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+	
+	function getPos(obj) {
+	  var pos = { left: 0, top: 0 };
+	  while (obj) {
+	    pos.left += obj.offsetLeft ? obj.offsetLeft : 0;
+	    pos.top += obj.offsetTop ? obj.offsetTop : 0;
+	    obj = obj.offsetParent;
+	  }
+	  return pos;
+	}
 	
 	var propTypes = {
 	  /**
@@ -16174,7 +16238,7 @@
 	      args[_key] = arguments[_key];
 	    }
 	
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.resized = false, _this.state = {
 	      draging: false,
 	      draged: false,
 	      original: {
@@ -16183,32 +16247,54 @@
 	      },
 	      maxWidth: Number.MAX_SAFE_INTEGER,
 	      maxHeight: Number.MAX_SAFE_INTEGER
-	    }, _this.onStart = function () {
-	      var draggable = _this.props.draggable;
+	    }, _this.onStart = function (event) {
+	      var _this$props = _this.props,
+	          draggable = _this$props.draggable,
+	          resizable = _this$props.resizable,
+	          centered = _this$props.centered;
 	
 	      _this.setState({
 	        draging: true
 	      });
+	      var transfromDom = _this.resizable && _this.resizable.resizable || _this.resize;
+	      var pos = getPos(transfromDom);
+	      var transform = transfromDom.style && transfromDom.style.transform;
+	      // reg1 = /translate\((\d+)?px, (\d+)?px\)/;
+	      // 'translate(420px, 30px)'.match(reg1)
+	      // 兼容含有拖拽功能，点击模态框头部，开始突然往左上角抖一下的问题
+	      // 如果是resize了，那么就会有一定的偏移，这个transform也有值了
+	      if (!transform || transform == 'translate(0px, 0px)' || transform == 'translate(0px)' || _this.resized) {
+	        if (draggable && resizable && centered) {
+	          var a = transfromDom.getBoundingClientRect();
+	          transfromDom.style.transform = 'translate(' + Math.floor(a.x) + 'px, ' + Math.floor(a.y) + 'px)';
+	        } else {
+	          transfromDom.style.transform = 'translate(' + Math.floor(pos.left) + 'px, ' + Math.floor(pos.top) + 'px)';
+	        }
+	        _this.resized = false;
+	      }
 	      _this.props.onStart();
+	      if (event) {
+	        event.stopPropagation(); // 两个可拖拽modal嵌套的时候，事件冒泡会引起两个可拖拽modal一起动
+	      }
 	      return draggable;
 	    }, _this.onStop = function (e, delta) {
-	      var dialogWidth = _this.modalDialog && _this.modalDialog.offsetWidth;
-	      var clientWidth = e && e.target && e.target.clientWidth;
-	      if (delta.x > 0 && clientWidth - delta.x < 50) {
-	        return;
-	      }
-	      if (delta.x < 0 && dialogWidth + delta.x < 50) {
-	        return;
-	      }
-	      if (delta.y < 0) {
-	        return;
-	      }
+	      // let dialogWidth = this.modalDialog && this.modalDialog.offsetWidth;
+	      // let clientWidth = e && e.target && e.target.clientWidth;
+	      // if(delta.x > 0 && clientWidth - delta.x < 50){
+	      //   return
+	      // }
+	      // if(delta.x < 0 && dialogWidth + delta.x < 50){
+	      //   return
+	      // }
+	      // if(delta.y < 0 ){
+	      //   return
+	      // }
 	      _this.setState({
 	        draged: true,
 	        draging: false,
 	        original: {
-	          x: delta.x,
-	          y: delta.y
+	          x: Math.floor(delta.x),
+	          y: Math.floor(delta.y)
 	        }
 	      });
 	      _this.props.onStop();
@@ -16250,7 +16336,9 @@
 	      }
 	
 	      if (x || y) {
-	        elementRef.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+	        var modifiedX = Math.floor(x);
+	        var modifiedY = Math.floor(y);
+	        elementRef.style.transform = 'translate(' + modifiedX + 'px, ' + modifiedY + 'px)';
 	      }
 	      if (delta.height) {
 	        _this.updateBodyH();
@@ -16268,6 +16356,7 @@
 	      }
 	
 	      typeof onResizeStop === "function" && onResizeStop(e, direction, elementRef, delta);
+	      _this.resized = true;
 	    }, _this.updateBodyH = function () {
 	      var $resizable = _reactDom2["default"].findDOMNode(_this.resizable);
 	      var $header = $resizable.querySelector(".u-modal-header");
@@ -16300,14 +16389,14 @@
 	      }
 	      return size;
 	    }, _this.renderModalContent = function () {
-	      var _this$props = _this.props,
-	          clsPrefix = _this$props.clsPrefix,
-	          children = _this$props.children,
-	          resizable = _this$props.resizable,
-	          contentStyle = _this$props.contentStyle,
-	          minHeight = _this$props.minHeight,
-	          minWidth = _this$props.minWidth,
-	          resizeClassName = _this$props.resizeClassName;
+	      var _this$props2 = _this.props,
+	          clsPrefix = _this$props2.clsPrefix,
+	          children = _this$props2.children,
+	          resizable = _this$props2.resizable,
+	          contentStyle = _this$props2.contentStyle,
+	          minHeight = _this$props2.minHeight,
+	          minWidth = _this$props2.minWidth,
+	          resizeClassName = _this$props2.resizeClassName;
 	      var _this$state = _this.state,
 	          maxWidth = _this$state.maxWidth,
 	          maxHeight = _this$state.maxHeight;
@@ -32718,9 +32807,9 @@
 
 	module.exports = __webpack_require__(250).default;
 	module.exports.utils = __webpack_require__(251);
-	module.exports.Responsive = __webpack_require__(257).default;
-	module.exports.Responsive.utils = __webpack_require__(258);
-	module.exports.WidthProvider = __webpack_require__(259).default;
+	module.exports.Responsive = __webpack_require__(258).default;
+	module.exports.Responsive.utils = __webpack_require__(259);
+	module.exports.WidthProvider = __webpack_require__(260).default;
 
 
 /***/ }),
@@ -34430,7 +34519,7 @@
 	};
 	
 	module.exports.Resizable = __webpack_require__(254).default;
-	module.exports.ResizableBox = __webpack_require__(256).default;
+	module.exports.ResizableBox = __webpack_require__(257).default;
 
 
 /***/ }),
@@ -34444,11 +34533,11 @@
 	
 	var _react = _interopRequireDefault(__webpack_require__(1));
 	
-	var _propTypes = _interopRequireDefault(__webpack_require__(6));
-	
 	var _reactDraggable = __webpack_require__(243);
 	
 	var _utils = __webpack_require__(255);
+	
+	var _propTypes = __webpack_require__(256);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -34456,7 +34545,7 @@
 	
 	function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 	
-	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	
 	function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 	
@@ -34466,9 +34555,7 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var Resizable =
-	/*#__PURE__*/
-	function (_React$Component) {
+	var Resizable = /*#__PURE__*/function (_React$Component) {
 	  _inheritsLoose(Resizable, _React$Component);
 	
 	  function Resizable() {
@@ -34480,31 +34567,42 @@
 	
 	    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
 	
-	    _defineProperty(_assertThisInitialized(_this), "state", {
-	      slackW: 0,
-	      slackH: 0
-	    });
+	    _defineProperty(_assertThisInitialized(_this), "state", undefined);
+	
+	    _defineProperty(_assertThisInitialized(_this), "lastHandleRect", null);
+	
+	    _defineProperty(_assertThisInitialized(_this), "slack", null);
 	
 	    return _this;
 	  }
 	
 	  var _proto = Resizable.prototype;
 	
+	  _proto.componentWillUnmount = function componentWillUnmount() {
+	    this.resetData();
+	  };
+	
 	  _proto.lockAspectRatio = function lockAspectRatio(width, height, aspectRatio) {
 	    height = width / aspectRatio;
 	    width = height * aspectRatio;
 	    return [width, height];
-	  } // If you do this, be careful of constraints
+	  };
+	
+	  _proto.resetData = function resetData() {
+	    this.lastHandleRect = this.slack = null;
+	  } // Clamp width and height within provided constraints
 	  ;
 	
 	  _proto.runConstraints = function runConstraints(width, height) {
 	    var _ref = [this.props.minConstraints, this.props.maxConstraints],
 	        min = _ref[0],
 	        max = _ref[1];
-	    if (!min && !max) return [width, height]; // Fit width & height to aspect ratio
+	    if (!min && !max) return [width, height]; // If constraining to min and max, we need to also fit width and height to aspect ratio.
 	
 	    if (this.props.lockAspectRatio) {
-	      if (height === this.props.height) {
+	      var resizingHorizontally = height === this.props.height;
+	
+	      if (resizingHorizontally) {
 	        var ratio = this.props.width / this.props.height;
 	        height = width / ratio;
 	        width = height * ratio;
@@ -34523,9 +34621,10 @@
 	    // we start removing slack, the element won't react to it right away until it's been
 	    // completely removed.
 	
-	    var _this$state = this.state,
-	        slackW = _this$state.slackW,
-	        slackH = _this$state.slackH;
+	    var _ref2 = this.slack || [0, 0],
+	        slackW = _ref2[0],
+	        slackH = _ref2[1];
+	
 	    width += slackW;
 	    height += slackH;
 	
@@ -34537,19 +34636,10 @@
 	    if (max) {
 	      width = Math.min(max[0], width);
 	      height = Math.min(max[1], height);
-	    } // If the numbers changed, we must have introduced some slack. Record it for the next iteration.
+	    } // If the width or height changed, we must have introduced some slack. Record it for the next iteration.
 	
 	
-	    slackW += oldW - width;
-	    slackH += oldH - height;
-	
-	    if (slackW !== this.state.slackW || slackH !== this.state.slackH) {
-	      this.setState({
-	        slackW: slackW,
-	        slackH: slackH
-	      });
-	    }
-	
+	    this.slack = [slackW + (oldW - width), slackH + (oldH - height)];
 	    return [width, height];
 	  }
 	  /**
@@ -34563,94 +34653,105 @@
 	  _proto.resizeHandler = function resizeHandler(handlerName, axis) {
 	    var _this2 = this;
 	
-	    return function (e, _ref2) {
-	      var node = _ref2.node,
-	          deltaX = _ref2.deltaX,
-	          deltaY = _ref2.deltaY;
-	      deltaX /= _this2.props.transformScale;
-	      deltaY /= _this2.props.transformScale; // Axis restrictions
+	    return function (e, _ref3) {
+	      var node = _ref3.node,
+	          deltaX = _ref3.deltaX,
+	          deltaY = _ref3.deltaY;
+	      // Reset data in case it was left over somehow (should not be possible)
+	      if (handlerName === 'onResizeStart') _this2.resetData(); // Axis restrictions
 	
-	      var canDragX = (_this2.props.axis === 'both' || _this2.props.axis === 'x') && ['n', 's'].indexOf(axis) === -1;
-	      var canDragY = (_this2.props.axis === 'both' || _this2.props.axis === 'y') && ['e', 'w'].indexOf(axis) === -1; // reverse delta if using top or left drag handles
+	      var canDragX = (_this2.props.axis === 'both' || _this2.props.axis === 'x') && axis !== 'n' && axis !== 's';
+	      var canDragY = (_this2.props.axis === 'both' || _this2.props.axis === 'y') && axis !== 'e' && axis !== 'w'; // No dragging possible.
 	
-	      if (canDragX && axis[axis.length - 1] === 'w') {
-	        deltaX = -deltaX;
-	      }
+	      if (!canDragX && !canDragY) return; // Decompose axis for later use
 	
-	      if (canDragY && axis[0] === 'n') {
-	        deltaY = -deltaY;
-	      } // Update w/h
+	      var axisV = axis[0];
+	      var axisH = axis[axis.length - 1]; // intentionally not axis[1], so that this catches axis === 'w' for example
+	      // Track the element being dragged to account for changes in position.
+	      // If a handle's position is changed between callbacks, we need to factor this in to the next callback.
+	      // Failure to do so will cause the element to "skip" when resized upwards or leftwards.
+	
+	      var handleRect = node.getBoundingClientRect();
+	
+	      if (_this2.lastHandleRect != null) {
+	        // If the handle has repositioned on either axis since last render,
+	        // we need to increase our callback values by this much.
+	        // Only checking 'n', 'w' since resizing by 's', 'w' won't affect the overall position on page,
+	        if (axisH === 'w') {
+	          var deltaLeftSinceLast = handleRect.left - _this2.lastHandleRect.left;
+	          deltaX += deltaLeftSinceLast;
+	        }
+	
+	        if (axisV === 'n') {
+	          var deltaTopSinceLast = handleRect.top - _this2.lastHandleRect.top;
+	          deltaY += deltaTopSinceLast;
+	        }
+	      } // Storage of last rect so we know how much it has really moved.
 	
 	
-	      var width = _this2.props.width + (canDragX ? deltaX : 0);
-	      var height = _this2.props.height + (canDragY ? deltaY : 0); // Early return if no change
+	      _this2.lastHandleRect = handleRect; // Reverse delta if using top or left drag handles.
 	
-	      var widthChanged = width !== _this2.props.width,
-	          heightChanged = height !== _this2.props.height;
-	      if (handlerName === 'onResize' && !widthChanged && !heightChanged) return;
+	      if (axisH === 'w') deltaX = -deltaX;
+	      if (axisV === 'n') deltaY = -deltaY; // Update w/h by the deltas. Also factor in transformScale.
+	
+	      var width = _this2.props.width + (canDragX ? deltaX / _this2.props.transformScale : 0);
+	      var height = _this2.props.height + (canDragY ? deltaY / _this2.props.transformScale : 0); // Run user-provided constraints.
 	
 	      var _this2$runConstraints = _this2.runConstraints(width, height);
 	
 	      width = _this2$runConstraints[0];
 	      height = _this2$runConstraints[1];
-	      // Set the appropriate state for this handler.
-	      var newState = {};
+	      var dimensionsChanged = width !== _this2.props.width || height !== _this2.props.height; // Call user-supplied callback if present.
 	
-	      if (handlerName === 'onResizeStart') {// nothing
-	      } else if (handlerName === 'onResizeStop') {
-	        newState.slackW = newState.slackH = 0;
-	      } else {
-	        // Early return if no change after constraints
-	        if (width === _this2.props.width && height === _this2.props.height) return;
-	      }
+	      var cb = typeof _this2.props[handlerName] === 'function' ? _this2.props[handlerName] : null; // Don't call 'onResize' if dimensions haven't changed.
 	
-	      var hasCb = typeof _this2.props[handlerName] === 'function';
+	      var shouldSkipCb = handlerName === 'onResize' && !dimensionsChanged;
 	
-	      if (hasCb) {
-	        // $FlowIgnore isn't refining this correctly to SyntheticEvent
+	      if (cb && !shouldSkipCb) {
 	        if (typeof e.persist === 'function') e.persist();
-	
-	        _this2.setState(newState, function () {
-	          return _this2.props[handlerName](e, {
-	            node: node,
-	            size: {
-	              width: width,
-	              height: height
-	            },
-	            handle: axis
-	          });
+	        cb(e, {
+	          node: node,
+	          size: {
+	            width: width,
+	            height: height
+	          },
+	          handle: axis
 	        });
-	      } else {
-	        _this2.setState(newState);
-	      }
+	      } // Reset internal data
+	
+	
+	      if (handlerName === 'onResizeStop') _this2.resetData();
 	    };
 	  };
 	
-	  _proto.renderResizeHandle = function renderResizeHandle(resizeHandle) {
+	  _proto.renderResizeHandle = function renderResizeHandle(resizeHandleAxis) {
 	    var handle = this.props.handle;
 	
 	    if (handle) {
 	      if (typeof handle === 'function') {
-	        return handle(resizeHandle);
+	        return handle(resizeHandleAxis);
 	      }
 	
 	      return handle;
 	    }
 	
-	    return _react.default.createElement("span", {
-	      className: "react-resizable-handle react-resizable-handle-" + resizeHandle
+	    return /*#__PURE__*/_react.default.createElement("span", {
+	      className: "react-resizable-handle react-resizable-handle-" + resizeHandleAxis
 	    });
 	  };
 	
 	  _proto.render = function render() {
 	    var _this3 = this;
 	
+	    // Pass along only props not meant for the `<Resizable>`.`
 	    // eslint-disable-next-line no-unused-vars
 	    var _this$props = this.props,
 	        children = _this$props.children,
+	        className = _this$props.className,
 	        draggableOpts = _this$props.draggableOpts,
 	        width = _this$props.width,
 	        height = _this$props.height,
+	        handle = _this$props.handle,
 	        handleSize = _this$props.handleSize,
 	        lockAspectRatio = _this$props.lockAspectRatio,
 	        axis = _this$props.axis,
@@ -34661,23 +34762,22 @@
 	        onResizeStart = _this$props.onResizeStart,
 	        resizeHandles = _this$props.resizeHandles,
 	        transformScale = _this$props.transformScale,
-	        p = _objectWithoutPropertiesLoose(_this$props, ["children", "draggableOpts", "width", "height", "handleSize", "lockAspectRatio", "axis", "minConstraints", "maxConstraints", "onResize", "onResizeStop", "onResizeStart", "resizeHandles", "transformScale"]);
-	
-	    var className = p.className ? p.className + " react-resizable" : 'react-resizable'; // What we're doing here is getting the child of this element, and cloning it with this element's props.
+	        p = _objectWithoutPropertiesLoose(_this$props, ["children", "className", "draggableOpts", "width", "height", "handle", "handleSize", "lockAspectRatio", "axis", "minConstraints", "maxConstraints", "onResize", "onResizeStop", "onResizeStart", "resizeHandles", "transformScale"]); // What we're doing here is getting the child of this element, and cloning it with this element's props.
 	    // We are then defining its children as:
 	    // Its original children (resizable's child's children), and
 	    // One or more draggable handles.
 	
-	    return (0, _utils.cloneElement)(children, _objectSpread({}, p, {
-	      className: className,
-	      children: [children.props.children, resizeHandles.map(function (h) {
-	        return _react.default.createElement(_reactDraggable.DraggableCore, _extends({}, draggableOpts, {
-	          key: "resizableHandle-" + h,
-	          onStop: _this3.resizeHandler('onResizeStop', h),
-	          onStart: _this3.resizeHandler('onResizeStart', h),
-	          onDrag: _this3.resizeHandler('onResize', h)
-	        }), _this3.renderResizeHandle(h));
-	      })]
+	
+	    return (0, _utils.cloneElement)(children, _objectSpread(_objectSpread({}, p), {}, {
+	      className: (className ? className + " " : '') + "react-resizable",
+	      children: [].concat(children.props.children, resizeHandles.map(function (handleAxis) {
+	        return /*#__PURE__*/_react.default.createElement(_reactDraggable.DraggableCore, _extends({}, draggableOpts, {
+	          key: "resizableHandle-" + handleAxis,
+	          onStop: _this3.resizeHandler('onResizeStop', handleAxis),
+	          onStart: _this3.resizeHandler('onResizeStart', handleAxis),
+	          onDrag: _this3.resizeHandler('onResize', handleAxis)
+	        }), _this3.renderResizeHandle(handleAxis));
+	      }))
 	    }));
 	  };
 	
@@ -34686,52 +34786,7 @@
 	
 	exports.default = Resizable;
 	
-	_defineProperty(Resizable, "propTypes", {
-	  //
-	  // Required Props
-	  //
-	  // Require that one and only one child be present.
-	  children: _propTypes.default.element.isRequired,
-	  // Initial w/h
-	  width: _propTypes.default.number.isRequired,
-	  height: _propTypes.default.number.isRequired,
-	  //
-	  // Optional props
-	  //
-	  // Custom resize handle
-	  handle: _propTypes.default.element,
-	  // If you change this, be sure to update your css
-	  handleSize: _propTypes.default.array,
-	  // Defines which resize handles should be rendered (default: 'se')
-	  // Allows for any combination of:
-	  // 's' - South handle (bottom-center)
-	  // 'w' - West handle (left-center)
-	  // 'e' - East handle (right-center)
-	  // 'n' - North handle (top-center)
-	  // 'sw' - Southwest handle (bottom-left)
-	  // 'nw' - Northwest handle (top-left)
-	  // 'se' - Southeast handle (bottom-right)
-	  // 'ne' - Northeast handle (top-center)
-	  resizeHandles: _propTypes.default.arrayOf(_propTypes.default.oneOf(['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne'])),
-	  transformScale: _propTypes.default.number,
-	  // If true, will only allow width/height to move in lockstep
-	  lockAspectRatio: _propTypes.default.bool,
-	  // Restricts resizing to a particular axis (default: 'both')
-	  // 'both' - allows resizing by width or height
-	  // 'x' - only allows the width to be changed
-	  // 'y' - only allows the height to be changed
-	  // 'none' - disables resizing altogether
-	  axis: _propTypes.default.oneOf(['both', 'x', 'y', 'none']),
-	  // Min/max size
-	  minConstraints: _propTypes.default.arrayOf(_propTypes.default.number),
-	  maxConstraints: _propTypes.default.arrayOf(_propTypes.default.number),
-	  // Callbacks
-	  onResizeStop: _propTypes.default.func,
-	  onResizeStart: _propTypes.default.func,
-	  onResize: _propTypes.default.func,
-	  // These will be passed wholesale to react-draggable's DraggableCore
-	  draggableOpts: _propTypes.default.object
-	});
+	_defineProperty(Resizable, "propTypes", _propTypes.resizableProps);
 	
 	_defineProperty(Resizable, "defaultProps", {
 	  handleSize: [20, 20],
@@ -34758,21 +34813,21 @@
 	
 	function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 	
-	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	// React.addons.cloneWithProps look-alike that merges style & className.
 	function cloneElement(element, props) {
 	  if (props.style && element.props.style) {
-	    props.style = _objectSpread({}, element.props.style, {}, props.style);
+	    props.style = _objectSpread(_objectSpread({}, element.props.style), props.style);
 	  }
 	
 	  if (props.className && element.props.className) {
 	    props.className = element.props.className + " " + props.className;
 	  }
 	
-	  return _react.default.cloneElement(element, props);
+	  return /*#__PURE__*/_react.default.cloneElement(element, props);
 	}
 
 /***/ }),
@@ -34782,17 +34837,144 @@
 	"use strict";
 	
 	exports.__esModule = true;
+	exports.resizableProps = void 0;
+	
+	var _propTypes = _interopRequireDefault(__webpack_require__(6));
+	
+	var _reactDraggable = __webpack_require__(243);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var resizableProps = {
+	  /*
+	  * Restricts resizing to a particular axis (default: 'both')
+	  * 'both' - allows resizing by width or height
+	  * 'x' - only allows the width to be changed
+	  * 'y' - only allows the height to be changed
+	  * 'none' - disables resizing altogether
+	  * */
+	  axis: _propTypes.default.oneOf(['both', 'x', 'y', 'none']),
+	  className: _propTypes.default.string,
+	
+	  /*
+	  * Require that one and only one child be present.
+	  * */
+	  children: _propTypes.default.element.isRequired,
+	
+	  /*
+	  * These will be passed wholesale to react-draggable's DraggableCore
+	  * */
+	  draggableOpts: _propTypes.default.shape({
+	    allowAnyClick: _propTypes.default.bool,
+	    cancel: _propTypes.default.string,
+	    children: _propTypes.default.node,
+	    disabled: _propTypes.default.bool,
+	    enableUserSelectHack: _propTypes.default.bool,
+	    offsetParent: _propTypes.default.node,
+	    grid: _propTypes.default.arrayOf(_propTypes.default.number),
+	    handle: _propTypes.default.string,
+	    nodeRef: _propTypes.default.object,
+	    onStart: _propTypes.default.func,
+	    onDrag: _propTypes.default.func,
+	    onStop: _propTypes.default.func,
+	    onMouseDown: _propTypes.default.func,
+	    scale: _propTypes.default.number
+	  }),
+	
+	  /*
+	  * Initial height
+	  * */
+	  height: _propTypes.default.number.isRequired,
+	
+	  /*
+	  * Customize cursor resize handle
+	  * */
+	  handle: _propTypes.default.oneOfType([_propTypes.default.node, _propTypes.default.func]),
+	
+	  /*
+	  * If you change this, be sure to update your css
+	  * */
+	  handleSize: _propTypes.default.arrayOf(_propTypes.default.number),
+	  lockAspectRatio: _propTypes.default.bool,
+	
+	  /*
+	  * Max X & Y measure
+	  * */
+	  maxConstraints: _propTypes.default.arrayOf(_propTypes.default.number),
+	
+	  /*
+	  * Min X & Y measure
+	  * */
+	  minConstraints: _propTypes.default.arrayOf(_propTypes.default.number),
+	
+	  /*
+	  * Called on stop resize event
+	  * */
+	  onResizeStop: _propTypes.default.func,
+	
+	  /*
+	  * Called on start resize event
+	  * */
+	  onResizeStart: _propTypes.default.func,
+	
+	  /*
+	  * Called on resize event
+	  * */
+	  onResize: _propTypes.default.func,
+	
+	  /*
+	  * Defines which resize handles should be rendered (default: 'se')
+	  * 's' - South handle (bottom-center)
+	  * 'w' - West handle (left-center)
+	  * 'e' - East handle (right-center)
+	  * 'n' - North handle (top-center)
+	  * 'sw' - Southwest handle (bottom-left)
+	  * 'nw' - Northwest handle (top-left)
+	  * 'se' - Southeast handle (bottom-right)
+	  * 'ne' - Northeast handle (top-center)
+	  * */
+	  resizeHandles: _propTypes.default.arrayOf(_propTypes.default.oneOf(['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne'])),
+	
+	  /*
+	  * If `transform: scale(n)` is set on the parent, this should be set to `n`.
+	  * */
+	  transformScale: _propTypes.default.number,
+	
+	  /*
+	   * Initial width
+	   */
+	  width: _propTypes.default.number.isRequired
+	};
+	exports.resizableProps = resizableProps;
+
+/***/ }),
+/* 257 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	exports.__esModule = true;
 	exports.default = void 0;
 	
-	var _react = _interopRequireDefault(__webpack_require__(1));
+	var React = _interopRequireWildcard(__webpack_require__(1));
 	
 	var _propTypes = _interopRequireDefault(__webpack_require__(6));
 	
 	var _Resizable = _interopRequireDefault(__webpack_require__(254));
 	
+	var _propTypes2 = __webpack_require__(256);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+	
 	function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+	
+	function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	
+	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	
 	function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 	
@@ -34802,10 +34984,7 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	// An example use of Resizable.
-	var ResizableBox =
-	/*#__PURE__*/
-	function (_React$Component) {
+	var ResizableBox = /*#__PURE__*/function (_React$Component) {
 	  _inheritsLoose(ResizableBox, _React$Component);
 	
 	  function ResizableBox() {
@@ -34826,8 +35005,6 @@
 	
 	    _defineProperty(_assertThisInitialized(_this), "onResize", function (e, data) {
 	      var size = data.size;
-	      var width = size.width,
-	          height = size.height;
 	
 	      if (_this.props.onResize) {
 	        e.persist && e.persist();
@@ -34877,46 +35054,44 @@
 	        width = _this$props.width,
 	        height = _this$props.height,
 	        resizeHandles = _this$props.resizeHandles,
-	        props = _objectWithoutPropertiesLoose(_this$props, ["handle", "handleSize", "onResize", "onResizeStart", "onResizeStop", "draggableOpts", "minConstraints", "maxConstraints", "lockAspectRatio", "axis", "width", "height", "resizeHandles"]);
+	        style = _this$props.style,
+	        transformScale = _this$props.transformScale,
+	        props = _objectWithoutPropertiesLoose(_this$props, ["handle", "handleSize", "onResize", "onResizeStart", "onResizeStop", "draggableOpts", "minConstraints", "maxConstraints", "lockAspectRatio", "axis", "width", "height", "resizeHandles", "style", "transformScale"]);
 	
-	    return _react.default.createElement(_Resizable.default, {
+	    return /*#__PURE__*/React.createElement(_Resizable.default, {
+	      axis: axis,
+	      draggableOpts: draggableOpts,
 	      handle: handle,
 	      handleSize: handleSize,
-	      width: this.state.width,
 	      height: this.state.height,
+	      lockAspectRatio: lockAspectRatio,
+	      maxConstraints: maxConstraints,
+	      minConstraints: minConstraints,
 	      onResizeStart: onResizeStart,
 	      onResize: this.onResize,
 	      onResizeStop: onResizeStop,
-	      draggableOpts: draggableOpts,
-	      minConstraints: minConstraints,
-	      maxConstraints: maxConstraints,
-	      lockAspectRatio: lockAspectRatio,
-	      axis: axis,
-	      resizeHandles: resizeHandles
-	    }, _react.default.createElement("div", _extends({
-	      style: {
+	      resizeHandles: resizeHandles,
+	      transformScale: transformScale,
+	      width: this.state.width
+	    }, /*#__PURE__*/React.createElement("div", _extends({}, props, {
+	      style: _objectSpread(_objectSpread({}, style), {}, {
 	        width: this.state.width + 'px',
 	        height: this.state.height + 'px'
-	      }
-	    }, props)));
+	      })
+	    })));
 	  };
 	
 	  return ResizableBox;
-	}(_react.default.Component);
+	}(React.Component);
 	
 	exports.default = ResizableBox;
 	
-	_defineProperty(ResizableBox, "propTypes", {
-	  height: _propTypes.default.number,
-	  width: _propTypes.default.number
-	});
-	
-	_defineProperty(ResizableBox, "defaultProps", {
-	  handleSize: [20, 20]
-	});
+	_defineProperty(ResizableBox, "propTypes", _objectSpread(_objectSpread({}, _propTypes2.resizableProps), {}, {
+	  children: _propTypes.default.element
+	}));
 
 /***/ }),
-/* 257 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -34939,7 +35114,7 @@
 	
 	var _utils = __webpack_require__(251);
 	
-	var _responsiveUtils = __webpack_require__(258);
+	var _responsiveUtils = __webpack_require__(259);
 	
 	var _ReactGridLayout = __webpack_require__(250);
 	
@@ -35148,7 +35323,7 @@
 	exports.default = ResponsiveReactGridLayout;
 
 /***/ }),
-/* 258 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -35240,7 +35415,7 @@
 	}
 
 /***/ }),
-/* 259 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -35339,7 +35514,7 @@
 	}
 
 /***/ }),
-/* 260 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36087,7 +36262,7 @@
 
 
 /***/ }),
-/* 261 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36163,7 +36338,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 262 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36294,7 +36469,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 263 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36371,7 +36546,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 264 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36400,11 +36575,11 @@
 	
 	var _Modal2 = _interopRequireDefault(_Modal);
 	
-	var _beeButton = __webpack_require__(265);
+	var _beeButton = __webpack_require__(266);
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _ConfirmModal = __webpack_require__(267);
+	var _ConfirmModal = __webpack_require__(268);
 	
 	var _ConfirmModal2 = _interopRequireDefault(_ConfirmModal);
 	
@@ -36621,7 +36796,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 265 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36630,7 +36805,7 @@
 	  value: true
 	});
 	
-	var _Button = __webpack_require__(266);
+	var _Button = __webpack_require__(267);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -36640,7 +36815,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 266 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36815,7 +36990,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 267 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36832,7 +37007,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _beeButton = __webpack_require__(265);
+	var _beeButton = __webpack_require__(266);
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
@@ -36865,7 +37040,7 @@
 	};
 	
 	var defaultProps = {
-	    title: "提示信息",
+	    // title: "提示信息",
 	    onOk: function onOk() {},
 	    onCancel: function onCancel() {},
 	    content: "确认要删除吗 ?",
@@ -36918,7 +37093,7 @@
 	                    resizable: true,
 	                    width: 400
 	                },
-	                _react2["default"].createElement(
+	                title ? _react2["default"].createElement(
 	                    _Modal2["default"].Header,
 	                    { closeButton: true, className: 'ac-confirm-header' },
 	                    _react2["default"].createElement(
@@ -36926,7 +37101,7 @@
 	                        { className: 'ac-confirm-header-title' },
 	                        title
 	                    )
-	                ),
+	                ) : null,
 	                _react2["default"].createElement(
 	                    _Modal2["default"].Body,
 	                    { className: 'ac-confirm-body' },
@@ -36951,6 +37126,16 @@
 	                    { className: 'ac-confirm-footer' },
 	                    _react2["default"].createElement(
 	                        _beeButton2["default"],
+	                        { colors: 'secondary', onClick: function onClick() {
+	                                _this2.setState({
+	                                    show: false
+	                                });
+	                                onCancel();
+	                            } },
+	                        locale.cancel
+	                    ),
+	                    _react2["default"].createElement(
+	                        _beeButton2["default"],
 	                        { colors: 'primary', onClick: function onClick() {
 	                                _this2.setState({
 	                                    show: false
@@ -36958,16 +37143,6 @@
 	                                onOk();
 	                            } },
 	                        locale.ok
-	                    ),
-	                    _react2["default"].createElement(
-	                        _beeButton2["default"],
-	                        { bordered: true, onClick: function onClick() {
-	                                _this2.setState({
-	                                    show: false
-	                                });
-	                                onCancel();
-	                            } },
-	                        locale.cancel
 	                    )
 	                )
 	            )
@@ -36983,7 +37158,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 268 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36992,7 +37167,7 @@
 	  value: true
 	});
 	
-	var _FormControl = __webpack_require__(269);
+	var _FormControl = __webpack_require__(270);
 	
 	var _FormControl2 = _interopRequireDefault(_FormControl);
 	
@@ -37002,7 +37177,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 269 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37029,7 +37204,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _rcTextarea = __webpack_require__(270);
+	var _rcTextarea = __webpack_require__(271);
 	
 	var _rcTextarea2 = _interopRequireDefault(_rcTextarea);
 	
@@ -37369,7 +37544,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 270 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -37389,19 +37564,19 @@
 	});
 	exports.default = void 0;
 	
-	var _classCallCheck2 = _interopRequireDefault(__webpack_require__(271));
+	var _classCallCheck2 = _interopRequireDefault(__webpack_require__(272));
 	
-	var _createClass2 = _interopRequireDefault(__webpack_require__(272));
+	var _createClass2 = _interopRequireDefault(__webpack_require__(273));
 	
-	var _inherits2 = _interopRequireDefault(__webpack_require__(273));
+	var _inherits2 = _interopRequireDefault(__webpack_require__(274));
 	
-	var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(275));
+	var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(276));
 	
-	var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(276));
+	var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(277));
 	
 	var React = _interopRequireWildcard(__webpack_require__(1));
 	
-	var _ResizableTextArea = _interopRequireDefault(__webpack_require__(277));
+	var _ResizableTextArea = _interopRequireDefault(__webpack_require__(278));
 	
 	function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
 	
@@ -37502,7 +37677,7 @@
 	exports.default = _default;
 
 /***/ }),
-/* 271 */
+/* 272 */
 /***/ (function(module, exports) {
 
 	function _classCallCheck(instance, Constructor) {
@@ -37514,7 +37689,7 @@
 	module.exports = _classCallCheck;
 
 /***/ }),
-/* 272 */
+/* 273 */
 /***/ (function(module, exports) {
 
 	function _defineProperties(target, props) {
@@ -37536,10 +37711,10 @@
 	module.exports = _createClass;
 
 /***/ }),
-/* 273 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var setPrototypeOf = __webpack_require__(274);
+	var setPrototypeOf = __webpack_require__(275);
 	
 	function _inherits(subClass, superClass) {
 	  if (typeof superClass !== "function" && superClass !== null) {
@@ -37559,7 +37734,7 @@
 	module.exports = _inherits;
 
 /***/ }),
-/* 274 */
+/* 275 */
 /***/ (function(module, exports) {
 
 	function _setPrototypeOf(o, p) {
@@ -37574,7 +37749,7 @@
 	module.exports = _setPrototypeOf;
 
 /***/ }),
-/* 275 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var _typeof = __webpack_require__(204);
@@ -37592,7 +37767,7 @@
 	module.exports = _possibleConstructorReturn;
 
 /***/ }),
-/* 276 */
+/* 277 */
 /***/ (function(module, exports) {
 
 	function _getPrototypeOf(o) {
@@ -37605,7 +37780,7 @@
 	module.exports = _getPrototypeOf;
 
 /***/ }),
-/* 277 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -37619,27 +37794,27 @@
 	});
 	exports.default = void 0;
 	
-	var _defineProperty2 = _interopRequireDefault(__webpack_require__(278));
+	var _defineProperty2 = _interopRequireDefault(__webpack_require__(279));
 	
-	var _classCallCheck2 = _interopRequireDefault(__webpack_require__(271));
+	var _classCallCheck2 = _interopRequireDefault(__webpack_require__(272));
 	
-	var _createClass2 = _interopRequireDefault(__webpack_require__(272));
+	var _createClass2 = _interopRequireDefault(__webpack_require__(273));
 	
-	var _inherits2 = _interopRequireDefault(__webpack_require__(273));
+	var _inherits2 = _interopRequireDefault(__webpack_require__(274));
 	
-	var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(275));
+	var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(276));
 	
-	var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(276));
+	var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(277));
 	
 	var React = _interopRequireWildcard(__webpack_require__(1));
 	
-	var _rcResizeObserver = _interopRequireDefault(__webpack_require__(279));
+	var _rcResizeObserver = _interopRequireDefault(__webpack_require__(280));
 	
-	var _omit = _interopRequireDefault(__webpack_require__(288));
+	var _omit = _interopRequireDefault(__webpack_require__(289));
 	
 	var _classnames = _interopRequireDefault(__webpack_require__(5));
 	
-	var _calculateNodeHeight = _interopRequireDefault(__webpack_require__(291));
+	var _calculateNodeHeight = _interopRequireDefault(__webpack_require__(292));
 	
 	function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 	
@@ -37819,7 +37994,7 @@
 	exports.default = _default;
 
 /***/ }),
-/* 278 */
+/* 279 */
 /***/ (function(module, exports) {
 
 	function _defineProperty(obj, key, value) {
@@ -37840,7 +38015,7 @@
 	module.exports = _defineProperty;
 
 /***/ }),
-/* 279 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -37854,27 +38029,27 @@
 	});
 	exports.default = void 0;
 	
-	var _objectSpread2 = _interopRequireDefault(__webpack_require__(280));
+	var _objectSpread2 = _interopRequireDefault(__webpack_require__(281));
 	
-	var _classCallCheck2 = _interopRequireDefault(__webpack_require__(271));
+	var _classCallCheck2 = _interopRequireDefault(__webpack_require__(272));
 	
-	var _createClass2 = _interopRequireDefault(__webpack_require__(272));
+	var _createClass2 = _interopRequireDefault(__webpack_require__(273));
 	
-	var _inherits2 = _interopRequireDefault(__webpack_require__(273));
+	var _inherits2 = _interopRequireDefault(__webpack_require__(274));
 	
-	var _createSuper2 = _interopRequireDefault(__webpack_require__(281));
+	var _createSuper2 = _interopRequireDefault(__webpack_require__(282));
 	
 	var React = _interopRequireWildcard(__webpack_require__(1));
 	
-	var _findDOMNode = _interopRequireDefault(__webpack_require__(283));
+	var _findDOMNode = _interopRequireDefault(__webpack_require__(284));
 	
-	var _toArray = _interopRequireDefault(__webpack_require__(284));
+	var _toArray = _interopRequireDefault(__webpack_require__(285));
 	
-	var _warning = _interopRequireDefault(__webpack_require__(285));
+	var _warning = _interopRequireDefault(__webpack_require__(286));
 	
-	var _ref = __webpack_require__(286);
+	var _ref = __webpack_require__(287);
 	
-	var _resizeObserverPolyfill = _interopRequireDefault(__webpack_require__(287));
+	var _resizeObserverPolyfill = _interopRequireDefault(__webpack_require__(288));
 	
 	var INTERNAL_PREFIX_KEY = 'rc-observer-key'; // Still need to be compatible with React 15, we use class component here
 	
@@ -38034,10 +38209,10 @@
 	exports.default = _default;
 
 /***/ }),
-/* 280 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var defineProperty = __webpack_require__(278);
+	var defineProperty = __webpack_require__(279);
 	
 	function ownKeys(object, enumerableOnly) {
 	  var keys = Object.keys(object);
@@ -38076,14 +38251,14 @@
 	module.exports = _objectSpread2;
 
 /***/ }),
-/* 281 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var getPrototypeOf = __webpack_require__(276);
+	var getPrototypeOf = __webpack_require__(277);
 	
-	var isNativeReflectConstruct = __webpack_require__(282);
+	var isNativeReflectConstruct = __webpack_require__(283);
 	
-	var possibleConstructorReturn = __webpack_require__(275);
+	var possibleConstructorReturn = __webpack_require__(276);
 	
 	function _createSuper(Derived) {
 	  return function () {
@@ -38104,7 +38279,7 @@
 	module.exports = _createSuper;
 
 /***/ }),
-/* 282 */
+/* 283 */
 /***/ (function(module, exports) {
 
 	function _isNativeReflectConstruct() {
@@ -38123,7 +38298,7 @@
 	module.exports = _isNativeReflectConstruct;
 
 /***/ }),
-/* 283 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -38149,7 +38324,7 @@
 	}
 
 /***/ }),
-/* 284 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -38187,7 +38362,7 @@
 	}
 
 /***/ }),
-/* 285 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
@@ -38246,7 +38421,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)))
 
 /***/ }),
-/* 286 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -38305,7 +38480,7 @@
 	/* eslint-enable */
 
 /***/ }),
-/* 287 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {(function (global, factory) {
@@ -39248,7 +39423,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 288 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -39257,7 +39432,7 @@
 	  value: true
 	});
 	
-	var _extends2 = __webpack_require__(289);
+	var _extends2 = __webpack_require__(290);
 	
 	var _extends3 = _interopRequireDefault(_extends2);
 	
@@ -39276,14 +39451,14 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 289 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	exports.__esModule = true;
 	
-	var _assign = __webpack_require__(290);
+	var _assign = __webpack_require__(291);
 	
 	var _assign2 = _interopRequireDefault(_assign);
 	
@@ -39304,13 +39479,13 @@
 	};
 
 /***/ }),
-/* 290 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = { "default": __webpack_require__(145), __esModule: true };
 
 /***/ }),
-/* 291 */
+/* 292 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -39441,7 +39616,7 @@
 	}
 
 /***/ }),
-/* 292 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39450,7 +39625,7 @@
 	  value: true
 	});
 	
-	var _Transfer = __webpack_require__(293);
+	var _Transfer = __webpack_require__(294);
 	
 	var _Transfer2 = _interopRequireDefault(_Transfer);
 	
@@ -39460,7 +39635,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 293 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39477,15 +39652,15 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _list = __webpack_require__(294);
+	var _list = __webpack_require__(295);
 	
 	var _list2 = _interopRequireDefault(_list);
 	
-	var _operation = __webpack_require__(309);
+	var _operation = __webpack_require__(310);
 	
 	var _operation2 = _interopRequireDefault(_operation);
 	
-	var _search = __webpack_require__(295);
+	var _search = __webpack_require__(296);
 	
 	var _search2 = _interopRequireDefault(_search);
 	
@@ -39495,7 +39670,7 @@
 	
 	var _reactBeautifulDnd = __webpack_require__(142);
 	
-	var _utils = __webpack_require__(310);
+	var _utils = __webpack_require__(311);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -39524,7 +39699,8 @@
 	  appendToBottom: false,
 	  renderOperation: function renderOperation() {
 	    return '';
-	  } //自定义操作
+	  }, //自定义操作,
+	  pagination: false
 	};
 	
 	var propTypes = {
@@ -39549,7 +39725,8 @@
 	  showCheckbox: _propTypes2['default'].bool,
 	  draggable: _propTypes2['default'].bool,
 	  appendToBottom: _propTypes2['default'].bool,
-	  renderOperation: _propTypes2['default'].func
+	  renderOperation: _propTypes2['default'].func,
+	  pagination: _propTypes2['default'].bool
 	};
 	
 	var defaultTitles = ['', ''];
@@ -39813,6 +39990,7 @@
 	        listStyle = _props.listStyle,
 	        _props$className = _props.className,
 	        className = _props$className === undefined ? '' : _props$className,
+	        pagination = _props.pagination,
 	        filterOption = _props.filterOption,
 	        render = _props.render,
 	        lazy = _props.lazy,
@@ -39866,7 +40044,8 @@
 	          draggable: draggable,
 	          id: '1',
 	          droppableId: droppableId,
-	          draggingItemId: draggingItemId
+	          draggingItemId: draggingItemId,
+	          pagination: pagination
 	        }),
 	        !draggable ? _react2['default'].createElement(_operation2['default'], {
 	          rightActive: rightActive,
@@ -39899,7 +40078,8 @@
 	          lazy: lazy,
 	          showCheckbox: showCheckbox,
 	          draggable: draggable,
-	          id: '2'
+	          id: '2',
+	          pagination: pagination
 	        })
 	      )
 	    );
@@ -40152,7 +40332,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 294 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40167,7 +40347,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _search = __webpack_require__(295);
+	var _search = __webpack_require__(296);
 	
 	var _search2 = _interopRequireDefault(_search);
 	
@@ -40179,7 +40359,7 @@
 	
 	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
 	
-	var _PureRenderMixin = __webpack_require__(296);
+	var _PureRenderMixin = __webpack_require__(297);
 	
 	var _PureRenderMixin2 = _interopRequireDefault(_PureRenderMixin);
 	
@@ -40187,19 +40367,23 @@
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
-	var _index = __webpack_require__(292);
+	var _index = __webpack_require__(293);
 	
-	var _item = __webpack_require__(298);
+	var _item = __webpack_require__(299);
 	
 	var _item2 = _interopRequireDefault(_item);
 	
-	var _beeCheckbox = __webpack_require__(306);
+	var _beeCheckbox = __webpack_require__(307);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
 	var _beeIcon = __webpack_require__(66);
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
+	
+	var _beeFormControl = __webpack_require__(269);
+	
+	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
 	var _reactBeautifulDnd = __webpack_require__(142);
 	
@@ -40223,7 +40407,8 @@
 	  dataSource: [],
 	  titleText: '',
 	  showSearch: false,
-	  render: noop
+	  render: noop,
+	  pagination: false
 	};
 	function isRenderResultPlainObject(result) {
 	  return result && !_react2['default'].isValidElement(result) && Object.prototype.toString.call(result) === '[object Object]';
@@ -40237,75 +40422,19 @@
 	
 	    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
 	
-	    _this.matchFilter = function (text, item) {
-	      //filter：搜索框中的内容
-	      //filterOption：用户自定义的搜索过滤方法
-	      var _this$props = _this.props,
-	          filter = _this$props.filter,
-	          filterOption = _this$props.filterOption;
+	    _initialiseProps.call(_this);
 	
-	      if (filterOption) {
-	        return filterOption(filter, item);
-	      }
-	      return text.indexOf(filter) >= 0;
-	    };
+	    var pagination = props.pagination,
+	        dataSource = props.dataSource;
 	
-	    _this.handleSelect = function (selectedItem) {
-	      // checkedKeys：已勾选的Keys数组
-	      // result：是否已勾选，true：已勾选  false：未勾选
-	      var checkedKeys = _this.props.checkedKeys;
-	
-	      var result = checkedKeys.some(function (key) {
-	        return key === selectedItem.key;
-	      });
-	      _this.props.handleSelect(selectedItem, result);
-	    };
-	
-	    _this.handleFilter = function (e) {
-	      _this.props.handleFilter(e);
-	    };
-	
-	    _this.handleClear = function () {
-	      _this.props.handleClear();
-	    };
-	
-	    _this.renderItem = function (item) {
-	      var _this$props$render = _this.props.render,
-	          render = _this$props$render === undefined ? noop : _this$props$render;
-	
-	      var renderResult = render(item);
-	      var isRenderResultPlain = isRenderResultPlainObject(renderResult);
-	      return {
-	        renderedText: isRenderResultPlain ? renderResult.value : renderResult,
-	        renderedEl: isRenderResultPlain ? renderResult.label : renderResult
-	      };
-	    };
-	
-	    _this.onKeyDown = function (event, provided, snapshot, item) {
-	      if (provided.dragHandleProps) {
-	        provided.dragHandleProps.onKeyDown(event);
-	      }
-	
-	      if (event.defaultPrevented) {
-	        return;
-	      }
-	
-	      if (snapshot.isDragging) {
-	        return;
-	      }
-	
-	      if (event.keyCode !== _tinperBeeCore.KeyCode.ENTER) {
-	        return;
-	      }
-	
-	      // 为了选择，我们使用此事件 we are using the event for selection
-	      event.preventDefault();
-	
-	      _this.performAction(event, item);
-	    };
-	
+	    var totalPages = Math.ceil(dataSource.length / 10);
+	    var paginationInfo = pagination ? {
+	      currentPage: 1,
+	      totalPages: totalPages === 0 ? 1 : totalPages
+	    } : {};
 	    _this.state = {
-	      mounted: false
+	      mounted: false,
+	      paginationInfo: paginationInfo
 	    };
 	    return _this;
 	  }
@@ -40318,6 +40447,25 @@
 	        mounted: true
 	      });
 	    }, 0);
+	  };
+	
+	  TransferList.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, prevState) {
+	    var paginationInfo = prevState.paginationInfo;
+	    var pagination = nextProps.pagination,
+	        dataSource = nextProps.dataSource;
+	
+	    if (pagination) {
+	      var totalPages = Math.ceil(dataSource.length / 10);
+	      var currentPage = paginationInfo.currentPage;
+	      console.log('walieva', currentPage, totalPages);
+	      return {
+	        paginationInfo: {
+	          totalPages: totalPages === 0 ? 1 : totalPages,
+	          currentPage: totalPages === 0 ? 1 : currentPage && totalPages && totalPages < currentPage ? totalPages : currentPage // 在最后一页移除元素之后，当前页设置为最后一页
+	        }
+	      };
+	    }
+	    return {};
 	  };
 	
 	  TransferList.prototype.componentWillUnmount = function componentWillUnmount() {
@@ -40396,6 +40544,7 @@
 	        checkedKeys = _props.checkedKeys,
 	        lazy = _props.lazy,
 	        filterOption = _props.filterOption,
+	        pagination = _props.pagination,
 	        _props$body = _props.body,
 	        body = _props$body === undefined ? noop : _props$body,
 	        _props$footer = _props.footer,
@@ -40415,14 +40564,22 @@
 	
 	    // Custom Layout
 	
+	    var paginationInfo = this.state.paginationInfo;
+	
 	    var footerDom = footer((0, _objectAssign2['default'])({}, this.props));
 	    var bodyDom = body((0, _objectAssign2['default'])({}, this.props));
 	
-	    var listCls = (0, _classnames2['default'])(prefixCls, (_classNames2 = {}, _defineProperty(_classNames2, prefixCls + '-with-footer', !!footerDom), _defineProperty(_classNames2, prefixCls + '-draggable', !!draggable), _classNames2));
+	    var listCls = (0, _classnames2['default'])(prefixCls, (_classNames2 = {}, _defineProperty(_classNames2, prefixCls + '-with-footer', !!footerDom), _defineProperty(_classNames2, prefixCls + '-draggable', !!draggable), _defineProperty(_classNames2, prefixCls + '-with-pagination', !!pagination), _classNames2));
 	
 	    var filteredDataSource = [];
-	    var totalDataSource = [];
-	    var showItems = dataSource.map(function (item, index) {
+	    var totalDataSource = pagination ? dataSource : [];
+	    var splitedDataSource = !pagination ? dataSource.concat() : dataSource.slice(10 * (paginationInfo.currentPage - 1), 10 * paginationInfo.currentPage);
+	    if (pagination) {
+	      filteredDataSource = dataSource.filter(function (item) {
+	        return !item.disabled;
+	      });
+	    }
+	    var showItems = splitedDataSource.map(function (item, index) {
 	      if (!item) {
 	        return;
 	      }
@@ -40436,9 +40593,11 @@
 	      }
 	
 	      // all show items
-	      totalDataSource.push(item);
+	      if (!pagination) {
+	        totalDataSource.push(item);
+	      }
 	
-	      if (!item.disabled) {
+	      if (!item.disabled && !pagination) {
 	        filteredDataSource.push(item);
 	      }
 	
@@ -40548,6 +40707,7 @@
 	          );
 	        }
 	      ),
+	      pagination ? this.createListPagination() : null,
 	      _react2['default'].createElement(
 	        'div',
 	        { className: prefixCls + '-body-not-found ' + (dataSource.length == 0 ? "show" : "") },
@@ -40602,12 +40762,170 @@
 	  return TransferList;
 	}(_react2['default'].Component);
 	
+	var _initialiseProps = function _initialiseProps() {
+	  var _this5 = this;
+	
+	  this.matchFilter = function (text, item) {
+	    //filter：搜索框中的内容
+	    //filterOption：用户自定义的搜索过滤方法
+	    var _props3 = _this5.props,
+	        filter = _props3.filter,
+	        filterOption = _props3.filterOption;
+	
+	    if (filterOption) {
+	      return filterOption(filter, item);
+	    }
+	    return text.indexOf(filter) >= 0;
+	  };
+	
+	  this.handleSelect = function (selectedItem) {
+	    // checkedKeys：已勾选的Keys数组
+	    // result：是否已勾选，true：已勾选  false：未勾选
+	    var checkedKeys = _this5.props.checkedKeys;
+	
+	    var result = checkedKeys.some(function (key) {
+	      return key === selectedItem.key;
+	    });
+	    _this5.props.handleSelect(selectedItem, result);
+	  };
+	
+	  this.handleFilter = function (e) {
+	    _this5.props.handleFilter(e);
+	  };
+	
+	  this.handleClear = function () {
+	    _this5.props.handleClear();
+	  };
+	
+	  this.renderItem = function (item) {
+	    var _props$render2 = _this5.props.render,
+	        render = _props$render2 === undefined ? noop : _props$render2;
+	
+	    var renderResult = render(item);
+	    var isRenderResultPlain = isRenderResultPlainObject(renderResult);
+	    return {
+	      renderedText: isRenderResultPlain ? renderResult.value : renderResult,
+	      renderedEl: isRenderResultPlain ? renderResult.label : renderResult
+	    };
+	  };
+	
+	  this.onKeyDown = function (event, provided, snapshot, item) {
+	    if (provided.dragHandleProps) {
+	      provided.dragHandleProps.onKeyDown(event);
+	    }
+	
+	    if (event.defaultPrevented) {
+	      return;
+	    }
+	
+	    if (snapshot.isDragging) {
+	      return;
+	    }
+	
+	    if (event.keyCode !== _tinperBeeCore.KeyCode.ENTER) {
+	      return;
+	    }
+	
+	    // 为了选择，我们使用此事件 we are using the event for selection
+	    event.preventDefault();
+	
+	    _this5.performAction(event, item);
+	  };
+	
+	  this.handleChangePage = function (value) {
+	    var val = +value;
+	    var paginationInfo = _this5.state.paginationInfo;
+	
+	    if (Number.isNaN(val) || typeof val !== 'number' || val % 1 !== 0) {
+	      return;
+	    }
+	    if (val > paginationInfo.totalPages) {
+	      val = paginationInfo.totalPages;
+	    }
+	    if (val < 1) {
+	      val = 1;
+	    }
+	    _this5.setState({
+	      paginationInfo: _extends({}, paginationInfo, {
+	        currentPage: val
+	      })
+	    });
+	  };
+	
+	  this.handleMove = function (step) {
+	    var _state$paginationInfo = _this5.state.paginationInfo,
+	        currentPage = _state$paginationInfo.currentPage,
+	        totalPages = _state$paginationInfo.totalPages;
+	
+	    var newCurrentPage = currentPage + step;
+	    if (newCurrentPage < 1 || newCurrentPage > totalPages) {
+	      return;
+	    }
+	    _this5.setState({
+	      paginationInfo: {
+	        totalPages: totalPages,
+	        currentPage: newCurrentPage
+	      }
+	    });
+	  };
+	
+	  this.createListPagination = function () {
+	    var prefixCls = _this5.props.prefixCls;
+	    var paginationInfo = _this5.state.paginationInfo;
+	    var currentPage = paginationInfo.currentPage,
+	        totalPages = paginationInfo.totalPages;
+	
+	    return _react2['default'].createElement(
+	      'div',
+	      { className: prefixCls + '-pagination' },
+	      _react2['default'].createElement(
+	        'span',
+	        {
+	          onClick: function onClick() {
+	            return _this5.handleMove(-1);
+	          },
+	          className: 'prev-link ' + (currentPage === 1 ? 'disabled' : '')
+	        },
+	        _react2['default'].createElement(_beeIcon2['default'], { type: 'uf-arrow-left' })
+	      ),
+	      _react2['default'].createElement(_beeFormControl2['default'], {
+	        size: 'sm',
+	        value: currentPage,
+	        ref: 'input',
+	        onChange: _this5.handleChangePage
+	      }),
+	      _react2['default'].createElement(
+	        'span',
+	        {
+	          className: prefixCls + '-pagination-slash'
+	        },
+	        '/'
+	      ),
+	      _react2['default'].createElement(
+	        'span',
+	        null,
+	        totalPages
+	      ),
+	      _react2['default'].createElement(
+	        'span',
+	        {
+	          onClick: function onClick() {
+	            return _this5.handleMove(1);
+	          },
+	          className: 'next-link ' + (currentPage === totalPages ? 'disabled' : '')
+	        },
+	        _react2['default'].createElement(_beeIcon2['default'], { type: 'uf-arrow-right' })
+	      )
+	    );
+	  };
+	};
+	
 	TransferList.defaultProps = defaultProps;
 	exports['default'] = TransferList;
 	module.exports = exports['default'];
 
 /***/ }),
-/* 295 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40624,7 +40942,7 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _beeFormControl = __webpack_require__(268);
+	var _beeFormControl = __webpack_require__(269);
 	
 	var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
 	
@@ -40721,7 +41039,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 296 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40737,7 +41055,7 @@
 	 * @providesModule ReactComponentWithPureRenderMixin
 	 */
 	
-	var shallowEqual = __webpack_require__(297);
+	var shallowEqual = __webpack_require__(298);
 	
 	function shallowCompare(instance, nextProps, nextState) {
 	  return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
@@ -40778,7 +41096,7 @@
 	module.exports = ReactComponentWithPureRenderMixin;
 
 /***/ }),
-/* 297 */
+/* 298 */
 /***/ (function(module, exports) {
 
 	//
@@ -40830,7 +41148,7 @@
 
 
 /***/ }),
-/* 298 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -40847,7 +41165,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _PureRenderMixin = __webpack_require__(296);
+	var _PureRenderMixin = __webpack_require__(297);
 	
 	var _PureRenderMixin2 = _interopRequireDefault(_PureRenderMixin);
 	
@@ -40855,11 +41173,11 @@
 	
 	var _objectAssign2 = _interopRequireDefault(_objectAssign);
 	
-	var _reactLazyLoad = __webpack_require__(299);
+	var _reactLazyLoad = __webpack_require__(300);
 	
 	var _reactLazyLoad2 = _interopRequireDefault(_reactLazyLoad);
 	
-	var _beeCheckbox = __webpack_require__(306);
+	var _beeCheckbox = __webpack_require__(307);
 	
 	var _beeCheckbox2 = _interopRequireDefault(_beeCheckbox);
 	
@@ -40997,7 +41315,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 299 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41018,21 +41336,21 @@
 	
 	var _reactDom = __webpack_require__(2);
 	
-	var _eventlistener = __webpack_require__(300);
+	var _eventlistener = __webpack_require__(301);
 	
-	var _lodash = __webpack_require__(301);
+	var _lodash = __webpack_require__(302);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _lodash3 = __webpack_require__(302);
+	var _lodash3 = __webpack_require__(303);
 	
 	var _lodash4 = _interopRequireDefault(_lodash3);
 	
-	var _parentScroll = __webpack_require__(303);
+	var _parentScroll = __webpack_require__(304);
 	
 	var _parentScroll2 = _interopRequireDefault(_parentScroll);
 	
-	var _inViewport = __webpack_require__(304);
+	var _inViewport = __webpack_require__(305);
 	
 	var _inViewport2 = _interopRequireDefault(_inViewport);
 	
@@ -41223,7 +41541,7 @@
 	};
 
 /***/ }),
-/* 300 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(root,factory){
@@ -41252,7 +41570,7 @@
 	}));
 
 /***/ }),
-/* 301 */
+/* 302 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -41636,7 +41954,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 302 */
+/* 303 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -42082,7 +42400,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 303 */
+/* 304 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -42127,7 +42445,7 @@
 	exports.default = scrollParent;
 
 /***/ }),
-/* 304 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42137,7 +42455,7 @@
 	});
 	exports.default = inViewport;
 	
-	var _getElementPosition = __webpack_require__(305);
+	var _getElementPosition = __webpack_require__(306);
 	
 	var _getElementPosition2 = _interopRequireDefault(_getElementPosition);
 	
@@ -42177,7 +42495,7 @@
 	}
 
 /***/ }),
-/* 305 */
+/* 306 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -42200,7 +42518,7 @@
 	}
 
 /***/ }),
-/* 306 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42209,11 +42527,11 @@
 	  value: true
 	});
 	
-	var _Checkbox = __webpack_require__(307);
+	var _Checkbox = __webpack_require__(308);
 	
 	var _Checkbox2 = _interopRequireDefault(_Checkbox);
 	
-	var _CheckboxGroup = __webpack_require__(308);
+	var _CheckboxGroup = __webpack_require__(309);
 	
 	var _CheckboxGroup2 = _interopRequireDefault(_CheckboxGroup);
 	
@@ -42224,7 +42542,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 307 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42440,7 +42758,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 308 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42457,7 +42775,7 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _Checkbox = __webpack_require__(307);
+	var _Checkbox = __webpack_require__(308);
 	
 	var _Checkbox2 = _interopRequireDefault(_Checkbox);
 	
@@ -42609,7 +42927,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 309 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42622,7 +42940,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeButton = __webpack_require__(265);
+	var _beeButton = __webpack_require__(266);
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
@@ -42722,7 +43040,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 310 */
+/* 311 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -42794,7 +43112,7 @@
 	exports.move = move;
 
 /***/ }),
-/* 311 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42807,11 +43125,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeButton = __webpack_require__(265);
+	var _beeButton = __webpack_require__(266);
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _src = __webpack_require__(292);
+	var _src = __webpack_require__(293);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -42834,7 +43152,7 @@
 	
 	var AllTargetKeys = [];
 	var mockData = [];
-	for (var i = 0; i < 20; i++) {
+	for (var i = 0; i < 20000; i++) {
 	  mockData.push({
 	    key: i.toString(),
 	    title: 'content' + (i + 1),
@@ -42910,6 +43228,7 @@
 	        '\u5168\u90E8\u79FB\u5230\u5DE6\u8FB9'
 	      ),
 	      _react2['default'].createElement(_src2['default'], {
+	        pagination: true,
 	        dataSource: mockData,
 	        titles: ['Source', 'Target'],
 	        targetKeys: targetKeys,
@@ -42931,7 +43250,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 312 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42944,7 +43263,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(292);
+	var _src = __webpack_require__(293);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -43025,7 +43344,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 313 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43038,11 +43357,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeButton = __webpack_require__(265);
+	var _beeButton = __webpack_require__(266);
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _src = __webpack_require__(292);
+	var _src = __webpack_require__(293);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -43135,7 +43454,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 314 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43148,7 +43467,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(292);
+	var _src = __webpack_require__(293);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -43245,7 +43564,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 315 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43258,7 +43577,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _src = __webpack_require__(292);
+	var _src = __webpack_require__(293);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -43356,7 +43675,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 316 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43369,11 +43688,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeButton = __webpack_require__(265);
+	var _beeButton = __webpack_require__(266);
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
-	var _src = __webpack_require__(292);
+	var _src = __webpack_require__(293);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -43485,7 +43804,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 317 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43498,7 +43817,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeButton = __webpack_require__(265);
+	var _beeButton = __webpack_require__(266);
 	
 	var _beeButton2 = _interopRequireDefault(_beeButton);
 	
@@ -43506,7 +43825,7 @@
 	
 	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _src = __webpack_require__(292);
+	var _src = __webpack_require__(293);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -43679,7 +43998,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43692,11 +44011,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _beeTree = __webpack_require__(319);
+	var _beeTree = __webpack_require__(320);
 	
 	var _beeTree2 = _interopRequireDefault(_beeTree);
 	
-	var _src = __webpack_require__(292);
+	var _src = __webpack_require__(293);
 	
 	var _src2 = _interopRequireDefault(_src);
 	
@@ -43896,7 +44215,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43911,15 +44230,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Tree = __webpack_require__(320);
+	var _Tree = __webpack_require__(321);
 	
 	var _Tree2 = _interopRequireDefault(_Tree);
 	
-	var _TreeNode = __webpack_require__(321);
+	var _TreeNode = __webpack_require__(322);
 	
 	var _TreeNode2 = _interopRequireDefault(_TreeNode);
 	
-	var _openAnimation = __webpack_require__(326);
+	var _openAnimation = __webpack_require__(327);
 	
 	var _openAnimation2 = _interopRequireDefault(_openAnimation);
 	
@@ -44029,7 +44348,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 320 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44046,11 +44365,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TreeNode = __webpack_require__(321);
+	var _TreeNode = __webpack_require__(322);
 	
 	var _TreeNode2 = _interopRequireDefault(_TreeNode);
 	
-	var _infiniteScroll = __webpack_require__(323);
+	var _infiniteScroll = __webpack_require__(324);
 	
 	var _infiniteScroll2 = _interopRequireDefault(_infiniteScroll);
 	
@@ -44058,7 +44377,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _util = __webpack_require__(322);
+	var _util = __webpack_require__(323);
 	
 	var _propTypes = __webpack_require__(6);
 	
@@ -44066,15 +44385,15 @@
 	
 	var _tinperBeeCore = __webpack_require__(26);
 	
-	var _config = __webpack_require__(324);
+	var _config = __webpack_require__(325);
 	
 	var _config2 = _interopRequireDefault(_config);
 	
-	var _createStore = __webpack_require__(325);
+	var _createStore = __webpack_require__(326);
 	
 	var _createStore2 = _interopRequireDefault(_createStore);
 	
-	var _omit = __webpack_require__(288);
+	var _omit = __webpack_require__(289);
 	
 	var _omit2 = _interopRequireDefault(_omit);
 	
@@ -45406,7 +45725,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 321 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45435,7 +45754,7 @@
 	
 	var _beeAnimate2 = _interopRequireDefault(_beeAnimate);
 	
-	var _util = __webpack_require__(322);
+	var _util = __webpack_require__(323);
 	
 	var _propTypes = __webpack_require__(6);
 	
@@ -45990,7 +46309,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 322 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46536,7 +46855,7 @@
 	}
 
 /***/ }),
-/* 323 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46553,9 +46872,9 @@
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _util = __webpack_require__(322);
+	var _util = __webpack_require__(323);
 	
-	var _config = __webpack_require__(324);
+	var _config = __webpack_require__(325);
 	
 	var _config2 = _interopRequireDefault(_config);
 	
@@ -46858,7 +47177,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 324 */
+/* 325 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -46879,7 +47198,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 325 */
+/* 326 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -46924,7 +47243,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 326 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';

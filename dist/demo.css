@@ -16,6 +16,13 @@
     padding-top: 33px; }
     .u-transfer-list.u-transfer-list-draggable:first-child {
       margin-right: 16px; }
+    .u-transfer-list.u-transfer-list-with-pagination {
+      height: 240px; }
+      .u-transfer-list.u-transfer-list-with-pagination .u-transfer-list-body {
+        height: calc(100% - 40px); }
+        .u-transfer-list.u-transfer-list-with-pagination .u-transfer-list-body .u-transfer-list-content-item-highlight-enter {
+          animation: none;
+          transition: none; }
     .u-transfer-list-with-footer {
       padding-bottom: 33px; }
     .u-transfer-list-search-action {
@@ -108,6 +115,41 @@
         color: #909090; }
       .u-transfer-list-content-item-highlight-enter {
         animation: transferHighlightIn 1s ease;
+        transition: none; }
+    .u-transfer-list-pagination {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center;
+      height: 40px;
+      padding: 5px 0;
+      -ms-flex-pack: end;
+      justify-content: flex-end;
+      border-top: 1px solid #d9d9d9; }
+      .u-transfer-list-pagination-slash {
+        margin: 0 10px 0 5px; }
+      .u-transfer-list-pagination .u-form-control {
+        width: 42px;
+        height: 80%;
+        background-color: #fff;
+        border: 1px solid #d9d9d9;
+        border-radius: 2px;
+        box-sizing: border-box;
+        margin-right: 8px;
+        outline: none;
+        padding: 0 6px;
+        text-align: center;
+        transition: border-color .3s; }
+      .u-transfer-list-pagination span.prev-link.disabled,
+      .u-transfer-list-pagination span.prev-link.disabled *,
+      .u-transfer-list-pagination span.next-link.disabled,
+      .u-transfer-list-pagination span.next-link.disabled * {
+        opacity: 0.7;
+        cursor: not-allowed; }
+      .u-transfer-list-pagination .uf {
+        cursor: pointer; }
+      .u-transfer-list-pagination-item-highlight-enter {
+        animation: none;
         transition: none; }
     .u-transfer-list-delete-selected {
       display: none;

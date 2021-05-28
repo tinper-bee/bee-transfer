@@ -12,7 +12,7 @@ import Transfer from '../../src';
 
 const AllTargetKeys = [];
 const mockData = [];
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 20000; i++) {
   mockData.push({
     key: i.toString(),
     title: `content${i + 1}`,
@@ -74,6 +74,7 @@ class Demo1 extends React.Component {
         <Button onClick={this.moveAllToRight} style={{margin:'8px'}}>全部移到右边</Button>
         <Button onClick={this.moveAllToLeft} style={{margin:'8px'}}>全部移到左边</Button>
         <Transfer
+          pagination
           dataSource={mockData}
           titles={['Source', 'Target']}
           targetKeys={targetKeys}

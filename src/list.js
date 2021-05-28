@@ -8,6 +8,7 @@ import { TransferItem } from './index';
 import Item from './item';
 import Checkbox from 'bee-checkbox';
 import Icon from 'bee-icon';
+import FormControl from 'bee-form-control';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { KeyCode} from 'tinper-bee-core';
 
@@ -19,6 +20,7 @@ const defaultProps = {
   titleText: '',
   showSearch: false,
   render: noop,
+  pagination: false
 }; 
 function isRenderResultPlainObject(result) {
   return result && !React.isValidElement(result) &&
@@ -29,8 +31,15 @@ class TransferList extends React.Component {
 
   constructor(props) {
     super(props);
+    const { pagination, dataSource } = props
+    const totalPages = Math.ceil(dataSource.length / 10)
+    const paginationInfo = pagination ? {
+      currentPage: 1,
+      totalPages: totalPages === 0 ? 1 : totalPages
+    } : {}
     this.state = {
       mounted: false,
+      paginationInfo
     };
   }
 
@@ -41,6 +50,23 @@ class TransferList extends React.Component {
       });
     }, 0);
   }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { paginationInfo } = prevState
+    const { pagination, dataSource } = nextProps
+    if (pagination) {
+      const totalPages = Math.ceil(dataSource.length / 10)
+      const currentPage = paginationInfo.currentPage
+      console.log('walieva', currentPage, totalPages)
+      return {
+        paginationInfo: {
+          totalPages: totalPages === 0 ? 1 : totalPages,
+          currentPage: totalPages === 0 ? 1 : (currentPage && totalPages && totalPages < currentPage) ? totalPages : currentPage // 在最后一页移除元素之后，当前页设置为最后一页
+        }
+      }
+    }
+    return {};
+  };
 
   componentWillUnmount() {
     clearTimeout(this.timer);
@@ -146,24 +172,93 @@ class TransferList extends React.Component {
     this.performAction(event,item);
   };
 
+  handleChangePage = value => {
+    let val = +value
+    const { paginationInfo } = this.state
+    if (Number.isNaN(val) || typeof val !== 'number' || val % 1 !== 0) {
+      return
+    }
+    if (val > paginationInfo.totalPages) {
+      val = paginationInfo.totalPages
+    }
+    if (val < 1) {
+      val = 1
+    }
+    this.setState({
+      paginationInfo: {
+        ...paginationInfo,
+        currentPage: val
+      }
+    })
+  }
+
+  handleMove = step => {
+    const { currentPage, totalPages } = this.state.paginationInfo
+    const newCurrentPage = currentPage + step
+    if (newCurrentPage < 1 || newCurrentPage > totalPages) {
+      return
+    }
+    this.setState({
+      paginationInfo: {
+        totalPages,
+        currentPage: newCurrentPage
+      }
+    })
+  }
+
+  createListPagination = () => {
+    const { prefixCls } = this.props
+    const { paginationInfo } = this.state
+    const { currentPage, totalPages } = paginationInfo
+    return <div className={`${prefixCls}-pagination`}>
+      <span
+        onClick={() => this.handleMove(-1)}
+        className={`prev-link ${currentPage === 1 ? 'disabled' : ''}`}
+      >
+        <Icon type="uf-arrow-left" />
+      </span>
+      <FormControl
+          size="sm"
+          value={currentPage}
+          ref="input"
+          onChange={this.handleChangePage}
+      />
+      <span
+        className={`${prefixCls}-pagination-slash`}
+      >/</span>
+      <span>{totalPages}</span>
+      <span
+        onClick={() => this.handleMove(1)}
+        className={`next-link ${currentPage === totalPages ? 'disabled' : ''}`}
+      >
+        <Icon type="uf-arrow-right" />
+      </span>
+    </div>
+  }
 
   render() {
-    const { prefixCls, dataSource, titleText, filter, checkedKeys, lazy, filterOption,
+    const { prefixCls, dataSource, titleText, filter, checkedKeys, lazy, filterOption, pagination,
             body = noop, footer = noop, showSearch, render = noop, style, id, showCheckbox, draggable, droppableId, draggingItemId } = this.props;
     let { searchPlaceholder, notFoundContent } = this.props;
 
     // Custom Layout
+    const { paginationInfo } = this.state
     const footerDom = footer(assign({}, this.props));
     const bodyDom = body(assign({}, this.props));
 
     const listCls = classNames(prefixCls, {
       [`${prefixCls}-with-footer`]: !!footerDom,
-      [`${prefixCls}-draggable`]: !!draggable
+      [`${prefixCls}-draggable`]: !!draggable,
+      [`${prefixCls}-with-pagination`]: !!pagination
     });
 
-    const filteredDataSource = [];
-    const totalDataSource = [];
-    const showItems = dataSource.map((item,index) => {
+    let filteredDataSource = [];
+    const totalDataSource = pagination ? dataSource : [];
+    const splitedDataSource = !pagination ? dataSource.concat() : dataSource.slice(10 * (paginationInfo.currentPage - 1), 10 * paginationInfo.currentPage)
+    if (pagination) {
+      filteredDataSource = dataSource.filter(item => !item.disabled)
+    }
+    const showItems = splitedDataSource.map((item,index) => {
       if(!item){return}
       const { renderedText, renderedEl } = this.renderItem(item);
       if (filter && filter.trim() && !this.matchFilter(renderedText, item)) {
@@ -171,9 +266,11 @@ class TransferList extends React.Component {
       }
 
       // all show items
-      totalDataSource.push(item);
+      if (!pagination) {
+        totalDataSource.push(item);
+      }
 
-      if (!item.disabled) {
+      if (!item.disabled && !pagination) {
         filteredDataSource.push(item);
       }
       
@@ -262,6 +359,7 @@ class TransferList extends React.Component {
             </div>
           )}
         </Droppable>
+        {pagination ? this.createListPagination() : null}
         <div className={`${prefixCls}-body-not-found ${dataSource.length == 0? "show" : ""}`}>
           {notFoundContent}
         </div>
