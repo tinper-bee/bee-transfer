@@ -57,7 +57,6 @@ class TransferList extends React.Component {
     if (pagination) {
       const totalPages = Math.ceil(dataSource.length / 10)
       const currentPage = paginationInfo.currentPage
-      console.log('walieva', currentPage, totalPages)
       return {
         paginationInfo: {
           totalPages: totalPages === 0 ? 1 : totalPages,
