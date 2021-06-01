@@ -87,9 +87,9 @@ var TransferList = function (_React$Component) {
 
     _initialiseProps.call(_this);
 
-    var pagination = props.pagination,
-        dataSource = props.dataSource;
+    var pagination = props.pagination;
 
+    var dataSource = _this.handleFilterDataSource();
     var totalPages = Math.ceil(dataSource.length / 10);
     var paginationInfo = pagination ? {
       currentPage: 1,
@@ -97,7 +97,8 @@ var TransferList = function (_React$Component) {
     } : {};
     _this.state = {
       mounted: false,
-      paginationInfo: paginationInfo
+      paginationInfo: paginationInfo,
+      dataSource: dataSource
     };
     return _this;
   }
@@ -112,21 +113,25 @@ var TransferList = function (_React$Component) {
     }, 0);
   };
 
-  TransferList.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, prevState) {
-    var paginationInfo = prevState.paginationInfo;
-    var pagination = nextProps.pagination,
-        dataSource = nextProps.dataSource;
+  TransferList.prototype.UNSAFE_componentWillReceiveProps = function UNSAFE_componentWillReceiveProps(nextProps) {
+    var paginationInfo = this.state.paginationInfo;
+    var pagination = nextProps.pagination;
 
+    var dataSource = this.handleFilterDataSource(nextProps);
     if (pagination) {
       var totalPages = Math.ceil(dataSource.length / 10);
       var currentPage = paginationInfo.currentPage;
-      console.log('walieva', currentPage, totalPages);
-      return {
+      this.setState({
+        dataSource: dataSource,
         paginationInfo: {
           totalPages: totalPages === 0 ? 1 : totalPages,
           currentPage: totalPages === 0 ? 1 : currentPage && totalPages && totalPages < currentPage ? totalPages : currentPage // 在最后一页移除元素之后，当前页设置为最后一页
         }
-      };
+      });
+    } else {
+      this.setState({
+        dataSource: dataSource
+      });
     }
     return {};
   };
@@ -201,7 +206,6 @@ var TransferList = function (_React$Component) {
 
     var _props = this.props,
         prefixCls = _props.prefixCls,
-        dataSource = _props.dataSource,
         titleText = _props.titleText,
         filter = _props.filter,
         checkedKeys = _props.checkedKeys,
@@ -227,13 +231,14 @@ var TransferList = function (_React$Component) {
 
     // Custom Layout
 
-    var paginationInfo = this.state.paginationInfo;
+    var _state = this.state,
+        paginationInfo = _state.paginationInfo,
+        dataSource = _state.dataSource;
 
     var footerDom = footer((0, _objectAssign2["default"])({}, this.props));
     var bodyDom = body((0, _objectAssign2["default"])({}, this.props));
 
     var listCls = (0, _classnames2["default"])(prefixCls, (_classNames2 = {}, _defineProperty(_classNames2, prefixCls + '-with-footer', !!footerDom), _defineProperty(_classNames2, prefixCls + '-draggable', !!draggable), _defineProperty(_classNames2, prefixCls + '-with-pagination', !!pagination), _classNames2));
-
     var filteredDataSource = [];
     var totalDataSource = pagination ? dataSource : [];
     var splitedDataSource = !pagination ? dataSource.concat() : dataSource.slice(10 * (paginationInfo.currentPage - 1), 10 * paginationInfo.currentPage);
@@ -251,11 +256,9 @@ var TransferList = function (_React$Component) {
           renderedText = _renderItem.renderedText,
           renderedEl = _renderItem.renderedEl;
 
-      if (filter && filter.trim() && !_this4.matchFilter(renderedText, item)) {
-        return null;
-      }
-
       // all show items
+
+
       if (!pagination) {
         totalDataSource.push(item);
       }
@@ -428,13 +431,9 @@ var TransferList = function (_React$Component) {
 var _initialiseProps = function _initialiseProps() {
   var _this5 = this;
 
-  this.matchFilter = function (text, item) {
+  this.matchFilter = function (text, item, filter, filterOption) {
     //filter：搜索框中的内容
     //filterOption：用户自定义的搜索过滤方法
-    var _props3 = _this5.props,
-        filter = _props3.filter,
-        filterOption = _props3.filterOption;
-
     if (filterOption) {
       return filterOption(filter, item);
     }
@@ -580,6 +579,23 @@ var _initialiseProps = function _initialiseProps() {
         _react2["default"].createElement(_beeIcon2["default"], { type: 'uf-arrow-right' })
       )
     );
+  };
+
+  this.handleFilterDataSource = function (nextProps) {
+    var _ref2 = nextProps || _this5.props,
+        dataSource = _ref2.dataSource,
+        filter = _ref2.filter,
+        filterOption = _ref2.filterOption;
+
+    return dataSource.filter(function (data) {
+      var _renderItem2 = _this5.renderItem(data),
+          renderedText = _renderItem2.renderedText;
+
+      if (filter && filter.trim() && !_this5.matchFilter(renderedText, data, filter, filterOption)) {
+        return false;
+      }
+      return true;
+    });
   };
 };
 

@@ -508,8 +508,12 @@ var _initialiseProps = function _initialiseProps() {
     return _this3.moveTo('left');
   };
 
-  this.moveToRight = function (insertIndex) {
-    return _this3.moveTo('right', insertIndex);
+  this.moveToRight = function () {
+    return _this3.moveTo('right');
+  };
+
+  this.multiMoveToRight = function (insertIndex) {
+    _this3.moveTo('right', insertIndex);
   };
 
   this.handleSelectAll = function (direction, filteredDataSource, checkAll) {
@@ -645,7 +649,7 @@ var _initialiseProps = function _initialiseProps() {
     } else {
       // case5：从左往右拖拽（添加已选）
       if (_this3.state.sourceSelectedKeys.length > 1) {
-        return _this3.moveToRight(destination.index);
+        return _this3.multiMoveToRight(destination.index);
       }
       var _result = (0, _utils.move)( // 一次移动的方法
       _this3.getList(source.droppableId), _this3.getList(destination.droppableId), source, destination, targetKeys);
