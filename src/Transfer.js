@@ -224,7 +224,11 @@ class Transfer extends React.Component{
   }
 
   moveToLeft = () => this.moveTo('left')
-  moveToRight = insertIndex => this.moveTo('right', insertIndex)
+  moveToRight = () => this.moveTo('right')
+
+  multiMoveToRight = insertIndex => {
+    this.moveTo('right', insertIndex)
+  }
 
   /**
    * List中的item选中/未选中状态改变时触发
@@ -392,7 +396,7 @@ class Transfer extends React.Component{
       }
     } else {  // case5：从左往右拖拽（添加已选）
       if (this.state.sourceSelectedKeys.length > 1) {
-        return this.moveToRight(destination.index)
+        return this.multiMoveToRight(destination.index)
       }
       const result = move( // 一次移动的方法
           this.getList(source.droppableId),

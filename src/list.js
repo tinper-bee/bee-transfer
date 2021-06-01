@@ -31,7 +31,8 @@ class TransferList extends React.Component {
 
   constructor(props) {
     super(props);
-    const { pagination, dataSource } = props
+    const { pagination } = props
+    const dataSource = this.handleFilterDataSource()
     const totalPages = Math.ceil(dataSource.length / 10)
     const paginationInfo = pagination ? {
       currentPage: 1,
@@ -39,7 +40,8 @@ class TransferList extends React.Component {
     } : {}
     this.state = {
       mounted: false,
-      paginationInfo
+      paginationInfo,
+      dataSource
     };
   }
 
@@ -51,18 +53,24 @@ class TransferList extends React.Component {
     }, 0);
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { paginationInfo } = prevState
-    const { pagination, dataSource } = nextProps
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const { paginationInfo } = this.state
+    const { pagination } = nextProps
+    const dataSource = this.handleFilterDataSource(nextProps)
     if (pagination) {
       const totalPages = Math.ceil(dataSource.length / 10)
       const currentPage = paginationInfo.currentPage
-      return {
+      this.setState({
+        dataSource,
         paginationInfo: {
           totalPages: totalPages === 0 ? 1 : totalPages,
           currentPage: totalPages === 0 ? 1 : (currentPage && totalPages && totalPages < currentPage) ? totalPages : currentPage // 在最后一页移除元素之后，当前页设置为最后一页
         }
-      }
+      })
+    } else {
+      this.setState({
+        dataSource
+      })
     }
     return {};
   };
@@ -76,10 +84,9 @@ class TransferList extends React.Component {
   }
 
 
-  matchFilter = (text,item) => {
+  matchFilter = (text,item,filter,filterOption) => {
     //filter：搜索框中的内容
     //filterOption：用户自定义的搜索过滤方法
-    const { filter, filterOption} = this.props;
     if (filterOption) {
       return filterOption(filter, item);
     }
@@ -235,13 +242,24 @@ class TransferList extends React.Component {
     </div>
   }
 
+  handleFilterDataSource = (nextProps) => {
+    const { dataSource, filter, filterOption } = nextProps || this.props
+    return dataSource.filter(data => {
+      const { renderedText } = this.renderItem(data);
+      if (filter && filter.trim() && !this.matchFilter(renderedText, data, filter, filterOption)) {
+        return false
+      }
+      return true
+    })
+  }
+
   render() {
-    const { prefixCls, dataSource, titleText, filter, checkedKeys, lazy, filterOption, pagination,
+    const { prefixCls, titleText, filter, checkedKeys, lazy, filterOption, pagination,
             body = noop, footer = noop, showSearch, render = noop, style, id, showCheckbox, draggable, droppableId, draggingItemId } = this.props;
     let { searchPlaceholder, notFoundContent } = this.props;
 
     // Custom Layout
-    const { paginationInfo } = this.state
+    const { paginationInfo, dataSource } = this.state
     const footerDom = footer(assign({}, this.props));
     const bodyDom = body(assign({}, this.props));
 
@@ -250,7 +268,6 @@ class TransferList extends React.Component {
       [`${prefixCls}-draggable`]: !!draggable,
       [`${prefixCls}-with-pagination`]: !!pagination
     });
-
     let filteredDataSource = [];
     const totalDataSource = pagination ? dataSource : [];
     const splitedDataSource = !pagination ? dataSource.concat() : dataSource.slice(10 * (paginationInfo.currentPage - 1), 10 * paginationInfo.currentPage)
@@ -260,9 +277,6 @@ class TransferList extends React.Component {
     const showItems = splitedDataSource.map((item,index) => {
       if(!item){return}
       const { renderedText, renderedEl } = this.renderItem(item);
-      if (filter && filter.trim() && !this.matchFilter(renderedText, item)) {
-        return null;
-      }
 
       // all show items
       if (!pagination) {
